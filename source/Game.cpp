@@ -123,6 +123,10 @@ void CGame::Initialize()
 	}
 	
 	m_mapArray[MAP_HALL1]->Draw();
+	
+	m_characterArray[CHARACTER_SNIDE]->SetPosition(148, 64);
+	m_characterArray[CHARACTER_GABRIEL]->SetPosition(128, 64);
+	
 	m_characterArray[CHARACTER_GABRIEL]->SetFrameType(FRAME_SPEAK);
 }
 
@@ -161,14 +165,14 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	}
 	else if(keysHeld() & KEY_LEFT)
 	{
-		if(m_characterArray[CHARACTER_SNIDE]->X() > 40)
+		if(m_characterArray[CHARACTER_SNIDE]->X() > 64)
 			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_LEFT);
 		else
 			m_mapArray[MAP_HALL1]->ScrollLeft();
 	}
 	else if(keysHeld() & KEY_RIGHT)
 	{
-		if(m_characterArray[CHARACTER_SNIDE]->X() < 192)
+		if(m_characterArray[CHARACTER_SNIDE]->X() < 188)
 			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_RIGHT);
 		else
 			m_mapArray[MAP_HALL1]->ScrollRight();
@@ -182,8 +186,32 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 		m_characterArray[CHARACTER_SNIDE]->SetFrameType(FRAME_NONE);
 	}
 	
-	m_characterArray[CHARACTER_SNIDE]->Draw(elapsedTime);
-	m_characterArray[CHARACTER_GABRIEL]->Draw(elapsedTime);
+	m_characterArray[CHARACTER_SNIDE]->Animate(elapsedTime);
+	m_characterArray[CHARACTER_GABRIEL]->Animate(elapsedTime);
+	
+	SortSprites();
+	
+	m_characterArray[CHARACTER_SNIDE]->Draw();
+	m_characterArray[CHARACTER_GABRIEL]->Draw();
 	
 	oamUpdate(&oamSub);
+}
+
+void CGame::SortSprites()
+{
+	for (int i=0; i < MAX_CHARACTERS; i++)
+	{
+		m_characterArray[i]->Hide();
+		
+		for(int j=0; j < MAX_CHARACTERS; j++)
+		{
+			if (m_characterArray[i]->Y() + CHARACTER_HEIGHT > m_characterArray[j]->Y() + CHARACTER_HEIGHT &&
+				m_characterArray[i]->Priority() > m_characterArray[j]->Priority())
+			{
+				int temp = m_characterArray[i]->Priority();
+				m_characterArray[i]->SetPriority(m_characterArray[j]->Priority());
+				m_characterArray[j]->SetPriority(temp);
+			}
+		}
+	}
 }

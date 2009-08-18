@@ -16,6 +16,7 @@ public:
 	
 	void Initialize();
 	void Update(int elapsedTime, CTime* pTime);
+	void SortSprites();
 
 private:
 	GameType m_gameType;

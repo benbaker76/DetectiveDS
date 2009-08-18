@@ -24,14 +24,14 @@ void CMap::Draw()
 
 void CMap::ScrollLeft()
 {
-	m_x--;
+	m_x-=2;
 	
 	BACKGROUND_SUB.scroll[2].x = m_x;
 }
 
 void CMap::ScrollRight()
 {
-	m_x++;
+	m_x+=2;
 	
 	BACKGROUND_SUB.scroll[2].x = m_x;
 }

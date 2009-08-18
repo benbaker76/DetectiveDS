@@ -5,6 +5,11 @@
 
 #define MAX_CHARACTERS			10
 
+#define CHARACTER_WIDTH			24
+#define CHARACTER_HEIGHT		41
+
+#define HEAD_HEIGHT				21
+
 enum DirectionType
 {
 	DIRECTION_UP,
@@ -33,12 +38,19 @@ public:
 	CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite);
 	~CCharacter();
 	
-	void Draw(int elapsedTime);
+	void SetPosition(int x, int y);
+	void SetPriority(int index);
+	void Animate(int elapsedTime);
+	void Hide();
+	void Draw();
 	void Move(DirectionType directionType);
+	
 	void SetFrameType(FrameType frameType);
 	
 	int X() const { return m_x; }
 	int Y() const { return m_y; }
+	
+	int Priority() const { return m_pHeadSprite->OamIndex(); }
 
 private:
 	CharacterType m_characterType;

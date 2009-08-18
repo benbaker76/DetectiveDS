@@ -54,8 +54,17 @@ public:
 	CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u16* pPalette, int paletteLen, const int* frameArray, int frameCount);
 	~CSprite();
 	
-	void Draw(int elapsedTime, int x, int y);
+	void SetPosition(int x, int y);
+	void Animate(int elapsedTime);
+	void Hide();
+	void Draw();
 	void SetFrameType(FrameType frameType);
+	
+	void SetOamIndex(int oamIndex) { m_oamIndex = oamIndex; }
+	int OamIndex() const { return m_oamIndex; }
+	
+	int X() const { return m_x; }
+	int Y() const { return m_y; }
 
 private:
 	SpriteType m_spriteType;
@@ -71,12 +80,15 @@ private:
 	int m_frameCount;
 	int m_lastUpdate;
 	
+	int m_oamIndex;
+	
 	u16* m_gfx;
 	u16* m_gfxSub;
 	
 	CSprite* m_pSprite;
 	
-	void Animate(int elapsedTime);
+	int m_x;
+	int m_y;
 };
 
 #endif

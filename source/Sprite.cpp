@@ -15,6 +15,11 @@ CSprite::CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u
 	m_frameNum = 0;
 	m_lastUpdate = 0;
 	
+	m_x = 0;
+	m_y = 0;
+	
+	m_oamIndex = spriteType;
+	
 	m_gfxSub = oamAllocateGfx(&oamSub, SpriteSize_32x32, SpriteColorFormat_256Color);
 	dmaCopy(m_pPalette, SPRITE_PALETTE_SUB, m_paletteLen);
 }
@@ -23,35 +28,10 @@ CSprite::~CSprite()
 {
 }
 
-void CSprite::Draw(int elapsedTime, int x, int y)
+void CSprite::SetPosition(int x, int y)
 {
-	Animate(elapsedTime);
-
-	dmaCopy(m_pTiles + (m_frameNum * 256), m_gfxSub, 32 * 32);
-	
-	oamSet(&oamSub,						// sub graphics engine context
-		m_spriteType,					// oam index (0 to 127)
-		x, y,							// x and y pixel location of the sprite
-		0,								// priority, lower renders last (on top)
-		0,								// this is the palette index if multiple palettes or the alpha value if bmp sprite	
-		SpriteSize_32x32,
-		SpriteColorFormat_256Color,
-		m_gfxSub,						// pointer to the loaded graphics
-		-1,								// sprite rotation data  
-		false,							// double the size when rotating?
-		false,							// hide the sprite?
-		false,							// horizontal flip?
-		false,							// vertical flip?
-		false);							// mosaic?
-}
-
-void CSprite::SetFrameType(FrameType frameType)
-{
-	if(m_frameType != frameType)
-	{
-		m_frameType = frameType;
-		Animate(1000);
-	}
+	m_x = x;
+	m_y = y;
 }
 
 void CSprite::Animate(int elapsedTime)
@@ -90,5 +70,39 @@ void CSprite::Animate(int elapsedTime)
 		
 		if (!frameFound)
 			m_frameNum = 0;
+	}
+}
+
+void CSprite::Hide()
+{
+	oamSet(&oamSub, m_oamIndex,	 m_x, m_y,	0,	0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxSub, -1, false, true, false, false, false);
+}
+
+void CSprite::Draw()
+{
+	dmaCopy(m_pTiles + (m_frameNum * 256), m_gfxSub, 32 * 32);
+	
+	oamSet(&oamSub,						// sub graphics engine context
+		m_oamIndex,						// oam index (0 to 127)
+		m_x, m_y,						// x and y pixel location of the sprite
+		0,								// priority, lower renders last (on top)
+		0,								// this is the palette index if multiple palettes or the alpha value if bmp sprite	
+		SpriteSize_32x32,
+		SpriteColorFormat_256Color,
+		m_gfxSub,						// pointer to the loaded graphics
+		-1,								// sprite rotation data  
+		false,							// double the size when rotating?
+		false,							// hide the sprite?
+		false,							// horizontal flip?
+		false,							// vertical flip?
+		false);							// mosaic?
+}
+
+void CSprite::SetFrameType(FrameType frameType)
+{
+	if(m_frameType != frameType)
+	{
+		m_frameType = frameType;
+		Animate(1000);
 	}
 }
