@@ -39,10 +39,10 @@ void CSprite::Draw(int elapsedTime, int x, int y)
 		m_gfxSub,						// pointer to the loaded graphics
 		-1,								// sprite rotation data  
 		false,							// double the size when rotating?
-		false);							// hide the sprite?
-	
-	//oamSub.oamMemory[m_spriteType].hFlip = true;
-	//oamSub.oamMemory[m_spriteType].priority = OBJPRIORITY_3;
+		false,							// hide the sprite?
+		false,							// horizontal flip?
+		false,							// vertical flip?
+		false);							// mosaic?
 }
 
 void CSprite::SetFrameType(FrameType frameType)
