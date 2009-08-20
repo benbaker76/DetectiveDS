@@ -167,9 +167,15 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	{
 		if(m_characterArray[CHARACTER_SNIDE]->X() > 64)
 			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_LEFT);
-		else
-			m_mapArray[MAP_HALL1]->ScrollLeft();
+		
+		else if (m_mapArray[MAP_HALL1]->ScrollLeft());
+			
+			{
+			//m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_LEFT);
+			}
+		
 	}
+	
 	else if(keysHeld() & KEY_RIGHT)
 	{
 		if(m_characterArray[CHARACTER_SNIDE]->X() < 188)

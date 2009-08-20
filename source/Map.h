@@ -34,8 +34,8 @@ public:
 	~CMap();
 	
 	void Draw();
-	void ScrollLeft();
-	void ScrollRight();
+	bool ScrollLeft();
+	bool ScrollRight();
 
 private:
 	const u32* m_pTiles;

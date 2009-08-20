@@ -22,14 +22,18 @@ void CMap::Draw()
 	dmaCopy(m_pPalette, BG_PALETTE_SUB, m_paletteLen);
 }
 
-void CMap::ScrollLeft()
+bool CMap::ScrollLeft()
 {
+	if (m_x>0)
+	{
 	m_x-=2;
-	
+
 	BACKGROUND_SUB.scroll[2].x = m_x;
+	}
+	return 0;
 }
 
-void CMap::ScrollRight()
+bool CMap::ScrollRight()
 {
 	m_x+=2;
 	
