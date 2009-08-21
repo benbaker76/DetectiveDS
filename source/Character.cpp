@@ -45,25 +45,44 @@ void CCharacter::Draw()
 	m_pBodySprite->Draw();
 }
 
+void CCharacter::Face(DirectionType directionType)
+{
+	switch(directionType)
+	{
+		case DIRECTION_UP:
+			SetFrameType(FRAME_UP);
+			break;
+		case DIRECTION_DOWN:
+			SetFrameType(FRAME_DOWN);
+			break;
+		case DIRECTION_LEFT:
+			SetFrameType(FRAME_LEFT);
+			break;
+		case DIRECTION_RIGHT:
+			SetFrameType(FRAME_RIGHT);
+			break;
+	}
+}
+
 void CCharacter::Move(DirectionType directionType)
 {
 	switch(directionType)
 	{
 		case DIRECTION_UP:
 			SetFrameType(FRAME_UP);
-			SetPosition(m_x + 2, m_y - 1);
+			SetPosition(m_x + 1, m_y - 1);
 			break;
 		case DIRECTION_DOWN:
 			SetFrameType(FRAME_DOWN);
-			SetPosition(m_x - 2, m_y + 1);
+			SetPosition(m_x - 1, m_y + 1);
 			break;
 		case DIRECTION_LEFT:
 			SetFrameType(FRAME_LEFT);
-			SetPosition(m_x - 2, m_y);
+			SetPosition(m_x - 1, m_y);
 			break;
 		case DIRECTION_RIGHT:
 			SetFrameType(FRAME_RIGHT);
-			SetPosition(m_x + 2, m_y);
+			SetPosition(m_x + 1, m_y);
 			break;
 	}
 }

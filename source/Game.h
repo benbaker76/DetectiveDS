@@ -28,6 +28,8 @@ private:
 	CRoom* m_roomArray[MAX_ROOMS];
 	CItem* m_itemArray[MAX_ITEMS];
 	CEvent* m_eventArray[MAX_EVENTS];
+	
+	int m_bg2VScroll;
 };
 
 #endif

@@ -43,6 +43,7 @@ public:
 	void Animate(int elapsedTime);
 	void Hide();
 	void Draw();
+	void Face(DirectionType directionType);
 	void Move(DirectionType directionType);
 	
 	void SetFrameType(FrameType frameType);

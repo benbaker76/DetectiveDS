@@ -51,6 +51,15 @@
 #include "sprite_dingle_head.h"
 #include "sprite_dingle_body.h"
 
+#include "title_bg1.h"
+#include "title_bg2.h"
+#include "title_bg3.h"
+
+#include "font.h"
+#include "font_large.h"
+
+#include "icons.h"
+
 #define BG0_MAP_BASE				28
 #define BG0_MAP_BASE_SUB			28
 
