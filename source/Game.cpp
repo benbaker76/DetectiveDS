@@ -174,7 +174,15 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	}
 	else if(keysHeld() & KEY_LEFT)
 	{
-		if(m_characterArray[CHARACTER_SNIDE]->X() > 128)
+	// this modification enables the scroll to be correct regarless of height of player
+	// there is a problem introduced, follow me here mate..
+	// when the scroll no longer scrolls (ie. left edge) then the player must be able to move
+	// away from the 128 centre point and toward the left until colmap signals a collision.
+	// Then, moving right allows the player to return to the 128 possition and continue the
+	// scrolling.
+	// the opposite is true of moving right.
+	
+		if(m_characterArray[CHARACTER_SNIDE]->X() > (128-(m_characterArray[CHARACTER_SNIDE]->Y()-(112 - CHARACTER_HEIGHT))))
 			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_LEFT);
 		else
 		{
@@ -184,7 +192,7 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	}
 	else if(keysHeld() & KEY_RIGHT)
 	{
-		if(m_characterArray[CHARACTER_SNIDE]->X() < 128)
+		if(m_characterArray[CHARACTER_SNIDE]->X() < (128+(m_characterArray[CHARACTER_SNIDE]->Y()-(112 - CHARACTER_HEIGHT))))
 			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_RIGHT);
 		else
 		{
