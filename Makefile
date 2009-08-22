@@ -126,8 +126,9 @@ export LIBPATHS		:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 #---------------------------------------------------------------------------------
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
-	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile 
-	ndstool -c $(TARGET).nds -9 $(TARGET).arm9 $(NITRODIR) $(LOGO) $(ICON) "$(NAME);$(AUTHOR);$(VERSION)"
+	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+	ndstool -c $(TARGET).nds -9 $(TARGET).arm9 $(LOGO) $(ICON) "$(NAME);$(AUTHOR);$(VERSION)"
+#	ndstool -c $(TARGET).nds -9 $(TARGET).arm9 $(NITRODIR) $(LOGO) $(ICON) "$(NAME);$(AUTHOR);$(VERSION)"
 #	efs $(TARGET).nds
 
 #---------------------------------------------------------------------------------

@@ -5,6 +5,14 @@
 
 #define MAX_MAPS		18
 
+enum DirectionType
+{
+	DIRECTION_UP,
+	DIRECTION_DOWN,
+	DIRECTION_LEFT,
+	DIRECTION_RIGHT
+};
+
 enum MapType
 {
 	MAP_CELLAR,
@@ -34,8 +42,7 @@ public:
 	~CMap();
 	
 	void Draw();
-	void ScrollLeft();
-	void ScrollRight();
+	bool Scroll(DirectionType directionType);
 
 private:
 	const u32* m_pTiles;

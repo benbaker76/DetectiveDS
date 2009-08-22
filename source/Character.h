@@ -10,14 +10,6 @@
 
 #define HEAD_HEIGHT				21
 
-enum DirectionType
-{
-	DIRECTION_UP,
-	DIRECTION_DOWN,
-	DIRECTION_LEFT,
-	DIRECTION_RIGHT
-};
-
 enum CharacterType
 {
 	CHARACTER_SNIDE,

@@ -160,7 +160,7 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	
 	if(keysHeld() & KEY_UP)
 	{
-		if(m_characterArray[CHARACTER_SNIDE]->Y() > 72 - CHARACTER_HEIGHT)
+		if(m_characterArray[CHARACTER_SNIDE]->Y() > 76 - CHARACTER_HEIGHT)
 			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_UP);
 		else
 			m_characterArray[CHARACTER_SNIDE]->Face(DIRECTION_UP);
@@ -174,30 +174,36 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	}
 	else if(keysHeld() & KEY_LEFT)
 	{
-	// this modification enables the scroll to be correct regarless of height of player
-	// there is a problem introduced, follow me here mate..
-	// when the scroll no longer scrolls (ie. left edge) then the player must be able to move
-	// away from the 128 centre point and toward the left until colmap signals a collision.
-	// Then, moving right allows the player to return to the 128 possition and continue the
-	// scrolling.
-	// the opposite is true of moving right.
-	
-		if(m_characterArray[CHARACTER_SNIDE]->X() > (128-(m_characterArray[CHARACTER_SNIDE]->Y()-(112 - CHARACTER_HEIGHT))))
+		// Unfortunately this doesn't seem to work after I added back the "scroll to the edge" code from last night
+		// So we will have to come up with a new way of dealing with the angle
+		// Right now though I'm concentrating on getting the level to scroll properly
+		// Believe it or not it's a total pain in the arse reminiciant of the double screen
+		// vertical scrolling in Warhawk.
+		
+		//if(m_characterArray[CHARACTER_SNIDE]->X() > (128-(m_characterArray[CHARACTER_SNIDE]->Y()-(112 - CHARACTER_HEIGHT))))
+		
+		if(m_characterArray[CHARACTER_SNIDE]->X() > 128)
 			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_LEFT);
 		else
 		{
 			m_characterArray[CHARACTER_SNIDE]->Face(DIRECTION_LEFT);
-			m_mapArray[MAP_HALL1]->ScrollLeft();
+			
+			if(!m_mapArray[MAP_HALL1]->Scroll(DIRECTION_LEFT) && m_characterArray[CHARACTER_SNIDE]->X() > 0)
+				m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_LEFT);
 		}
 	}
 	else if(keysHeld() & KEY_RIGHT)
 	{
-		if(m_characterArray[CHARACTER_SNIDE]->X() < (128+(m_characterArray[CHARACTER_SNIDE]->Y()-(112 - CHARACTER_HEIGHT))))
+		//if(m_characterArray[CHARACTER_SNIDE]->X() < (128+(m_characterArray[CHARACTER_SNIDE]->Y()-(112 - CHARACTER_HEIGHT))))
+		
+		if(m_characterArray[CHARACTER_SNIDE]->X() < 128)
 			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_RIGHT);
 		else
 		{
 			m_characterArray[CHARACTER_SNIDE]->Face(DIRECTION_RIGHT);
-			m_mapArray[MAP_HALL1]->ScrollRight();
+			
+			if(!m_mapArray[MAP_HALL1]->Scroll(DIRECTION_RIGHT) && m_characterArray[CHARACTER_SNIDE]->X() < 256 - CHARACTER_WIDTH)
+				m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_RIGHT);
 		}
 	}
 	else if(keysHeld() & KEY_A)

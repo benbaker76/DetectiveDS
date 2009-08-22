@@ -20,22 +20,35 @@ CMap::~CMap()
 void CMap::Draw()
 {
 	dmaCopy(m_pTiles, BG_TILE_RAM_SUB(BG2_TILE_BASE_SUB), m_tilesLen);
-	dmaCopy(m_pMap, BG_MAP_RAM_SUB(BG2_MAP_BASE_SUB), m_mapLen);
+	dmaCopy(m_pMap, BG_MAP_RAM_SUB(BG2_MAP_BASE_SUB), 4096);
 	dmaCopy(m_pPalette, BG_PALETTE_SUB, m_paletteLen);
 }
 
-void CMap::ScrollLeft()
+bool CMap::Scroll(DirectionType directionType)
 {
-	if(m_x > 0)
-		m_x--;
-	
-	BACKGROUND_SUB.scroll[2].x = m_x;
+	switch(directionType)
+	{
+		case DIRECTION_LEFT:
+			if(m_x > 0)
+			{
+				BACKGROUND_SUB.scroll[2].x = --m_x;
+				
+				return true;
+			}
+			break;
+		case DIRECTION_RIGHT:
+			if(m_x < m_width + 256)
+			{				
+				BACKGROUND_SUB.scroll[2].x = ++m_x;
+		
+				return true;
+			}
+			break;
+		case DIRECTION_UP:
+		case DIRECTION_DOWN:
+			break;
+	}
+
+	return false;
 }
 
-void CMap::ScrollRight()
-{
-	if(m_x < m_width + 256)
-		m_x++;
-	
-	BACKGROUND_SUB.scroll[2].x = m_x;
-}
