@@ -9,5 +9,7 @@ extern const char* g_doctorText[];
 extern const char* g_majorText[];
 extern const char* g_dingleText[];
 
+extern const int g_largeTextMap[];
+
 void DrawText(const char* string, int x, int y, bool sub);
 void DrawTextLarge(const char* string, int x, int y, bool sub);

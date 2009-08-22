@@ -124,8 +124,8 @@ void CGame::Initialize()
 	
 	m_mapArray[MAP_HALL1]->Draw();
 	
-	m_characterArray[CHARACTER_SNIDE]->SetPosition(128, 64);
-	m_characterArray[CHARACTER_GABRIEL]->SetPosition(64, 64);
+	m_characterArray[CHARACTER_SNIDE]->SetPosition(128, ROOM_VERT_CENTRE - CHARACTER_HEIGHT);
+	m_characterArray[CHARACTER_GABRIEL]->SetPosition(64, ROOM_VERT_CENTRE - CHARACTER_HEIGHT);
 	
 	m_characterArray[CHARACTER_GABRIEL]->SetFrameType(FRAME_SPEAK);
 }
@@ -160,14 +160,14 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	
 	if(keysHeld() & KEY_UP)
 	{
-		if(m_characterArray[CHARACTER_SNIDE]->Y() > 76 - CHARACTER_HEIGHT)
+		if(m_characterArray[CHARACTER_SNIDE]->Y() > ROOM_FLOOR_TOP - CHARACTER_HEIGHT)
 			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_UP);
 		else
 			m_characterArray[CHARACTER_SNIDE]->Face(DIRECTION_UP);
 	}
 	else if(keysHeld() & KEY_DOWN)
 	{
-		if(m_characterArray[CHARACTER_SNIDE]->Y() < 112 - CHARACTER_HEIGHT)
+		if(m_characterArray[CHARACTER_SNIDE]->Y() < ROOM_FLOOR_BOTTOM - CHARACTER_HEIGHT)
 			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_DOWN);
 		else
 			m_characterArray[CHARACTER_SNIDE]->Face(DIRECTION_DOWN);
@@ -182,7 +182,7 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 		
 		//if(m_characterArray[CHARACTER_SNIDE]->X() > (128-(m_characterArray[CHARACTER_SNIDE]->Y()-(112 - CHARACTER_HEIGHT))))
 		
-		if(m_characterArray[CHARACTER_SNIDE]->X() > 128)
+		if(m_characterArray[CHARACTER_SNIDE]->X() > ROOM_HORIZ_CENTRE)
 			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_LEFT);
 		else
 		{
@@ -196,7 +196,7 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	{
 		//if(m_characterArray[CHARACTER_SNIDE]->X() < (128+(m_characterArray[CHARACTER_SNIDE]->Y()-(112 - CHARACTER_HEIGHT))))
 		
-		if(m_characterArray[CHARACTER_SNIDE]->X() < 128)
+		if(m_characterArray[CHARACTER_SNIDE]->X() < ROOM_HORIZ_CENTRE)
 			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_RIGHT);
 		else
 		{

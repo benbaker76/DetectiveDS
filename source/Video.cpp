@@ -56,7 +56,7 @@ void CVideo::Initialize()
 	DrawText("INTRODUCING", 4, 18, true);
 	DrawText("THE CAST..", 5, 19, true);
 	
-	DrawTextLarge("THIS IS A TEST!!!", 0, 14, true);
+	DrawTextLarge("\"GRENADE!\" SHOUTS THE MAJOR.", 0, 14, true);
 	
 	oamInit(&oamMain, SpriteMapping_1D_32, false);
 	oamInit(&oamSub, SpriteMapping_1D_32, false);
