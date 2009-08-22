@@ -23,6 +23,8 @@ void CMap::Draw()
 	dmaCopy(m_pTiles, BG_TILE_RAM_SUB(BG2_TILE_BASE_SUB), m_tilesLen);
 	dmaCopy(m_pMap, BG_MAP_RAM_SUB(BG2_MAP_BASE_SUB), 4096);
 	dmaCopy(m_pPalette, BG_PALETTE_SUB, m_paletteLen);
+	
+	BG_PALETTE_SUB[0] = 0;
 }
 
 bool CMap::Scroll(DirectionType directionType)

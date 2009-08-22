@@ -155,7 +155,7 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 		}
 	}
 	
-	m_bg2VScroll++;
+	m_bg2VScroll--;
 	BACKGROUND.scroll[2].y = m_bg2VScroll;
 	
 	if(keysHeld() & KEY_UP)
