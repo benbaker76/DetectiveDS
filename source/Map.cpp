@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "Map.h"
 #include "TDG.h"
 
@@ -31,15 +32,21 @@ bool CMap::Scroll(DirectionType directionType)
 		case DIRECTION_LEFT:
 			if(m_x > 0)
 			{
-				BACKGROUND_SUB.scroll[2].x = --m_x;
+				BACKGROUND_SUB.scroll[2].x = ((--m_x) & 0xFF);
+				
+				if((m_x & 0xFF) == 255)
+					dmaCopy(m_pMap + ((m_x / 256) * 1024), BG_MAP_RAM_SUB(BG2_MAP_BASE_SUB), 4096);
 				
 				return true;
 			}
 			break;
 		case DIRECTION_RIGHT:
-			if(m_x < m_width + 256)
+			if(m_x < m_width - 256)
 			{				
-				BACKGROUND_SUB.scroll[2].x = ++m_x;
+				BACKGROUND_SUB.scroll[2].x = ((++m_x) & 0xFF);
+						
+				if((m_x & 0xFF) == 0)				
+					dmaCopy(m_pMap + ((m_x / 256) * 1024), BG_MAP_RAM_SUB(BG2_MAP_BASE_SUB), 4096);
 		
 				return true;
 			}
