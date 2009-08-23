@@ -2,6 +2,10 @@
 #define __CGAME_H__
 
 #include "TDG.h"
+#include <maxmod9.h>
+
+#include "soundbank_bin.h"
+#include "soundbank.h"
 
 enum GameType
 {

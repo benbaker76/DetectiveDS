@@ -2,6 +2,10 @@
 #include <stdio.h>
 #include "TDG.h"
 #include "Game.h"
+#include <maxmod9.h>
+
+#include "soundbank_bin.h"
+#include "soundbank.h"
 
 CGame m_game(GAMETYPE_NORMAL);
 CTimer m_timer(9, 10, 0, 0);
@@ -28,7 +32,7 @@ void InterruptHandlerTimer2()
 
 int main(void)
 {
-	irqInit();
+	//irqInit();
 
 	irqSet(IRQ_VBLANK, InterruptHandlerVBlank);
 	irqSet(IRQ_HBLANK, InterruptHandlerHBlank);
@@ -36,6 +40,12 @@ int main(void)
 	irqSet(IRQ_TIMER2, InterruptHandlerTimer2);
 	
 	irqEnable(IRQ_VBLANK | IRQ_HBLANK | IRQ_TIMER1 | IRQ_TIMER2);
+	
+	mmInitDefaultMem((mm_addr)soundbank_bin);
+	mmLoad(MOD_KEYG_SUBTONAL);
+	mmLoadEffect(SFX_AMBULANCE);
+	mmLoadEffect(SFX_BOOM);
+	mmStart(MOD_KEYG_SUBTONAL, MM_PLAY_LOOP);
 	
 	consoleDebugInit(DebugDevice_NOCASH);
 	

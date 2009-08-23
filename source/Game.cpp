@@ -133,12 +133,12 @@ void CGame::Initialize()
 		m_roomArray[ROOM_OUTSIDE1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE1], m_roomArray[ROOM_HALL1]));
 		m_roomArray[ROOM_LANDING]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_LANDING], m_roomArray[ROOM_HALL1]));
 		
-		InitializeDoors();
-		
 		m_eventArray[EVENT_SHOW_ROOM] = new CEvent(EVENT_SHOW_ROOM, new CTime(9, 10, 0, 0));
 		m_eventArray[EVENT_GET_SHOT] = new CEvent(EVENT_SHOW_ROOM, new CTime(12, 0, 0, 0));
 		break;
 	}
+	
+	InitializeDoors();
 	
 	m_currentRoom = m_roomArray[ROOM_HALL1];
 	m_currentRoom->Initialize(0);
@@ -253,6 +253,44 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	{
 		m_snide->SetFrameType(FRAME_NONE);
 	}
+	
+	/* mm_sound_effect ambulance = {
+		{ SFX_AMBULANCE } ,			// id
+		(int)(1.0f * (1<<10)),	// rate
+		0,		// handle
+		255,	// volume
+		0,		// panning
+	};
+
+	mm_sound_effect boom = {
+		{ SFX_BOOM } ,			// id
+		(int)(1.0f * (1<<10)),	// rate
+		0,		// handle
+		255,	// volume
+		255,	// panning
+	};
+	
+	mm_sfxhand amb = 0;
+	
+	int keys_pressed, keys_released;
+
+	keys_pressed = keysDown();
+	keys_released = keysUp();
+
+	// Play looping ambulance sound effect out of left speaker if A button is pressed
+	if ( keys_pressed & KEY_A ) {
+		amb = mmEffectEx(&ambulance);
+	}
+
+	// stop ambulance sound when A button is released
+	if ( keys_released & KEY_A ) {
+		mmEffectCancel(amb);
+	}
+
+	// Play explosion sound effect out of right speaker if B button is pressed
+	if ( keys_pressed & KEY_B ) {
+		mmEffectEx(&boom);
+	} */
 	
 	m_snide->Animate(elapsedTime);
 	m_characterArray[CHARACTER_GABRIEL]->Animate(elapsedTime);
