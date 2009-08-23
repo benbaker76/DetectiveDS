@@ -7,7 +7,8 @@
 
 enum EventType
 {
-	EVENT_SHOW_ROOM
+	EVENT_SHOW_ROOM,
+	EVENT_GET_SHOT
 };
 
 class CEvent

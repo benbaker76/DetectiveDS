@@ -1,3 +1,5 @@
+#include "TDG.h"
+
 extern const int g_snideHeadFrames[];
 extern const int g_snideBodyFrames[];
 extern const int g_reverendHeadFrames[];

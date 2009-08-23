@@ -41,8 +41,17 @@ public:
 	CMap(int width, int height, const u32* pTiles, int tilesLen, const u16* pMap, int mapLen, const u16* pPalette, int paletteLen);
 	~CMap();
 	
+	void Initialize(int x);
 	void Draw();
 	bool Scroll(DirectionType directionType);
+	
+	void SetX(int x) { m_x = x; }
+	void SetY(int y) { m_y = y; }
+	
+	int X() const { return m_x; }
+	int Y() const { return m_y; }
+	int Width() const { return m_width; }
+	int Height() const { return m_height; }
 
 private:
 	const u32* m_pTiles;

@@ -1,13 +1,15 @@
 #ifndef __TDG_H__
 #define __TDG_H__
 
+#include "ColMap.h"
+#include "Door.h"
 #include "Globals.h"
 #include "Map.h"
+#include "Room.h"
 #include "Sprite.h"
 #include "Video.h"
 #include "Character.h"
 #include "Item.h"
-#include "Room.h"
 #include "Timer.h"
 #include "Event.h"
 

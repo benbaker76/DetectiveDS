@@ -17,6 +17,7 @@ public:
 	void Initialize();
 	void Update(int elapsedTime, CTime* pTime);
 	void SortSprites();
+	void InitializeDoors();
 
 private:
 	GameType m_gameType;
@@ -29,7 +30,10 @@ private:
 	CItem* m_itemArray[MAX_ITEMS];
 	CEvent* m_eventArray[MAX_EVENTS];
 	
-	int m_bg2VScroll;
+	CRoom* m_currentRoom;
+	CCharacter* m_snide;
+	
+	int m_bg2MainVScroll;
 };
 
 #endif

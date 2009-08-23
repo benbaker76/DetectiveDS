@@ -4,6 +4,7 @@
 #include "TDG.h"
 
 #define MAX_ROOMS			30
+#define MAX_DOORS			10
 
 #define ROOM_FLOOR_TOP		144
 #define ROOM_FLOOR_BOTTOM	184
@@ -44,17 +45,37 @@ enum RoomType
 	ROOM_LIBRARY
 };
 
+class CDoor;
+
 class CRoom
 {
 public:
-	CRoom(RoomType roomType, CMap* pMap);
+	CRoom(RoomType roomType, CMap* pMap, const unsigned char* colMap);
 	~CRoom();
 	
-	CMap* pMap() const { return m_pMap; }
+	void Initialize(int x);
+	void Draw();
+	bool Scroll(DirectionType directionType);
+	
+	void SetDoor(int doorType, CDoor* pDoor) { m_doorArray[doorType] = pDoor; }
+	CDoor* GetDoor(int doorType) const { return m_doorArray[doorType]; }
+	
+	void SetX(int x) { m_pMap->SetX(x); }
+	void SetY(int y) { m_pMap->SetY(y); }
+
+	CMap* pMap() const { return m_pMap; }	
+	int X() const { return m_pMap->X(); }
+	int Y() const { return m_pMap->Y(); }
+	int Width() const { return m_pMap->Width(); }
+	int Height() const { return m_pMap->Height(); }
+	u8 ColMap(int x, int y) const { return (m_colMap == NULL ? 0 : *(m_colMap + x + y * (m_pMap->Width() / 8))); }
 
 private:
 	RoomType m_roomType;
 	CMap* m_pMap;
+	const u8* m_colMap;
+	
+	CDoor* m_doorArray[MAX_DOORS];
 };
 
 #endif

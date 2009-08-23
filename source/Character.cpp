@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "Character.h"
 
 CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite)
@@ -85,6 +86,40 @@ void CCharacter::Move(DirectionType directionType)
 			SetPosition(m_x + 1, m_y);
 			break;
 	}
+}
+
+CollisionType CCharacter::CheckCollision(DirectionType directionType, CRoom* pRoom)
+{
+	switch(directionType)
+	{
+		case DIRECTION_UP:
+			for(int i=0; i<CHARACTER_WIDTH / 8; i++)
+			{
+				int x = ((pRoom->X() + m_x) / 8) + i;
+				int y = ((pRoom->Y() + m_y + CHARACTER_HEIGHT) / 8) - 1;
+				CollisionType collisionType = (CollisionType) pRoom->ColMap(x, y);
+				
+				if(collisionType != COL_NOTHING_HERE)
+					return collisionType;
+			}
+			break;
+		case DIRECTION_DOWN:
+			for(int i=0; i<CHARACTER_WIDTH / 8; i++)
+			{
+				int x = ((pRoom->X() + m_x) / 8) + i;
+				int y = ((pRoom->Y() + m_y + CHARACTER_HEIGHT) / 8);
+				CollisionType collisionType = (CollisionType) pRoom->ColMap(x, y);
+				
+				if(collisionType != COL_NOTHING_HERE)
+					return collisionType;
+			}
+			break;
+		case DIRECTION_LEFT:
+		case DIRECTION_RIGHT:
+			break;
+	}
+	
+	return COL_NOTHING_HERE;
 }
 
 void CCharacter::SetFrameType(FrameType frameType)

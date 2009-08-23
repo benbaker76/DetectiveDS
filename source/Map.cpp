@@ -18,13 +18,25 @@ CMap::~CMap()
 {
 }
 
-void CMap::Draw()
+void CMap::Initialize(int x)
 {
+	m_x = x;
+	
 	dmaCopy(m_pTiles, BG_TILE_RAM_SUB(BG2_TILE_BASE_SUB), m_tilesLen);
-	dmaCopy(m_pMap, BG_MAP_RAM_SUB(BG2_MAP_BASE_SUB), 4096);
 	dmaCopy(m_pPalette, BG_PALETTE_SUB, m_paletteLen);
 	
 	BG_PALETTE_SUB[0] = 0;
+	BACKGROUND_SUB.scroll[2].x = (m_x & 0xFF);
+	
+	Draw();
+}
+
+void CMap::Draw()
+{
+	if((m_x & 0xFF) == 255)
+		dmaCopy(m_pMap + ((m_x / 256) * 1024), BG_MAP_RAM_SUB(BG2_MAP_BASE_SUB), 4096);
+	else				
+		dmaCopy(m_pMap + ((m_x / 256) * 1024), BG_MAP_RAM_SUB(BG2_MAP_BASE_SUB), 4096);
 }
 
 bool CMap::Scroll(DirectionType directionType)
@@ -46,7 +58,7 @@ bool CMap::Scroll(DirectionType directionType)
 			if(m_x < m_width - 256)
 			{				
 				BACKGROUND_SUB.scroll[2].x = ((++m_x) & 0xFF);
-						
+				
 				if((m_x & 0xFF) == 0)				
 					dmaCopy(m_pMap + ((m_x / 256) * 1024), BG_MAP_RAM_SUB(BG2_MAP_BASE_SUB), 4096);
 		

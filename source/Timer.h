@@ -24,6 +24,7 @@ class CTimer
 {
 public:
 	CTimer();
+	CTimer(int hours, int minutes, int seconds, int milliSeconds);
 	~CTimer();
 	
 	void Start();

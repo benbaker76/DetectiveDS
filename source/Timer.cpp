@@ -7,6 +7,11 @@ CTimer::CTimer()
 	m_pCurrentTime = new CTime(0, 0, 0, 0);
 }
 
+CTimer::CTimer(int hours, int minutes, int seconds, int milliSeconds)
+{
+	m_pCurrentTime = new CTime(hours, minutes, seconds, milliSeconds);
+}
+
 CTimer::~CTimer()
 {
 }

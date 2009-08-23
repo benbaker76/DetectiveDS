@@ -24,6 +24,8 @@ enum CharacterType
 	CHARACTER_DINGLE
 };
 
+class CRoom;
+
 class CCharacter
 {
 public:
@@ -37,8 +39,12 @@ public:
 	void Draw();
 	void Face(DirectionType directionType);
 	void Move(DirectionType directionType);
+	CollisionType CheckCollision(DirectionType directionType, CRoom* pRoom);
 	
 	void SetFrameType(FrameType frameType);
+	
+	void SetX(int x) { m_x = x; SetPosition(m_x, m_y); }
+	void SetY(int y) { m_y = y; SetPosition(m_x, m_y); }
 	
 	int X() const { return m_x; }
 	int Y() const { return m_y; }

@@ -68,65 +68,85 @@ void CGame::Initialize()
 		m_characterArray[CHARACTER_MAJOR] = new CCharacter(CHARACTER_MAJOR, m_spriteArray[SPRITE_HEAD_MAJOR], m_spriteArray[SPRITE_BODY_MAJOR]);
 		m_characterArray[CHARACTER_DINGLE] = new CCharacter(CHARACTER_DINGLE, m_spriteArray[SPRITE_HEAD_DINGLE], m_spriteArray[SPRITE_BODY_DINGLE]);
 		
-		m_mapArray[MAP_CELLAR] = new CMap(400, 120, map_cellarTiles, map_cellarTilesLen, map_cellarMap, map_cellarMapLen, map_cellarPal, map_cellarPalLen);
-		m_mapArray[MAP_CLOCK] = new CMap(304, 120, map_clockTiles, map_clockTilesLen, map_clockMap, map_clockMapLen, map_clockPal, map_clockPalLen);
-		m_mapArray[MAP_DRAWING] = new CMap(640, 120, map_drawingTiles, map_drawingTilesLen, map_drawingMap, map_drawingMapLen, map_drawingPal, map_drawingPalLen);
-		m_mapArray[MAP_HALL1] = new CMap(832, 120, map_hall1Tiles, map_hall1TilesLen, map_hall1Map, map_hall1MapLen, map_hall1Pal, map_hall1PalLen);
-		m_mapArray[MAP_HALL2] = new CMap(832, 120, map_hall2Tiles, map_hall2TilesLen, map_hall2Map, map_hall2MapLen, map_hall2Pal, map_hall2PalLen);
-		m_mapArray[MAP_HALL3] = new CMap(832, 120, map_hall3Tiles, map_hall3TilesLen, map_hall3Map, map_hall3MapLen, map_hall3Pal, map_hall3PalLen);
-		m_mapArray[MAP_HALL4] = new CMap(544, 120, map_hall4Tiles, map_hall4TilesLen, map_hall4Map, map_hall4MapLen, map_hall4Pal, map_hall4PalLen);
-		m_mapArray[MAP_KITCHEN] = new CMap(536, 120, map_kitchenTiles, map_kitchenTilesLen, map_kitchenMap, map_kitchenMapLen, map_kitchenPal, map_kitchenPalLen);
-		m_mapArray[MAP_LANDING] = new CMap(400, 120, map_landingTiles, map_landingTilesLen, map_landingMap, map_landingMapLen, map_landingPal, map_landingPalLen);
-		m_mapArray[MAP_LIBRARY] = new CMap(416, 120, map_libraryTiles, map_libraryTilesLen, map_libraryMap, map_libraryMapLen, map_libraryPal, map_libraryPalLen);
-		m_mapArray[MAP_OUTSIDE1] = new CMap(400, 120, map_outside1Tiles, map_outside1TilesLen, map_outside1Map, map_outside1MapLen, map_outside1Pal, map_outside1PalLen);
-		m_mapArray[MAP_OUTSIDE2] = new CMap(544, 120, map_outside2Tiles, map_outside2TilesLen, map_outside2Map, map_outside2MapLen, map_outside2Pal, map_outside2PalLen);
-		m_mapArray[MAP_PASSAGE1] = new CMap(240, 120, map_passage1Tiles, map_passage1TilesLen, map_passage1Map, map_passage1MapLen, map_passage1Pal, map_passage1PalLen);
-		m_mapArray[MAP_PASSAGE2] = new CMap(240, 120, map_passage2Tiles, map_passage2TilesLen, map_passage2Map, map_passage2MapLen, map_passage2Pal, map_passage2PalLen);
-		m_mapArray[MAP_ROOM1] = new CMap(400, 120, map_room1Tiles, map_room1TilesLen, map_room1Map, map_room1MapLen, map_room1Pal, map_room1PalLen);
-		m_mapArray[MAP_ROOM2] = new CMap(344, 120, map_room2Tiles, map_room2TilesLen, map_room2Map, map_room2MapLen, map_room2Pal, map_room2PalLen);
-		m_mapArray[MAP_STAIRS] = new CMap(336, 120, map_stairsTiles, map_stairsTilesLen, map_stairsMap, map_stairsMapLen, map_stairsPal, map_stairsPalLen);
-		m_mapArray[MAP_STUDY] = new CMap(320, 120, map_studyTiles, map_studyTilesLen, map_studyMap, map_studyMapLen, map_studyPal, map_studyPalLen);
+		m_mapArray[MAP_CELLAR] = new CMap(400, 192, map_cellarTiles, map_cellarTilesLen, map_cellarMap, map_cellarMapLen, map_cellarPal, map_cellarPalLen);
+		m_mapArray[MAP_CLOCK] = new CMap(304, 192, map_clockTiles, map_clockTilesLen, map_clockMap, map_clockMapLen, map_clockPal, map_clockPalLen);
+		m_mapArray[MAP_DRAWING] = new CMap(640, 192, map_drawingTiles, map_drawingTilesLen, map_drawingMap, map_drawingMapLen, map_drawingPal, map_drawingPalLen);
+		m_mapArray[MAP_HALL1] = new CMap(832, 192, map_hall1Tiles, map_hall1TilesLen, map_hall1Map, map_hall1MapLen, map_hall1Pal, map_hall1PalLen);
+		m_mapArray[MAP_HALL2] = new CMap(832, 192, map_hall2Tiles, map_hall2TilesLen, map_hall2Map, map_hall2MapLen, map_hall2Pal, map_hall2PalLen);
+		m_mapArray[MAP_HALL3] = new CMap(832, 192, map_hall3Tiles, map_hall3TilesLen, map_hall3Map, map_hall3MapLen, map_hall3Pal, map_hall3PalLen);
+		m_mapArray[MAP_HALL4] = new CMap(544, 192, map_hall4Tiles, map_hall4TilesLen, map_hall4Map, map_hall4MapLen, map_hall4Pal, map_hall4PalLen);
+		m_mapArray[MAP_KITCHEN] = new CMap(536, 192, map_kitchenTiles, map_kitchenTilesLen, map_kitchenMap, map_kitchenMapLen, map_kitchenPal, map_kitchenPalLen);
+		m_mapArray[MAP_LANDING] = new CMap(400, 192, map_landingTiles, map_landingTilesLen, map_landingMap, map_landingMapLen, map_landingPal, map_landingPalLen);
+		m_mapArray[MAP_LIBRARY] = new CMap(416, 192, map_libraryTiles, map_libraryTilesLen, map_libraryMap, map_libraryMapLen, map_libraryPal, map_libraryPalLen);
+		m_mapArray[MAP_OUTSIDE1] = new CMap(400, 192, map_outside1Tiles, map_outside1TilesLen, map_outside1Map, map_outside1MapLen, map_outside1Pal, map_outside1PalLen);
+		m_mapArray[MAP_OUTSIDE2] = new CMap(544, 192, map_outside2Tiles, map_outside2TilesLen, map_outside2Map, map_outside2MapLen, map_outside2Pal, map_outside2PalLen);
+		m_mapArray[MAP_PASSAGE1] = new CMap(240, 192, map_passage1Tiles, map_passage1TilesLen, map_passage1Map, map_passage1MapLen, map_passage1Pal, map_passage1PalLen);
+		m_mapArray[MAP_PASSAGE2] = new CMap(240, 192, map_passage2Tiles, map_passage2TilesLen, map_passage2Map, map_passage2MapLen, map_passage2Pal, map_passage2PalLen);
+		m_mapArray[MAP_ROOM1] = new CMap(400, 192, map_room1Tiles, map_room1TilesLen, map_room1Map, map_room1MapLen, map_room1Pal, map_room1PalLen);
+		m_mapArray[MAP_ROOM2] = new CMap(344, 192, map_room2Tiles, map_room2TilesLen, map_room2Map, map_room2MapLen, map_room2Pal, map_room2PalLen);
+		m_mapArray[MAP_STAIRS] = new CMap(336, 192, map_stairsTiles, map_stairsTilesLen, map_stairsMap, map_stairsMapLen, map_stairsPal, map_stairsPalLen);
+		m_mapArray[MAP_STUDY] = new CMap(320, 192, map_studyTiles, map_studyTilesLen, map_studyMap, map_studyMapLen, map_studyPal, map_studyPalLen);
 		
-		m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, m_mapArray[MAP_ROOM1]);
-		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, m_mapArray[MAP_ROOM1]);
-		m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, m_mapArray[MAP_ROOM1]);
-		m_roomArray[ROOM_COOK] = new CRoom(ROOM_COOK, m_mapArray[MAP_ROOM1]);
-		m_roomArray[ROOM_GABRIEL] = new CRoom(ROOM_GABRIEL, m_mapArray[MAP_ROOM1]);
-		m_roomArray[ROOM_CYNTHIA] = new CRoom(ROOM_CYNTHIA, m_mapArray[MAP_ROOM1]);
-		m_roomArray[ROOM_PROFESSOR] = new CRoom(ROOM_PROFESSOR, m_mapArray[MAP_ROOM1]);
-		m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, m_mapArray[MAP_ROOM1]);		
-		m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, m_mapArray[MAP_ROOM1]);
-		m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, m_mapArray[MAP_ROOM1]);
-		m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, m_mapArray[MAP_OUTSIDE1]);
-		m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, m_mapArray[MAP_OUTSIDE2]);
-		m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, m_mapArray[MAP_OUTSIDE1]);
-		m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, m_mapArray[MAP_OUTSIDE2]);
-		m_roomArray[ROOM_OUTSIDE5] = new CRoom(ROOM_OUTSIDE5, m_mapArray[MAP_OUTSIDE1]);
-		m_roomArray[ROOM_PASSAGE1] = new CRoom(ROOM_PASSAGE1, m_mapArray[MAP_PASSAGE1]);
-		m_roomArray[ROOM_PASSAGE2] = new CRoom(ROOM_PASSAGE2, m_mapArray[MAP_PASSAGE2]);
-		m_roomArray[ROOM_PASSAGE3] = new CRoom(ROOM_PASSAGE3, m_mapArray[MAP_PASSAGE1]);
-		m_roomArray[ROOM_HALL1] = new CRoom(ROOM_HALL1, m_mapArray[MAP_HALL1]);
-		m_roomArray[ROOM_HALL2] = new CRoom(ROOM_HALL1, m_mapArray[MAP_HALL2]);
-		m_roomArray[ROOM_HALL3] = new CRoom(ROOM_HALL1, m_mapArray[MAP_HALL3]);
-		m_roomArray[ROOM_HALL4] = new CRoom(ROOM_HALL1, m_mapArray[MAP_HALL4]);
-		m_roomArray[ROOM_LANDING] = new CRoom(ROOM_LANDING, m_mapArray[MAP_LANDING]);
-		m_roomArray[ROOM_KITCHEN] = new CRoom(ROOM_KITCHEN, m_mapArray[MAP_KITCHEN]);
-		m_roomArray[ROOM_STAIRS] = new CRoom(ROOM_STAIRS, m_mapArray[MAP_STAIRS]);
-		m_roomArray[ROOM_STUDY] = new CRoom(ROOM_STUDY, m_mapArray[MAP_STUDY]);
-		m_roomArray[ROOM_CLOCK] = new CRoom(ROOM_CLOCK, m_mapArray[MAP_CLOCK]);
-		m_roomArray[ROOM_CELLAR] = new CRoom(ROOM_CELLAR, m_mapArray[MAP_CELLAR]);
-		m_roomArray[ROOM_DRAWING] = new CRoom(ROOM_DRAWING, m_mapArray[MAP_DRAWING]);
-		m_roomArray[ROOM_LIBRARY] = new CRoom(ROOM_LIBRARY, m_mapArray[MAP_LIBRARY]);
+		m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, m_mapArray[MAP_ROOM1], col_room1);
+		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, m_mapArray[MAP_ROOM1], col_room1);
+		m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, m_mapArray[MAP_ROOM1], col_room1);
+		m_roomArray[ROOM_COOK] = new CRoom(ROOM_COOK, m_mapArray[MAP_ROOM1], col_room1);
+		m_roomArray[ROOM_GABRIEL] = new CRoom(ROOM_GABRIEL, m_mapArray[MAP_ROOM1], col_room1);
+		m_roomArray[ROOM_CYNTHIA] = new CRoom(ROOM_CYNTHIA, m_mapArray[MAP_ROOM1], col_room1);
+		m_roomArray[ROOM_PROFESSOR] = new CRoom(ROOM_PROFESSOR, m_mapArray[MAP_ROOM1], col_room1);
+		m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, m_mapArray[MAP_ROOM1], col_room1);		
+		m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, m_mapArray[MAP_ROOM1], col_room1);
+		m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, m_mapArray[MAP_ROOM1], col_room1);
+		m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, m_mapArray[MAP_OUTSIDE1], NULL);
+		m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, m_mapArray[MAP_OUTSIDE2], NULL);
+		m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, m_mapArray[MAP_OUTSIDE1], NULL);
+		m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, m_mapArray[MAP_OUTSIDE2], NULL);
+		m_roomArray[ROOM_OUTSIDE5] = new CRoom(ROOM_OUTSIDE5, m_mapArray[MAP_OUTSIDE1], NULL);
+		m_roomArray[ROOM_PASSAGE1] = new CRoom(ROOM_PASSAGE1, m_mapArray[MAP_PASSAGE1], NULL);
+		m_roomArray[ROOM_PASSAGE2] = new CRoom(ROOM_PASSAGE2, m_mapArray[MAP_PASSAGE2], NULL);
+		m_roomArray[ROOM_PASSAGE3] = new CRoom(ROOM_PASSAGE3, m_mapArray[MAP_PASSAGE1], NULL);
+		m_roomArray[ROOM_HALL1] = new CRoom(ROOM_HALL1, m_mapArray[MAP_HALL1], col_hall1);
+		m_roomArray[ROOM_HALL2] = new CRoom(ROOM_HALL2, m_mapArray[MAP_HALL2], NULL);
+		m_roomArray[ROOM_HALL3] = new CRoom(ROOM_HALL3, m_mapArray[MAP_HALL3], NULL);
+		m_roomArray[ROOM_HALL4] = new CRoom(ROOM_HALL4, m_mapArray[MAP_HALL4], NULL);
+		m_roomArray[ROOM_LANDING] = new CRoom(ROOM_LANDING, m_mapArray[MAP_LANDING], NULL);
+		m_roomArray[ROOM_KITCHEN] = new CRoom(ROOM_KITCHEN, m_mapArray[MAP_KITCHEN], NULL);
+		m_roomArray[ROOM_STAIRS] = new CRoom(ROOM_STAIRS, m_mapArray[MAP_STAIRS], NULL);
+		m_roomArray[ROOM_STUDY] = new CRoom(ROOM_STUDY, m_mapArray[MAP_STUDY], NULL);
+		m_roomArray[ROOM_CLOCK] = new CRoom(ROOM_CLOCK, m_mapArray[MAP_CLOCK], NULL);
+		m_roomArray[ROOM_CELLAR] = new CRoom(ROOM_CELLAR, m_mapArray[MAP_CELLAR], NULL);
+		m_roomArray[ROOM_DRAWING] = new CRoom(ROOM_DRAWING, m_mapArray[MAP_DRAWING], NULL);
+		m_roomArray[ROOM_LIBRARY] = new CRoom(ROOM_LIBRARY, m_mapArray[MAP_LIBRARY], NULL);
 		
-		m_eventArray[EVENT_SHOW_ROOM] = new CEvent(EVENT_SHOW_ROOM, new CTime(0, 0, 5, 0));
+		m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_REVEREND]));
+		m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_CYNTHIA]));
+		m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_DOCTOR]));
+		m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR4, new CDoor(DOOR_DOOR4, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_DINGLE]));
+		m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR5, new CDoor(DOOR_DOOR5, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_OUTSIDE1]));
+		m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR6, new CDoor(DOOR_DOOR6, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_LANDING]));
+		m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR7, new CDoor(DOOR_DOOR7, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_PASSAGE2]));
+		
+		m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_HALL1]));
+		m_roomArray[ROOM_CYNTHIA]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_CYNTHIA], m_roomArray[ROOM_HALL1]));
+		m_roomArray[ROOM_DOCTOR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_DOCTOR], m_roomArray[ROOM_HALL1]));
+		m_roomArray[ROOM_DINGLE]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_DINGLE], m_roomArray[ROOM_HALL1]));
+		m_roomArray[ROOM_OUTSIDE1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE1], m_roomArray[ROOM_HALL1]));
+		m_roomArray[ROOM_LANDING]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_LANDING], m_roomArray[ROOM_HALL1]));
+		
+		InitializeDoors();
+		
+		m_eventArray[EVENT_SHOW_ROOM] = new CEvent(EVENT_SHOW_ROOM, new CTime(9, 10, 0, 0));
+		m_eventArray[EVENT_GET_SHOT] = new CEvent(EVENT_SHOW_ROOM, new CTime(12, 0, 0, 0));
 		break;
 	}
 	
-	m_mapArray[MAP_HALL1]->Draw();
+	m_currentRoom = m_roomArray[ROOM_HALL1];
+	m_currentRoom->Initialize(0);
 	
-	m_characterArray[CHARACTER_SNIDE]->SetPosition(128, ROOM_VERT_CENTRE - CHARACTER_HEIGHT);
+	m_snide = m_characterArray[CHARACTER_SNIDE];
+	m_snide->SetPosition(128, ROOM_VERT_CENTRE - CHARACTER_HEIGHT);
+	
 	m_characterArray[CHARACTER_GABRIEL]->SetPosition(64, ROOM_VERT_CENTRE - CHARACTER_HEIGHT);
-	
 	m_characterArray[CHARACTER_GABRIEL]->SetFrameType(FRAME_SPEAK);
 }
 
@@ -155,72 +175,91 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 		}
 	}
 	
-	m_bg2VScroll--;
-	BACKGROUND.scroll[2].y = m_bg2VScroll;
+	BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
 	
 	if(keysHeld() & KEY_UP)
 	{
-		if(m_characterArray[CHARACTER_SNIDE]->Y() > ROOM_FLOOR_TOP - CHARACTER_HEIGHT)
-			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_UP);
+		if(m_snide->Y() > ROOM_FLOOR_TOP - CHARACTER_HEIGHT)
+			m_snide->Move(DIRECTION_UP);
 		else
-			m_characterArray[CHARACTER_SNIDE]->Face(DIRECTION_UP);
+			m_snide->Face(DIRECTION_UP);
+		
+		if(CollisionType collisionType = m_snide->CheckCollision(DIRECTION_UP, m_currentRoom))
+		{
+			if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE2)
+			{
+				CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
+				
+				if(pDoor != NULL)
+				{
+					m_currentRoom = pDoor->pRoomThere();
+					m_currentRoom->Initialize(pDoor->pDoor()->X() - ROOM_HORIZ_CENTRE);
+					m_snide->SetPosition(ROOM_HORIZ_CENTRE, pDoor->pDoor()->Y() - CHARACTER_HEIGHT);
+				}
+			}
+		}
 	}
 	else if(keysHeld() & KEY_DOWN)
 	{
-		if(m_characterArray[CHARACTER_SNIDE]->Y() < ROOM_FLOOR_BOTTOM - CHARACTER_HEIGHT)
-			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_DOWN);
+		if(m_snide->Y() < ROOM_FLOOR_BOTTOM - CHARACTER_HEIGHT)
+			m_snide->Move(DIRECTION_DOWN);
 		else
-			m_characterArray[CHARACTER_SNIDE]->Face(DIRECTION_DOWN);
+			m_snide->Face(DIRECTION_DOWN);
+		
+		if(CollisionType collisionType = m_snide->CheckCollision(DIRECTION_DOWN, m_currentRoom))
+		{
+			if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE2)
+			{
+				CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
+				
+				if(pDoor != NULL)
+				{
+					m_currentRoom = pDoor->pRoomThere();
+					m_currentRoom->Initialize(pDoor->pDoor()->X() - ROOM_HORIZ_CENTRE);
+					m_snide->SetPosition(ROOM_HORIZ_CENTRE, pDoor->pDoor()->Y() - CHARACTER_HEIGHT + 8);
+				}
+			}
+		}
 	}
 	else if(keysHeld() & KEY_LEFT)
 	{
-		// Unfortunately this doesn't seem to work after I added back the "scroll to the edge" code from last night
-		// So we will have to come up with a new way of dealing with the angle
-		// Right now though I'm concentrating on getting the level to scroll properly
-		// Believe it or not it's a total pain in the arse reminiciant of the double screen
-		// vertical scrolling in Warhawk.
-		
-		//if(m_characterArray[CHARACTER_SNIDE]->X() > (128-(m_characterArray[CHARACTER_SNIDE]->Y()-(112 - CHARACTER_HEIGHT))))
-		
-		if(m_characterArray[CHARACTER_SNIDE]->X() > ROOM_HORIZ_CENTRE)
-			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_LEFT);
+		if(m_snide->X() > ROOM_HORIZ_CENTRE)
+			m_snide->Move(DIRECTION_LEFT);
 		else
 		{
-			m_characterArray[CHARACTER_SNIDE]->Face(DIRECTION_LEFT);
+			m_snide->Face(DIRECTION_LEFT);
 			
-			if(!m_mapArray[MAP_HALL1]->Scroll(DIRECTION_LEFT) && m_characterArray[CHARACTER_SNIDE]->X() > 0)
-				m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_LEFT);
+			if(!m_currentRoom->Scroll(DIRECTION_LEFT) && m_snide->X() > 0)
+				m_snide->Move(DIRECTION_LEFT);
 		}
 	}
 	else if(keysHeld() & KEY_RIGHT)
 	{
-		//if(m_characterArray[CHARACTER_SNIDE]->X() < (128+(m_characterArray[CHARACTER_SNIDE]->Y()-(112 - CHARACTER_HEIGHT))))
-		
-		if(m_characterArray[CHARACTER_SNIDE]->X() < ROOM_HORIZ_CENTRE)
-			m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_RIGHT);
+		if(m_snide->X() < ROOM_HORIZ_CENTRE)
+			m_snide->Move(DIRECTION_RIGHT);
 		else
 		{
-			m_characterArray[CHARACTER_SNIDE]->Face(DIRECTION_RIGHT);
+			m_snide->Face(DIRECTION_RIGHT);
 			
-			if(!m_mapArray[MAP_HALL1]->Scroll(DIRECTION_RIGHT) && m_characterArray[CHARACTER_SNIDE]->X() < 256 - CHARACTER_WIDTH)
-				m_characterArray[CHARACTER_SNIDE]->Move(DIRECTION_RIGHT);
+			if(!m_currentRoom->Scroll(DIRECTION_RIGHT) && m_snide->X() < 256 - CHARACTER_WIDTH)
+				m_snide->Move(DIRECTION_RIGHT);
 		}
 	}
 	else if(keysHeld() & KEY_A)
 	{
-		m_characterArray[CHARACTER_SNIDE]->SetFrameType(FRAME_SPEAK);
+		m_snide->SetFrameType(FRAME_SPEAK);
 	}
 	else
 	{
-		m_characterArray[CHARACTER_SNIDE]->SetFrameType(FRAME_NONE);
+		m_snide->SetFrameType(FRAME_NONE);
 	}
 	
-	m_characterArray[CHARACTER_SNIDE]->Animate(elapsedTime);
+	m_snide->Animate(elapsedTime);
 	m_characterArray[CHARACTER_GABRIEL]->Animate(elapsedTime);
 	
 	SortSprites();
 	
-	m_characterArray[CHARACTER_SNIDE]->Draw();
+	m_snide->Draw();
 	m_characterArray[CHARACTER_GABRIEL]->Draw();
 	
 	oamUpdate(&oamSub);
@@ -243,4 +282,11 @@ void CGame::SortSprites()
 			}
 		}
 	}
+}
+
+void CGame::InitializeDoors()
+{
+	for (int i=0; i < MAX_ROOMS; i++)
+		for(int j=0; j < MAX_DOORS; j++)
+			m_roomArray[i]->GetDoor(j)->Initialize();
 }

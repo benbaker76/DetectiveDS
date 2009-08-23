@@ -4,7 +4,7 @@
 #include "Game.h"
 
 CGame m_game(GAMETYPE_NORMAL);
-CTimer m_timer;
+CTimer m_timer(9, 10, 0, 0);
 
 u8 m_elapsedTime;
 u8 m_lastUpdate;
@@ -37,10 +37,10 @@ int main(void)
 	
 	irqEnable(IRQ_VBLANK | IRQ_HBLANK | IRQ_TIMER1 | IRQ_TIMER2);
 	
+	consoleDebugInit(DebugDevice_NOCASH);
+	
 	m_timer.Start();
 	m_game.Initialize();
-	
-	consoleDebugInit(DebugDevice_NOCASH);
 
 	while(1)
 	{
