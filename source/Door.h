@@ -31,7 +31,7 @@ class CRoom;
 class CDoor
 {
 public:
-	CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomHere, CRoom* pRoomThere);
+	CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoomOut);
 	~CDoor();
 	
 	void Initialize();
@@ -40,16 +40,16 @@ public:
 	int Y() const { return m_y; }
 	DoorType GetDoorType() const { return  m_doorType; };
 	DoorState GetDoorState() const { return  m_doorState; };
-	CRoom* pRoomHere() const { return m_pRoomHere; }
-	CRoom* pRoomThere() const { return m_pRoomThere; }
-	CDoor* pDoor() const { return m_pDoor; }
+	CRoom* pRoomIn() const { return m_pRoomIn; }
+	CRoom* pRoomOut() const { return m_pRoomOut; }
+	CDoor* pDoorOut() const { return m_pDoorOut; }
 
 private:
 	DoorType m_doorType;
 	DoorState m_doorState;
-	CRoom* m_pRoomHere;
-	CRoom* m_pRoomThere;
-	CDoor* m_pDoor;
+	CRoom* m_pRoomIn;
+	CRoom* m_pRoomOut;
+	CDoor* m_pDoorOut;
 	
 	int m_x;
 	int m_y;

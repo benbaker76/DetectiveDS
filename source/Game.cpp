@@ -192,9 +192,9 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 				
 				if(pDoor != NULL)
 				{
-					m_currentRoom = pDoor->pRoomThere();
-					m_currentRoom->Initialize(pDoor->pDoor()->X() - ROOM_HORIZ_CENTRE);
-					m_snide->SetPosition(ROOM_HORIZ_CENTRE, pDoor->pDoor()->Y() - CHARACTER_HEIGHT);
+					m_currentRoom = pDoor->pRoomOut();
+					m_currentRoom->Initialize(pDoor->pDoorOut()->X() - ROOM_HORIZ_CENTRE);
+					m_snide->SetPosition(ROOM_HORIZ_CENTRE, pDoor->pDoorOut()->Y() - CHARACTER_HEIGHT);
 				}
 			}
 		}
@@ -214,9 +214,9 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 				
 				if(pDoor != NULL)
 				{
-					m_currentRoom = pDoor->pRoomThere();
-					m_currentRoom->Initialize(pDoor->pDoor()->X() - ROOM_HORIZ_CENTRE);
-					m_snide->SetPosition(ROOM_HORIZ_CENTRE, pDoor->pDoor()->Y() - CHARACTER_HEIGHT + 8);
+					m_currentRoom = pDoor->pRoomOut();
+					m_currentRoom->Initialize(pDoor->pDoorOut()->X() - ROOM_HORIZ_CENTRE);
+					m_snide->SetPosition(ROOM_HORIZ_CENTRE, pDoor->pDoorOut()->Y() - CHARACTER_HEIGHT + 8);
 				}
 			}
 		}
