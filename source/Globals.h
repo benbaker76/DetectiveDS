@@ -1,4 +1,8 @@
 #include "TDG.h"
+#include <maxmod9.h>
+
+#include "soundbank_bin.h"
+#include "soundbank.h"
 
 extern const int g_snideHeadFrames[];
 extern const int g_snideBodyFrames[];
@@ -20,3 +24,5 @@ extern const int g_majorHeadFrames[];
 extern const int g_majorBodyFrames[];
 extern const int g_dingleHeadFrames[];
 extern const int g_dingleBodyFrames[];
+
+extern mm_sound_effect g_sfx_footsteps;

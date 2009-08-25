@@ -152,12 +152,16 @@ void CGame::Initialize()
 
 void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 {
+	static mm_sfxhand footsteps = 0;
 	touchPosition touch;
-	int key;
+	int keys_held, keys_pressed, keys_released;
 	
 	touchRead(&touch);
 	scanKeys();
-	key = keysHeld();
+	
+	keys_held = keysHeld();
+	keys_pressed = keysDown();
+	keys_released = keysUp();
 	
 	//char buf[256];
 	//sprintf(buf, "%02d:%02d:%02d:%02d Elapsed: %08d", pCurrentTime->Hours, pCurrentTime->Minutes, pCurrentTime->Seconds, pCurrentTime->MilliSeconds, elapsedTime);
@@ -177,7 +181,24 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	
 	BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
 	
-	if(keysHeld() & KEY_UP)
+	if(keys_released & KEY_UP ||
+		keys_released & KEY_DOWN ||
+		keys_released & KEY_LEFT ||
+		keys_released & KEY_RIGHT)
+	{
+		mmEffectCancel(footsteps);
+	}
+	
+	if(keys_pressed & KEY_UP ||
+		keys_pressed & KEY_DOWN ||
+		keys_pressed & KEY_LEFT ||
+		keys_pressed & KEY_RIGHT)
+	{
+		mmEffectCancel(footsteps);
+		footsteps = mmEffectEx(&g_sfx_footsteps);
+	}
+	
+	if(keys_held & KEY_UP)
 	{
 		if(m_snide->Y() > ROOM_FLOOR_TOP - CHARACTER_HEIGHT)
 			m_snide->Move(DIRECTION_UP);
@@ -186,7 +207,7 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 		
 		if(CollisionType collisionType = m_snide->CheckCollision(DIRECTION_UP, m_currentRoom))
 		{
-			if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE2)
+			if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
 			{
 				CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
 				
@@ -199,7 +220,7 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 			}
 		}
 	}
-	else if(keysHeld() & KEY_DOWN)
+	else if(keys_held & KEY_DOWN)
 	{
 		if(m_snide->Y() < ROOM_FLOOR_BOTTOM - CHARACTER_HEIGHT)
 			m_snide->Move(DIRECTION_DOWN);
@@ -208,7 +229,7 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 		
 		if(CollisionType collisionType = m_snide->CheckCollision(DIRECTION_DOWN, m_currentRoom))
 		{
-			if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE2)
+			if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
 			{
 				CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
 				
@@ -221,7 +242,7 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 			}
 		}
 	}
-	else if(keysHeld() & KEY_LEFT)
+	else if(keys_held & KEY_LEFT)
 	{
 		if(m_snide->X() > ROOM_HORIZ_CENTRE)
 			m_snide->Move(DIRECTION_LEFT);
@@ -233,7 +254,7 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 				m_snide->Move(DIRECTION_LEFT);
 		}
 	}
-	else if(keysHeld() & KEY_RIGHT)
+	else if(keys_held & KEY_RIGHT)
 	{
 		if(m_snide->X() < ROOM_HORIZ_CENTRE)
 			m_snide->Move(DIRECTION_RIGHT);
@@ -245,7 +266,7 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 				m_snide->Move(DIRECTION_RIGHT);
 		}
 	}
-	else if(keysHeld() & KEY_A)
+	else if(keys_held & KEY_A)
 	{
 		m_snide->SetFrameType(FRAME_SPEAK);
 	}
@@ -253,44 +274,6 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	{
 		m_snide->SetFrameType(FRAME_NONE);
 	}
-	
-	/* mm_sound_effect ambulance = {
-		{ SFX_AMBULANCE } ,			// id
-		(int)(1.0f * (1<<10)),	// rate
-		0,		// handle
-		255,	// volume
-		0,		// panning
-	};
-
-	mm_sound_effect boom = {
-		{ SFX_BOOM } ,			// id
-		(int)(1.0f * (1<<10)),	// rate
-		0,		// handle
-		255,	// volume
-		255,	// panning
-	};
-	
-	mm_sfxhand amb = 0;
-	
-	int keys_pressed, keys_released;
-
-	keys_pressed = keysDown();
-	keys_released = keysUp();
-
-	// Play looping ambulance sound effect out of left speaker if A button is pressed
-	if ( keys_pressed & KEY_A ) {
-		amb = mmEffectEx(&ambulance);
-	}
-
-	// stop ambulance sound when A button is released
-	if ( keys_released & KEY_A ) {
-		mmEffectCancel(amb);
-	}
-
-	// Play explosion sound effect out of right speaker if B button is pressed
-	if ( keys_pressed & KEY_B ) {
-		mmEffectEx(&boom);
-	} */
 	
 	m_snide->Animate(elapsedTime);
 	m_characterArray[CHARACTER_GABRIEL]->Animate(elapsedTime);

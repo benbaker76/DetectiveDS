@@ -30,6 +30,21 @@ void InterruptHandlerTimer2()
 	m_timer.Update();
 }
 
+mm_word mmEventHandler(mm_word msg, mm_word param)
+{
+	switch( msg )
+	{
+
+	case MMCB_SONGMESSAGE:
+        break;
+	case MMCB_SONGFINISHED:
+		break;
+    }
+	
+	return 0;
+}
+
+
 int main(void)
 {
 	//irqInit();
@@ -42,10 +57,10 @@ int main(void)
 	irqEnable(IRQ_VBLANK | IRQ_HBLANK | IRQ_TIMER1 | IRQ_TIMER2);
 	
 	mmInitDefaultMem((mm_addr)soundbank_bin);
-	mmLoad(MOD_KEYG_SUBTONAL);
-	mmLoadEffect(SFX_AMBULANCE);
-	mmLoadEffect(SFX_BOOM);
-	mmStart(MOD_KEYG_SUBTONAL, MM_PLAY_LOOP);
+	mmSetEventHandler(mmEventHandler);
+	mmLoad(MOD_DETECTIVE);
+	mmLoadEffect(SFX_FOOTSTEPS);
+	mmStart(MOD_DETECTIVE, MM_PLAY_LOOP);
 	
 	consoleDebugInit(DebugDevice_NOCASH);
 	
