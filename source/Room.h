@@ -6,11 +6,6 @@
 #define MAX_ROOMS			30
 #define MAX_DOORS			10
 
-#define ROOM_FLOOR_TOP		144
-#define ROOM_FLOOR_BOTTOM	184
-#define ROOM_HORIZ_CENTRE	128
-#define ROOM_VERT_CENTRE	168
-
 enum RoomType
 {
 	ROOM_SNIDE,

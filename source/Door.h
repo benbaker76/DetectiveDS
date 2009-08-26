@@ -15,8 +15,7 @@ enum DoorType
 	DOOR_DOOR5,
 	DOOR_DOOR6,
 	DOOR_DOOR7,
-	DOOR_SECRET_PASSAGE1,
-	DOOR_SECRET_PASSAGE2
+	DOOR_SECRET_PASSAGE,
 };
 
 enum DoorState
@@ -35,6 +34,8 @@ public:
 	~CDoor();
 	
 	void Initialize();
+	
+	void SetDoorState(DoorState doorState) { m_doorState = doorState; m_pDoorOut->SetDoorState(doorState); };
 	
 	int X() const { return m_x; }
 	int Y() const { return m_y; }

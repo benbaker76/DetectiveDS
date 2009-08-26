@@ -90,36 +90,27 @@ void CCharacter::Move(DirectionType directionType)
 
 CollisionType CCharacter::CheckCollision(DirectionType directionType, CRoom* pRoom)
 {
+	CollisionType retType = COL_PATH;
+	int x = ((pRoom->X() + m_x) + CHARACTER_WIDTH / 2) / 8;
+	int y = ((pRoom->Y() + m_y) + CHARACTER_HEIGHT) / 8;
+	
 	switch(directionType)
 	{
 		case DIRECTION_UP:
-			for(int i=0; i<CHARACTER_WIDTH / 8; i++)
-			{
-				int x = ((pRoom->X() + m_x) / 8) + i;
-				int y = ((pRoom->Y() + m_y + CHARACTER_HEIGHT) / 8) - 1;
-				CollisionType collisionType = (CollisionType) pRoom->ColMap(x, y);
-				
-				if(collisionType != COL_NOTHING_HERE)
-					return collisionType;
-			}
+			retType = (CollisionType) pRoom->ColMap(x, y-1);
 			break;
 		case DIRECTION_DOWN:
-			for(int i=0; i<CHARACTER_WIDTH / 8; i++)
-			{
-				int x = ((pRoom->X() + m_x) / 8) + i;
-				int y = ((pRoom->Y() + m_y + CHARACTER_HEIGHT) / 8);
-				CollisionType collisionType = (CollisionType) pRoom->ColMap(x, y);
-				
-				if(collisionType != COL_NOTHING_HERE)
-					return collisionType;
-			}
+			retType = (CollisionType) pRoom->ColMap(x, y);
 			break;
 		case DIRECTION_LEFT:
+			retType = (CollisionType) pRoom->ColMap(x-1, y-1);
+			break;
 		case DIRECTION_RIGHT:
+			retType = (CollisionType) pRoom->ColMap(x+1, y-1);
 			break;
 	}
 	
-	return COL_NOTHING_HERE;
+	return retType;
 }
 
 void CCharacter::SetFrameType(FrameType frameType)

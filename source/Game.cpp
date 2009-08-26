@@ -144,9 +144,9 @@ void CGame::Initialize()
 	m_currentRoom->Initialize(0);
 	
 	m_snide = m_characterArray[CHARACTER_SNIDE];
-	m_snide->SetPosition(128, ROOM_VERT_CENTRE - CHARACTER_HEIGHT);
+	m_snide->SetPosition(128, 168 - CHARACTER_HEIGHT);
 	
-	m_characterArray[CHARACTER_GABRIEL]->SetPosition(64, ROOM_VERT_CENTRE - CHARACTER_HEIGHT);
+	m_characterArray[CHARACTER_GABRIEL]->SetPosition(64, 168 - CHARACTER_HEIGHT);
 	m_characterArray[CHARACTER_GABRIEL]->SetFrameType(FRAME_SPEAK);
 }
 
@@ -200,70 +200,92 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	
 	if(keys_held & KEY_UP)
 	{
-		if(m_snide->Y() > ROOM_FLOOR_TOP - CHARACTER_HEIGHT)
+		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_UP, m_currentRoom);
+		
+		if(collisionType == COL_PATH)
 			m_snide->Move(DIRECTION_UP);
 		else
 			m_snide->Face(DIRECTION_UP);
 		
-		if(CollisionType collisionType = m_snide->CheckCollision(DIRECTION_UP, m_currentRoom))
+		if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
 		{
-			if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
+			CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
+			
+			if(pDoor != NULL)
 			{
-				CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
-				
-				if(pDoor != NULL)
-				{
-					m_currentRoom = pDoor->pRoomOut();
-					m_currentRoom->Initialize(pDoor->pDoorOut()->X() - ROOM_HORIZ_CENTRE);
-					m_snide->SetPosition(ROOM_HORIZ_CENTRE, pDoor->pDoorOut()->Y() - CHARACTER_HEIGHT);
-				}
+				m_currentRoom = pDoor->pRoomOut();
+				m_currentRoom->Initialize(pDoor->pDoorOut()->X() - 128);
+				m_snide->SetPosition(128, pDoor->pDoorOut()->Y() - CHARACTER_HEIGHT);
 			}
 		}
 	}
 	else if(keys_held & KEY_DOWN)
 	{
-		if(m_snide->Y() < ROOM_FLOOR_BOTTOM - CHARACTER_HEIGHT)
+		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_DOWN, m_currentRoom);
+		
+		if(collisionType == COL_PATH)
 			m_snide->Move(DIRECTION_DOWN);
 		else
 			m_snide->Face(DIRECTION_DOWN);
 		
-		if(CollisionType collisionType = m_snide->CheckCollision(DIRECTION_DOWN, m_currentRoom))
+		if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
 		{
-			if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
+			CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
+			
+			if(pDoor != NULL)
 			{
-				CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
-				
-				if(pDoor != NULL)
-				{
-					m_currentRoom = pDoor->pRoomOut();
-					m_currentRoom->Initialize(pDoor->pDoorOut()->X() - ROOM_HORIZ_CENTRE);
-					m_snide->SetPosition(ROOM_HORIZ_CENTRE, pDoor->pDoorOut()->Y() - CHARACTER_HEIGHT + 8);
-				}
+				m_currentRoom = pDoor->pRoomOut();
+				m_currentRoom->Initialize(pDoor->pDoorOut()->X() - 128);
+				m_snide->SetPosition(128, pDoor->pDoorOut()->Y() - CHARACTER_HEIGHT + 8);
 			}
 		}
 	}
 	else if(keys_held & KEY_LEFT)
 	{
-		if(m_snide->X() > ROOM_HORIZ_CENTRE)
-			m_snide->Move(DIRECTION_LEFT);
+		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_LEFT, m_currentRoom);
+		
+	    if(m_snide->X() > 128)
+		{
+			if(collisionType == COL_PATH)
+				m_snide->Move(DIRECTION_LEFT);
+			else
+				m_snide->Face(DIRECTION_LEFT);
+		}
 		else
 		{
-			m_snide->Face(DIRECTION_LEFT);
-			
 			if(!m_currentRoom->Scroll(DIRECTION_LEFT) && m_snide->X() > 0)
-				m_snide->Move(DIRECTION_LEFT);
+			{
+				if(collisionType == COL_PATH)
+					m_snide->Move(DIRECTION_LEFT);
+				else
+					m_snide->Face(DIRECTION_LEFT);
+			}
+			else
+				m_snide->Face(DIRECTION_LEFT);
 		}
 	}
 	else if(keys_held & KEY_RIGHT)
 	{
-		if(m_snide->X() < ROOM_HORIZ_CENTRE)
-			m_snide->Move(DIRECTION_RIGHT);
+		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_RIGHT, m_currentRoom);
+		
+		if(m_snide->X() < 128)
+		{		
+			if(collisionType == COL_PATH)
+				m_snide->Move(DIRECTION_RIGHT);
+			else
+				m_snide->Face(DIRECTION_RIGHT);
+		}
 		else
 		{
-			m_snide->Face(DIRECTION_RIGHT);
-			
 			if(!m_currentRoom->Scroll(DIRECTION_RIGHT) && m_snide->X() < 256 - CHARACTER_WIDTH)
-				m_snide->Move(DIRECTION_RIGHT);
+			{
+				if(collisionType == COL_PATH)
+					m_snide->Move(DIRECTION_RIGHT);
+				else
+					m_snide->Face(DIRECTION_RIGHT);
+			}
+			else
+				m_snide->Face(DIRECTION_RIGHT);
 		}
 	}
 	else if(keys_held & KEY_A)
