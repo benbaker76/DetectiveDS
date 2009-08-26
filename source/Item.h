@@ -3,7 +3,7 @@
 
 #include "TDG.h"
 
-#define MAX_ITEMS				32
+#define MAX_ITEMS				54
 
 enum ItemType
 {
