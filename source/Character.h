@@ -59,7 +59,7 @@ private:
 	CSprite* m_spriteCol1;
 	CSprite* m_spriteCol2;	
 	
-	int m_x;
+	float m_x;
 	int m_y;
 };
 

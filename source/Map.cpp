@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "Map.h"
 #include "TDG.h"
+#include "lz77.h"
 
 CMap::CMap(int width, int height, const u32* pTiles, int tilesLen, const u16* pMap, int mapLen, const u16* pPalette, int paletteLen)
 {
@@ -22,7 +23,8 @@ void CMap::Initialize(int x)
 {
 	m_x = x;
 	
-	dmaCopy(m_pTiles, BG_TILE_RAM_SUB(BG2_TILE_BASE_SUB), m_tilesLen);
+	//dmaCopy(m_pTiles, BG_TILE_RAM_SUB(BG2_TILE_BASE_SUB), m_tilesLen);
+	decompressToVRAM(m_pTiles, BG_TILE_RAM_SUB(BG2_TILE_BASE_SUB));
 	dmaCopy(m_pPalette, BG_PALETTE_SUB, m_paletteLen);
 	
 	BG_PALETTE_SUB[0] = 0;

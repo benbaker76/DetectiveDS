@@ -81,8 +81,8 @@ void CGame::Initialize()
 		m_mapArray[MAP_LIBRARY] = new CMap(416, 192, map_libraryTiles, map_libraryTilesLen, map_libraryMap, map_libraryMapLen, map_libraryPal, map_libraryPalLen);
 		m_mapArray[MAP_OUTSIDE1] = new CMap(400, 192, map_outside1Tiles, map_outside1TilesLen, map_outside1Map, map_outside1MapLen, map_outside1Pal, map_outside1PalLen);
 		m_mapArray[MAP_OUTSIDE2] = new CMap(544, 192, map_outside2Tiles, map_outside2TilesLen, map_outside2Map, map_outside2MapLen, map_outside2Pal, map_outside2PalLen);
-		m_mapArray[MAP_PASSAGE1] = new CMap(240, 192, map_passage1Tiles, map_passage1TilesLen, map_passage1Map, map_passage1MapLen, map_passage1Pal, map_passage1PalLen);
-		m_mapArray[MAP_PASSAGE2] = new CMap(240, 192, map_passage2Tiles, map_passage2TilesLen, map_passage2Map, map_passage2MapLen, map_passage2Pal, map_passage2PalLen);
+		m_mapArray[MAP_PASSAGE1] = new CMap(256, 192, map_passage1Tiles, map_passage1TilesLen, map_passage1Map, map_passage1MapLen, map_passage1Pal, map_passage1PalLen);
+		m_mapArray[MAP_PASSAGE2] = new CMap(256, 192, map_passage2Tiles, map_passage2TilesLen, map_passage2Map, map_passage2MapLen, map_passage2Pal, map_passage2PalLen);
 		m_mapArray[MAP_ROOM1] = new CMap(400, 192, map_room1Tiles, map_room1TilesLen, map_room1Map, map_room1MapLen, map_room1Pal, map_room1PalLen);
 		m_mapArray[MAP_ROOM2] = new CMap(344, 192, map_room2Tiles, map_room2TilesLen, map_room2Map, map_room2MapLen, map_room2Pal, map_room2PalLen);
 		m_mapArray[MAP_STAIRS] = new CMap(336, 192, map_stairsTiles, map_stairsTilesLen, map_stairsMap, map_stairsMapLen, map_stairsPal, map_stairsPalLen);
@@ -189,7 +189,7 @@ void CGame::Initialize()
 	m_snide->SetPosition(142, 105);
 	
 	m_currentRoom = m_roomArray[ROOM_STAIRS];
-	m_currentRoom->Initialize(197 - 128);
+	m_currentRoom->Initialize(69);
 	
 	m_characterArray[CHARACTER_GABRIEL]->SetPosition(64, 168 - CHARACTER_HEIGHT);
 	m_characterArray[CHARACTER_GABRIEL]->SetFrameType(FRAME_SPEAK);
@@ -259,8 +259,24 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 			if(pDoor != NULL)
 			{
 				m_currentRoom = pDoor->pRoomOut();
-				m_currentRoom->Initialize(pDoor->pDoorOut()->X() - 128);
-				m_snide->SetPosition(128, pDoor->pDoorOut()->Y() - CHARACTER_HEIGHT);
+				
+				int xRoom = pDoor->pDoorOut()->X() - 128;
+				
+				int xChar = 128;
+				int yChar = pDoor->pDoorOut()->Y() - CHARACTER_HEIGHT;
+				
+				if(xRoom + 256 > m_currentRoom->Width()) xRoom = m_currentRoom->Width() - 256;
+				if(xRoom < 0) xRoom = 0;
+			
+				if(pDoor->pDoorOut()->X() < 128) xChar = pDoor->pDoorOut()->X();
+				if(pDoor->pDoorOut()->X() > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - pDoor->pDoorOut()->X());	
+				
+				m_currentRoom->Initialize(xRoom);
+				m_snide->SetPosition(xChar, yChar);
+				
+				//char buf[256];
+				//sprintf(buf, "xRoom: %05d, xChar: %05d", xRoom, xChar);
+				//DrawText(buf, 0, 1, false);
 			}
 		}
 	}
@@ -280,8 +296,24 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 			if(pDoor != NULL)
 			{
 				m_currentRoom = pDoor->pRoomOut();
-				m_currentRoom->Initialize(pDoor->pDoorOut()->X() - 128);
-				m_snide->SetPosition(128, pDoor->pDoorOut()->Y() - CHARACTER_HEIGHT + 16);
+			
+				int xRoom = pDoor->pDoorOut()->X() - 128;
+				
+				int xChar = 128;
+				int yChar = pDoor->pDoorOut()->Y() - CHARACTER_HEIGHT + 16;
+				
+				if(xRoom + 256 > m_currentRoom->Width()) xRoom = m_currentRoom->Width() - 256;
+				if(xRoom < 0) xRoom = 0;
+				
+				if(pDoor->pDoorOut()->X() < 128) xChar = pDoor->pDoorOut()->X();
+				if(pDoor->pDoorOut()->X() > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - pDoor->pDoorOut()->X());
+				
+				m_currentRoom->Initialize(xRoom);
+				m_snide->SetPosition(xChar, yChar);
+				
+				//char buf[256];
+				//sprintf(buf, "xRoom: %05d, xChar: %05d", xRoom, xChar);
+				//DrawText(buf, 0, 1, false);
 			}
 		}
 	}

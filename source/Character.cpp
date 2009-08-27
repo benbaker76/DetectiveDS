@@ -10,11 +10,11 @@ CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprit
 	m_x = 0;
 	m_y = 0;
 
-	m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_col1Tiles, sprite_col1TilesLen, sprite_col1Pal, sprite_col1PalLen, NULL, 0);
-	m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_col2Tiles, sprite_col2TilesLen, sprite_col2Pal, sprite_col2PalLen, NULL, 0);
+	//m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_col1Tiles, sprite_col1TilesLen, sprite_col1Pal, sprite_col1PalLen, NULL, 0);
+	//m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_col2Tiles, sprite_col2TilesLen, sprite_col2Pal, sprite_col2PalLen, NULL, 0);
 	
-	m_spriteCol1->SetOamIndex(0);
-	m_spriteCol2->SetOamIndex(1);
+	//m_spriteCol1->SetOamIndex(0);
+	//m_spriteCol2->SetOamIndex(1);
 }
 
 CCharacter::~CCharacter()
@@ -78,11 +78,11 @@ void CCharacter::Move(DirectionType directionType)
 	{
 		case DIRECTION_UP:
 			SetFrameType(FRAME_UP);
-			SetPosition(m_x + 1, m_y - 1);
+			SetPosition(m_x + 2, m_y - 1);
 			break;
 		case DIRECTION_DOWN:
 			SetFrameType(FRAME_DOWN);
-			SetPosition(m_x - 1, m_y + 1);
+			SetPosition(m_x - 2, m_y + 1);
 			break;
 		case DIRECTION_LEFT:
 			SetFrameType(FRAME_LEFT);
@@ -103,34 +103,34 @@ CollisionType CCharacter::CheckCollision(DirectionType directionType, CRoom* pRo
 	int x2 = ((m_x + CHARACTER_WIDTH / 2) / 8);
 	int y2 = ((m_y + CHARACTER_HEIGHT-8) / 8);
 	
-	m_spriteCol1->SetPosition(x2 * 8, y2 * 8);
-	m_spriteCol1->Draw();
+	//m_spriteCol1->SetPosition(x2 * 8, y2 * 8);
+	//m_spriteCol1->Draw();
 	
 	switch(directionType)
 	{
 		case DIRECTION_UP:
 			retType = (CollisionType) pRoom->ColMap(x, y-1);
 			
-			m_spriteCol2->SetPosition(x2 * 8, (y2-1) * 8);
-			m_spriteCol2->Draw();
+			//m_spriteCol2->SetPosition(x2 * 8, (y2-1) * 8);
+			//m_spriteCol2->Draw();
 			break;
 		case DIRECTION_DOWN:
 			retType = (CollisionType) pRoom->ColMap(x, y+1);
 			
-			m_spriteCol2->SetPosition(x2 * 8, (y2+1) * 8);
-			m_spriteCol2->Draw();
+			//m_spriteCol2->SetPosition(x2 * 8, (y2+1) * 8);
+			//m_spriteCol2->Draw();
 			break;
 		case DIRECTION_LEFT:
 			retType = (CollisionType) pRoom->ColMap(x-2, y);
 			
-			m_spriteCol2->SetPosition((x2-2) * 8, y2 * 8);
-			m_spriteCol2->Draw();
+			//m_spriteCol2->SetPosition((x2-2) * 8, y2 * 8);
+			//m_spriteCol2->Draw();
 			break;
 		case DIRECTION_RIGHT:
 			retType = (CollisionType) pRoom->ColMap(x+2, y);
 			
-			m_spriteCol2->SetPosition((x2+2) * 8, y2 * 8);
-			m_spriteCol2->Draw();
+			//m_spriteCol2->SetPosition((x2+2) * 8, y2 * 8);
+			//m_spriteCol2->Draw();
 			break;
 	}
 	
