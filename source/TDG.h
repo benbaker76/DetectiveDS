@@ -55,6 +55,7 @@
 
 #include "sprite_col1.h"
 #include "sprite_col2.h"
+#include "sprite_col3.h"
 
 #include "title_bg1.h"
 #include "title_bg2.h"

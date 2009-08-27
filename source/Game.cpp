@@ -98,27 +98,49 @@ void CGame::Initialize()
 		m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, m_mapArray[MAP_ROOM1], col_room1);		
 		m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, m_mapArray[MAP_ROOM1], col_room1);
 		m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, m_mapArray[MAP_ROOM1], col_room1);
-		m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, m_mapArray[MAP_OUTSIDE1], NULL);
-		m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, m_mapArray[MAP_OUTSIDE2], NULL);
-		m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, m_mapArray[MAP_OUTSIDE1], NULL);
-		m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, m_mapArray[MAP_OUTSIDE2], NULL);
-		m_roomArray[ROOM_OUTSIDE5] = new CRoom(ROOM_OUTSIDE5, m_mapArray[MAP_OUTSIDE1], NULL);
-		m_roomArray[ROOM_PASSAGE1] = new CRoom(ROOM_PASSAGE1, m_mapArray[MAP_PASSAGE1], NULL);
-		m_roomArray[ROOM_PASSAGE2] = new CRoom(ROOM_PASSAGE2, m_mapArray[MAP_PASSAGE2], NULL);
-		m_roomArray[ROOM_PASSAGE3] = new CRoom(ROOM_PASSAGE3, m_mapArray[MAP_PASSAGE1], NULL);
+		m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, m_mapArray[MAP_OUTSIDE1], col_outside1);
+		m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, m_mapArray[MAP_OUTSIDE2], col_outside2);
+		m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, m_mapArray[MAP_OUTSIDE1], col_outside1);
+		m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, m_mapArray[MAP_OUTSIDE2], col_outside2);
+		m_roomArray[ROOM_PASSAGE1] = new CRoom(ROOM_PASSAGE1, m_mapArray[MAP_PASSAGE1], col_passage1);
+		m_roomArray[ROOM_PASSAGE2] = new CRoom(ROOM_PASSAGE2, m_mapArray[MAP_PASSAGE2], col_passage2);
+		m_roomArray[ROOM_PASSAGE3] = new CRoom(ROOM_PASSAGE3, m_mapArray[MAP_PASSAGE1], col_passage1);
 		m_roomArray[ROOM_HALL1] = new CRoom(ROOM_HALL1, m_mapArray[MAP_HALL1], col_hall1);
-		m_roomArray[ROOM_HALL2] = new CRoom(ROOM_HALL2, m_mapArray[MAP_HALL2], NULL);
-		m_roomArray[ROOM_HALL3] = new CRoom(ROOM_HALL3, m_mapArray[MAP_HALL3], NULL);
-		m_roomArray[ROOM_HALL4] = new CRoom(ROOM_HALL4, m_mapArray[MAP_HALL4], NULL);
-		m_roomArray[ROOM_LANDING] = new CRoom(ROOM_LANDING, m_mapArray[MAP_LANDING], NULL);
-		m_roomArray[ROOM_KITCHEN] = new CRoom(ROOM_KITCHEN, m_mapArray[MAP_KITCHEN], NULL);
-		m_roomArray[ROOM_STAIRS] = new CRoom(ROOM_STAIRS, m_mapArray[MAP_STAIRS], NULL);
-		m_roomArray[ROOM_STUDY] = new CRoom(ROOM_STUDY, m_mapArray[MAP_STUDY], NULL);
-		m_roomArray[ROOM_CLOCK] = new CRoom(ROOM_CLOCK, m_mapArray[MAP_CLOCK], NULL);
-		m_roomArray[ROOM_CELLAR] = new CRoom(ROOM_CELLAR, m_mapArray[MAP_CELLAR], NULL);
-		m_roomArray[ROOM_DRAWING] = new CRoom(ROOM_DRAWING, m_mapArray[MAP_DRAWING], NULL);
-		m_roomArray[ROOM_LIBRARY] = new CRoom(ROOM_LIBRARY, m_mapArray[MAP_LIBRARY], NULL);
+		m_roomArray[ROOM_HALL2] = new CRoom(ROOM_HALL2, m_mapArray[MAP_HALL2], col_hall2);
+		m_roomArray[ROOM_HALL3] = new CRoom(ROOM_HALL3, m_mapArray[MAP_HALL3], col_hall3);
+		m_roomArray[ROOM_HALL4] = new CRoom(ROOM_HALL4, m_mapArray[MAP_HALL4], col_hall4);
+		m_roomArray[ROOM_LANDING] = new CRoom(ROOM_LANDING, m_mapArray[MAP_LANDING], col_landing);
+		m_roomArray[ROOM_KITCHEN] = new CRoom(ROOM_KITCHEN, m_mapArray[MAP_KITCHEN], col_kitchen);
+		m_roomArray[ROOM_STAIRS] = new CRoom(ROOM_STAIRS, m_mapArray[MAP_STAIRS], col_stairs);
+		m_roomArray[ROOM_STUDY] = new CRoom(ROOM_STUDY, m_mapArray[MAP_STUDY], col_study);
+		m_roomArray[ROOM_CLOCK] = new CRoom(ROOM_CLOCK, m_mapArray[MAP_CLOCK], col_clock);
+		m_roomArray[ROOM_CELLAR] = new CRoom(ROOM_CELLAR, m_mapArray[MAP_CELLAR], col_cellar);
+		m_roomArray[ROOM_DRAWING] = new CRoom(ROOM_DRAWING, m_mapArray[MAP_DRAWING], col_drawing);
+		m_roomArray[ROOM_LIBRARY] = new CRoom(ROOM_LIBRARY, m_mapArray[MAP_LIBRARY], col_library);
 		
+		
+		m_roomArray[ROOM_SNIDE]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_SNIDE], m_roomArray[ROOM_HALL2]));		
+		m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_HALL1]));
+		m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_PASSAGE1]));		
+		m_roomArray[ROOM_BENTLEY]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_BENTLEY], m_roomArray[ROOM_HALL3]));		
+		m_roomArray[ROOM_COOK]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_COOK], m_roomArray[ROOM_HALL4]));
+		m_roomArray[ROOM_GABRIEL]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_GABRIEL], m_roomArray[ROOM_HALL4]));
+		m_roomArray[ROOM_CYNTHIA]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_CYNTHIA], m_roomArray[ROOM_HALL1]));
+		m_roomArray[ROOM_PROFESSOR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PROFESSOR], m_roomArray[ROOM_HALL2]));
+		m_roomArray[ROOM_DOCTOR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_DOCTOR], m_roomArray[ROOM_HALL1]));
+		m_roomArray[ROOM_MAJOR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_MAJOR], m_roomArray[ROOM_HALL2]));
+		m_roomArray[ROOM_DINGLE]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_DINGLE], m_roomArray[ROOM_HALL1]));
+		m_roomArray[ROOM_OUTSIDE1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE1], m_roomArray[ROOM_HALL1]));
+		m_roomArray[ROOM_OUTSIDE2]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE2], m_roomArray[ROOM_PASSAGE1]));
+		m_roomArray[ROOM_OUTSIDE3]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE3], m_roomArray[ROOM_CLOCK]));
+		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_CELLAR]));
+		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_DRAWING]));
+		m_roomArray[ROOM_PASSAGE1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE1], m_roomArray[ROOM_REVEREND]));
+		m_roomArray[ROOM_PASSAGE1]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE1], m_roomArray[ROOM_OUTSIDE2]));
+		m_roomArray[ROOM_PASSAGE2]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE2], m_roomArray[ROOM_HALL1]));
+		m_roomArray[ROOM_PASSAGE2]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE2], m_roomArray[ROOM_HALL2]));
+		m_roomArray[ROOM_PASSAGE3]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE3], m_roomArray[ROOM_KITCHEN]));
+		m_roomArray[ROOM_PASSAGE3]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE3], m_roomArray[ROOM_CELLAR]));
 		m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_REVEREND]));
 		m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_CYNTHIA]));
 		m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_DOCTOR]));
@@ -126,14 +148,36 @@ void CGame::Initialize()
 		m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR5, new CDoor(DOOR_DOOR5, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_OUTSIDE1]));
 		m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR6, new CDoor(DOOR_DOOR6, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_LANDING]));
 		m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR7, new CDoor(DOOR_DOOR7, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_PASSAGE2]));
-		
-		m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_HALL1]));
-		m_roomArray[ROOM_CYNTHIA]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_CYNTHIA], m_roomArray[ROOM_HALL1]));
-		m_roomArray[ROOM_DOCTOR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_DOCTOR], m_roomArray[ROOM_HALL1]));
-		m_roomArray[ROOM_DINGLE]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_DINGLE], m_roomArray[ROOM_HALL1]));
-		m_roomArray[ROOM_OUTSIDE1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE1], m_roomArray[ROOM_HALL1]));
+		m_roomArray[ROOM_HALL2]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_HALL2], m_roomArray[ROOM_PROFESSOR]));
+		m_roomArray[ROOM_HALL2]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_HALL2], m_roomArray[ROOM_MAJOR]));
+		m_roomArray[ROOM_HALL2]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_HALL2], m_roomArray[ROOM_PASSAGE2]));
+		m_roomArray[ROOM_HALL2]->SetDoor(DOOR_DOOR4, new CDoor(DOOR_DOOR4, DOORSTATE_OPEN, m_roomArray[ROOM_HALL2], m_roomArray[ROOM_SNIDE]));
+		m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_KITCHEN]));
+		m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_STAIRS]));
+		m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_STUDY]));
+		m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR4, new CDoor(DOOR_DOOR4, DOORSTATE_OPEN, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_BENTLEY]));
+		m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR5, new CDoor(DOOR_DOOR5, DOORSTATE_OPEN, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_DRAWING]));
+		m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR6, new CDoor(DOOR_DOOR6, DOORSTATE_OPEN, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_LIBRARY]));
+		m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR7, new CDoor(DOOR_DOOR7, DOORSTATE_OPEN, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_HALL4]));
+		m_roomArray[ROOM_HALL4]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_HALL4], m_roomArray[ROOM_HALL3]));
+		m_roomArray[ROOM_HALL4]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_HALL4], m_roomArray[ROOM_COOK]));
+		m_roomArray[ROOM_HALL4]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_HALL4], m_roomArray[ROOM_GABRIEL]));
 		m_roomArray[ROOM_LANDING]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_LANDING], m_roomArray[ROOM_HALL1]));
-		
+		m_roomArray[ROOM_LANDING]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_LANDING], m_roomArray[ROOM_STAIRS]));
+		m_roomArray[ROOM_KITCHEN]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_KITCHEN], m_roomArray[ROOM_PASSAGE3]));
+		m_roomArray[ROOM_KITCHEN]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_KITCHEN], m_roomArray[ROOM_HALL3]));
+		m_roomArray[ROOM_STAIRS]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_LANDING]));
+		m_roomArray[ROOM_STAIRS]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_HALL3]));
+		m_roomArray[ROOM_STUDY]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_STUDY], m_roomArray[ROOM_HALL3]));
+		m_roomArray[ROOM_CLOCK]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_CLOCK], m_roomArray[ROOM_OUTSIDE3]));
+		m_roomArray[ROOM_CLOCK]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_CLOCK], m_roomArray[ROOM_DRAWING]));
+		m_roomArray[ROOM_CELLAR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_CELLAR], m_roomArray[ROOM_PASSAGE3]));
+		m_roomArray[ROOM_CELLAR]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_CELLAR], m_roomArray[ROOM_OUTSIDE4]));
+		m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_CLOCK]));
+		m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_HALL3]));
+		m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_OUTSIDE4]));
+		m_roomArray[ROOM_LIBRARY]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_LIBRARY], m_roomArray[ROOM_HALL3]));
+				
 		m_eventArray[EVENT_SHOW_ROOM] = new CEvent(EVENT_SHOW_ROOM, new CTime(9, 10, 0, 0));
 		m_eventArray[EVENT_GET_SHOT] = new CEvent(EVENT_SHOW_ROOM, new CTime(12, 0, 0, 0));
 		break;
@@ -141,11 +185,11 @@ void CGame::Initialize()
 	
 	InitializeDoors();
 	
-	m_currentRoom = m_roomArray[ROOM_HALL1];
-	m_currentRoom->Initialize(0);
-	
 	m_snide = m_characterArray[CHARACTER_SNIDE];
-	m_snide->SetPosition(128, 168 - CHARACTER_HEIGHT);
+	m_snide->SetPosition(142, 105);
+	
+	m_currentRoom = m_roomArray[ROOM_STAIRS];
+	m_currentRoom->Initialize(197 - 128);
 	
 	m_characterArray[CHARACTER_GABRIEL]->SetPosition(64, 168 - CHARACTER_HEIGHT);
 	m_characterArray[CHARACTER_GABRIEL]->SetFrameType(FRAME_SPEAK);

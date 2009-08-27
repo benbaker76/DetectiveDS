@@ -46,5 +46,21 @@ enum CollisionType
 	COL_STABBED_DOCTOR = 41
 };
 
-extern const u8 col_hall1[];
-extern const u8 col_room1[];
+extern const unsigned char col_cellar[1200];
+extern const unsigned char col_clock[912];
+extern const unsigned char col_drawing[1920];
+extern const unsigned char col_hall1[2496];
+extern const unsigned char col_hall2[2496];
+extern const unsigned char col_hall3[2496];
+extern const unsigned char col_hall4[1632];
+extern const unsigned char col_kitchen[1608];
+extern const unsigned char col_landing[1200];
+extern const unsigned char col_library[1248];
+extern const unsigned char col_outside1[1200];
+extern const unsigned char col_outside2[1632];
+extern const unsigned char col_passage1[720];
+extern const unsigned char col_passage2[720];
+extern const unsigned char col_room1[1200];
+extern const unsigned char col_room2[1032];
+extern const unsigned char col_stairs[1008];
+extern const unsigned char col_study[960];
