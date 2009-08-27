@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "Character.h"
+#include "Text.h"
 
 CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite)
 {
@@ -8,6 +9,12 @@ CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprit
 	m_pBodySprite = pBodySprite;
 	m_x = 0;
 	m_y = 0;
+
+	m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_col1Tiles, sprite_col1TilesLen, sprite_col1Pal, sprite_col1PalLen, NULL, 0);
+	m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_col2Tiles, sprite_col2TilesLen, sprite_col2Pal, sprite_col2PalLen, NULL, 0);
+	
+	m_spriteCol1->SetOamIndex(0);
+	m_spriteCol2->SetOamIndex(1);
 }
 
 CCharacter::~CCharacter()
@@ -92,23 +99,43 @@ CollisionType CCharacter::CheckCollision(DirectionType directionType, CRoom* pRo
 {
 	CollisionType retType = COL_PATH;
 	int x = ((pRoom->X() + m_x) + CHARACTER_WIDTH / 2) / 8;
-	int y = ((pRoom->Y() + m_y) + CHARACTER_HEIGHT) / 8;
+	int y = ((pRoom->Y() + m_y) + CHARACTER_HEIGHT-8) / 8;
+	int x2 = ((m_x + CHARACTER_WIDTH / 2) / 8);
+	int y2 = ((m_y + CHARACTER_HEIGHT-8) / 8);
+	
+	m_spriteCol1->SetPosition(x2 * 8, y2 * 8);
+	m_spriteCol1->Draw();
 	
 	switch(directionType)
 	{
 		case DIRECTION_UP:
 			retType = (CollisionType) pRoom->ColMap(x, y-1);
+			
+			m_spriteCol2->SetPosition(x2 * 8, (y2-1) * 8);
+			m_spriteCol2->Draw();
 			break;
 		case DIRECTION_DOWN:
-			retType = (CollisionType) pRoom->ColMap(x, y);
+			retType = (CollisionType) pRoom->ColMap(x, y+1);
+			
+			m_spriteCol2->SetPosition(x2 * 8, (y2+1) * 8);
+			m_spriteCol2->Draw();
 			break;
 		case DIRECTION_LEFT:
-			retType = (CollisionType) pRoom->ColMap(x-1, y-1);
+			retType = (CollisionType) pRoom->ColMap(x-2, y);
+			
+			m_spriteCol2->SetPosition((x2-2) * 8, y2 * 8);
+			m_spriteCol2->Draw();
 			break;
 		case DIRECTION_RIGHT:
-			retType = (CollisionType) pRoom->ColMap(x+1, y-1);
+			retType = (CollisionType) pRoom->ColMap(x+2, y);
+			
+			m_spriteCol2->SetPosition((x2+2) * 8, y2 * 8);
+			m_spriteCol2->Draw();
 			break;
 	}
+	
+	DrawText("                                ", 0, 0, false);
+	DrawText(g_colName[(int) retType], 0, 0, false);
 	
 	return retType;
 }

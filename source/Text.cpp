@@ -209,7 +209,7 @@ const int g_largeTextMap[] =
 
 void DrawText(const char* string, int x, int y, bool sub)
 {
-	u16* pMap = BG_MAP_RAM(BG0_MAP_BASE) + (x + y * 32);
+	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)) + (x + y * 32);
 	
 	for(int i=0; i<strlen(string); i++)
 		*pMap++ = string[i] - 0x20;
@@ -217,13 +217,10 @@ void DrawText(const char* string, int x, int y, bool sub)
 
 void DrawTextLarge(const char* string, int x, int y, bool sub)
 {
-	u16* pMap = BG_MAP_RAM(BG0_MAP_BASE) + (x + y * 32);
+	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)) + (x + y * 32);
 	
 	for(int i=0; i<strlen(string); i++)
-	{
-		//*pMap = string[i] * 2 - 0x20 + 96;
-		//*(pMap+32) = string[i] * 2 - 0x20 + 96 + 1;
-		
+	{	
 		*pMap = 96 * 2 + g_largeTextMap[string[i] - 0x20] * 2;
 		*(pMap+32) = 96 * 2 + g_largeTextMap[string[i] - 0x20] * 2 + 1;
 		pMap++;

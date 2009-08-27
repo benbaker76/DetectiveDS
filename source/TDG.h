@@ -53,6 +53,9 @@
 #include "sprite_dingle_head.h"
 #include "sprite_dingle_body.h"
 
+#include "sprite_col1.h"
+#include "sprite_col2.h"
+
 #include "title_bg1.h"
 #include "title_bg2.h"
 #include "title_bg3.h"

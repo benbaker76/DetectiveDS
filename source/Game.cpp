@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "Game.h"
 #include "TDG.h"
+#include "Text.h"
 
 CGame::CGame(GameType gameType)
 {
@@ -35,7 +36,7 @@ void CGame::Initialize()
 	
 	switch(m_gameType)
 	{
-	case GAMETYPE_NORMAL:	
+	case GAMETYPE_NORMAL:
 		m_spriteArray[SPRITE_HEAD_SNIDE] = new CSprite(SPRITE_HEAD_SNIDE, sprite_snide_headTiles, sprite_snide_headTilesLen, sprite_snide_headPal, sprite_snide_headPalLen, g_snideHeadFrames, 8);
 		m_spriteArray[SPRITE_BODY_SNIDE] = new CSprite(SPRITE_BODY_SNIDE, sprite_snide_bodyTiles, sprite_snide_bodyTilesLen, sprite_snide_bodyPal, sprite_snide_bodyPalLen, g_snideBodyFrames, 17);
 		m_spriteArray[SPRITE_HEAD_REVEREND] = new CSprite(SPRITE_HEAD_REVEREND, sprite_reverend_headTiles, sprite_reverend_headTilesLen, sprite_reverend_headPal, sprite_reverend_headPalLen, g_reverendHeadFrames, 4);
@@ -56,7 +57,7 @@ void CGame::Initialize()
 		m_spriteArray[SPRITE_BODY_MAJOR] = new CSprite(SPRITE_BODY_MAJOR, sprite_major_bodyTiles, sprite_major_bodyTilesLen, sprite_major_bodyPal, sprite_major_bodyPalLen, g_majorBodyFrames, 6);		
 		m_spriteArray[SPRITE_HEAD_DINGLE] = new CSprite(SPRITE_HEAD_DINGLE, sprite_dingle_headTiles, sprite_dingle_headTilesLen, sprite_dingle_headPal, sprite_dingle_headPalLen, g_dingleHeadFrames, 5);
 		m_spriteArray[SPRITE_BODY_DINGLE] = new CSprite(SPRITE_BODY_DINGLE, sprite_dingle_bodyTiles, sprite_dingle_bodyTilesLen, sprite_dingle_bodyPal, sprite_dingle_bodyPalLen, g_dingleBodyFrames, 7);
-			
+					
 		m_characterArray[CHARACTER_SNIDE] = new CCharacter(CHARACTER_SNIDE, m_spriteArray[SPRITE_HEAD_SNIDE], m_spriteArray[SPRITE_BODY_SNIDE]);
 		m_characterArray[CHARACTER_REVEREND] = new CCharacter(CHARACTER_REVEREND, m_spriteArray[SPRITE_HEAD_REVEREND], m_spriteArray[SPRITE_BODY_REVEREND]);
 		m_characterArray[CHARACTER_BENTLEY] = new CCharacter(CHARACTER_BENTLEY, m_spriteArray[SPRITE_HEAD_BENTLEY], m_spriteArray[SPRITE_BODY_BENTLEY]);
@@ -236,7 +237,7 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 			{
 				m_currentRoom = pDoor->pRoomOut();
 				m_currentRoom->Initialize(pDoor->pDoorOut()->X() - 128);
-				m_snide->SetPosition(128, pDoor->pDoorOut()->Y() - CHARACTER_HEIGHT + 8);
+				m_snide->SetPosition(128, pDoor->pDoorOut()->Y() - CHARACTER_HEIGHT + 16);
 			}
 		}
 	}
@@ -244,49 +245,43 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	{
 		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_LEFT, m_currentRoom);
 		
-	    if(m_snide->X() > 128)
+		if(collisionType == COL_PATH)
 		{
-			if(collisionType == COL_PATH)
-				m_snide->Move(DIRECTION_LEFT);
-			else
-				m_snide->Face(DIRECTION_LEFT);
-		}
-		else
-		{
-			if(!m_currentRoom->Scroll(DIRECTION_LEFT) && m_snide->X() > 0)
+			if(m_snide->X() > 128)
 			{
-				if(collisionType == COL_PATH)
+				m_snide->Move(DIRECTION_LEFT);
+			}
+			else
+			{
+				if(!m_currentRoom->Scroll(DIRECTION_LEFT))
 					m_snide->Move(DIRECTION_LEFT);
 				else
 					m_snide->Face(DIRECTION_LEFT);
 			}
-			else
-				m_snide->Face(DIRECTION_LEFT);
 		}
+		else
+			m_snide->Face(DIRECTION_LEFT);
 	}
 	else if(keys_held & KEY_RIGHT)
 	{
 		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_RIGHT, m_currentRoom);
 		
-		if(m_snide->X() < 128)
-		{		
-			if(collisionType == COL_PATH)
-				m_snide->Move(DIRECTION_RIGHT);
-			else
-				m_snide->Face(DIRECTION_RIGHT);
-		}
-		else
+		if(collisionType == COL_PATH)
 		{
-			if(!m_currentRoom->Scroll(DIRECTION_RIGHT) && m_snide->X() < 256 - CHARACTER_WIDTH)
+			if(m_snide->X() < 128)
 			{
-				if(collisionType == COL_PATH)
+				m_snide->Move(DIRECTION_RIGHT);
+			}
+			else
+			{
+				if(!m_currentRoom->Scroll(DIRECTION_RIGHT))
 					m_snide->Move(DIRECTION_RIGHT);
 				else
 					m_snide->Face(DIRECTION_RIGHT);
 			}
-			else
-				m_snide->Face(DIRECTION_RIGHT);
 		}
+		else
+			m_snide->Face(DIRECTION_RIGHT);
 	}
 	else if(keys_held & KEY_A)
 	{

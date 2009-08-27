@@ -52,11 +52,11 @@ void CVideo::Initialize()
 	WIN0_X0	= 0;
 	WIN0_X1 = 255;
 	
-	DrawText("@2009 HEADSOFT", 9, 1, true);
-	DrawText("INTRODUCING", 4, 18, true);
-	DrawText("THE CAST..", 5, 19, true);
+	DrawText("@2009 HEADSOFT", 9, 1, false);
+	DrawText("INTRODUCING", 4, 18, false);
+	DrawText("THE CAST..", 5, 19, false);
 	
-	DrawTextLarge("\"GRENADE!\" SHOUTS THE MAJOR.", 0, 14, true);
+	DrawTextLarge("\"GRENADE!\" SHOUTS THE MAJOR.", 0, 14, false);
 	
 	oamInit(&oamMain, SpriteMapping_1D_32, false);
 	oamInit(&oamSub, SpriteMapping_1D_32, false);

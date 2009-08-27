@@ -56,6 +56,9 @@ private:
 	CSprite* m_pHeadSprite;
 	CSprite* m_pBodySprite;
 	
+	CSprite* m_spriteCol1;
+	CSprite* m_spriteCol2;	
+	
 	int m_x;
 	int m_y;
 };
