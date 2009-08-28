@@ -100,8 +100,8 @@ CollisionType CCharacter::CheckCollision(DirectionType directionType, CRoom* pRo
 	CollisionType retType = COL_PATH;
 	int x = ((pRoom->X() + m_x) + CHARACTER_WIDTH / 2) / 8;
 	int y = ((pRoom->Y() + m_y) + CHARACTER_HEIGHT-8) / 8;
-	int x2 = ((m_x + CHARACTER_WIDTH / 2) / 8);
-	int y2 = ((m_y + CHARACTER_HEIGHT-8) / 8);
+	//int x2 = ((m_x + CHARACTER_WIDTH / 2) / 8);
+	//int y2 = ((m_y + CHARACTER_HEIGHT-8) / 8);
 	
 	//m_spriteCol1->SetPosition(x2 * 8, y2 * 8);
 	//m_spriteCol1->Draw();

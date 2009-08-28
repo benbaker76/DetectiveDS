@@ -85,7 +85,7 @@ void CSprite::Draw()
 	oamSet(&oamSub,						// sub graphics engine context
 		m_oamIndex,						// oam index (0 to 127)
 		m_x, m_y,						// x and y pixel location of the sprite
-		0,								// priority, lower renders last (on top)
+		1,								// priority, lower renders last (on top)
 		0,								// this is the palette index if multiple palettes or the alpha value if bmp sprite	
 		SpriteSize_32x32,
 		SpriteColorFormat_256Color,

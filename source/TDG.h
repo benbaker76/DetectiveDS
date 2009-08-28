@@ -32,6 +32,11 @@
 #include "map_stairs.h"
 #include "map_study.h"
 
+#include "map_landing_front1.h"
+#include "map_landing_front2.h"
+#include "map_outside2_front.h"
+#include "map_stairs_front.h"
+
 #include "sprite_snide_head.h"
 #include "sprite_snide_body.h"
 #include "sprite_reverend_head.h"
@@ -72,8 +77,8 @@
 #define BG1_MAP_BASE				31
 #define BG1_MAP_BASE_SUB			31
 
-#define BG2_MAP_BASE				30
-#define BG2_MAP_BASE_SUB			30
+#define BG2_MAP_BASE				20
+#define BG2_MAP_BASE_SUB			20
 
 #define BG3_MAP_BASE				29
 #define BG3_MAP_BASE_SUB			29

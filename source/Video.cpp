@@ -25,9 +25,12 @@ void CVideo::Initialize()
 	bgInit(3, BgType_Text8bpp, BgSize_T_256x256, BG3_MAP_BASE, BG3_TILE_BASE);
 	
 	bgInitSub(0, BgType_Text4bpp, BgSize_T_256x256, BG0_MAP_BASE_SUB, BG0_TILE_BASE_SUB);
-	bgInitSub(1, BgType_Text8bpp, BgSize_T_256x256, BG1_MAP_BASE_SUB, BG1_TILE_BASE_SUB);
-	bgInitSub(2, BgType_Text8bpp, BgSize_T_512x256, BG2_MAP_BASE_SUB, BG2_TILE_BASE_SUB);
+	int bg1Sub = bgInitSub(1, BgType_Text8bpp, BgSize_T_512x256, BG1_MAP_BASE_SUB, BG1_TILE_BASE_SUB);
+	int bg2Sub = bgInitSub(2, BgType_Text8bpp, BgSize_T_512x256, BG2_MAP_BASE_SUB, BG2_TILE_BASE_SUB);
 	bgInitSub(3, BgType_Text8bpp, BgSize_T_256x256, BG3_MAP_BASE_SUB, BG3_TILE_BASE_SUB);
+	
+	bgSetControlBits(bg1Sub, BG_PRIORITY_0);
+	bgSetControlBits(bg2Sub, BG_PRIORITY_2);
 	
 	lcdMainOnBottom();
 	

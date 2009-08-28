@@ -42,11 +42,14 @@ public:
 	~CMap();
 	
 	void Initialize(int x);
+	void InitializeOverlay();
 	void Draw();
 	bool Scroll(DirectionType directionType);
 	
 	void SetX(int x) { m_x = x; }
 	void SetY(int y) { m_y = y; }
+	
+	void SetOverlay(const u32* pTiles, int tilesLen, const u16* pMap, int mapLen) { m_pTilesOverlay = pTiles; m_tilesOverlayLen = tilesLen; m_pMapOverlay = pMap; m_mapOverlayLen = mapLen; }
 	
 	int X() const { return m_x; }
 	int Y() const { return m_y; }
@@ -61,6 +64,12 @@ private:
 	int m_tilesLen;
 	int m_mapLen;
 	int m_paletteLen;
+	
+	const u32* m_pTilesOverlay;
+	const u16* m_pMapOverlay;
+	
+	int m_tilesOverlayLen;
+	int m_mapOverlayLen;
 	
 	int m_x;
 	int m_y;

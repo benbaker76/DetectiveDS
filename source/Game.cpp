@@ -88,6 +88,10 @@ void CGame::Initialize()
 		m_mapArray[MAP_STAIRS] = new CMap(336, 192, map_stairsTiles, map_stairsTilesLen, map_stairsMap, map_stairsMapLen, map_stairsPal, map_stairsPalLen);
 		m_mapArray[MAP_STUDY] = new CMap(320, 192, map_studyTiles, map_studyTilesLen, map_studyMap, map_studyMapLen, map_studyPal, map_studyPalLen);
 		
+		m_mapArray[MAP_LANDING]->SetOverlay(map_landing_front1Tiles, map_landing_front1TilesLen, map_landing_front1Map, map_landing_front1MapLen);
+		m_mapArray[MAP_OUTSIDE2]->SetOverlay(map_outside2_frontTiles, map_outside2_frontTilesLen, map_outside2_frontMap, map_outside2_frontMapLen);
+		//m_mapArray[MAP_STAIRS]->SetOverlay(map_stairs_frontTiles, map_stairs_frontTilesLen, map_stairs_frontMap, map_stairs_frontMapLen);
+		
 		m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, m_mapArray[MAP_ROOM1], col_room1);
 		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, m_mapArray[MAP_ROOM1], col_room1);
 		m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, m_mapArray[MAP_ROOM1], col_room1);
@@ -191,8 +195,8 @@ void CGame::Initialize()
 	m_currentRoom = m_roomArray[ROOM_STAIRS];
 	m_currentRoom->Initialize(69);
 	
-	m_characterArray[CHARACTER_GABRIEL]->SetPosition(64, 168 - CHARACTER_HEIGHT);
-	m_characterArray[CHARACTER_GABRIEL]->SetFrameType(FRAME_SPEAK);
+	//m_characterArray[CHARACTER_GABRIEL]->SetPosition(64, 168 - CHARACTER_HEIGHT);
+	//m_characterArray[CHARACTER_GABRIEL]->SetFrameType(FRAME_SPEAK);
 }
 
 void CGame::Update(int elapsedTime, CTime* pCurrentTime)
@@ -226,20 +230,21 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	
 	BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
 	
-	if(keys_released & KEY_UP ||
-		keys_released & KEY_DOWN ||
-		keys_released & KEY_LEFT ||
-		keys_released & KEY_RIGHT)
+	if((keys_released & KEY_UP) ||
+		(keys_released & KEY_DOWN) ||
+		(keys_released & KEY_LEFT) ||
+		(keys_released & KEY_RIGHT))
 	{
 		mmEffectCancel(footsteps);
+		footsteps = 0;
 	}
 	
-	if(keys_pressed & KEY_UP ||
-		keys_pressed & KEY_DOWN ||
-		keys_pressed & KEY_LEFT ||
-		keys_pressed & KEY_RIGHT)
+	if(((keys_held & KEY_UP) ||
+		(keys_held & KEY_DOWN) ||
+		(keys_held & KEY_LEFT) ||
+		(keys_held & KEY_RIGHT)) &&
+		(footsteps == 0))
 	{
-		mmEffectCancel(footsteps);
 		footsteps = mmEffectEx(&g_sfx_footsteps);
 	}
 	
@@ -369,12 +374,12 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	}
 	
 	m_snide->Animate(elapsedTime);
-	m_characterArray[CHARACTER_GABRIEL]->Animate(elapsedTime);
+	//m_characterArray[CHARACTER_GABRIEL]->Animate(elapsedTime);
 	
 	SortSprites();
 	
 	m_snide->Draw();
-	m_characterArray[CHARACTER_GABRIEL]->Draw();
+	//m_characterArray[CHARACTER_GABRIEL]->Draw();
 	
 	oamUpdate(&oamSub);
 }
