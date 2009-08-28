@@ -32,7 +32,7 @@ public:
 	CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite);
 	~CCharacter();
 	
-	void SetPosition(int x, int y);
+	void SetPosition(float x, float y);
 	void SetPriority(int index);
 	void Animate(int elapsedTime);
 	void Hide();
@@ -43,11 +43,11 @@ public:
 	
 	void SetFrameType(FrameType frameType);
 	
-	void SetX(int x) { m_x = x; SetPosition(m_x, m_y); }
-	void SetY(int y) { m_y = y; SetPosition(m_x, m_y); }
+	void SetX(float x) { m_x = x; SetPosition(m_x, m_y); }
+	void SetY(float y) { m_y = y; SetPosition(m_x, m_y); }
 	
-	int X() const { return m_x; }
-	int Y() const { return m_y; }
+	float X() const { return m_x; }
+	float Y() const { return m_y; }
 	
 	int Priority() const { return m_pHeadSprite->OamIndex(); }
 
@@ -60,7 +60,7 @@ private:
 	CSprite* m_spriteCol2;	
 	
 	float m_x;
-	int m_y;
+	float m_y;
 };
 
 #endif

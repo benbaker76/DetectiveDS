@@ -56,7 +56,7 @@ public:
 	CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u16* pPalette, int paletteLen, const int* frameArray, int frameCount);
 	~CSprite();
 	
-	void SetPosition(int x, int y);
+	void SetPosition(float x, float y);
 	void Animate(int elapsedTime);
 	void Hide();
 	void Draw();
@@ -65,8 +65,8 @@ public:
 	void SetOamIndex(int oamIndex) { m_oamIndex = oamIndex; }
 	int OamIndex() const { return m_oamIndex; }
 	
-	int X() const { return m_x; }
-	int Y() const { return m_y; }
+	float X() const { return m_x; }
+	float Y() const { return m_y; }
 
 private:
 	SpriteType m_spriteType;
@@ -89,8 +89,8 @@ private:
 	
 	CSprite* m_pSprite;
 	
-	int m_x;
-	int m_y;
+	float m_x;
+	float m_y;
 };
 
 #endif

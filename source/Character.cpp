@@ -21,7 +21,7 @@ CCharacter::~CCharacter()
 {
 }
 
-void CCharacter::SetPosition(int x, int y)
+void CCharacter::SetPosition(float x, float y)
 {
 	m_x = x;
 	m_y = y;
@@ -78,11 +78,11 @@ void CCharacter::Move(DirectionType directionType)
 	{
 		case DIRECTION_UP:
 			SetFrameType(FRAME_UP);
-			SetPosition(m_x + 2, m_y - 1);
+			SetPosition(m_x + 1.5f, m_y - 0.75f);
 			break;
 		case DIRECTION_DOWN:
 			SetFrameType(FRAME_DOWN);
-			SetPosition(m_x - 2, m_y + 1);
+			SetPosition(m_x - 1.5f, m_y + 0.75f);
 			break;
 		case DIRECTION_LEFT:
 			SetFrameType(FRAME_LEFT);

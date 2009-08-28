@@ -28,7 +28,7 @@ CSprite::~CSprite()
 {
 }
 
-void CSprite::SetPosition(int x, int y)
+void CSprite::SetPosition(float x, float y)
 {
 	m_x = x;
 	m_y = y;
