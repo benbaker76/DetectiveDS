@@ -99,4 +99,6 @@
 
 #define ARRAY_LENGTH(x)		(sizeof(x) / sizeof(x[0]))
 
+#define PI 3.1415926536
+
 #endif

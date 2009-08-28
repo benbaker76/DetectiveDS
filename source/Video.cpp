@@ -49,11 +49,6 @@ void CVideo::Initialize()
 	dmaCopy(title_bg3Tiles, BG_TILE_RAM(BG3_TILE_BASE), title_bg3TilesLen);
 	dmaCopy(title_bg3Map, BG_MAP_RAM(BG3_MAP_BASE), title_bg3MapLen);
 	
-	//dmaCopy(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), watchTilesLen);
-	decompressToVRAM(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB));
-	dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
-	dmaCopy(watchPal, BG_PALETTE_SUB, watchPalLen);
-	
 	WIN_IN = WIN0_BG0 | WIN0_BG1 | WIN0_BG2 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;
 	WIN_OUT = WIN0_BG0 | WIN0_BG1 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;
 	WIN0_Y0 = 0;
