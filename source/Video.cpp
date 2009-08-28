@@ -3,6 +3,7 @@
 #include "TDG.h"
 #include "Windows.h"
 #include "Text.h"
+#include "lz77.h"
 
 CVideo::CVideo()
 {
@@ -25,12 +26,12 @@ void CVideo::Initialize()
 	bgInit(3, BgType_Text8bpp, BgSize_T_256x256, BG3_MAP_BASE, BG3_TILE_BASE);
 	
 	bgInitSub(0, BgType_Text4bpp, BgSize_T_256x256, BG0_MAP_BASE_SUB, BG0_TILE_BASE_SUB);
-	int bg1Sub = bgInitSub(1, BgType_Text8bpp, BgSize_T_512x256, BG1_MAP_BASE_SUB, BG1_TILE_BASE_SUB);
+	bgInitSub(1, BgType_Text8bpp, BgSize_T_256x256, BG1_MAP_BASE_SUB, BG1_TILE_BASE_SUB);
 	int bg2Sub = bgInitSub(2, BgType_Text8bpp, BgSize_T_512x256, BG2_MAP_BASE_SUB, BG2_TILE_BASE_SUB);
-	bgInitSub(3, BgType_Text8bpp, BgSize_T_256x256, BG3_MAP_BASE_SUB, BG3_TILE_BASE_SUB);
+	int bg3Sub = bgInitSub(3, BgType_Text8bpp, BgSize_T_512x256, BG3_MAP_BASE_SUB, BG3_TILE_BASE_SUB);
 	
-	bgSetControlBits(bg1Sub, BG_PRIORITY_0);
-	bgSetControlBits(bg2Sub, BG_PRIORITY_2);
+	bgSetControlBits(bg2Sub, BG_PRIORITY_0);
+	bgSetControlBits(bg3Sub, BG_PRIORITY_2);
 	
 	lcdMainOnBottom();
 	
@@ -47,6 +48,11 @@ void CVideo::Initialize()
 	
 	dmaCopy(title_bg3Tiles, BG_TILE_RAM(BG3_TILE_BASE), title_bg3TilesLen);
 	dmaCopy(title_bg3Map, BG_MAP_RAM(BG3_MAP_BASE), title_bg3MapLen);
+	
+	//dmaCopy(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), watchTilesLen);
+	decompressToVRAM(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB));
+	dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
+	dmaCopy(watchPal, BG_PALETTE_SUB, watchPalLen);
 	
 	WIN_IN = WIN0_BG0 | WIN0_BG1 | WIN0_BG2 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;
 	WIN_OUT = WIN0_BG0 | WIN0_BG1 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;

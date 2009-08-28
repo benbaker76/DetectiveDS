@@ -62,6 +62,8 @@
 #include "sprite_col2.h"
 #include "sprite_col3.h"
 
+#include "watch.h"
+
 #include "title_bg1.h"
 #include "title_bg2.h"
 #include "title_bg3.h"
@@ -71,17 +73,17 @@
 
 #include "icons.h"
 
-#define BG0_MAP_BASE				28
-#define BG0_MAP_BASE_SUB			28
+#define BG0_MAP_BASE				26
+#define BG0_MAP_BASE_SUB			26
 
-#define BG1_MAP_BASE				31
-#define BG1_MAP_BASE_SUB			31
+#define BG1_MAP_BASE				27
+#define BG1_MAP_BASE_SUB			27
 
-#define BG2_MAP_BASE				20
-#define BG2_MAP_BASE_SUB			20
+#define BG2_MAP_BASE				28
+#define BG2_MAP_BASE_SUB			28
 
-#define BG3_MAP_BASE				29
-#define BG3_MAP_BASE_SUB			29
+#define BG3_MAP_BASE				30
+#define BG3_MAP_BASE_SUB			30
 
 #define BG0_TILE_BASE				7
 #define BG0_TILE_BASE_SUB			7
@@ -89,11 +91,11 @@
 #define BG1_TILE_BASE				6
 #define BG1_TILE_BASE_SUB			6
 
-#define BG2_TILE_BASE				0
-#define BG2_TILE_BASE_SUB			0
+#define BG2_TILE_BASE				5
+#define BG2_TILE_BASE_SUB			5
 
-#define BG3_TILE_BASE				5
-#define BG3_TILE_BASE_SUB			5
+#define BG3_TILE_BASE				0
+#define BG3_TILE_BASE_SUB			0
 
 #define ARRAY_LENGTH(x)		(sizeof(x) / sizeof(x[0]))
 
