@@ -60,7 +60,7 @@ int main(void)
 	mmSetEventHandler(mmEventHandler);
 	mmLoad(MOD_DETECTIVE);
 	mmLoadEffect(SFX_FOOTSTEPS);
-	//mmStart(MOD_DETECTIVE, MM_PLAY_LOOP);
+	mmStart(MOD_DETECTIVE, MM_PLAY_LOOP);
 	//mmPosition(1);
 	
 	consoleDebugInit(DebugDevice_NOCASH);

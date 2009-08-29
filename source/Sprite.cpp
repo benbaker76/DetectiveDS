@@ -21,7 +21,7 @@ CSprite::CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u
 	m_oamIndex = spriteType;
 	
 	m_gfxSub = oamAllocateGfx(&oamSub, SpriteSize_32x32, SpriteColorFormat_256Color);
-	dmaCopy(m_pPalette, SPRITE_PALETTE_SUB, m_paletteLen);
+	//dmaCopy(m_pPalette, SPRITE_PALETTE_SUB, m_paletteLen);
 }
 
 CSprite::~CSprite()

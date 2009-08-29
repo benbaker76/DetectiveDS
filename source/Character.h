@@ -6,7 +6,7 @@
 #define MAX_CHARACTERS			10
 
 #define CHARACTER_WIDTH			24
-#define CHARACTER_HEIGHT		42
+#define CHARACTER_HEIGHT		53
 
 #define HEAD_HEIGHT				21
 

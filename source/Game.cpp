@@ -215,8 +215,6 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	//sprintf(buf, "%02d:%02d:%02d:%02d Elapsed: %08d", pCurrentTime->Hours, pCurrentTime->Minutes, pCurrentTime->Seconds, pCurrentTime->MilliSeconds, elapsedTime);
 	//fprintf(stderr, buf);
 	
-	DrawTime(pCurrentTime);
-	
 	for(int i=0; i<MAX_EVENTS; i++)
 	{
 		if(m_eventArray[i] != NULL)

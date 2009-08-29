@@ -68,6 +68,9 @@
 #include "title_bg2.h"
 #include "title_bg3.h"
 
+#include "menu_top.h"
+#include "menu_bottom.h"
+
 #include "font.h"
 #include "font_large.h"
 
