@@ -7,6 +7,8 @@
 #include "soundbank_bin.h"
 #include "soundbank.h"
 
+#include "Text.h"
+
 CGame m_game(GAMETYPE_NORMAL);
 CTimer m_timer(9, 10, 0, 0);
 
@@ -74,7 +76,7 @@ int main(void)
 		m_lastUpdate = m_timer.pCurrentTime()->MilliSeconds;
 		
 		m_game.Update(m_elapsedTime, m_timer.pCurrentTime());
-
+		
 		swiWaitForVBlank();
 	}
 
