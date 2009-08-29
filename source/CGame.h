@@ -36,6 +36,7 @@ private:
 	
 	CRoom* m_currentRoom;
 	CCharacter* m_snide;
+	CWatch* m_watch;
 	
 	int m_bg2MainVScroll;
 };

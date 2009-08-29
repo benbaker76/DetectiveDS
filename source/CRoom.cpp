@@ -1,4 +1,4 @@
-#include "Room.h"
+#include "CRoom.h"
 
 CRoom::CRoom(RoomType roomType, CMap* pMap, const unsigned char* colMap)
 {

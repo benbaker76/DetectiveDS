@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "Door.h"
+#include "CDoor.h"
 
 CDoor::CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoomOut)
 {

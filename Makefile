@@ -35,8 +35,8 @@ SOUNDBANK_NAME	:=	soundbank
 # Header variables
 #---------------------------------------------------------------------------------
 NAME		:=	DetectiveGameDS
-AUTHOR		:=	By Flash & HeadKaze
-VERSION		:=	www.retrobytesportal.com
+AUTHOR		:=	By HeadKaze
+VERSION		:=	www.headsoft.com.au
 NITRODIR	:=	-d efsroot
 LOGO		:=	
 ICON		:=	-b logo.bmp

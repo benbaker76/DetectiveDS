@@ -84,7 +84,6 @@ private:
 	
 	int m_oamIndex;
 	
-	u16* m_gfx;
 	u16* m_gfxSub;
 	
 	CSprite* m_pSprite;

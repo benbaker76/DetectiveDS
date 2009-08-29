@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "Map.h"
+#include "CMap.h"
 #include "TDG.h"
 #include "lz77.h"
 
@@ -31,6 +31,8 @@ void CMap::Initialize(int x)
 	//dmaCopy(m_pTiles, BG_TILE_RAM_SUB(BG3_TILE_BASE_SUB), m_tilesLen);
 	decompressToVRAM(m_pTiles, BG_TILE_RAM_SUB(BG3_TILE_BASE_SUB));
 	dmaCopy(m_pPalette, BG_PALETTE_SUB, m_paletteLen);
+	
+	DC_FlushAll();
 	
 	BG_PALETTE_SUB[0] = 0;
 	BACKGROUND_SUB.scroll[2].x = (m_x & 0xFF);

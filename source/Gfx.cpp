@@ -70,8 +70,8 @@ void DrawLine(int x0, int y0, int x1, int y1, int colorIndex)
 
 void DrawTime(CTime* pTime)
 {
-	dmaCopy(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), watchTilesLen);
-	dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
+	//dmaCopy(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), watchTilesLen);
+	//dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
 	//dmaCopy(watchPal, BG_PALETTE_SUB, watchPalLen);
 
 	float radians;

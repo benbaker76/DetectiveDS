@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "Character.h"
+#include "CCharacter.h"
 #include "Text.h"
 
 CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite)

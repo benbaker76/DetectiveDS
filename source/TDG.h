@@ -2,16 +2,17 @@
 #define __TDG_H__
 
 #include "ColMap.h"
-#include "Door.h"
+#include "CDoor.h"
 #include "Globals.h"
-#include "Map.h"
-#include "Room.h"
-#include "Sprite.h"
-#include "Video.h"
-#include "Character.h"
-#include "Item.h"
-#include "Timer.h"
-#include "Event.h"
+#include "CMap.h"
+#include "CRoom.h"
+#include "CSprite.h"
+#include "CVideo.h"
+#include "CCharacter.h"
+#include "CItem.h"
+#include "CTimer.h"
+#include "CEvent.h"
+#include "CWatch.h"
 
 #include "map_cellar.h"
 #include "map_clock.h"
@@ -61,6 +62,8 @@
 #include "sprite_col1.h"
 #include "sprite_col2.h"
 #include "sprite_col3.h"
+
+#include "sprite_watch.h"
 
 #include "watch.h"
 

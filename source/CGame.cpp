@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "Game.h"
+#include "CGame.h"
 #include "TDG.h"
 #include "Text.h"
 
@@ -196,6 +196,8 @@ void CGame::Initialize()
 	
 	//m_characterArray[CHARACTER_GABRIEL]->SetPosition(64, 168 - CHARACTER_HEIGHT);
 	//m_characterArray[CHARACTER_GABRIEL]->SetFrameType(FRAME_SPEAK);
+	
+	m_watch = new CWatch(113, 21);
 }
 
 void CGame::Update(int elapsedTime, CTime* pCurrentTime)
@@ -214,6 +216,8 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	//char buf[256];
 	//sprintf(buf, "%02d:%02d:%02d:%02d Elapsed: %08d", pCurrentTime->Hours, pCurrentTime->Minutes, pCurrentTime->Seconds, pCurrentTime->MilliSeconds, elapsedTime);
 	//fprintf(stderr, buf);
+	
+	m_watch->Draw(pCurrentTime);
 	
 	for(int i=0; i<MAX_EVENTS; i++)
 	{

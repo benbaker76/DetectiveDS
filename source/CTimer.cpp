@@ -1,6 +1,6 @@
 #include <nds.h>
 #include <stdio.h>
-#include "Timer.h"
+#include "CTimer.h"
 
 CTimer::CTimer()
 {

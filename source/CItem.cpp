@@ -1,5 +1,5 @@
 #include <nds.h>
-#include "Item.h"
+#include "CItem.h"
 
 CItem::CItem(ItemType itemType)
 {

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "Sprite.h"
+#include "CSprite.h"
 #include "TDG.h"
 
 CSprite::CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u16* pPalette, int paletteLen, const int* frameArray, int frameCount)

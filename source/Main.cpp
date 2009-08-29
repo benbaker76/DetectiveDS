@@ -1,7 +1,7 @@
 #include <nds.h>
 #include <stdio.h>
 #include "TDG.h"
-#include "Game.h"
+#include "CGame.h"
 #include <maxmod9.h>
 
 #include "soundbank_bin.h"

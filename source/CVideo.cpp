@@ -1,7 +1,7 @@
 #include <nds.h>
-#include "Video.h"
+#include "CVideo.h"
 #include "TDG.h"
-#include "Windows.h"
+#include "windows.h"
 #include "Text.h"
 #include "lz77.h"
 

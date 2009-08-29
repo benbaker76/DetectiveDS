@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "Event.h"
+#include "CEvent.h"
 
 CEvent::CEvent(EventType eventType, CTime* pEventTime)
 {
