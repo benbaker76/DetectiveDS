@@ -1,7 +1,9 @@
+#include <nds.h>
 #include <stdio.h>
 #include "CGame.h"
 #include "TDG.h"
 #include "Text.h"
+#include "Gfx.h"
 
 CGame::CGame(GameType gameType)
 {
@@ -185,7 +187,7 @@ void CGame::Initialize()
 		m_eventArray[EVENT_GET_SHOT] = new CEvent(EVENT_SHOW_ROOM, new CTime(12, 0, 0, 0));
 		break;
 	}
-
+	
 	InitializeDoors();
 	
 	m_snide = m_characterArray[CHARACTER_SNIDE];
@@ -197,10 +199,15 @@ void CGame::Initialize()
 	//m_characterArray[CHARACTER_GABRIEL]->SetPosition(64, 168 - CHARACTER_HEIGHT);
 	//m_characterArray[CHARACTER_GABRIEL]->SetFrameType(FRAME_SPEAK);
 	
+	m_fxManager.Initialize();
+	//m_fxManager.SetFx(FX_LIGHTS, true);
+	
 	m_watch = new CWatch(113, 21);
+	m_timer = new CTimer(9, 10, 0, 0);
+	m_timer->Start();
 }
 
-void CGame::Update(int elapsedTime, CTime* pCurrentTime)
+void CGame::Update()
 {
 	static mm_sfxhand footsteps = 0;
 	touchPosition touch;
@@ -213,17 +220,20 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 	keys_pressed = keysDown();
 	keys_released = keysUp();
 	
+	m_elapsedTime = m_timer->pCurrentTime()->MilliSeconds - m_lastUpdate;
+	m_lastUpdate = m_timer->pCurrentTime()->MilliSeconds;
+	
 	//char buf[256];
-	//sprintf(buf, "%02d:%02d:%02d:%02d Elapsed: %08d", pCurrentTime->Hours, pCurrentTime->Minutes, pCurrentTime->Seconds, pCurrentTime->MilliSeconds, elapsedTime);
+	//sprintf(buf, "%02d:%02d:%02d:%02d Elapsed: %08d", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes, m_timer->pCurrentTime()->Seconds, m_timer->pCurrentTime()->MilliSeconds, elapsedTime);
 	//fprintf(stderr, buf);
 	
-	m_watch->Draw(pCurrentTime);
+	m_watch->Draw(m_timer->pCurrentTime());
 	
 	for(int i=0; i<MAX_EVENTS; i++)
 	{
 		if(m_eventArray[i] != NULL)
 		{
-			if(m_eventArray[i]->Update(pCurrentTime))
+			if(m_eventArray[i]->Update(m_timer->pCurrentTime()))
 			{
 				m_eventArray[i] = NULL;
 				//fprintf(stderr,"Event!");
@@ -279,8 +289,12 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 				if(pDoor->pDoorOut()->X() < 128) xChar = pDoor->pDoorOut()->X();
 				if(pDoor->pDoorOut()->X() > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - pDoor->pDoorOut()->X());	
 				
+				m_fxManager.SetFx(FX_FADE_BLACK_OUT, true);
+				
 				m_currentRoom->Initialize(xRoom);
 				m_snide->SetPosition(xChar, yChar);
+				
+				//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
 				
 				//char buf[256];
 				//sprintf(buf, "xRoom: %05d, xChar: %05d", xRoom, xChar);
@@ -316,8 +330,12 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 				if(pDoor->pDoorOut()->X() < 128) xChar = pDoor->pDoorOut()->X();
 				if(pDoor->pDoorOut()->X() > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - pDoor->pDoorOut()->X());
 				
+				m_fxManager.SetFx(FX_FADE_BLACK_OUT, true);
+				
 				m_currentRoom->Initialize(xRoom);
 				m_snide->SetPosition(xChar, yChar);
+				
+				//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
 				
 				//char buf[256];
 				//sprintf(buf, "xRoom: %05d, xChar: %05d", xRoom, xChar);
@@ -376,7 +394,7 @@ void CGame::Update(int elapsedTime, CTime* pCurrentTime)
 		m_snide->SetFrameType(FRAME_NONE);
 	}
 	
-	m_snide->Animate(elapsedTime);
+	m_snide->Animate(m_elapsedTime);
 	//m_characterArray[CHARACTER_GABRIEL]->Animate(elapsedTime);
 	
 	SortSprites();
@@ -421,4 +439,23 @@ void CGame::InitializeDoors()
 			}
 		}
 	}
+}
+
+void CGame::UpdateVBlank()
+{
+	m_fxManager.UpdateVBlank();
+}
+
+void CGame::UpdateHBlank()
+{
+	m_fxManager.UpdateHBlank();
+}
+
+void CGame::UpdateTimer1()
+{
+}
+
+void CGame::UpdateTimer2()
+{
+	m_timer->Update();
 }

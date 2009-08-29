@@ -1,6 +1,8 @@
 #ifndef __TDG_H__
 #define __TDG_H__
 
+#include "CFx.h"
+#include "CFxManager.h"
 #include "ColMap.h"
 #include "CDoor.h"
 #include "Globals.h"

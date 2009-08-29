@@ -10,26 +10,25 @@
 #include "Text.h"
 
 CGame m_game(GAMETYPE_NORMAL);
-CTimer m_timer(9, 10, 0, 0);
-
-u8 m_elapsedTime;
-u8 m_lastUpdate;
 
 void InterruptHandlerVBlank()
 {
+	m_game.UpdateVBlank();
 }
 
 void InterruptHandlerHBlank()
 {
+	m_game.UpdateHBlank();
 }
 
 void InterruptHandlerTimer1()
 {
+	m_game.UpdateTimer1();
 }
 
 void InterruptHandlerTimer2()
 {
-	m_timer.Update();
+	m_game.UpdateTimer2();
 }
 
 mm_word mmEventHandler(mm_word msg, mm_word param)
@@ -45,7 +44,6 @@ mm_word mmEventHandler(mm_word msg, mm_word param)
 	
 	return 0;
 }
-
 
 int main(void)
 {
@@ -66,16 +64,12 @@ int main(void)
 	//mmPosition(1);
 	
 	consoleDebugInit(DebugDevice_NOCASH);
-	
-	m_timer.Start();
+
 	m_game.Initialize();
 
 	while(1)
 	{
-		m_elapsedTime = m_timer.pCurrentTime()->MilliSeconds - m_lastUpdate;
-		m_lastUpdate = m_timer.pCurrentTime()->MilliSeconds;
-		
-		m_game.Update(m_elapsedTime, m_timer.pCurrentTime());
+		m_game.Update();
 		
 		swiWaitForVBlank();
 	}

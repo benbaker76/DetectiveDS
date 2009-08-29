@@ -95,3 +95,11 @@ void DrawTime(CTime* pTime)
 	y = 20 + sin(radians) * 8;
 	DrawLine(112, 20, x, y, 3);
 }
+
+void dmaTransfer(uint8 channel, const void* src, void* dest, uint32 size, uint32 mode)
+{
+	DMA_CR(channel) = 0;
+	DMA_SRC(channel) = (uint32)src;
+	DMA_DEST(channel) = (uint32)dest;
+	DMA_CR(channel) = (size | mode);
+};
