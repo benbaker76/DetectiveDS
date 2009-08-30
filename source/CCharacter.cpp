@@ -2,13 +2,15 @@
 #include "CCharacter.h"
 #include "Text.h"
 
-CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite)
+CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite, int width, int height)
 {
 	m_characterType = characterType;
 	m_pHeadSprite = pHeadSprite;
 	m_pBodySprite = pBodySprite;
 	m_x = 0;
 	m_y = 0;
+	m_width = width;
+	m_height = height;
 
 	//m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_col1Tiles, sprite_col1TilesLen, sprite_col1Pal, sprite_col1PalLen, NULL, 0);
 	//m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_col2Tiles, sprite_col2TilesLen, sprite_col2Pal, sprite_col2PalLen, NULL, 0);
@@ -31,17 +33,33 @@ void CCharacter::SetPosition(float x, float y)
 
 void CCharacter::SetPriority(int index)
 {
+	if(!m_visible)
+		return;
+	
 	m_pHeadSprite->SetOamIndex(index);
 	m_pBodySprite->SetOamIndex(index+1);
 }
 
 void CCharacter::Animate(int elapsedTime)
 {
+	if(!m_visible)
+		return;
+	
 	m_pHeadSprite->Animate(elapsedTime);
 	m_pBodySprite->Animate(elapsedTime);
 }
 
+void CCharacter::Show()
+{
+	m_visible = true;
+}
+
 void CCharacter::Hide()
+{
+	m_visible = false;
+}
+
+void CCharacter::Disable()
 {
 	m_pHeadSprite->Hide();
 	m_pBodySprite->Hide();
@@ -49,6 +67,9 @@ void CCharacter::Hide()
 
 void CCharacter::Draw()
 {
+	if(!m_visible)
+		return;
+	
 	m_pHeadSprite->Draw();
 	m_pBodySprite->Draw();
 }
@@ -98,8 +119,8 @@ void CCharacter::Move(DirectionType directionType)
 CollisionType CCharacter::CheckCollision(DirectionType directionType, CRoom* pRoom)
 {
 	CollisionType retType = COL_PATH;
-	int x = ((pRoom->X() + m_x) + CHARACTER_WIDTH / 2) / 8;
-	int y = ((pRoom->Y() + m_y) + CHARACTER_HEIGHT-8) / 8;
+	int x = ((pRoom->X() + m_x) + m_width / 2) / 8;
+	int y = ((pRoom->Y() + m_y) + m_height-8) / 8;
 	//int x2 = ((m_x + CHARACTER_WIDTH / 2) / 8);
 	//int y2 = ((m_y + CHARACTER_HEIGHT-8) / 8);
 	
@@ -134,8 +155,8 @@ CollisionType CCharacter::CheckCollision(DirectionType directionType, CRoom* pRo
 			break;
 	}
 	
-	DrawText("                                ", 0, 0, false);
-	DrawText(g_colName[(int) retType], 0, 0, false);
+	//DrawText("                                ", 0, 0, false);
+	//DrawText(g_colName[(int) retType], 0, 0, false);
 	
 	return retType;
 }

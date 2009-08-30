@@ -18,7 +18,7 @@ enum FrameType
 
 enum SpriteType
 {
-	SPRITE_HEAD_SNIDE = 2,
+	SPRITE_HEAD_SNIDE,
 	SPRITE_BODY_SNIDE,
 	SPRITE_HEAD_REVEREND,
 	SPRITE_BODY_REVEREND,
@@ -77,8 +77,6 @@ private:
 	int m_oamIndex;
 	
 	u16* m_gfxSub;
-	
-	CSprite* m_pSprite;
 	
 	float m_x;
 	float m_y;

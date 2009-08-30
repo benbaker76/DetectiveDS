@@ -11,6 +11,8 @@ void CFxFade::Initialize()
 	//if(m_lightsEnabled)
 	//	FxManager()->SetFx(FX_LIGHTS, false);
 	
+	m_fadeValue = 0;
+	
 	switch(CFx::GetFxType())
 	{
 	case FX_FADE_BLACK_IN:
@@ -36,8 +38,6 @@ void CFxFade::Initialize()
 	default:
 		break;
 	}
-	
-	m_fadeValue = 0;
 }
 
 void CFxFade::Shutdown()
@@ -52,18 +52,18 @@ void CFxFade::UpdateVBlank()
 	case FX_FADE_BLACK_IN:
 	case FX_FADE_WHITE_IN:
 		REG_BLDY_SUB = m_fadeValue;
-		REG_BLDALPHA_SUB = 0xF;
+		REG_BLDALPHA_SUB = m_fadeValue;
 		break;
 	case FX_FADE_BLACK_OUT:
 	case FX_FADE_WHITE_OUT:
-		REG_BLDY_SUB = 0xF - m_fadeValue;
+		REG_BLDY_SUB = 16 - m_fadeValue;
 		REG_BLDALPHA_SUB = ((0xF - m_fadeValue) << 8) | m_fadeValue;
 		break;
 	default:
 		break;
 	}
 	
-	if(m_fadeValue < 0xF)
+	if(m_fadeValue < 16)
 		m_fadeValue++;
 	else
 	{
@@ -83,7 +83,10 @@ void CFxFade::UpdateHBlank()
 void CFxLights::Initialize()
 {
 	for(int i=0; i<SCREEN_HEIGHT; i++)
-		m_map_light[i] = 16 - (abs(i - 40) * ((96.0f / SCREEN_HEIGHT)));
+		m_map_light[i] = (i < 40 ? 16 : (16 - (abs(i - 40) * ((96.0f / SCREEN_HEIGHT)))));
+
+	dmaTransfer(1, NULL, NULL, 0, 0);
+	m_fadeValue = 0;
 		
 	switch(CFx::GetFxType())
 	{
@@ -95,7 +98,7 @@ void CFxLights::Initialize()
 		break;
 	case FX_LIGHTS_BLACK_OUT:
 		REG_BLDCNT_SUB = BLEND_FADE_BLACK | BLEND_SRC_BG2 | BLEND_SRC_BG3 | BLEND_SRC_SPRITE;
-		REG_BLDY_SUB = 0xF;
+		REG_BLDY_SUB = 16;
 		REG_BLDALPHA_SUB = (0xF << 8);
 		break;
 	case FX_LIGHTS_WHITE:
@@ -106,15 +109,12 @@ void CFxLights::Initialize()
 		break;
 	case FX_LIGHTS_WHITE_OUT:
 		REG_BLDCNT_SUB = BLEND_FADE_WHITE | BLEND_SRC_BG2 | BLEND_SRC_BG3 | BLEND_SRC_SPRITE;
-		REG_BLDY_SUB = 0xF;
+		REG_BLDY_SUB = 16;
 		REG_BLDALPHA_SUB = (0xF << 8);
 		break;
 	default:
 		break;
 	}
-
-	dmaTransfer(1, NULL, NULL, 0, 0);
-	m_fadeValue = 0;	
 }
 
 void CFxLights::Shutdown()
@@ -141,7 +141,7 @@ void CFxLights::UpdateVBlank()
 	case FX_LIGHTS_BLACK_OUT:
 	case FX_LIGHTS_WHITE_OUT:
 		for(int i=0; i<SCREEN_HEIGHT; i++)
-			m_map_mix[i] = (u16) (m_map_light[i] | (0xF - m_fadeValue));
+			m_map_mix[i] = (u16) (m_map_light[i] | (16 - m_fadeValue));
 		
 		dmaTransfer(1, m_map_mix, (void*) &REG_BLDY_SUB, 1, DMA_ENABLE | DMA_REPEAT | DMA_START_HBL | DMA_DST_RESET);
 		break;
@@ -149,7 +149,7 @@ void CFxLights::UpdateVBlank()
 		break;
 	}
 	
-	if(m_fadeValue < 0xF)
+	if(m_fadeValue < 16)
 		m_fadeValue++;
 	else
 	{

@@ -29,13 +29,15 @@ class CRoom;
 class CCharacter
 {
 public:
-	CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite);
+	CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite, int width, int height);
 	~CCharacter();
 	
 	void SetPosition(float x, float y);
 	void SetPriority(int index);
 	void Animate(int elapsedTime);
+	void Show();
 	void Hide();
+	void Disable();
 	void Draw();
 	void Face(DirectionType directionType);
 	void Move(DirectionType directionType);
@@ -48,6 +50,9 @@ public:
 	
 	float X() const { return m_x; }
 	float Y() const { return m_y; }
+	float Width() const { return m_width; }
+	float Height() const { return m_height; }
+	bool Visible() const { return m_visible; }
 	
 	int Priority() const { return m_pHeadSprite->OamIndex(); }
 
@@ -57,10 +62,14 @@ private:
 	CSprite* m_pBodySprite;
 	
 	CSprite* m_spriteCol1;
-	CSprite* m_spriteCol2;	
+	CSprite* m_spriteCol2;
+	
+	bool m_visible;
 	
 	float m_x;
 	float m_y;
+	int m_width;
+	int m_height;
 };
 
 #endif

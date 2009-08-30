@@ -20,8 +20,10 @@ public:
 	
 	void Initialize();
 	void Update();
-	void SortSprites();
 	void InitializeDoors();
+	void SortSprites();
+	void AnimateCharacters(int elapsedTime);
+	void DrawCharacters();
 	
 	void UpdateVBlank();
 	void UpdateHBlank();
@@ -44,9 +46,6 @@ private:
 	CCharacter* m_snide;
 	CWatch* m_watch;
 	CTimer* m_timer;
-	
-	u8 m_elapsedTime;
-	u8 m_lastUpdate;
 	
 	int m_bg2MainVScroll;
 };

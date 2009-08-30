@@ -60,16 +60,16 @@ void CGame::Initialize()
 		m_spriteArray[SPRITE_HEAD_DINGLE] = new CSprite(SPRITE_HEAD_DINGLE, sprite_dingle_headTiles, sprite_dingle_headTilesLen, sprite_dingle_headPal, sprite_dingle_headPalLen, g_dingleHeadFrames, 5);
 		m_spriteArray[SPRITE_BODY_DINGLE] = new CSprite(SPRITE_BODY_DINGLE, sprite_dingle_bodyTiles, sprite_dingle_bodyTilesLen, sprite_dingle_bodyPal, sprite_dingle_bodyPalLen, g_dingleBodyFrames, 7);
 		
-		m_characterArray[CHARACTER_SNIDE] = new CCharacter(CHARACTER_SNIDE, m_spriteArray[SPRITE_HEAD_SNIDE], m_spriteArray[SPRITE_BODY_SNIDE]);
-		m_characterArray[CHARACTER_REVEREND] = new CCharacter(CHARACTER_REVEREND, m_spriteArray[SPRITE_HEAD_REVEREND], m_spriteArray[SPRITE_BODY_REVEREND]);
-		m_characterArray[CHARACTER_BENTLEY] = new CCharacter(CHARACTER_BENTLEY, m_spriteArray[SPRITE_HEAD_BENTLEY], m_spriteArray[SPRITE_BODY_BENTLEY]);
-		m_characterArray[CHARACTER_COOK] = new CCharacter(CHARACTER_COOK, m_spriteArray[SPRITE_HEAD_COOK], m_spriteArray[SPRITE_BODY_COOK]);
-		m_characterArray[CHARACTER_GABRIEL] = new CCharacter(CHARACTER_GABRIEL, m_spriteArray[SPRITE_HEAD_GABRIEL], m_spriteArray[SPRITE_BODY_GABRIEL]);
-		m_characterArray[CHARACTER_CYNTHIA] = new CCharacter(CHARACTER_CYNTHIA, m_spriteArray[SPRITE_HEAD_CYNTHIA], m_spriteArray[SPRITE_BODY_CYNTHIA]);
-		m_characterArray[CHARACTER_PROFESSOR] = new CCharacter(CHARACTER_PROFESSOR, m_spriteArray[SPRITE_HEAD_PROFESSOR], m_spriteArray[SPRITE_BODY_PROFESSOR]);
-		m_characterArray[CHARACTER_DOCTOR] = new CCharacter(CHARACTER_DOCTOR, m_spriteArray[SPRITE_HEAD_DOCTOR], m_spriteArray[SPRITE_BODY_DOCTOR]);
-		m_characterArray[CHARACTER_MAJOR] = new CCharacter(CHARACTER_MAJOR, m_spriteArray[SPRITE_HEAD_MAJOR], m_spriteArray[SPRITE_BODY_MAJOR]);
-		m_characterArray[CHARACTER_DINGLE] = new CCharacter(CHARACTER_DINGLE, m_spriteArray[SPRITE_HEAD_DINGLE], m_spriteArray[SPRITE_BODY_DINGLE]);
+		m_characterArray[CHARACTER_SNIDE] = new CCharacter(CHARACTER_SNIDE, m_spriteArray[SPRITE_HEAD_SNIDE], m_spriteArray[SPRITE_BODY_SNIDE], 24, 53);
+		m_characterArray[CHARACTER_REVEREND] = new CCharacter(CHARACTER_REVEREND, m_spriteArray[SPRITE_HEAD_REVEREND], m_spriteArray[SPRITE_BODY_REVEREND], 24, 53);
+		m_characterArray[CHARACTER_BENTLEY] = new CCharacter(CHARACTER_BENTLEY, m_spriteArray[SPRITE_HEAD_BENTLEY], m_spriteArray[SPRITE_BODY_BENTLEY], 24, 53);
+		m_characterArray[CHARACTER_COOK] = new CCharacter(CHARACTER_COOK, m_spriteArray[SPRITE_HEAD_COOK], m_spriteArray[SPRITE_BODY_COOK], 24, 44);
+		m_characterArray[CHARACTER_GABRIEL] = new CCharacter(CHARACTER_GABRIEL, m_spriteArray[SPRITE_HEAD_GABRIEL], m_spriteArray[SPRITE_BODY_GABRIEL], 24, 48);
+		m_characterArray[CHARACTER_CYNTHIA] = new CCharacter(CHARACTER_CYNTHIA, m_spriteArray[SPRITE_HEAD_CYNTHIA], m_spriteArray[SPRITE_BODY_CYNTHIA], 24, 49);
+		m_characterArray[CHARACTER_PROFESSOR] = new CCharacter(CHARACTER_PROFESSOR, m_spriteArray[SPRITE_HEAD_PROFESSOR], m_spriteArray[SPRITE_BODY_PROFESSOR], 24, 48);
+		m_characterArray[CHARACTER_DOCTOR] = new CCharacter(CHARACTER_DOCTOR, m_spriteArray[SPRITE_HEAD_DOCTOR], m_spriteArray[SPRITE_BODY_DOCTOR], 24, 49);
+		m_characterArray[CHARACTER_MAJOR] = new CCharacter(CHARACTER_MAJOR, m_spriteArray[SPRITE_HEAD_MAJOR], m_spriteArray[SPRITE_BODY_MAJOR], 24, 46);
+		m_characterArray[CHARACTER_DINGLE] = new CCharacter(CHARACTER_DINGLE, m_spriteArray[SPRITE_HEAD_DINGLE], m_spriteArray[SPRITE_BODY_DINGLE], 24, 48);
 		
 		m_mapArray[MAP_CELLAR] = new CMap(400, 192, map_cellarTiles, map_cellarTilesLen, map_cellarMap, map_cellarMapLen, map_cellarPal, map_cellarPalLen);
 		m_mapArray[MAP_CLOCK] = new CMap(304, 192, map_clockTiles, map_clockTilesLen, map_clockMap, map_clockMapLen, map_clockPal, map_clockPalLen);
@@ -192,12 +192,33 @@ void CGame::Initialize()
 	
 	m_snide = m_characterArray[CHARACTER_SNIDE];
 	m_snide->SetPosition(142, 105);
+	m_snide->Show();
 	
 	m_currentRoom = m_roomArray[ROOM_STAIRS];
 	m_currentRoom->Initialize(69);
+
+	m_characterArray[CHARACTER_REVEREND]->SetPosition(CHARACTER_WIDTH, 168 - CHARACTER_HEIGHT);
+	m_characterArray[CHARACTER_BENTLEY]->SetPosition(CHARACTER_WIDTH * 2, 168 - CHARACTER_HEIGHT);
+	m_characterArray[CHARACTER_COOK]->SetPosition(CHARACTER_WIDTH * 3, 168 - CHARACTER_HEIGHT);
+	m_characterArray[CHARACTER_GABRIEL]->SetPosition(CHARACTER_WIDTH * 4, 168 - CHARACTER_HEIGHT);
+	m_characterArray[CHARACTER_CYNTHIA]->SetPosition(CHARACTER_WIDTH * 5, 168 - CHARACTER_HEIGHT);
+	m_characterArray[CHARACTER_PROFESSOR]->SetPosition(CHARACTER_WIDTH * 6, 168 - CHARACTER_HEIGHT);
+	m_characterArray[CHARACTER_DOCTOR]->SetPosition(CHARACTER_WIDTH * 7, 168 - CHARACTER_HEIGHT);
+	m_characterArray[CHARACTER_MAJOR]->SetPosition(CHARACTER_WIDTH * 8, 168 - CHARACTER_HEIGHT);
+	m_characterArray[CHARACTER_DINGLE]->SetPosition(CHARACTER_WIDTH * 9, 168 - CHARACTER_HEIGHT);
 	
-	//m_characterArray[CHARACTER_GABRIEL]->SetPosition(64, 168 - CHARACTER_HEIGHT);
-	//m_characterArray[CHARACTER_GABRIEL]->SetFrameType(FRAME_SPEAK);
+	m_characterArray[CHARACTER_REVEREND]->SetFrameType(FRAME_SPEAK);
+	m_characterArray[CHARACTER_BENTLEY]->SetFrameType(FRAME_SPEAK);
+	m_characterArray[CHARACTER_COOK]->SetFrameType(FRAME_SPEAK);
+	m_characterArray[CHARACTER_GABRIEL]->SetFrameType(FRAME_SPEAK);
+	m_characterArray[CHARACTER_CYNTHIA]->SetFrameType(FRAME_SPEAK);
+	m_characterArray[CHARACTER_PROFESSOR]->SetFrameType(FRAME_SPEAK);
+	m_characterArray[CHARACTER_DOCTOR]->SetFrameType(FRAME_SPEAK);
+	m_characterArray[CHARACTER_MAJOR]->SetFrameType(FRAME_SPEAK);
+	m_characterArray[CHARACTER_DINGLE]->SetFrameType(FRAME_SPEAK);
+	
+	//for(int i=0; i<MAX_CHARACTERS; i++)
+	//	m_characterArray[i]->Show();
 	
 	m_fxManager.Initialize();
 	m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
@@ -210,6 +231,8 @@ void CGame::Initialize()
 void CGame::Update()
 {
 	static mm_sfxhand footsteps = 0;
+	static u8 lastUpdate = 0;
+	u8 elapsedTime;
 	touchPosition touch;
 	int keys_held, keys_pressed, keys_released;
 	
@@ -220,8 +243,8 @@ void CGame::Update()
 	keys_pressed = keysDown();
 	keys_released = keysUp();
 	
-	m_elapsedTime = m_timer->pCurrentTime()->MilliSeconds - m_lastUpdate;
-	m_lastUpdate = m_timer->pCurrentTime()->MilliSeconds;
+	elapsedTime = m_timer->pCurrentTime()->MilliSeconds - lastUpdate;
+	lastUpdate = m_timer->pCurrentTime()->MilliSeconds;
 	
 	//char buf[256];
 	//sprintf(buf, "%02d:%02d:%02d:%02d Elapsed: %08d", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes, m_timer->pCurrentTime()->Seconds, m_timer->pCurrentTime()->MilliSeconds, elapsedTime);
@@ -281,7 +304,7 @@ void CGame::Update()
 				int xRoom = pDoor->pDoorOut()->X() - 128;
 				
 				int xChar = 128;
-				int yChar = pDoor->pDoorOut()->Y() - CHARACTER_HEIGHT;
+				int yChar = pDoor->pDoorOut()->Y() - m_characterArray[CHARACTER_SNIDE]->Height();
 				
 				if(xRoom + 256 > m_currentRoom->Width()) xRoom = m_currentRoom->Width() - 256;
 				if(xRoom < 0) xRoom = 0;
@@ -322,7 +345,7 @@ void CGame::Update()
 				int xRoom = pDoor->pDoorOut()->X() - 128;
 				
 				int xChar = 128;
-				int yChar = pDoor->pDoorOut()->Y() - CHARACTER_HEIGHT + 16;
+				int yChar = pDoor->pDoorOut()->Y() - m_characterArray[CHARACTER_SNIDE]->Height() + 16;
 				
 				if(xRoom + 256 > m_currentRoom->Width()) xRoom = m_currentRoom->Width() - 256;
 				if(xRoom < 0) xRoom = 0;
@@ -394,34 +417,11 @@ void CGame::Update()
 		m_snide->SetFrameType(FRAME_NONE);
 	}
 	
-	m_snide->Animate(m_elapsedTime);
-	//m_characterArray[CHARACTER_GABRIEL]->Animate(elapsedTime);
-	
 	SortSprites();
-	
-	m_snide->Draw();
-	//m_characterArray[CHARACTER_GABRIEL]->Draw();
+	AnimateCharacters(elapsedTime);
+	DrawCharacters();
 	
 	oamUpdate(&oamSub);
-}
-
-void CGame::SortSprites()
-{
-	for (int i=0; i < MAX_CHARACTERS; i++)
-	{
-		m_characterArray[i]->Hide();
-		
-		for(int j=0; j < MAX_CHARACTERS; j++)
-		{
-			if (m_characterArray[i]->Y() + CHARACTER_HEIGHT > m_characterArray[j]->Y() + CHARACTER_HEIGHT &&
-				m_characterArray[i]->Priority() > m_characterArray[j]->Priority())
-			{
-				int temp = m_characterArray[i]->Priority();
-				m_characterArray[i]->SetPriority(m_characterArray[j]->Priority());
-				m_characterArray[j]->SetPriority(temp);
-			}
-		}
-	}
 }
 
 void CGame::InitializeDoors()
@@ -439,6 +439,37 @@ void CGame::InitializeDoors()
 			}
 		}
 	}
+}
+
+void CGame::SortSprites()
+{
+	for (int i=0; i < MAX_CHARACTERS; i++)
+	{
+		m_characterArray[i]->Disable();
+		
+		for(int j=0; j < MAX_CHARACTERS; j++)
+		{
+			if (m_characterArray[i]->Y() + m_characterArray[i]->Height() > m_characterArray[j]->Y() + m_characterArray[j]->Height() &&
+				m_characterArray[i]->Priority() > m_characterArray[j]->Priority())
+			{
+				int temp = m_characterArray[i]->Priority();
+				m_characterArray[i]->SetPriority(m_characterArray[j]->Priority());
+				m_characterArray[j]->SetPriority(temp);
+			}
+		}
+	}
+}
+
+void CGame::AnimateCharacters(int elapsedTime)
+{
+	for (int i=0; i < MAX_CHARACTERS; i++)
+		m_characterArray[i]->Animate(elapsedTime);
+}
+
+void CGame::DrawCharacters()
+{
+	for (int i=0; i < MAX_CHARACTERS; i++)
+		m_characterArray[i]->Draw();
 }
 
 void CGame::UpdateVBlank()
