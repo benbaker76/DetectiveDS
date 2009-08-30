@@ -18,7 +18,12 @@ void CFxManager::Initialize()
 	m_fxArray[FX_FADE_BLACK_OUT] = new CFxFade(FX_FADE_BLACK_OUT, this);
 	m_fxArray[FX_FADE_WHITE_IN] = new CFxFade(FX_FADE_WHITE_IN, this);
 	m_fxArray[FX_FADE_WHITE_OUT] = new CFxFade(FX_FADE_WHITE_OUT, this);
-	m_fxArray[FX_LIGHTS] = new CFxLights(FX_LIGHTS, this);
+	m_fxArray[FX_LIGHTS_BLACK] = new CFxLights(FX_LIGHTS_BLACK, this);
+	m_fxArray[FX_LIGHTS_BLACK_IN] = new CFxLights(FX_LIGHTS_BLACK_IN, this);
+	m_fxArray[FX_LIGHTS_BLACK_OUT] = new CFxLights(FX_LIGHTS_BLACK_OUT, this);
+	m_fxArray[FX_LIGHTS_WHITE] = new CFxLights(FX_LIGHTS_WHITE, this);
+	m_fxArray[FX_LIGHTS_WHITE_IN] = new CFxLights(FX_LIGHTS_WHITE_IN, this);
+	m_fxArray[FX_LIGHTS_WHITE_OUT] = new CFxLights(FX_LIGHTS_WHITE_OUT, this);
 }
 
 void CFxManager::FxOff()

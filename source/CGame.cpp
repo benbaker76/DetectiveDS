@@ -200,7 +200,7 @@ void CGame::Initialize()
 	//m_characterArray[CHARACTER_GABRIEL]->SetFrameType(FRAME_SPEAK);
 	
 	m_fxManager.Initialize();
-	//m_fxManager.SetFx(FX_LIGHTS, true);
+	m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 	
 	m_watch = new CWatch(113, 21);
 	m_timer = new CTimer(9, 10, 0, 0);
@@ -289,7 +289,7 @@ void CGame::Update()
 				if(pDoor->pDoorOut()->X() < 128) xChar = pDoor->pDoorOut()->X();
 				if(pDoor->pDoorOut()->X() > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - pDoor->pDoorOut()->X());	
 				
-				m_fxManager.SetFx(FX_FADE_BLACK_OUT, true);
+				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 				
 				m_currentRoom->Initialize(xRoom);
 				m_snide->SetPosition(xChar, yChar);
@@ -330,7 +330,7 @@ void CGame::Update()
 				if(pDoor->pDoorOut()->X() < 128) xChar = pDoor->pDoorOut()->X();
 				if(pDoor->pDoorOut()->X() > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - pDoor->pDoorOut()->X());
 				
-				m_fxManager.SetFx(FX_FADE_BLACK_OUT, true);
+				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 				
 				m_currentRoom->Initialize(xRoom);
 				m_snide->SetPosition(xChar, yChar);

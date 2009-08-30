@@ -69,9 +69,9 @@ int main(void)
 
 	while(1)
 	{
-		m_game.Update();
-		
 		swiWaitForVBlank();
+		
+		m_game.Update();
 	}
 
 	return 0;

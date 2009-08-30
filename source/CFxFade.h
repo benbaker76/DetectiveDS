@@ -35,7 +35,9 @@ public:
 
 private:
 
-	u16 m_map_light[SCREEN_HEIGHT+1];
+	u16 m_map_light[SCREEN_HEIGHT];
+	u16 m_map_mix[SCREEN_HEIGHT];
+	u16 m_fadeValue; 
 };
 
 #endif
