@@ -71,7 +71,7 @@ void DrawLine(int x0, int y0, int x1, int y1, int colorIndex)
 void DrawTime(CTime* pTime)
 {
 	dmaCopy(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), watchTilesLen);
-	dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
+	//dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
 	//dmaCopy(watchPal, BG_PALETTE_SUB, watchPalLen);
 
 	float radians;
@@ -79,14 +79,14 @@ void DrawTime(CTime* pTime)
 	
 	int secondHandRotation = (pTime->Seconds * 6) - 90;
 	radians = secondHandRotation * (PI / 180);
-	x = 112 + cos(radians) * 8;
-	y = 20 + sin(radians) * 8;
+	x = 112 + cos(radians) * 10;
+	y = 20 + sin(radians) * 10;
 	DrawLine(112, 20, x, y, 3);
 	
 	int minuteHandRotation = (pTime->Minutes * 6) - 90;
 	radians = minuteHandRotation * (PI / 180);
-	x = 112 + cos(radians) * 8;
-	y = 20 + sin(radians) * 8;
+	x = 112 + cos(radians) * 10;
+	y = 20 + sin(radians) * 10;
 	DrawLine(112, 20, x, y, 3);
 	
 	int hourHandRotation = (pTime->Hours * 30) + (pTime->Minutes * 0.5) - 90;

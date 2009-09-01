@@ -47,7 +47,8 @@ enum SpriteType
 class CSprite
 {
 public:
-	CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u16* pPalette, int paletteLen, const int* frameArray, int frameCount);
+	CSprite(SpriteType spriteType, const u32* pBmp, const int* frameArray, int frameCount);
+	//CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u16* pPalette, int paletteLen, const int* frameArray, int frameCount);
 	~CSprite();
 	
 	void SetPosition(float x, float y);
@@ -59,16 +60,19 @@ public:
 	void SetOamIndex(int oamIndex) { m_oamIndex = oamIndex; }
 	int OamIndex() const { return m_oamIndex; }
 	
+	void SetAlpha(int alpha) { m_alpha = alpha; }
+	
 	float X() const { return m_x; }
 	float Y() const { return m_y; }
 
 private:
 	SpriteType m_spriteType;
-	const u32* m_pTiles;
-	const u16* m_pPalette;
+	const u32* m_pBmp;
+	//const u32* m_pTiles;
+	//const u16* m_pPalette;
 	
-	int m_tilesLen;
-	int m_paletteLen;
+	//int m_tilesLen;
+	//int m_paletteLen;
 	
 	const int* m_frameArray;
 	FrameType m_frameType;
@@ -82,6 +86,8 @@ private:
 	
 	float m_x;
 	float m_y;
+	
+	int m_alpha;
 };
 
 #endif

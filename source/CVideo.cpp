@@ -35,7 +35,7 @@ void CVideo::Initialize()
 	
 	lcdMainOnBottom();
 	
-	dmaCopy(sprite_snide_bodyPal, SPRITE_PALETTE_SUB, sprite_snide_bodyPalLen);
+	//dmaCopy(sprite_snide_bodyPal, SPRITE_PALETTE_SUB, sprite_snide_bodyPalLen);
 	
 	dmaCopy(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), watchTilesLen);
 	dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
@@ -71,6 +71,6 @@ void CVideo::Initialize()
 	
 	DrawTextLarge("\"GRENADE!\" SHOUTS THE MAJOR.", 0, 11, false);
 	
-	oamInit(&oamMain, SpriteMapping_1D_32, false);
-	oamInit(&oamSub, SpriteMapping_1D_32, false);
+	//oamInit(&oamSub, SpriteMapping_1D_32, false);
+	oamInit(&oamSub, SpriteMapping_Bmp_1D_128, false);
 }

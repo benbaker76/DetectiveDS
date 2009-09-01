@@ -49,6 +49,8 @@ public:
 	void SetX(float x) { m_x = x; SetPosition(m_x, m_y); }
 	void SetY(float y) { m_y = y; SetPosition(m_x, m_y); }
 	
+	void SetAlpha(int alpha) { m_pHeadSprite->SetAlpha(alpha); m_pBodySprite->SetAlpha(alpha); }
+	
 	float X() const { return m_x; }
 	float Y() const { return m_y; }
 	float Width() const { return m_width; }
