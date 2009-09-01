@@ -96,6 +96,10 @@ void CSprite::Draw()
 		false,							// horizontal flip?
 		false,							// vertical flip?
 		false);							// mosaic?
+	
+	
+	//if(m_spriteType == SPRITE_ANGUS_HEAD || SPRITE_ANGUS_BODY == m_spriteType)
+		
 }
 
 void CSprite::SetFrameType(FrameType frameType)

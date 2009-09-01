@@ -39,37 +39,40 @@ void CGame::Initialize()
 	switch(m_gameType)
 	{
 	case GAMETYPE_NORMAL:
-		m_spriteArray[SPRITE_HEAD_SNIDE] = new CSprite(SPRITE_HEAD_SNIDE, sprite_snide_headTiles, sprite_snide_headTilesLen, sprite_snide_headPal, sprite_snide_headPalLen, g_snideHeadFrames, 8);
-		m_spriteArray[SPRITE_BODY_SNIDE] = new CSprite(SPRITE_BODY_SNIDE, sprite_snide_bodyTiles, sprite_snide_bodyTilesLen, sprite_snide_bodyPal, sprite_snide_bodyPalLen, g_snideBodyFrames, 17);
-		m_spriteArray[SPRITE_HEAD_REVEREND] = new CSprite(SPRITE_HEAD_REVEREND, sprite_reverend_headTiles, sprite_reverend_headTilesLen, sprite_reverend_headPal, sprite_reverend_headPalLen, g_reverendHeadFrames, 4);
-		m_spriteArray[SPRITE_BODY_REVEREND] = new CSprite(SPRITE_BODY_REVEREND, sprite_reverend_bodyTiles, sprite_reverend_bodyTilesLen, sprite_reverend_bodyPal, sprite_reverend_bodyPalLen, g_reverendBodyFrames, 6);
-		m_spriteArray[SPRITE_HEAD_BENTLEY] = new CSprite(SPRITE_HEAD_BENTLEY, sprite_bentley_headTiles, sprite_bentley_headTilesLen, sprite_bentley_headPal, sprite_bentley_headPalLen, g_bentleyHeadFrames, 4);
-		m_spriteArray[SPRITE_BODY_BENTLEY] = new CSprite(SPRITE_BODY_BENTLEY, sprite_bentley_bodyTiles, sprite_bentley_bodyTilesLen, sprite_bentley_bodyPal, sprite_bentley_bodyPalLen, g_bentleyBodyFrames, 6);
-		m_spriteArray[SPRITE_HEAD_COOK] = new CSprite(SPRITE_HEAD_COOK, sprite_cook_headTiles, sprite_cook_headTilesLen, sprite_cook_headPal, sprite_cook_headPalLen, g_cookHeadFrames, 4);
-		m_spriteArray[SPRITE_BODY_COOK] = new CSprite(SPRITE_BODY_COOK, sprite_cook_bodyTiles, sprite_cook_bodyTilesLen, sprite_cook_bodyPal, sprite_cook_bodyPalLen, g_cookBodyFrames, 6);
-		m_spriteArray[SPRITE_HEAD_GABRIEL] = new CSprite(SPRITE_HEAD_GABRIEL, sprite_gabriel_headTiles, sprite_gabriel_headTilesLen, sprite_gabriel_headPal, sprite_gabriel_headPalLen, g_gabrielHeadFrames, 5);
-		m_spriteArray[SPRITE_BODY_GABRIEL] = new CSprite(SPRITE_BODY_GABRIEL, sprite_gabriel_bodyTiles, sprite_gabriel_bodyTilesLen, sprite_gabriel_bodyPal, sprite_gabriel_bodyPalLen, g_gabrielBodyFrames, 7);
-		m_spriteArray[SPRITE_HEAD_CYNTHIA] = new CSprite(SPRITE_HEAD_CYNTHIA, sprite_cynthia_headTiles, sprite_cynthia_headTilesLen, sprite_cynthia_headPal, sprite_cynthia_headPalLen, g_cynthiaHeadFrames, 4);
-		m_spriteArray[SPRITE_BODY_CYNTHIA] = new CSprite(SPRITE_BODY_CYNTHIA, sprite_cynthia_bodyTiles, sprite_cynthia_bodyTilesLen, sprite_cynthia_bodyPal, sprite_cynthia_bodyPalLen, g_cynthiaBodyFrames, 6);
-		m_spriteArray[SPRITE_HEAD_PROFESSOR] = new CSprite(SPRITE_HEAD_PROFESSOR, sprite_professor_headTiles, sprite_professor_headTilesLen, sprite_professor_headPal, sprite_professor_headPalLen, g_professorHeadFrames, 5);
-		m_spriteArray[SPRITE_BODY_PROFESSOR] = new CSprite(SPRITE_BODY_PROFESSOR, sprite_professor_bodyTiles, sprite_professor_bodyTilesLen, sprite_professor_bodyPal, sprite_professor_bodyPalLen, g_professorBodyFrames, 7);
-		m_spriteArray[SPRITE_HEAD_DOCTOR] = new CSprite(SPRITE_HEAD_DOCTOR, sprite_doctor_headTiles, sprite_doctor_headTilesLen, sprite_doctor_headPal, sprite_doctor_headPalLen, g_doctorHeadFrames, 5);
-		m_spriteArray[SPRITE_BODY_DOCTOR] = new CSprite(SPRITE_BODY_DOCTOR, sprite_doctor_bodyTiles, sprite_doctor_bodyTilesLen, sprite_doctor_bodyPal, sprite_doctor_bodyPalLen, g_doctorBodyFrames, 7);
-		m_spriteArray[SPRITE_HEAD_MAJOR] = new CSprite(SPRITE_HEAD_MAJOR, sprite_major_headTiles, sprite_major_headTilesLen, sprite_major_headPal, sprite_major_headPalLen, g_majorHeadFrames, 4);
-		m_spriteArray[SPRITE_BODY_MAJOR] = new CSprite(SPRITE_BODY_MAJOR, sprite_major_bodyTiles, sprite_major_bodyTilesLen, sprite_major_bodyPal, sprite_major_bodyPalLen, g_majorBodyFrames, 6);		
-		m_spriteArray[SPRITE_HEAD_DINGLE] = new CSprite(SPRITE_HEAD_DINGLE, sprite_dingle_headTiles, sprite_dingle_headTilesLen, sprite_dingle_headPal, sprite_dingle_headPalLen, g_dingleHeadFrames, 5);
-		m_spriteArray[SPRITE_BODY_DINGLE] = new CSprite(SPRITE_BODY_DINGLE, sprite_dingle_bodyTiles, sprite_dingle_bodyTilesLen, sprite_dingle_bodyPal, sprite_dingle_bodyPalLen, g_dingleBodyFrames, 7);
+		m_spriteArray[SPRITE_SNIDE_HEAD] = new CSprite(SPRITE_SNIDE_HEAD, sprite_snide_headTiles, sprite_snide_headTilesLen, sprite_snide_headPal, sprite_snide_headPalLen, g_snideHeadFrames, 8);
+		m_spriteArray[SPRITE_SNIDE_BODY] = new CSprite(SPRITE_SNIDE_BODY, sprite_snide_bodyTiles, sprite_snide_bodyTilesLen, sprite_snide_bodyPal, sprite_snide_bodyPalLen, g_snideBodyFrames, 17);
+		m_spriteArray[SPRITE_REVEREND_HEAD] = new CSprite(SPRITE_REVEREND_HEAD, sprite_reverend_headTiles, sprite_reverend_headTilesLen, sprite_reverend_headPal, sprite_reverend_headPalLen, g_reverendHeadFrames, 4);
+		m_spriteArray[SPRITE_REVEREND_BODY] = new CSprite(SPRITE_REVEREND_BODY, sprite_reverend_bodyTiles, sprite_reverend_bodyTilesLen, sprite_reverend_bodyPal, sprite_reverend_bodyPalLen, g_reverendBodyFrames, 6);
+		m_spriteArray[SPRITE_BENTLEY_HEAD] = new CSprite(SPRITE_BENTLEY_HEAD, sprite_bentley_headTiles, sprite_bentley_headTilesLen, sprite_bentley_headPal, sprite_bentley_headPalLen, g_bentleyHeadFrames, 4);
+		m_spriteArray[SPRITE_BENTLEY_BODY] = new CSprite(SPRITE_BENTLEY_BODY, sprite_bentley_bodyTiles, sprite_bentley_bodyTilesLen, sprite_bentley_bodyPal, sprite_bentley_bodyPalLen, g_bentleyBodyFrames, 6);
+		m_spriteArray[SPRITE_COOK_HEAD] = new CSprite(SPRITE_COOK_HEAD, sprite_cook_headTiles, sprite_cook_headTilesLen, sprite_cook_headPal, sprite_cook_headPalLen, g_cookHeadFrames, 4);
+		m_spriteArray[SPRITE_COOK_BODY] = new CSprite(SPRITE_COOK_BODY, sprite_cook_bodyTiles, sprite_cook_bodyTilesLen, sprite_cook_bodyPal, sprite_cook_bodyPalLen, g_cookBodyFrames, 6);
+		m_spriteArray[SPRITE_GABRIEL_HEAD] = new CSprite(SPRITE_GABRIEL_HEAD, sprite_gabriel_headTiles, sprite_gabriel_headTilesLen, sprite_gabriel_headPal, sprite_gabriel_headPalLen, g_gabrielHeadFrames, 5);
+		m_spriteArray[SPRITE_GABRIEL_BODY] = new CSprite(SPRITE_GABRIEL_BODY, sprite_gabriel_bodyTiles, sprite_gabriel_bodyTilesLen, sprite_gabriel_bodyPal, sprite_gabriel_bodyPalLen, g_gabrielBodyFrames, 7);
+		m_spriteArray[SPRITE_CYNTHIA_HEAD] = new CSprite(SPRITE_CYNTHIA_HEAD, sprite_cynthia_headTiles, sprite_cynthia_headTilesLen, sprite_cynthia_headPal, sprite_cynthia_headPalLen, g_cynthiaHeadFrames, 4);
+		m_spriteArray[SPRITE_CYNTHIA_BODY] = new CSprite(SPRITE_CYNTHIA_BODY, sprite_cynthia_bodyTiles, sprite_cynthia_bodyTilesLen, sprite_cynthia_bodyPal, sprite_cynthia_bodyPalLen, g_cynthiaBodyFrames, 6);
+		m_spriteArray[SPRITE_PROFESSOR_HEAD] = new CSprite(SPRITE_PROFESSOR_HEAD, sprite_professor_headTiles, sprite_professor_headTilesLen, sprite_professor_headPal, sprite_professor_headPalLen, g_professorHeadFrames, 5);
+		m_spriteArray[SPRITE_PROFESSOR_BODY] = new CSprite(SPRITE_PROFESSOR_BODY, sprite_professor_bodyTiles, sprite_professor_bodyTilesLen, sprite_professor_bodyPal, sprite_professor_bodyPalLen, g_professorBodyFrames, 7);
+		m_spriteArray[SPRITE_DOCTOR_HEAD] = new CSprite(SPRITE_DOCTOR_HEAD, sprite_doctor_headTiles, sprite_doctor_headTilesLen, sprite_doctor_headPal, sprite_doctor_headPalLen, g_doctorHeadFrames, 5);
+		m_spriteArray[SPRITE_DOCTOR_BODY] = new CSprite(SPRITE_DOCTOR_BODY, sprite_doctor_bodyTiles, sprite_doctor_bodyTilesLen, sprite_doctor_bodyPal, sprite_doctor_bodyPalLen, g_doctorBodyFrames, 7);
+		m_spriteArray[SPRITE_MAJOR_HEAD] = new CSprite(SPRITE_MAJOR_HEAD, sprite_major_headTiles, sprite_major_headTilesLen, sprite_major_headPal, sprite_major_headPalLen, g_majorHeadFrames, 4);
+		m_spriteArray[SPRITE_MAJOR_BODY] = new CSprite(SPRITE_MAJOR_BODY, sprite_major_bodyTiles, sprite_major_bodyTilesLen, sprite_major_bodyPal, sprite_major_bodyPalLen, g_majorBodyFrames, 6);		
+		m_spriteArray[SPRITE_DINGLE_HEAD] = new CSprite(SPRITE_DINGLE_HEAD, sprite_dingle_headTiles, sprite_dingle_headTilesLen, sprite_dingle_headPal, sprite_dingle_headPalLen, g_dingleHeadFrames, 5);
+		m_spriteArray[SPRITE_DINGLE_BODY] = new CSprite(SPRITE_DINGLE_BODY, sprite_dingle_bodyTiles, sprite_dingle_bodyTilesLen, sprite_dingle_bodyPal, sprite_dingle_bodyPalLen, g_dingleBodyFrames, 7);
+		m_spriteArray[SPRITE_ANGUS_HEAD] = new CSprite(SPRITE_ANGUS_HEAD, sprite_angus_headTiles, sprite_angus_headTilesLen, sprite_angus_headPal, sprite_angus_headPalLen, g_angusHeadFrames, 5);
+		m_spriteArray[SPRITE_ANGUS_BODY] = new CSprite(SPRITE_ANGUS_BODY, sprite_angus_bodyTiles, sprite_angus_bodyTilesLen, sprite_angus_bodyPal, sprite_angus_bodyPalLen, g_angusBodyFrames, 7);
 		
-		m_characterArray[CHARACTER_SNIDE] = new CCharacter(CHARACTER_SNIDE, m_spriteArray[SPRITE_HEAD_SNIDE], m_spriteArray[SPRITE_BODY_SNIDE], 24, 53);
-		m_characterArray[CHARACTER_REVEREND] = new CCharacter(CHARACTER_REVEREND, m_spriteArray[SPRITE_HEAD_REVEREND], m_spriteArray[SPRITE_BODY_REVEREND], 24, 53);
-		m_characterArray[CHARACTER_BENTLEY] = new CCharacter(CHARACTER_BENTLEY, m_spriteArray[SPRITE_HEAD_BENTLEY], m_spriteArray[SPRITE_BODY_BENTLEY], 24, 53);
-		m_characterArray[CHARACTER_COOK] = new CCharacter(CHARACTER_COOK, m_spriteArray[SPRITE_HEAD_COOK], m_spriteArray[SPRITE_BODY_COOK], 24, 44);
-		m_characterArray[CHARACTER_GABRIEL] = new CCharacter(CHARACTER_GABRIEL, m_spriteArray[SPRITE_HEAD_GABRIEL], m_spriteArray[SPRITE_BODY_GABRIEL], 24, 48);
-		m_characterArray[CHARACTER_CYNTHIA] = new CCharacter(CHARACTER_CYNTHIA, m_spriteArray[SPRITE_HEAD_CYNTHIA], m_spriteArray[SPRITE_BODY_CYNTHIA], 24, 49);
-		m_characterArray[CHARACTER_PROFESSOR] = new CCharacter(CHARACTER_PROFESSOR, m_spriteArray[SPRITE_HEAD_PROFESSOR], m_spriteArray[SPRITE_BODY_PROFESSOR], 24, 48);
-		m_characterArray[CHARACTER_DOCTOR] = new CCharacter(CHARACTER_DOCTOR, m_spriteArray[SPRITE_HEAD_DOCTOR], m_spriteArray[SPRITE_BODY_DOCTOR], 24, 49);
-		m_characterArray[CHARACTER_MAJOR] = new CCharacter(CHARACTER_MAJOR, m_spriteArray[SPRITE_HEAD_MAJOR], m_spriteArray[SPRITE_BODY_MAJOR], 24, 46);
-		m_characterArray[CHARACTER_DINGLE] = new CCharacter(CHARACTER_DINGLE, m_spriteArray[SPRITE_HEAD_DINGLE], m_spriteArray[SPRITE_BODY_DINGLE], 24, 48);
+		m_characterArray[CHARACTER_SNIDE] = new CCharacter(CHARACTER_SNIDE, m_spriteArray[SPRITE_SNIDE_HEAD], m_spriteArray[SPRITE_SNIDE_BODY], 24, 53);
+		m_characterArray[CHARACTER_REVEREND] = new CCharacter(CHARACTER_REVEREND, m_spriteArray[SPRITE_REVEREND_HEAD], m_spriteArray[SPRITE_REVEREND_BODY], 24, 53);
+		m_characterArray[CHARACTER_BENTLEY] = new CCharacter(CHARACTER_BENTLEY, m_spriteArray[SPRITE_BENTLEY_HEAD], m_spriteArray[SPRITE_BENTLEY_BODY], 24, 53);
+		m_characterArray[CHARACTER_COOK] = new CCharacter(CHARACTER_COOK, m_spriteArray[SPRITE_COOK_HEAD], m_spriteArray[SPRITE_COOK_BODY], 24, 44);
+		m_characterArray[CHARACTER_GABRIEL] = new CCharacter(CHARACTER_GABRIEL, m_spriteArray[SPRITE_GABRIEL_HEAD], m_spriteArray[SPRITE_GABRIEL_BODY], 24, 48);
+		m_characterArray[CHARACTER_CYNTHIA] = new CCharacter(CHARACTER_CYNTHIA, m_spriteArray[SPRITE_CYNTHIA_HEAD], m_spriteArray[SPRITE_CYNTHIA_BODY], 24, 49);
+		m_characterArray[CHARACTER_PROFESSOR] = new CCharacter(CHARACTER_PROFESSOR, m_spriteArray[SPRITE_PROFESSOR_HEAD], m_spriteArray[SPRITE_PROFESSOR_BODY], 24, 48);
+		m_characterArray[CHARACTER_DOCTOR] = new CCharacter(CHARACTER_DOCTOR, m_spriteArray[SPRITE_DOCTOR_HEAD], m_spriteArray[SPRITE_DOCTOR_BODY], 24, 49);
+		m_characterArray[CHARACTER_MAJOR] = new CCharacter(CHARACTER_MAJOR, m_spriteArray[SPRITE_MAJOR_HEAD], m_spriteArray[SPRITE_MAJOR_BODY], 24, 46);
+		m_characterArray[CHARACTER_DINGLE] = new CCharacter(CHARACTER_DINGLE, m_spriteArray[SPRITE_DINGLE_HEAD], m_spriteArray[SPRITE_DINGLE_BODY], 24, 48);
+		m_characterArray[CHARACTER_ANGUS] = new CCharacter(CHARACTER_ANGUS, m_spriteArray[SPRITE_ANGUS_HEAD], m_spriteArray[SPRITE_ANGUS_BODY], 24, 48);
 		
 		m_mapArray[MAP_CELLAR] = new CMap(400, 192, map_cellarTiles, map_cellarTilesLen, map_cellarMap, map_cellarMapLen, map_cellarPal, map_cellarPalLen);
 		m_mapArray[MAP_CLOCK] = new CMap(304, 192, map_clockTiles, map_clockTilesLen, map_clockMap, map_clockMapLen, map_clockPal, map_clockPalLen);
@@ -89,25 +92,29 @@ void CGame::Initialize()
 		m_mapArray[MAP_ROOM2] = new CMap(344, 192, map_room2Tiles, map_room2TilesLen, map_room2Map, map_room2MapLen, map_room2Pal, map_room2PalLen);
 		m_mapArray[MAP_STAIRS] = new CMap(336, 192, map_stairsTiles, map_stairsTilesLen, map_stairsMap, map_stairsMapLen, map_stairsPal, map_stairsPalLen);
 		m_mapArray[MAP_STUDY] = new CMap(320, 192, map_studyTiles, map_studyTilesLen, map_studyMap, map_studyMapLen, map_studyPal, map_studyPalLen);
+		m_mapArray[MAP_GARDEN] = new CMap(304, 192, map_gardenTiles, map_gardenTilesLen, map_gardenMap, map_gardenMapLen, map_gardenPal, map_gardenPalLen);
+		m_mapArray[MAP_GRAVEYARD] = new CMap(304, 192, map_graveyardTiles, map_graveyardTilesLen, map_graveyardMap, map_graveyardMapLen, map_graveyardPal, map_graveyardPalLen);
 		
 		m_mapArray[MAP_LANDING]->SetOverlay(map_landing_front1Tiles, map_landing_front1TilesLen, map_landing_front1Map, map_landing_front1MapLen);
 		m_mapArray[MAP_OUTSIDE2]->SetOverlay(map_outside2_frontTiles, map_outside2_frontTilesLen, map_outside2_frontMap, map_outside2_frontMapLen);
 		//m_mapArray[MAP_STAIRS]->SetOverlay(map_stairs_frontTiles, map_stairs_frontTilesLen, map_stairs_frontMap, map_stairs_frontMapLen);
+		m_mapArray[MAP_GARDEN]->SetOverlay(map_garden_frontTiles, map_garden_frontTilesLen, map_garden_frontMap, map_garden_frontMapLen);
+		m_mapArray[MAP_GRAVEYARD]->SetOverlay(map_graveyard_frontTiles, map_graveyard_frontTilesLen, map_graveyard_frontMap, map_graveyard_frontMapLen);
 		
 		m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, m_mapArray[MAP_ROOM1], col_room1);
-		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, m_mapArray[MAP_ROOM1], col_room1);
+		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, m_mapArray[MAP_ROOM1], col_room3);
 		m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, m_mapArray[MAP_ROOM2], col_room2);
 		m_roomArray[ROOM_COOK] = new CRoom(ROOM_COOK, m_mapArray[MAP_ROOM2], col_room2);
 		m_roomArray[ROOM_GABRIEL] = new CRoom(ROOM_GABRIEL, m_mapArray[MAP_ROOM2], col_room2);
 		m_roomArray[ROOM_CYNTHIA] = new CRoom(ROOM_CYNTHIA, m_mapArray[MAP_ROOM1], col_room1);
 		m_roomArray[ROOM_PROFESSOR] = new CRoom(ROOM_PROFESSOR, m_mapArray[MAP_ROOM1], col_room1);
 		m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, m_mapArray[MAP_ROOM1], col_room1);		
-		m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, m_mapArray[MAP_ROOM1], col_room1);
+		m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, m_mapArray[MAP_ROOM1], col_room3);
 		m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, m_mapArray[MAP_ROOM1], col_room1);
 		m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, m_mapArray[MAP_OUTSIDE1], col_outside1);
 		m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, m_mapArray[MAP_OUTSIDE2], col_outside2);
 		m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, m_mapArray[MAP_OUTSIDE1], col_outside1);
-		m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, m_mapArray[MAP_OUTSIDE2], col_outside2);
+		m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, m_mapArray[MAP_OUTSIDE2], col_outside3);
 		m_roomArray[ROOM_PASSAGE1] = new CRoom(ROOM_PASSAGE1, m_mapArray[MAP_PASSAGE1], col_passage1);
 		m_roomArray[ROOM_PASSAGE2] = new CRoom(ROOM_PASSAGE2, m_mapArray[MAP_PASSAGE2], col_passage2);
 		m_roomArray[ROOM_PASSAGE3] = new CRoom(ROOM_PASSAGE3, m_mapArray[MAP_PASSAGE1], col_passage1);
@@ -123,6 +130,8 @@ void CGame::Initialize()
 		m_roomArray[ROOM_CELLAR] = new CRoom(ROOM_CELLAR, m_mapArray[MAP_CELLAR], col_cellar);
 		m_roomArray[ROOM_DRAWING] = new CRoom(ROOM_DRAWING, m_mapArray[MAP_DRAWING], col_drawing);
 		m_roomArray[ROOM_LIBRARY] = new CRoom(ROOM_LIBRARY, m_mapArray[MAP_LIBRARY], col_library);
+		m_roomArray[ROOM_GARDEN] = new CRoom(ROOM_GARDEN, m_mapArray[MAP_GARDEN], col_garden);
+		m_roomArray[ROOM_GRAVEYARD] = new CRoom(ROOM_GRAVEYARD, m_mapArray[MAP_GRAVEYARD], col_graveyard);
 		
 		m_roomArray[ROOM_SNIDE]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_SNIDE], m_roomArray[ROOM_HALL2]));		
 		m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_HALL1]));
@@ -134,12 +143,15 @@ void CGame::Initialize()
 		m_roomArray[ROOM_PROFESSOR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PROFESSOR], m_roomArray[ROOM_HALL2]));
 		m_roomArray[ROOM_DOCTOR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_DOCTOR], m_roomArray[ROOM_HALL1]));
 		m_roomArray[ROOM_MAJOR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_MAJOR], m_roomArray[ROOM_HALL2]));
+		m_roomArray[ROOM_MAJOR]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_MAJOR], m_roomArray[ROOM_OUTSIDE2]));
 		m_roomArray[ROOM_DINGLE]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_DINGLE], m_roomArray[ROOM_HALL1]));
 		m_roomArray[ROOM_OUTSIDE1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE1], m_roomArray[ROOM_HALL1]));
 		m_roomArray[ROOM_OUTSIDE2]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE2], m_roomArray[ROOM_PASSAGE1]));
+		m_roomArray[ROOM_OUTSIDE2]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE2], m_roomArray[ROOM_MAJOR]));
 		m_roomArray[ROOM_OUTSIDE3]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE3], m_roomArray[ROOM_CLOCK]));
-		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_CELLAR]));
-		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_DRAWING]));
+		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_GARDEN]));
+		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_CELLAR]));
+		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_DRAWING]));
 		m_roomArray[ROOM_PASSAGE1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE1], m_roomArray[ROOM_REVEREND]));
 		m_roomArray[ROOM_PASSAGE1]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE1], m_roomArray[ROOM_OUTSIDE2]));
 		m_roomArray[ROOM_PASSAGE2]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE2], m_roomArray[ROOM_HALL1]));
@@ -182,7 +194,10 @@ void CGame::Initialize()
 		m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_HALL3]));
 		m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_OUTSIDE4]));
 		m_roomArray[ROOM_LIBRARY]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_LIBRARY], m_roomArray[ROOM_HALL3]));
-					
+		m_roomArray[ROOM_GARDEN]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_GARDEN], m_roomArray[ROOM_GRAVEYARD]));
+		m_roomArray[ROOM_GARDEN]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_GARDEN], m_roomArray[ROOM_OUTSIDE4]));
+		m_roomArray[ROOM_GRAVEYARD]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_GRAVEYARD], m_roomArray[ROOM_GARDEN]));
+		
 		m_eventArray[EVENT_SHOW_ROOM] = new CEvent(EVENT_SHOW_ROOM, new CTime(9, 10, 0, 0));
 		m_eventArray[EVENT_GET_SHOT] = new CEvent(EVENT_SHOW_ROOM, new CTime(12, 0, 0, 0));
 		break;
@@ -196,29 +211,13 @@ void CGame::Initialize()
 	
 	m_currentRoom = m_roomArray[ROOM_STAIRS];
 	m_currentRoom->Initialize(69);
-
-	m_characterArray[CHARACTER_REVEREND]->SetPosition(CHARACTER_WIDTH, 168 - CHARACTER_HEIGHT);
-	m_characterArray[CHARACTER_BENTLEY]->SetPosition(CHARACTER_WIDTH * 2, 168 - CHARACTER_HEIGHT);
-	m_characterArray[CHARACTER_COOK]->SetPosition(CHARACTER_WIDTH * 3, 168 - CHARACTER_HEIGHT);
-	m_characterArray[CHARACTER_GABRIEL]->SetPosition(CHARACTER_WIDTH * 4, 168 - CHARACTER_HEIGHT);
-	m_characterArray[CHARACTER_CYNTHIA]->SetPosition(CHARACTER_WIDTH * 5, 168 - CHARACTER_HEIGHT);
-	m_characterArray[CHARACTER_PROFESSOR]->SetPosition(CHARACTER_WIDTH * 6, 168 - CHARACTER_HEIGHT);
-	m_characterArray[CHARACTER_DOCTOR]->SetPosition(CHARACTER_WIDTH * 7, 168 - CHARACTER_HEIGHT);
-	m_characterArray[CHARACTER_MAJOR]->SetPosition(CHARACTER_WIDTH * 8, 168 - CHARACTER_HEIGHT);
-	m_characterArray[CHARACTER_DINGLE]->SetPosition(CHARACTER_WIDTH * 9, 168 - CHARACTER_HEIGHT);
 	
-	m_characterArray[CHARACTER_REVEREND]->SetFrameType(FRAME_SPEAK);
-	m_characterArray[CHARACTER_BENTLEY]->SetFrameType(FRAME_SPEAK);
-	m_characterArray[CHARACTER_COOK]->SetFrameType(FRAME_SPEAK);
-	m_characterArray[CHARACTER_GABRIEL]->SetFrameType(FRAME_SPEAK);
-	m_characterArray[CHARACTER_CYNTHIA]->SetFrameType(FRAME_SPEAK);
-	m_characterArray[CHARACTER_PROFESSOR]->SetFrameType(FRAME_SPEAK);
-	m_characterArray[CHARACTER_DOCTOR]->SetFrameType(FRAME_SPEAK);
-	m_characterArray[CHARACTER_MAJOR]->SetFrameType(FRAME_SPEAK);
-	m_characterArray[CHARACTER_DINGLE]->SetFrameType(FRAME_SPEAK);
-	
-	//for(int i=0; i<MAX_CHARACTERS; i++)
-	//	m_characterArray[i]->Show();
+	/* for(int i=1; i<MAX_CHARACTERS; i++)
+	{
+		m_characterArray[i]->SetPosition((i - 1) * CHARACTER_WIDTH, 168 - CHARACTER_HEIGHT);
+		m_characterArray[i]->SetFrameType(FRAME_SPEAK);
+		m_characterArray[i]->Show();
+	} */
 	
 	m_fxManager.Initialize();
 	m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
@@ -250,7 +249,8 @@ void CGame::Update()
 	//sprintf(buf, "%02d:%02d:%02d:%02d Elapsed: %08d", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes, m_timer->pCurrentTime()->Seconds, m_timer->pCurrentTime()->MilliSeconds, elapsedTime);
 	//fprintf(stderr, buf);
 	
-	m_watch->Draw(m_timer->pCurrentTime());
+	DrawTime(m_timer->pCurrentTime());
+	//m_watch->Draw(m_timer->pCurrentTime());
 	
 	for(int i=0; i<MAX_EVENTS; i++)
 	{
@@ -288,7 +288,7 @@ void CGame::Update()
 	{
 		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_UP, m_currentRoom);
 		
-		if(collisionType == COL_PATH)
+		if(m_snide->X() < 256 - m_snide->Width() - 8 && collisionType == COL_PATH)
 			m_snide->Move(DIRECTION_UP);
 		else
 			m_snide->Face(DIRECTION_UP);
@@ -301,16 +301,17 @@ void CGame::Update()
 			{
 				m_currentRoom = pDoor->pRoomOut();
 				
-				int xRoom = pDoor->pDoorOut()->X() - 128;
+				int xDoor = pDoor->pDoorOut()->X() + (pDoor->pDoorOut()->Width() / 2) - 1;
+				int xRoom = xDoor - 128;
 				
 				int xChar = 128;
-				int yChar = pDoor->pDoorOut()->Y() - m_characterArray[CHARACTER_SNIDE]->Height();
+				int yChar = pDoor->pDoorOut()->Y() + pDoor->pDoorOut()->Height() - m_characterArray[CHARACTER_SNIDE]->Height();
 				
 				if(xRoom + 256 > m_currentRoom->Width()) xRoom = m_currentRoom->Width() - 256;
 				if(xRoom < 0) xRoom = 0;
 			
-				if(pDoor->pDoorOut()->X() < 128) xChar = pDoor->pDoorOut()->X();
-				if(pDoor->pDoorOut()->X() > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - pDoor->pDoorOut()->X());	
+				if(xDoor< 128) xChar = xDoor;
+				if(xDoor > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - xDoor);	
 				
 				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 				
@@ -329,7 +330,7 @@ void CGame::Update()
 	{
 		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_DOWN, m_currentRoom);
 		
-		if(collisionType == COL_PATH)
+		if(m_snide->X() > 8 && collisionType == COL_PATH)
 			m_snide->Move(DIRECTION_DOWN);
 		else
 			m_snide->Face(DIRECTION_DOWN);
@@ -342,16 +343,17 @@ void CGame::Update()
 			{
 				m_currentRoom = pDoor->pRoomOut();
 			
-				int xRoom = pDoor->pDoorOut()->X() - 128;
+				int xDoor = pDoor->pDoorOut()->X() + (pDoor->pDoorOut()->Width() / 2) - 1;
+				int xRoom = xDoor - 128;
 				
 				int xChar = 128;
-				int yChar = pDoor->pDoorOut()->Y() - m_characterArray[CHARACTER_SNIDE]->Height() + 16;
+				int yChar = pDoor->pDoorOut()->Y() + pDoor->pDoorOut()->Height() - m_characterArray[CHARACTER_SNIDE]->Height() + 16;
 				
 				if(xRoom + 256 > m_currentRoom->Width()) xRoom = m_currentRoom->Width() - 256;
 				if(xRoom < 0) xRoom = 0;
 				
-				if(pDoor->pDoorOut()->X() < 128) xChar = pDoor->pDoorOut()->X();
-				if(pDoor->pDoorOut()->X() > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - pDoor->pDoorOut()->X());
+				if(xDoor < 128) xChar = xDoor;
+				if(xDoor > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - xDoor);
 				
 				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 				
@@ -370,7 +372,25 @@ void CGame::Update()
 	{
 		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_LEFT, m_currentRoom);
 		
-		if(collisionType == COL_PATH)
+		if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
+		{
+			CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
+			
+			if(pDoor != NULL)
+			{
+				m_currentRoom = pDoor->pRoomOut();
+				
+				int xChar = 256 - m_characterArray[CHARACTER_SNIDE]->Width() - 8;
+				//int yChar =  pDoor->pDoorOut()->Y() + (pDoor->pDoorOut()->Height() / 2) -  m_characterArray[CHARACTER_SNIDE]->Height();
+				
+				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+				
+				m_currentRoom->Initialize(m_currentRoom->Width() - 256);
+				//m_snide->SetPosition(xChar, yChar);
+				m_snide->SetX(xChar);
+			}
+		}
+		else if(collisionType == COL_PATH)
 		{
 			if(m_snide->X() > 128)
 			{
@@ -391,7 +411,25 @@ void CGame::Update()
 	{
 		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_RIGHT, m_currentRoom);
 		
-		if(collisionType == COL_PATH)
+		if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
+		{
+			CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
+			
+			if(pDoor != NULL)
+			{
+				m_currentRoom = pDoor->pRoomOut();
+				
+				int xChar = 8;
+				//int yChar = pDoor->pDoorOut()->Y() + (pDoor->pDoorOut()->Height() / 2) -  m_characterArray[CHARACTER_SNIDE]->Height();
+				
+				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+				
+				m_currentRoom->Initialize(0);
+				//m_snide->SetPosition(xChar, yChar);
+				m_snide->SetX(xChar);
+			}
+		}
+		else if(collisionType == COL_PATH)
 		{
 			if(m_snide->X() < 128)
 			{
@@ -479,6 +517,17 @@ void CGame::UpdateVBlank()
 
 void CGame::UpdateHBlank()
 {
+	/* if(REG_VCOUNT == 0)
+	{
+		REG_DISPCNT_SUB &= ~DISPLAY_SPRITE_ATTR_MASK;
+		REG_DISPCNT_SUB |= SpriteMapping_1D_32;
+	}
+	if(REG_VCOUNT == 40)
+	{
+		REG_DISPCNT_SUB &= ~DISPLAY_SPRITE_ATTR_MASK;
+		REG_DISPCNT_SUB |= SpriteMapping_Bmp_1D_128;
+	} */
+
 	m_fxManager.UpdateHBlank();
 }
 

@@ -11,6 +11,8 @@ CDoor::CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoo
 	
 	m_x = 0;
 	m_y = 0;
+	m_width = 0;
+	m_height = 0;
 }
 
 CDoor::~CDoor()
@@ -36,8 +38,6 @@ void CDoor::Initialize()
 void CDoor::GetPosition()
 {
 	bool doorFound = false;
-	int xStart = 0;
-	int xEnd = 0;
 	
 	for(int y=0; y < m_pRoomIn->Height() / 8; y++)
 	{
@@ -48,20 +48,17 @@ void CDoor::GetPosition()
 				if(!doorFound)
 				{
 					doorFound = true;			
-					xStart = x;
+					m_x = x * 8;
+					m_y = y * 8;
 				}
 				
-				m_y = y;
-				xEnd = x;
+				m_width = (x * 8 - m_x);
+				m_height = (y * 8 - m_y);
 			}
 		}
 	}
 	
-	m_x = (xStart + ((xEnd - xStart) / 2)) * 8;
-	//m_x = xStart * 8;
-	m_y *= 8;
-	
 	//char buf[256];
-	//sprintf(buf, "--->y:%d", m_y);
+	//sprintf(buf, "x:%d, y:%d, width:%d, height:%d", m_x, m_y, m_width, m_height);
 	//fprintf(stderr, buf);
 }

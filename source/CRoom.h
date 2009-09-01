@@ -3,7 +3,7 @@
 
 #include "TDG.h"
 
-#define MAX_ROOMS			30
+#define MAX_ROOMS			31
 #define MAX_DOORS			10
 
 enum RoomType
@@ -36,7 +36,9 @@ enum RoomType
 	ROOM_CLOCK,
 	ROOM_CELLAR,
 	ROOM_DRAWING,
-	ROOM_LIBRARY
+	ROOM_LIBRARY,
+	ROOM_GARDEN,
+	ROOM_GRAVEYARD
 };
 
 class CDoor;

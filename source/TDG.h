@@ -34,11 +34,15 @@
 #include "map_room2.h"
 #include "map_stairs.h"
 #include "map_study.h"
+#include "map_garden.h"
+#include "map_graveyard.h"
 
 #include "map_landing_front1.h"
 #include "map_landing_front2.h"
 #include "map_outside2_front.h"
 #include "map_stairs_front.h"
+#include "map_garden_front.h"
+#include "map_graveyard_front.h"
 
 #include "sprite_snide_head.h"
 #include "sprite_snide_body.h"
@@ -60,6 +64,8 @@
 #include "sprite_major_body.h"
 #include "sprite_dingle_head.h"
 #include "sprite_dingle_body.h"
+#include "sprite_angus_head.h"
+#include "sprite_angus_body.h"
 
 #include "sprite_col1.h"
 #include "sprite_col2.h"

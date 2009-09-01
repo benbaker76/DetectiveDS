@@ -98,7 +98,7 @@ void CFxLights::Initialize()
 		break;
 	case FX_LIGHTS_BLACK_OUT:
 		REG_BLDCNT_SUB = BLEND_FADE_BLACK | BLEND_SRC_BG2 | BLEND_SRC_BG3 | BLEND_SRC_SPRITE;
-		REG_BLDY_SUB = 16;
+		REG_BLDY_SUB = 17;
 		REG_BLDALPHA_SUB = (0xF << 8);
 		break;
 	case FX_LIGHTS_WHITE:
@@ -109,7 +109,7 @@ void CFxLights::Initialize()
 		break;
 	case FX_LIGHTS_WHITE_OUT:
 		REG_BLDCNT_SUB = BLEND_FADE_WHITE | BLEND_SRC_BG2 | BLEND_SRC_BG3 | BLEND_SRC_SPRITE;
-		REG_BLDY_SUB = 16;
+		REG_BLDY_SUB = 17;
 		REG_BLDALPHA_SUB = (0xF << 8);
 		break;
 	default:
@@ -141,7 +141,7 @@ void CFxLights::UpdateVBlank()
 	case FX_LIGHTS_BLACK_OUT:
 	case FX_LIGHTS_WHITE_OUT:
 		for(int i=0; i<SCREEN_HEIGHT; i++)
-			m_map_mix[i] = (u16) (m_map_light[i] | (16 - m_fadeValue));
+			m_map_mix[i] = (u16) (m_map_light[i] | (17 - m_fadeValue));
 		
 		dmaTransfer(1, m_map_mix, (void*) &REG_BLDY_SUB, 1, DMA_ENABLE | DMA_REPEAT | DMA_START_HBL | DMA_DST_RESET);
 		break;
@@ -149,7 +149,7 @@ void CFxLights::UpdateVBlank()
 		break;
 	}
 	
-	if(m_fadeValue < 16)
+	if(m_fadeValue < 17)
 		m_fadeValue++;
 	else
 	{

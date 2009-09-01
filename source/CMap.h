@@ -3,7 +3,7 @@
 
 #include <nds.h>
 
-#define MAX_MAPS		18
+#define MAX_MAPS		20
 
 enum DirectionType
 {
@@ -32,7 +32,9 @@ enum MapType
 	MAP_ROOM1,
 	MAP_ROOM2,
 	MAP_STAIRS,
-	MAP_STUDY
+	MAP_STUDY,
+	MAP_GARDEN,
+	MAP_GRAVEYARD
 };
 
 class CMap

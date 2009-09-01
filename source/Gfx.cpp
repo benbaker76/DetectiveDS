@@ -9,7 +9,7 @@ void DrawPixel(int x, int y, int colorIndex)
 {
 	u16 tileId = *(BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB) + (x / 8) + (y / 8) * 32);
 	u16* pTile = BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB) + tileId * 32 + ((x % 8) / 2) + (y % 8) * 4;
-	*pTile = ((x % 2) == 0 ? ((*pTile &~ 0xF) | colorIndex) : ((*pTile &~ 0x0F00) | (colorIndex << 8)));
+	*pTile = ((x % 2) == 0 ? ((*pTile &~ 0xFF) | colorIndex) : ((*pTile &~ 0xFF00) | (colorIndex << 8)));
 }
 
 void DrawPixelDouble(int x, int y, int colorIndex)
@@ -70,8 +70,8 @@ void DrawLine(int x0, int y0, int x1, int y1, int colorIndex)
 
 void DrawTime(CTime* pTime)
 {
-	//dmaCopy(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), watchTilesLen);
-	//dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
+	dmaCopy(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), watchTilesLen);
+	dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
 	//dmaCopy(watchPal, BG_PALETTE_SUB, watchPalLen);
 
 	float radians;

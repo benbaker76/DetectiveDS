@@ -39,6 +39,8 @@ public:
 	
 	int X() const { return m_x; }
 	int Y() const { return m_y; }
+	int Width() const { return m_width; }
+	int Height() const { return m_height; }
 	DoorType GetDoorType() const { return  m_doorType; };
 	DoorState GetDoorState() const { return  m_doorState; };
 	CRoom* pRoomIn() const { return m_pRoomIn; }
@@ -54,6 +56,8 @@ private:
 	
 	int m_x;
 	int m_y;
+	int m_width;
+	int m_height;
 	
 	void GetPosition();
 };

@@ -24,5 +24,7 @@ extern const int g_majorHeadFrames[];
 extern const int g_majorBodyFrames[];
 extern const int g_dingleHeadFrames[];
 extern const int g_dingleBodyFrames[];
+extern const int g_angusHeadFrames[];
+extern const int g_angusBodyFrames[];
 
 extern mm_sound_effect g_sfx_footsteps;
