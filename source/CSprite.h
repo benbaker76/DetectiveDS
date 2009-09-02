@@ -62,6 +62,9 @@ public:
 	
 	void SetAlpha(int alpha) { m_alpha = alpha; }
 	
+	void SetPriority(int priority) { m_priority = priority; }
+	int Priority() const { return m_priority; }
+	
 	float X() const { return m_x; }
 	float Y() const { return m_y; }
 
@@ -81,6 +84,7 @@ private:
 	int m_lastUpdate;
 	
 	int m_oamIndex;
+	int m_priority;
 	
 	u16* m_gfxSub;
 	

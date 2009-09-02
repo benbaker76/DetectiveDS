@@ -31,20 +31,20 @@ void CCharacter::SetPosition(float x, float y)
 	m_pBodySprite->SetPosition(x, y+HEAD_HEIGHT);
 }
 
-void CCharacter::SetPriority(int index)
+void CCharacter::SetOamIndex(int index)
 {
-	if(!m_visible)
-		return;
-	
 	m_pHeadSprite->SetOamIndex(index);
 	m_pBodySprite->SetOamIndex(index+1);
 }
 
+void CCharacter::SetPriority(int priority)
+{
+	m_pHeadSprite->SetPriority(priority);
+	m_pBodySprite->SetPriority(priority);
+}
+
 void CCharacter::Animate(int elapsedTime)
 {
-	if(!m_visible)
-		return;
-	
 	m_pHeadSprite->Animate(elapsedTime);
 	m_pBodySprite->Animate(elapsedTime);
 }

@@ -36,7 +36,6 @@ private:
 	CFxManager m_fxManager;
 	
 	CCharacter* m_characterArray[MAX_CHARACTERS];
-	CMap* m_mapArray[MAX_MAPS];
 	CSprite* m_spriteArray[MAX_SPRITES];
 	CRoom* m_roomArray[MAX_ROOMS];
 	CItem* m_itemArray[MAX_ITEMS];

@@ -21,6 +21,7 @@ CSprite::CSprite(SpriteType spriteType, const u32* pBmp, const int* frameArray, 
 	m_y = 0;
 	
 	m_oamIndex = spriteType;
+	m_priority = 1;
 	
 	m_alpha = 0xF;
 	
@@ -93,7 +94,7 @@ void CSprite::Draw()
 	oamSet(&oamSub,						// sub graphics engine context
 		m_oamIndex,						// oam index (0 to 127)
 		m_x, m_y,						// x and y pixel location of the sprite
-		1,								// priority, lower renders last (on top)
+		m_priority,						// priority, lower renders last (on top)
 		m_alpha,						// this is the palette index if multiple palettes or the alpha value if bmp sprite	
 		SpriteSize_32x32,
 		//SpriteColorFormat_256Color,

@@ -21,9 +21,6 @@ void CGame::Initialize()
 	for(int i=0; i<MAX_CHARACTERS; i++)
 		m_characterArray[i] = NULL;
 		
-	for(int i=0; i<MAX_MAPS; i++)
-		m_mapArray[i] = NULL;
-		
 	for(int i=0; i<MAX_SPRITES; i++)
 		m_spriteArray[i] = NULL;
 		
@@ -97,64 +94,40 @@ void CGame::Initialize()
 		m_characterArray[CHARACTER_DINGLE] = new CCharacter(CHARACTER_DINGLE, m_spriteArray[SPRITE_DINGLE_HEAD], m_spriteArray[SPRITE_DINGLE_BODY], 24, 48);
 		m_characterArray[CHARACTER_ANGUS] = new CCharacter(CHARACTER_ANGUS, m_spriteArray[SPRITE_ANGUS_HEAD], m_spriteArray[SPRITE_ANGUS_BODY], 24, 48);
 		
-		m_mapArray[MAP_CELLAR] = new CMap(400, 192, map_cellarTiles, map_cellarTilesLen, map_cellarMap, map_cellarMapLen, map_cellarPal, map_cellarPalLen);
-		m_mapArray[MAP_CLOCK] = new CMap(304, 192, map_clockTiles, map_clockTilesLen, map_clockMap, map_clockMapLen, map_clockPal, map_clockPalLen);
-		m_mapArray[MAP_DRAWING] = new CMap(640, 192, map_drawingTiles, map_drawingTilesLen, map_drawingMap, map_drawingMapLen, map_drawingPal, map_drawingPalLen);
-		m_mapArray[MAP_HALL1] = new CMap(832, 192, map_hall1Tiles, map_hall1TilesLen, map_hall1Map, map_hall1MapLen, map_hall1Pal, map_hall1PalLen);
-		m_mapArray[MAP_HALL2] = new CMap(832, 192, map_hall2Tiles, map_hall2TilesLen, map_hall2Map, map_hall2MapLen, map_hall2Pal, map_hall2PalLen);
-		m_mapArray[MAP_HALL3] = new CMap(832, 192, map_hall3Tiles, map_hall3TilesLen, map_hall3Map, map_hall3MapLen, map_hall3Pal, map_hall3PalLen);
-		m_mapArray[MAP_HALL4] = new CMap(544, 192, map_hall4Tiles, map_hall4TilesLen, map_hall4Map, map_hall4MapLen, map_hall4Pal, map_hall4PalLen);
-		m_mapArray[MAP_KITCHEN] = new CMap(536, 192, map_kitchenTiles, map_kitchenTilesLen, map_kitchenMap, map_kitchenMapLen, map_kitchenPal, map_kitchenPalLen);
-		m_mapArray[MAP_LANDING] = new CMap(400, 192, map_landingTiles, map_landingTilesLen, map_landingMap, map_landingMapLen, map_landingPal, map_landingPalLen);
-		m_mapArray[MAP_LIBRARY] = new CMap(416, 192, map_libraryTiles, map_libraryTilesLen, map_libraryMap, map_libraryMapLen, map_libraryPal, map_libraryPalLen);
-		m_mapArray[MAP_OUTSIDE1] = new CMap(400, 192, map_outside1Tiles, map_outside1TilesLen, map_outside1Map, map_outside1MapLen, map_outside1Pal, map_outside1PalLen);
-		m_mapArray[MAP_OUTSIDE2] = new CMap(544, 192, map_outside2Tiles, map_outside2TilesLen, map_outside2Map, map_outside2MapLen, map_outside2Pal, map_outside2PalLen);
-		m_mapArray[MAP_PASSAGE1] = new CMap(256, 192, map_passage1Tiles, map_passage1TilesLen, map_passage1Map, map_passage1MapLen, map_passage1Pal, map_passage1PalLen);
-		m_mapArray[MAP_PASSAGE2] = new CMap(256, 192, map_passage2Tiles, map_passage2TilesLen, map_passage2Map, map_passage2MapLen, map_passage2Pal, map_passage2PalLen);
-		m_mapArray[MAP_ROOM1] = new CMap(400, 192, map_room1Tiles, map_room1TilesLen, map_room1Map, map_room1MapLen, map_room1Pal, map_room1PalLen);
-		m_mapArray[MAP_ROOM2] = new CMap(344, 192, map_room2Tiles, map_room2TilesLen, map_room2Map, map_room2MapLen, map_room2Pal, map_room2PalLen);
-		m_mapArray[MAP_STAIRS] = new CMap(336, 192, map_stairsTiles, map_stairsTilesLen, map_stairsMap, map_stairsMapLen, map_stairsPal, map_stairsPalLen);
-		m_mapArray[MAP_STUDY] = new CMap(320, 192, map_studyTiles, map_studyTilesLen, map_studyMap, map_studyMapLen, map_studyPal, map_studyPalLen);
-		m_mapArray[MAP_GARDEN] = new CMap(304, 192, map_gardenTiles, map_gardenTilesLen, map_gardenMap, map_gardenMapLen, map_gardenPal, map_gardenPalLen);
-		m_mapArray[MAP_GRAVEYARD] = new CMap(304, 192, map_graveyardTiles, map_graveyardTilesLen, map_graveyardMap, map_graveyardMapLen, map_graveyardPal, map_graveyardPalLen);
+		m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, &g_room1Map, NULL, col_room1);
+		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, &g_room1Map, NULL, col_room3);
+		m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, &g_room2Map, NULL, col_room2);
+		m_roomArray[ROOM_COOK] = new CRoom(ROOM_COOK, &g_room2Map, NULL, col_room2);
+		m_roomArray[ROOM_GABRIEL] = new CRoom(ROOM_GABRIEL, &g_room2Map, NULL, col_room2);
+		m_roomArray[ROOM_CYNTHIA] = new CRoom(ROOM_CYNTHIA, &g_room1Map, NULL, col_room1);
+		m_roomArray[ROOM_PROFESSOR] = new CRoom(ROOM_PROFESSOR, &g_room1Map, NULL, col_room1);
+		m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, &g_room1Map, NULL, col_room1);		
+		m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, &g_room1Map, NULL, col_room3);
+		m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, &g_room1Map, NULL, col_room1);
+		m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, &g_outside1Map, NULL, col_outside1);
+		m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, &g_outside2Map, &g_outside2_frontMap, col_outside2);
+		m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, &g_outside1Map, NULL, col_outside1);
+		m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, &g_outside2Map, &g_outside2_frontMap, col_outside3);
+		m_roomArray[ROOM_PASSAGE1] = new CRoom(ROOM_PASSAGE1, &g_passage1Map, NULL, col_passage1);
+		m_roomArray[ROOM_PASSAGE2] = new CRoom(ROOM_PASSAGE2, &g_passage2Map, NULL, col_passage2);
+		m_roomArray[ROOM_PASSAGE3] = new CRoom(ROOM_PASSAGE3, &g_passage1Map, NULL, col_passage1);
+		m_roomArray[ROOM_HALL1] = new CRoom(ROOM_HALL1, &g_hall1Map, NULL, col_hall1);
+		m_roomArray[ROOM_HALL2] = new CRoom(ROOM_HALL2, &g_hall2Map, NULL, col_hall2);
+		m_roomArray[ROOM_HALL3] = new CRoom(ROOM_HALL3, &g_hall3Map, NULL, col_hall3);
+		m_roomArray[ROOM_HALL4] = new CRoom(ROOM_HALL4, &g_hall4Map, NULL, col_hall4);
+		m_roomArray[ROOM_LANDING] = new CRoom(ROOM_LANDING, &g_landingMap, &g_landing_front1Map, col_landing);
+		m_roomArray[ROOM_KITCHEN] = new CRoom(ROOM_KITCHEN, &g_kitchenMap, NULL, col_kitchen);
+		m_roomArray[ROOM_STAIRS] = new CRoom(ROOM_STAIRS, &g_stairsMap, NULL, col_stairs);
+		m_roomArray[ROOM_STUDY] = new CRoom(ROOM_STUDY, &g_studyMap, NULL, col_study);
+		m_roomArray[ROOM_CLOCK] = new CRoom(ROOM_CLOCK, &g_clockMap, NULL, col_clock);
+		m_roomArray[ROOM_CELLAR] = new CRoom(ROOM_CELLAR, &g_cellarMap, NULL, col_cellar);
+		m_roomArray[ROOM_DRAWING] = new CRoom(ROOM_DRAWING, &g_drawingMap, NULL, col_drawing);
+		m_roomArray[ROOM_LIBRARY] = new CRoom(ROOM_LIBRARY, &g_libraryMap, NULL, col_library);
+		m_roomArray[ROOM_GARDEN] = new CRoom(ROOM_GARDEN, &g_gardenMap, &g_garden_frontMap, col_garden);
+		m_roomArray[ROOM_GRAVEYARD] = new CRoom(ROOM_GRAVEYARD, &g_graveyardMap, &g_graveyard_frontMap, col_graveyard);
 		
-		m_mapArray[MAP_LANDING]->SetOverlay(map_landing_front1Tiles, map_landing_front1TilesLen, map_landing_front1Map, map_landing_front1MapLen);
-		m_mapArray[MAP_OUTSIDE2]->SetOverlay(map_outside2_frontTiles, map_outside2_frontTilesLen, map_outside2_frontMap, map_outside2_frontMapLen);
-		//m_mapArray[MAP_STAIRS]->SetOverlay(map_stairs_frontTiles, map_stairs_frontTilesLen, map_stairs_frontMap, map_stairs_frontMapLen);
-		m_mapArray[MAP_GARDEN]->SetOverlay(map_garden_frontTiles, map_garden_frontTilesLen, map_garden_frontMap, map_garden_frontMapLen);
-		m_mapArray[MAP_GRAVEYARD]->SetOverlay(map_graveyard_frontTiles, map_graveyard_frontTilesLen, map_graveyard_frontMap, map_graveyard_frontMapLen);
-		
-		m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, m_mapArray[MAP_ROOM1], col_room1);
-		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, m_mapArray[MAP_ROOM1], col_room3);
-		m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, m_mapArray[MAP_ROOM2], col_room2);
-		m_roomArray[ROOM_COOK] = new CRoom(ROOM_COOK, m_mapArray[MAP_ROOM2], col_room2);
-		m_roomArray[ROOM_GABRIEL] = new CRoom(ROOM_GABRIEL, m_mapArray[MAP_ROOM2], col_room2);
-		m_roomArray[ROOM_CYNTHIA] = new CRoom(ROOM_CYNTHIA, m_mapArray[MAP_ROOM1], col_room1);
-		m_roomArray[ROOM_PROFESSOR] = new CRoom(ROOM_PROFESSOR, m_mapArray[MAP_ROOM1], col_room1);
-		m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, m_mapArray[MAP_ROOM1], col_room1);		
-		m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, m_mapArray[MAP_ROOM1], col_room3);
-		m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, m_mapArray[MAP_ROOM1], col_room1);
-		m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, m_mapArray[MAP_OUTSIDE1], col_outside1);
-		m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, m_mapArray[MAP_OUTSIDE2], col_outside2);
-		m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, m_mapArray[MAP_OUTSIDE1], col_outside1);
-		m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, m_mapArray[MAP_OUTSIDE2], col_outside3);
-		m_roomArray[ROOM_PASSAGE1] = new CRoom(ROOM_PASSAGE1, m_mapArray[MAP_PASSAGE1], col_passage1);
-		m_roomArray[ROOM_PASSAGE2] = new CRoom(ROOM_PASSAGE2, m_mapArray[MAP_PASSAGE2], col_passage2);
-		m_roomArray[ROOM_PASSAGE3] = new CRoom(ROOM_PASSAGE3, m_mapArray[MAP_PASSAGE1], col_passage1);
-		m_roomArray[ROOM_HALL1] = new CRoom(ROOM_HALL1, m_mapArray[MAP_HALL1], col_hall1);
-		m_roomArray[ROOM_HALL2] = new CRoom(ROOM_HALL2, m_mapArray[MAP_HALL2], col_hall2);
-		m_roomArray[ROOM_HALL3] = new CRoom(ROOM_HALL3, m_mapArray[MAP_HALL3], col_hall3);
-		m_roomArray[ROOM_HALL4] = new CRoom(ROOM_HALL4, m_mapArray[MAP_HALL4], col_hall4);
-		m_roomArray[ROOM_LANDING] = new CRoom(ROOM_LANDING, m_mapArray[MAP_LANDING], col_landing);
-		m_roomArray[ROOM_KITCHEN] = new CRoom(ROOM_KITCHEN, m_mapArray[MAP_KITCHEN], col_kitchen);
-		m_roomArray[ROOM_STAIRS] = new CRoom(ROOM_STAIRS, m_mapArray[MAP_STAIRS], col_stairs);
-		m_roomArray[ROOM_STUDY] = new CRoom(ROOM_STUDY, m_mapArray[MAP_STUDY], col_study);
-		m_roomArray[ROOM_CLOCK] = new CRoom(ROOM_CLOCK, m_mapArray[MAP_CLOCK], col_clock);
-		m_roomArray[ROOM_CELLAR] = new CRoom(ROOM_CELLAR, m_mapArray[MAP_CELLAR], col_cellar);
-		m_roomArray[ROOM_DRAWING] = new CRoom(ROOM_DRAWING, m_mapArray[MAP_DRAWING], col_drawing);
-		m_roomArray[ROOM_LIBRARY] = new CRoom(ROOM_LIBRARY, m_mapArray[MAP_LIBRARY], col_library);
-		m_roomArray[ROOM_GARDEN] = new CRoom(ROOM_GARDEN, m_mapArray[MAP_GARDEN], col_garden);
-		m_roomArray[ROOM_GRAVEYARD] = new CRoom(ROOM_GRAVEYARD, m_mapArray[MAP_GRAVEYARD], col_graveyard);
+		//m_roomArray[ROOM_STAIRS]->SetOverlay(&g_stairs_frontMap, 168);
+		m_roomArray[ROOM_GRAVEYARD]->SetOverlay(&g_graveyard_frontMap, 176);
 		
 		m_roomArray[ROOM_SNIDE]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_SNIDE], m_roomArray[ROOM_HALL2]));		
 		m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_HALL1]));
@@ -513,13 +486,22 @@ void CGame::SortSprites()
 		for(int j=0; j < MAX_CHARACTERS; j++)
 		{
 			if (m_characterArray[i]->Y() + m_characterArray[i]->Height() > m_characterArray[j]->Y() + m_characterArray[j]->Height() &&
-				m_characterArray[i]->Priority() > m_characterArray[j]->Priority())
+				m_characterArray[i]->OamIndex() > m_characterArray[j]->OamIndex())
 			{
-				int temp = m_characterArray[i]->Priority();
-				m_characterArray[i]->SetPriority(m_characterArray[j]->Priority());
-				m_characterArray[j]->SetPriority(temp);
+				int temp = m_characterArray[i]->OamIndex();
+				m_characterArray[i]->SetOamIndex(m_characterArray[j]->OamIndex());
+				m_characterArray[j]->SetOamIndex(temp);
 			}
 		}
+		
+		if(m_currentRoom->OverlayY() < m_characterArray[i]->Y() + m_characterArray[i]->Height())
+			m_characterArray[i]->SetPriority(0);
+		else
+			m_characterArray[i]->SetPriority(1);
+		
+		//char buf[256];
+		//sprintf(buf, "%d",m_characterArray[CHARACTER_SNIDE]->Priority());
+		//DrawText(buf, 0, 0, false);
 	}
 }
 

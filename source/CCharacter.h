@@ -34,7 +34,8 @@ public:
 	~CCharacter();
 	
 	void SetPosition(float x, float y);
-	void SetPriority(int index);
+	void SetOamIndex(int index);
+	void SetPriority(int priority);
 	void Animate(int elapsedTime);
 	void Show();
 	void Hide();
@@ -57,7 +58,8 @@ public:
 	float Height() const { return m_height; }
 	bool Visible() const { return m_visible; }
 	
-	int Priority() const { return m_pHeadSprite->OamIndex(); }
+	int OamIndex() const { return m_pHeadSprite->OamIndex(); }
+	int Priority() const { return m_pHeadSprite->Priority(); }
 
 private:
 	CharacterType m_characterType;

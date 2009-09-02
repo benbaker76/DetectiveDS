@@ -1,7 +1,8 @@
 #ifndef __CROOM_H__
 #define __CROOM_H__
 
-#include "TDG.h"
+#include <nds.h>
+#include "Globals.h"
 
 #define MAX_ROOMS			31
 #define MAX_DOORS			10
@@ -46,30 +47,39 @@ class CDoor;
 class CRoom
 {
 public:
-	CRoom(RoomType roomType, CMap* pMap, const unsigned char* colMap);
+	CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const unsigned char* colMap);
 	~CRoom();
 	
 	void Initialize(int x);
+	void InitializeOverlay();
 	void Draw();
 	bool Scroll(DirectionType directionType);
 	
 	void SetDoor(int doorType, CDoor* pDoor) { m_doorArray[doorType] = pDoor; }
 	CDoor* GetDoor(int doorType) const { return m_doorArray[doorType]; }
 	
-	void SetX(int x) { m_pMap->SetX(x); }
-	void SetY(int y) { m_pMap->SetY(y); }
-
-	CMap* pMap() const { return m_pMap; }	
-	int X() const { return m_pMap->X(); }
-	int Y() const { return m_pMap->Y(); }
-	int Width() const { return m_pMap->Width(); }
-	int Height() const { return m_pMap->Height(); }
-	u8 ColMap(int x, int y) const { return (m_colMap == NULL ? 0 : *(m_colMap + x + y * (m_pMap->Width() / 8))); }
+	void SetX(int x) { m_x = x; }
+	void SetY(int y) { m_y = y; }
+	
+	void SetOverlay(PMAP pOverlay, int overlayY) { m_pOverlay = pOverlay; m_overlayY = overlayY; }
+	
+	int X() const { return m_x; }
+	int Y() const { return m_y; }
+	int Width() const { return m_pMap->Width; }
+	int Height() const { return m_pMap->Height; }
+	int OverlayY() const { return m_overlayY; }
+	u8 ColMap(int x, int y) const { return (m_pColMap == NULL ? 0 : *(m_pColMap + x + y * (m_pMap->Width / 8))); }
 
 private:
 	RoomType m_roomType;
-	CMap* m_pMap;
-	const u8* m_colMap;
+	PMAP m_pMap;
+	PMAP m_pOverlay;
+	const u8* m_pColMap;
+	
+	int m_x;
+	int m_y;
+	
+	int m_overlayY;
 	
 	CDoor* m_doorArray[MAX_DOORS];
 };

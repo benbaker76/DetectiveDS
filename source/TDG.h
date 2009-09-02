@@ -6,7 +6,6 @@
 #include "ColMap.h"
 #include "CDoor.h"
 #include "Globals.h"
-#include "CMap.h"
 #include "CRoom.h"
 #include "CSprite.h"
 #include "CVideo.h"
