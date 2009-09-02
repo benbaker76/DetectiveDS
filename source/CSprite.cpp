@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include "CSprite.h"
 #include "TDG.h"
 
@@ -93,7 +94,7 @@ void CSprite::Draw()
 	
 	oamSet(&oamSub,						// sub graphics engine context
 		m_oamIndex,						// oam index (0 to 127)
-		m_x, m_y,						// x and y pixel location of the sprite
+		round(m_x), round(m_y),						// x and y pixel location of the sprite
 		m_priority,						// priority, lower renders last (on top)
 		m_alpha,						// this is the palette index if multiple palettes or the alpha value if bmp sprite	
 		SpriteSize_32x32,

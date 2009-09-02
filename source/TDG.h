@@ -68,7 +68,6 @@
 
 #include "sprite_col1.h"
 #include "sprite_col2.h"
-#include "sprite_col3.h"
 
 #include "sprite_watch.h"
 

@@ -156,7 +156,7 @@ const char* g_itemName[] =
 
 const char* g_colName[] =
 {
-	"PATH",
+	"NOTHING HERE",
 	"DOOR1",
 	"DOOR2",
 	"DOOR3",

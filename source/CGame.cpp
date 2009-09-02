@@ -95,19 +95,19 @@ void CGame::Initialize()
 		m_characterArray[CHARACTER_ANGUS] = new CCharacter(CHARACTER_ANGUS, m_spriteArray[SPRITE_ANGUS_HEAD], m_spriteArray[SPRITE_ANGUS_BODY], 24, 48);
 		
 		m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, &g_room1Map, NULL, col_room1);
-		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, &g_room1Map, NULL, col_room3);
+		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, &g_room1Map, NULL, col_room1);
 		m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, &g_room2Map, NULL, col_room2);
 		m_roomArray[ROOM_COOK] = new CRoom(ROOM_COOK, &g_room2Map, NULL, col_room2);
 		m_roomArray[ROOM_GABRIEL] = new CRoom(ROOM_GABRIEL, &g_room2Map, NULL, col_room2);
 		m_roomArray[ROOM_CYNTHIA] = new CRoom(ROOM_CYNTHIA, &g_room1Map, NULL, col_room1);
 		m_roomArray[ROOM_PROFESSOR] = new CRoom(ROOM_PROFESSOR, &g_room1Map, NULL, col_room1);
 		m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, &g_room1Map, NULL, col_room1);		
-		m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, &g_room1Map, NULL, col_room3);
+		m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, &g_room1Map, NULL, col_room1);
 		m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, &g_room1Map, NULL, col_room1);
 		m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, &g_outside1Map, NULL, col_outside1);
 		m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, &g_outside2Map, &g_outside2_frontMap, col_outside2);
 		m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, &g_outside1Map, NULL, col_outside1);
-		m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, &g_outside2Map, &g_outside2_frontMap, col_outside3);
+		m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, &g_outside2Map, &g_outside2_frontMap, col_outside2);
 		m_roomArray[ROOM_PASSAGE1] = new CRoom(ROOM_PASSAGE1, &g_passage1Map, NULL, col_passage1);
 		m_roomArray[ROOM_PASSAGE2] = new CRoom(ROOM_PASSAGE2, &g_passage2Map, NULL, col_passage2);
 		m_roomArray[ROOM_PASSAGE3] = new CRoom(ROOM_PASSAGE3, &g_passage1Map, NULL, col_passage1);
@@ -145,9 +145,9 @@ void CGame::Initialize()
 		m_roomArray[ROOM_OUTSIDE2]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE2], m_roomArray[ROOM_PASSAGE1]));
 		m_roomArray[ROOM_OUTSIDE2]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE2], m_roomArray[ROOM_MAJOR]));
 		m_roomArray[ROOM_OUTSIDE3]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE3], m_roomArray[ROOM_CLOCK]));
-		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_GARDEN]));
-		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_CELLAR]));
-		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_DRAWING]));
+		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_CELLAR]));
+		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_DRAWING]));
+		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_GARDEN]));
 		m_roomArray[ROOM_PASSAGE1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE1], m_roomArray[ROOM_REVEREND]));
 		m_roomArray[ROOM_PASSAGE1]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE1], m_roomArray[ROOM_OUTSIDE2]));
 		m_roomArray[ROOM_PASSAGE2]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE2], m_roomArray[ROOM_HALL1]));
@@ -286,7 +286,7 @@ void CGame::Update()
 	{
 		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_UP, m_currentRoom);
 		
-		if(m_snide->X() < 256 - m_snide->Width() - 8 && collisionType == COL_PATH)
+		if(m_snide->X() < 256 - m_snide->Width() - 8 && collisionType == COL_NOTHING_HERE)
 			m_snide->Move(DIRECTION_UP);
 		else
 			m_snide->Face(DIRECTION_UP);
@@ -299,7 +299,7 @@ void CGame::Update()
 			{
 				m_currentRoom = pDoor->pRoomOut();
 				
-				int xDoor = pDoor->pDoorOut()->X() + (pDoor->pDoorOut()->Width() / 2) - 1;
+				int xDoor = pDoor->pDoorOut()->X() + (pDoor->pDoorOut()->Width() / 2) - 8;
 				int xRoom = xDoor - 128;
 				
 				int xChar = 128;
@@ -328,7 +328,7 @@ void CGame::Update()
 	{
 		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_DOWN, m_currentRoom);
 		
-		if(m_snide->X() > 8 && collisionType == COL_PATH)
+		if(m_snide->X() > 8 && collisionType == COL_NOTHING_HERE)
 			m_snide->Move(DIRECTION_DOWN);
 		else
 			m_snide->Face(DIRECTION_DOWN);
@@ -341,7 +341,7 @@ void CGame::Update()
 			{
 				m_currentRoom = pDoor->pRoomOut();
 			
-				int xDoor = pDoor->pDoorOut()->X() + (pDoor->pDoorOut()->Width() / 2) - 1;
+				int xDoor = pDoor->pDoorOut()->X() + (pDoor->pDoorOut()->Width() / 2) - 8;
 				int xRoom = xDoor - 128;
 				
 				int xChar = 128;
@@ -388,7 +388,7 @@ void CGame::Update()
 				m_snide->SetX(xChar);
 			}
 		}
-		else if(collisionType == COL_PATH)
+		else if(collisionType == COL_NOTHING_HERE)
 		{
 			if(m_snide->X() > 128)
 			{
@@ -427,7 +427,7 @@ void CGame::Update()
 				m_snide->SetX(xChar);
 			}
 		}
-		else if(collisionType == COL_PATH)
+		else if(collisionType == COL_NOTHING_HERE)
 		{
 			if(m_snide->X() < 128)
 			{
