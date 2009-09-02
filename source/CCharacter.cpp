@@ -140,9 +140,9 @@ CollisionType CCharacter::CheckCollision(DirectionType directionType, CRoom* pRo
 			//m_spriteCol2->Draw();
 			break;
 		case DIRECTION_DOWN:
-			retType = (CollisionType) pRoom->ColMap(round((x - 8) / 8), round((y + 8) / 8));
+			retType = (CollisionType) pRoom->ColMap(floor((x - 8) / 8), floor((y + 8) / 8));
 			
-			//m_spriteCol2->SetPosition(round(x2 - 8), round(y2 + 8));
+			//m_spriteCol2->SetPosition(floor(x2 - 8), floor(y2 + 8));
 			//m_spriteCol2->Draw();
 			break;
 		case DIRECTION_LEFT:

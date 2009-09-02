@@ -47,7 +47,7 @@ class CDoor;
 class CRoom
 {
 public:
-	CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const unsigned char* colMap);
+	CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const u8* colMap);
 	~CRoom();
 	
 	void Initialize(int x);
@@ -62,6 +62,7 @@ public:
 	void SetY(int y) { m_y = y; }
 	
 	void SetOverlay(PMAP pOverlay, int overlayY) { m_pOverlay = pOverlay; m_overlayY = overlayY; }
+	void SetColMap(const u8* pColMap) { m_pColMap = pColMap; }
 	
 	int X() const { return m_x; }
 	int Y() const { return m_y; }

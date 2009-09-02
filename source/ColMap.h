@@ -83,4 +83,5 @@ extern const unsigned char col_room1[1200];
 extern const unsigned char col_room2[1032];
 extern const unsigned char col_room3[1200];
 extern const unsigned char col_stairs[1008];
+extern const unsigned char col_stairs_front[1302];
 extern const unsigned char col_study[960];
