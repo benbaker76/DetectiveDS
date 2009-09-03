@@ -1,11 +1,12 @@
 #ifndef __TDG_H__
 #define __TDG_H__
 
+#include <nds.h>
+#include "Globals.h"
 #include "CFx.h"
 #include "CFxManager.h"
 #include "ColMap.h"
 #include "CDoor.h"
-#include "Globals.h"
 #include "CRoom.h"
 #include "CSprite.h"
 #include "CVideo.h"

@@ -52,9 +52,9 @@ enum CollisionType
 	
 	COL_DOOR_CLOSED = 64,
 	COL_DOOR_OPEN = 65,
-	COL_DOOR_CLOSED_SMALL = 66,
-	COL_DOOR_OPEN_SMALL = 67,
-	COL_DOOR_HIDDEN_SMALL = 68,
+	COL_DOOR_SMALL_CLOSED = 66,
+	COL_DOOR_SMALL_OPEN = 67,
+	COL_DOOR_SMALL_HIDDEN = 68,
 	COL_TORCH1 = 69,
 	COL_TORCH2 = 70,
 	COL_FIREPLACE1 = 71,
@@ -62,26 +62,26 @@ enum CollisionType
 	COL_FIREPLACE3 = 73
 };
 
-extern const unsigned char col_cellar[1200];
-extern const unsigned char col_clock[912];
-extern const unsigned char col_drawing[1920];
-extern const unsigned char col_garden[912];
-extern const unsigned char col_graveyard[912];
-extern const unsigned char col_hall1[2496];
-extern const unsigned char col_hall2[2496];
-extern const unsigned char col_hall3[2496];
-extern const unsigned char col_hall4[1632];
-extern const unsigned char col_kitchen[1608];
-extern const unsigned char col_landing[1200];
-extern const unsigned char col_library[1248];
-extern const unsigned char col_outside1[1200];
-extern const unsigned char col_outside2[1632];
-extern const unsigned char col_outside3[1632];
-extern const unsigned char col_passage1[720];
-extern const unsigned char col_passage2[720];
-extern const unsigned char col_room1[1200];
-extern const unsigned char col_room2[1032];
-extern const unsigned char col_room3[1200];
-extern const unsigned char col_stairs[1008];
-extern const unsigned char col_stairs_front[1302];
-extern const unsigned char col_study[960];
+extern const unsigned char col_cellar[];
+extern const unsigned char col_clock[];
+extern const unsigned char col_drawing[];
+extern const unsigned char col_garden[];
+extern const unsigned char col_graveyard[];
+extern const unsigned char col_hall1[];
+extern const unsigned char col_hall2[];
+extern const unsigned char col_hall3[];
+extern const unsigned char col_hall4[];
+extern const unsigned char col_kitchen[];
+extern const unsigned char col_landing[];
+extern const unsigned char col_library[];
+extern const unsigned char col_outside1[];
+extern const unsigned char col_outside2[];
+extern const unsigned char col_outside3[];
+extern const unsigned char col_passage1[];
+extern const unsigned char col_passage2[];
+extern const unsigned char col_room1[];
+extern const unsigned char col_room2[];
+extern const unsigned char col_room3[];
+extern const unsigned char col_stairs[];
+extern const unsigned char col_stairs_front[];
+extern const unsigned char col_study[];

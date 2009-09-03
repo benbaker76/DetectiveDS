@@ -51,8 +51,10 @@ public:
 	~CRoom();
 	
 	void Initialize(int x);
+	void InitializeDoors();
 	void InitializeOverlay();
 	void Draw();
+	void MoveMap(PRECT rectSrc, PRECT rectDest);
 	bool Scroll(DirectionType directionType);
 	
 	void SetDoor(int doorType, CDoor* pDoor) { m_doorArray[doorType] = pDoor; }
@@ -70,6 +72,7 @@ public:
 	int Height() const { return m_pMap->Height; }
 	int OverlayY() const { return m_overlayY; }
 	u8 ColMap(int x, int y) const { return (m_pColMap == NULL ? 0 : *(m_pColMap + x + y * (m_pMap->Width / 8))); }
+	bool GetColMapRect(CollisionType, PRECT rect);
 
 private:
 	RoomType m_roomType;

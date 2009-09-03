@@ -18,6 +18,14 @@ typedef struct
 	u32 PaletteLen;	
 } MAP, *PMAP;
 
+typedef struct
+{
+	int X;
+	int Y;
+	int Width;
+	int Height;
+} RECT, *PRECT;
+
 enum DirectionType
 {
 	DIRECTION_UP,
@@ -27,6 +35,8 @@ enum DirectionType
 };
 
 #endif
+
+bool IsRectEmpty(PRECT pRect);
 
 extern const int g_snideHeadFrames[];
 extern const int g_snideBodyFrames[];

@@ -133,7 +133,7 @@ void CGame::Initialize()
 		
 		m_roomArray[ROOM_SNIDE]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_SNIDE], m_roomArray[ROOM_HALL2]));		
 		m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_HALL1]));
-		m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_PASSAGE1]));		
+		m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_HIDDEN, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_PASSAGE1]));		
 		m_roomArray[ROOM_BENTLEY]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_BENTLEY], m_roomArray[ROOM_HALL3]));		
 		m_roomArray[ROOM_COOK]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_COOK], m_roomArray[ROOM_HALL4]));
 		m_roomArray[ROOM_GABRIEL]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_GABRIEL], m_roomArray[ROOM_HALL4]));
@@ -141,7 +141,7 @@ void CGame::Initialize()
 		m_roomArray[ROOM_PROFESSOR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PROFESSOR], m_roomArray[ROOM_HALL2]));
 		m_roomArray[ROOM_DOCTOR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_DOCTOR], m_roomArray[ROOM_HALL1]));
 		m_roomArray[ROOM_MAJOR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_MAJOR], m_roomArray[ROOM_HALL2]));
-		m_roomArray[ROOM_MAJOR]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_MAJOR], m_roomArray[ROOM_OUTSIDE2]));
+		m_roomArray[ROOM_MAJOR]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_HIDDEN, m_roomArray[ROOM_MAJOR], m_roomArray[ROOM_OUTSIDE2]));
 		m_roomArray[ROOM_DINGLE]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_DINGLE], m_roomArray[ROOM_HALL1]));
 		m_roomArray[ROOM_OUTSIDE1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE1], m_roomArray[ROOM_HALL1]));
 		m_roomArray[ROOM_OUTSIDE2]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE2], m_roomArray[ROOM_PASSAGE1]));
@@ -179,7 +179,7 @@ void CGame::Initialize()
 		m_roomArray[ROOM_HALL4]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_HALL4], m_roomArray[ROOM_GABRIEL]));
 		m_roomArray[ROOM_LANDING]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_LANDING], m_roomArray[ROOM_HALL1]));
 		m_roomArray[ROOM_LANDING]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_LANDING], m_roomArray[ROOM_STAIRS]));
-		m_roomArray[ROOM_KITCHEN]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_KITCHEN], m_roomArray[ROOM_PASSAGE3]));
+		m_roomArray[ROOM_KITCHEN]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_HIDDEN, m_roomArray[ROOM_KITCHEN], m_roomArray[ROOM_PASSAGE3]));
 		m_roomArray[ROOM_KITCHEN]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_KITCHEN], m_roomArray[ROOM_HALL3]));
 		m_roomArray[ROOM_STAIRS]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_LANDING]));
 		m_roomArray[ROOM_STAIRS]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_HALL3]));
@@ -190,7 +190,7 @@ void CGame::Initialize()
 		m_roomArray[ROOM_CELLAR]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_CELLAR], m_roomArray[ROOM_OUTSIDE4]));
 		m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_CLOCK]));
 		m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_HALL3]));
-		m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_OUTSIDE4]));
+		m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_HIDDEN, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_OUTSIDE4]));
 		m_roomArray[ROOM_LIBRARY]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_LIBRARY], m_roomArray[ROOM_HALL3]));
 		m_roomArray[ROOM_GARDEN]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_GARDEN], m_roomArray[ROOM_GRAVEYARD]));
 		m_roomArray[ROOM_GARDEN]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_GARDEN], m_roomArray[ROOM_OUTSIDE4]));
@@ -300,12 +300,13 @@ void CGame::Update()
 			if(pDoor != NULL)
 			{
 				m_currentRoom = pDoor->pRoomOut();
+				PRECT pDoorRect = pDoor->pDoorOut()->pRect();
 				
-				int xDoor = pDoor->pDoorOut()->X() + (pDoor->pDoorOut()->Width() / 2) - 8;
+				int xDoor = ((pDoorRect->X + (pDoorRect->Width / 2)) - 1) * 8;
 				int xRoom = xDoor - 128;
 				
 				int xChar = 128;
-				int yChar = pDoor->pDoorOut()->Y() + pDoor->pDoorOut()->Height() - m_characterArray[CHARACTER_SNIDE]->Height();
+				int yChar = ((pDoorRect->Y + pDoorRect->Height - 1) * 8) - m_characterArray[CHARACTER_SNIDE]->Height();
 				
 				if(xRoom + 256 > m_currentRoom->Width()) xRoom = m_currentRoom->Width() - 256;
 				if(xRoom < 0) xRoom = 0;
@@ -321,7 +322,7 @@ void CGame::Update()
 				//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
 				
 				//char buf[256];
-				//sprintf(buf, "xRoom: %05d, xChar: %05d", xRoom, xChar);
+				//sprintf(buf, "xDoor: %05d, xRoom: %05d, xChar: %05d", xDoor, xRoom, xChar);
 				//DrawText(buf, 0, 1, false);
 			}
 		}
@@ -342,12 +343,13 @@ void CGame::Update()
 			if(pDoor != NULL)
 			{
 				m_currentRoom = pDoor->pRoomOut();
-			
-				int xDoor = pDoor->pDoorOut()->X() + (pDoor->pDoorOut()->Width() / 2) - 8;
+				PRECT pDoorRect = pDoor->pDoorOut()->pRect();
+					
+				int xDoor = ((pDoorRect->X + (pDoorRect->Width / 2)) - 1) * 8;
 				int xRoom = xDoor - 128;
 				
 				int xChar = 128;
-				int yChar = pDoor->pDoorOut()->Y() + pDoor->pDoorOut()->Height() - m_characterArray[CHARACTER_SNIDE]->Height() + 16;
+				int yChar = ((pDoorRect->Y + pDoorRect->Height - 1) * 8) - m_characterArray[CHARACTER_SNIDE]->Height() + 16;
 				
 				if(xRoom + 256 > m_currentRoom->Width()) xRoom = m_currentRoom->Width() - 256;
 				if(xRoom < 0) xRoom = 0;
@@ -363,7 +365,7 @@ void CGame::Update()
 				//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
 				
 				//char buf[256];
-				//sprintf(buf, "xRoom: %05d, xChar: %05d", xRoom, xChar);
+				//sprintf(buf, "xDoor: %05d, xRoom: %05d, xChar: %05d", xDoor, xRoom, xChar);
 				//DrawText(buf, 0, 1, false);
 			}
 		}
@@ -465,18 +467,7 @@ void CGame::Update()
 void CGame::InitializeDoors()
 {
 	for (int i=0; i < MAX_ROOMS; i++)
-	{
-		for(int j=0; j < MAX_DOORS; j++)
-		{
-			if(m_roomArray[i] != NULL)
-			{
-				CDoor* pDoor = m_roomArray[i]->GetDoor(j);
-				
-				if(pDoor != NULL)
-					pDoor->Initialize();
-			}
-		}
-	}
+		m_roomArray[i]->InitializeDoors();
 }
 
 void CGame::SortSprites()
