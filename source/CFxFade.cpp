@@ -1,4 +1,5 @@
 #include <nds.h>
+#include <math.h>
 #include "Gfx.h"
 #include "CFxManager.h"
 #include "CFxFade.h"
@@ -136,14 +137,14 @@ void CFxLights::UpdateVBlank()
 	case FX_LIGHTS_BLACK_IN:
 	case FX_LIGHTS_WHITE_IN:
 		for(int i=0; i<SCREEN_HEIGHT; i++)
-			m_map_mix[i] = (u16) (m_map_light[i] | m_fadeValue);
+			m_map_mix[i] = (u16) fmin(m_map_light[i] + m_fadeValue, 17);
 		
 		dmaTransfer(1, m_map_mix, (void*) &REG_BLDY_SUB, 1, DMA_ENABLE | DMA_REPEAT | DMA_START_HBL | DMA_DST_RESET);
 		break;
 	case FX_LIGHTS_BLACK_OUT:
 	case FX_LIGHTS_WHITE_OUT:
 		for(int i=0; i<SCREEN_HEIGHT; i++)
-			m_map_mix[i] = (u16) (m_map_light[i] | (17 - m_fadeValue));
+			m_map_mix[i] = (u16) fmin(m_map_light[i] + (17 - m_fadeValue), 17);
 		
 		dmaTransfer(1, m_map_mix, (void*) &REG_BLDY_SUB, 1, DMA_ENABLE | DMA_REPEAT | DMA_START_HBL | DMA_DST_RESET);
 		break;
