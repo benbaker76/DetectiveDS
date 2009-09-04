@@ -26,9 +26,11 @@ CSprite::CSprite(SpriteType spriteType, const u32* pBmp, const int* frameArray, 
 	
 	m_alpha = 0xF;
 	
+	//m_gfxMain = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
 	//m_gfxSub = oamAllocateGfx(&oamSub, SpriteSize_32x32, SpriteColorFormat_256Color);
+	
+	//m_gfxMain = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_Bmp);
 	m_gfxSub = oamAllocateGfx(&oamSub, SpriteSize_32x32, SpriteColorFormat_Bmp);
-	//dmaCopy(m_pPalette, SPRITE_PALETTE_SUB, m_paletteLen);
 }
 
 CSprite::~CSprite()
@@ -82,32 +84,26 @@ void CSprite::Animate(int elapsedTime)
 
 void CSprite::Hide()
 {
+	//oamSet(&oamMain, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxMain, -1, false, true, false, false, false);
 	//oamSet(&oamSub, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxSub, -1, false, true, false, false, false);
-	oamSet(&oamSub, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxSub, -1, false, true, false, false, false);
 	
+	//oamSet(&oamMain, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxMain, -1, false, true, false, false, false);
+	oamSet(&oamSub, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxSub, -1, false, true, false, false, false);
 }
 
 void CSprite::Draw()
 {
+	//dmaCopy(m_pTiles + (m_frameNum * 256), m_gfxMain, 32 * 32);
 	//dmaCopy(m_pTiles + (m_frameNum * 256), m_gfxSub, 32 * 32);
+	
+	//dmaCopy(m_pBmp + (m_frameNum * 512), m_gfxMain, 32 * 32 * 2);
 	dmaCopy(m_pBmp + (m_frameNum * 512), m_gfxSub, 32 * 32 * 2);
 	
-	oamSet(&oamSub,						// sub graphics engine context
-		m_oamIndex,						// oam index (0 to 127)
-		round(m_x), round(m_y),						// x and y pixel location of the sprite
-		m_priority,						// priority, lower renders last (on top)
-		m_alpha,						// this is the palette index if multiple palettes or the alpha value if bmp sprite	
-		SpriteSize_32x32,
-		//SpriteColorFormat_256Color,
-		SpriteColorFormat_Bmp,
-		m_gfxSub,						// pointer to the loaded graphics
-		-1,								// sprite rotation data  
-		false,							// double the size when rotating?
-		false,							// hide the sprite?
-		false,							// horizontal flip?
-		false,							// vertical flip?
-		false);							// mosaic?
-		
+	//oamSet(&oamMain, m_oamIndex, round(m_x), round(m_y), m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxMain, -1, false, false, false, false, false);	
+	//oamSet(&oamSub, m_oamIndex, round(m_x), round(m_y), m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxSub, -1, false, false, false, false, false);	
+	
+	//oamSet(&oamMain, m_oamIndex, round(m_x), round(m_y), m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxMain, -1, false, false, false, false, false);	
+	oamSet(&oamSub, m_oamIndex, round(m_x), round(m_y), m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxSub, -1, false, false, false, false, false);	
 }
 
 void CSprite::SetFrameType(FrameType frameType)

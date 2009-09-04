@@ -16,11 +16,11 @@ CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprit
 	//m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_col1Tiles, sprite_col1TilesLen, sprite_col1Pal, sprite_col1PalLen, NULL, 0);
 	//m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_col2Tiles, sprite_col2TilesLen, sprite_col2Pal, sprite_col2PalLen, NULL, 0);
 	
-	m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_col1Bitmap, NULL, 0);
-	m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_col2Bitmap, NULL, 0);
+	//m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_col1Bitmap, NULL, 0);
+	//m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_col2Bitmap, NULL, 0);
 	
-	m_spriteCol1->SetOamIndex(122);
-	m_spriteCol2->SetOamIndex(123);
+	//m_spriteCol1->SetOamIndex(122);
+	//m_spriteCol2->SetOamIndex(123);
 }
 
 CCharacter::~CCharacter()

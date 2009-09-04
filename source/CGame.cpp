@@ -16,8 +16,6 @@ CGame::~CGame()
 
 void CGame::Initialize()
 {
-	m_video.Initialize();
-	
 	for(int i=0; i<MAX_CHARACTERS; i++)
 		m_characterArray[i] = NULL;
 		
@@ -221,6 +219,13 @@ void CGame::Initialize()
 	
 	m_fxManager.Initialize();
 	m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+	
+	m_menu.DrawIcon(ICON_OPEN, 21, 16, false);
+	m_menu.DrawIcon(ICON_EXAMINE, 24, 16, false);
+	m_menu.DrawIcon(ICON_TIME, 27, 16, false);
+	m_menu.DrawIcon(ICON_INVENTORY, 21, 18, false);
+	m_menu.DrawIcon(ICON_USE, 24, 18, false);
+	m_menu.DrawIcon(ICON_ACCUSE, 27, 18, false);
 	
 	m_watch = new CWatch(113, 21);
 	m_timer = new CTimer(9, 10, 0, 0);
@@ -469,6 +474,7 @@ void CGame::Update()
 	AnimateCharacters(elapsedTime);
 	DrawCharacters();
 	
+	//oamUpdate(&oamMain);
 	oamUpdate(&oamSub);
 }
 

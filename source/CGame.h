@@ -32,8 +32,8 @@ public:
 
 private:
 	GameType m_gameType;
-	CVideo m_video;
 	CFxManager m_fxManager;
+	CMenu m_menu;
 	
 	CCharacter* m_characterArray[MAX_CHARACTERS];
 	CSprite* m_spriteArray[MAX_SPRITES];

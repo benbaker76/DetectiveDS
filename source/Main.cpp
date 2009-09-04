@@ -9,6 +9,7 @@
 
 #include "Text.h"
 
+CVideo m_video;
 CGame m_game(GAMETYPE_NORMAL);
 
 void InterruptHandlerVBlank()
@@ -64,6 +65,9 @@ int main(void)
 	//mmPosition(1);
 	
 	consoleDebugInit(DebugDevice_NOCASH);
+	
+	m_video.Initialize();
+	//m_video.InitializeTitleScreen();
 
 	m_game.Initialize();
 

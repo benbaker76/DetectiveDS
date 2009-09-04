@@ -5,6 +5,7 @@
 #include "Globals.h"
 #include "CFx.h"
 #include "CFxManager.h"
+#include "CMenu.h"
 #include "ColMap.h"
 #include "CDoor.h"
 #include "CRoom.h"
@@ -74,12 +75,9 @@
 
 #include "watch.h"
 
-#include "title_bg1.h"
-#include "title_bg2.h"
-#include "title_bg3.h"
-
 #include "menu_top.h"
 #include "menu_bottom.h"
+#include "menu_questions.h"
 
 #include "font.h"
 #include "font_large.h"
@@ -101,11 +99,11 @@
 #define BG0_TILE_BASE				7
 #define BG0_TILE_BASE_SUB			7
 
-#define BG1_TILE_BASE				6
-#define BG1_TILE_BASE_SUB			6
+#define BG1_TILE_BASE				5
+#define BG1_TILE_BASE_SUB			5
 
-#define BG2_TILE_BASE				5
-#define BG2_TILE_BASE_SUB			5
+#define BG2_TILE_BASE				6
+#define BG2_TILE_BASE_SUB			6
 
 #define BG3_TILE_BASE				0
 #define BG3_TILE_BASE_SUB			0

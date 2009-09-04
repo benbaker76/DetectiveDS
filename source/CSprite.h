@@ -86,6 +86,7 @@ private:
 	int m_oamIndex;
 	int m_priority;
 	
+	u16* m_gfxMain;
 	u16* m_gfxSub;
 	
 	float m_x;

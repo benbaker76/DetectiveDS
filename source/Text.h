@@ -16,3 +16,4 @@ extern const char* g_colName[];
 
 void DrawText(const char* string, int x, int y, bool sub);
 void DrawTextLarge(const char* string, int x, int y, bool sub);
+

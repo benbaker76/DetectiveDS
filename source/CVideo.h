@@ -10,6 +10,7 @@ public:
 	CVideo();
 	~CVideo();
 	
+	void InitializeTitleScreen();
 	void Initialize();
 
 private:
