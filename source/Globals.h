@@ -90,3 +90,5 @@ extern MAP g_garden_frontMap;
 extern MAP g_graveyard_frontMap;
 
 extern mm_sound_effect g_sfx_footsteps;
+extern mm_sound_effect g_sfx_opendoor;
+extern mm_sound_effect g_sfx_closedoor;

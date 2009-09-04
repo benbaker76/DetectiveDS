@@ -200,6 +200,29 @@ const char* g_colName[] =
 	"STABBED DOCTOR!"
 };
 
+const char* g_iconName[] =
+{
+	"NONE",
+	"OPEN",
+	"EXAMINE",
+	"INVENTORY",
+	"DROP",
+	"SAVE",
+	"LOAD",
+	"SHOOT",
+	"ACCUSE",
+	"DOOR_OPEN",
+	"DOOR_CLOSE",
+	"USE_KEY",
+	"QUESTION",
+	"READ",
+	"CONSUME",
+	"USE",
+	"TIME",
+	"PLACE",
+	"BAG"
+};
+
 const int g_largeTextMap[] =
 {
 	0x00,0x20,0x21,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x1C,0x1F,0x1B,0x00,

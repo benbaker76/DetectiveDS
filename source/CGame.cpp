@@ -184,7 +184,7 @@ void CGame::Initialize()
 		m_roomArray[ROOM_STUDY]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_LOCKED, m_roomArray[ROOM_STUDY], m_roomArray[ROOM_HALL3]));
 		m_roomArray[ROOM_CLOCK]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_CLOCK], m_roomArray[ROOM_OUTSIDE3]));
 		m_roomArray[ROOM_CLOCK]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_CLOSED, m_roomArray[ROOM_CLOCK], m_roomArray[ROOM_DRAWING]));
-		m_roomArray[ROOM_CELLAR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_HIDDEN, m_roomArray[ROOM_CELLAR], m_roomArray[ROOM_PASSAGE3]));
+		m_roomArray[ROOM_CELLAR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_CELLAR], m_roomArray[ROOM_PASSAGE3]));
 		m_roomArray[ROOM_CELLAR]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_CELLAR], m_roomArray[ROOM_OUTSIDE4]));
 		m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_CLOCK]));
 		m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_CLOSED, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_HALL3]));
@@ -220,12 +220,7 @@ void CGame::Initialize()
 	m_fxManager.Initialize();
 	m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 	
-	m_menu.DrawIcon(ICON_OPEN, 21, 16, false);
-	m_menu.DrawIcon(ICON_EXAMINE, 24, 16, false);
-	m_menu.DrawIcon(ICON_TIME, 27, 16, false);
-	m_menu.DrawIcon(ICON_INVENTORY, 21, 18, false);
-	m_menu.DrawIcon(ICON_USE, 24, 18, false);
-	m_menu.DrawIcon(ICON_ACCUSE, 27, 18, false);
+	m_menu.DrawMenu();
 	
 	m_watch = new CWatch(113, 21);
 	m_timer = new CTimer(9, 10, 0, 0);
@@ -256,6 +251,59 @@ void CGame::Update()
 	
 	//DrawTime(m_timer->pCurrentTime());
 	m_watch->Draw(m_timer->pCurrentTime());
+	
+	if(keys_pressed & KEY_TOUCH)
+	{
+		IconType iconType = m_menu.CheckIconClick(touch.px, touch.py);
+		
+		//DrawText("                                ", 0, 0, false);
+		//DrawText(g_iconName[(int) iconType], 0, 0, false);
+		switch(iconType)
+		{
+		case ICON_OPEN:
+			{
+				CollisionType collisionType = m_snide->CheckCollision(m_snide->Facing(), m_currentRoom);
+				
+				if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
+				{
+					CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
+					
+					if(pDoor->GetDoorState() == DOORSTATE_CLOSED || pDoor->GetDoorState() == DOORSTATE_LOCKED)
+					{
+						pDoor->SetDoorState(DOORSTATE_OPEN);
+						m_currentRoom->Draw();
+						mmEffectEx(&g_sfx_opendoor);
+					}
+					else if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+					{
+						pDoor->SetDoorState(DOORSTATE_CLOSED);
+						m_currentRoom->Draw();
+						mmEffectEx(&g_sfx_closedoor);
+					}
+				}
+			}
+			break;
+		case ICON_EXAMINE:
+			{
+				CollisionType collisionType = m_snide->CheckCollision(m_snide->Facing(), m_currentRoom);
+				
+				if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
+				{
+					CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
+					
+					if(pDoor->GetDoorState() == DOORSTATE_HIDDEN)
+					{
+						pDoor->SetDoorState(DOORSTATE_OPEN);
+						m_currentRoom->Draw();
+						mmEffectEx(&g_sfx_opendoor);
+					}
+				}
+			}
+		default:
+			break;
+		}
+	}
+	
 	
 	for(int i=0; i<MAX_EVENTS; i++)
 	{
@@ -304,7 +352,7 @@ void CGame::Update()
 			
 			if(pDoor != NULL)
 			{
-				//if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
 				{
 					m_currentRoom = pDoor->pRoomOut();
 					PRECT pDoorRect = pDoor->pDoorOut()->pRect();
@@ -350,7 +398,7 @@ void CGame::Update()
 			
 			if(pDoor != NULL)
 			{
-				//if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
 				{
 					m_currentRoom = pDoor->pRoomOut();
 					PRECT pDoorRect = pDoor->pDoorOut()->pRect();

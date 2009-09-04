@@ -56,6 +56,7 @@ public:
 	float Y() const { return m_y; }
 	float Width() const { return m_width; }
 	float Height() const { return m_height; }
+	DirectionType Facing() const { return m_facing; }
 	bool Visible() const { return m_visible; }
 	
 	int OamIndex() const { return m_pHeadSprite->OamIndex(); }
@@ -68,6 +69,8 @@ private:
 	
 	CSprite* m_spriteCol1;
 	CSprite* m_spriteCol2;
+	
+	DirectionType m_facing;
 	
 	bool m_visible;
 	

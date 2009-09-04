@@ -7,7 +7,7 @@
 
 enum IconType
 {
-	ICON_NOTHING,
+	ICON_NONE,
 	ICON_OPEN,
 	ICON_EXAMINE,
 	ICON_INVENTORY,
@@ -34,7 +34,12 @@ public:
 	CMenu();
 	~CMenu();
 	
+	void ClearIcons();
+	bool AddIcon(IconType iconType);
+	bool RemoveIcon(IconType iconType);
+	void DrawMenu();
 	void DrawIcon(IconType iconType, int x, int y, bool sub);
+	IconType CheckIconClick(int touchX, int touchY);
 
 private:
 	IconType m_iconArray[MAX_ICONS];

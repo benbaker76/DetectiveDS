@@ -80,6 +80,8 @@ void CCharacter::Draw()
 
 void CCharacter::Face(DirectionType directionType)
 {
+	m_facing = directionType;
+	
 	switch(directionType)
 	{
 		case DIRECTION_UP:
@@ -99,6 +101,8 @@ void CCharacter::Face(DirectionType directionType)
 
 void CCharacter::Move(DirectionType directionType)
 {
+	m_facing = directionType;
+	
 	switch(directionType)
 	{
 		case DIRECTION_UP:

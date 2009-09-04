@@ -61,6 +61,8 @@ int main(void)
 	mmSetEventHandler(mmEventHandler);
 	mmLoad(MOD_DETECTIVE);
 	mmLoadEffect(SFX_FOOTSTEPS);
+	mmLoadEffect(SFX_OPENDOOR);
+	mmLoadEffect(SFX_CLOSEDOOR);
 	mmStart(MOD_DETECTIVE, MM_PLAY_ONCE);
 	//mmPosition(1);
 	
