@@ -17,4 +17,4 @@ extern const char* g_iconName[];
 
 void DrawText(const char* string, int x, int y, bool sub);
 void DrawTextLarge(const char* string, int x, int y, bool sub);
-
+void DrawCharLarge(char c, int x, int y, bool sub);

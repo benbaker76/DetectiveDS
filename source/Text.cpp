@@ -253,3 +253,12 @@ void DrawTextLarge(const char* string, int x, int y, bool sub)
 	}
 }
 
+void DrawCharLarge(char c, int x, int y, bool sub)
+{
+	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)) + (x + y * 32);
+	
+	*pMap = 96 * 2 + g_largeTextMap[c - 0x20] * 2;
+	*(pMap+32) = 96 * 2 + g_largeTextMap[c - 0x20] * 2 + 1;
+}
+
+

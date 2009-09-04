@@ -1,6 +1,7 @@
 #include "TDG.h"
 #include "Text.h"
 #include "CFxFade.h"
+#include "CFxTextScroller.h"
 
 CFxManager::CFxManager()
 {
@@ -24,6 +25,7 @@ void CFxManager::Initialize()
 	m_fxArray[FX_LIGHTS_WHITE] = new CFxLights(FX_LIGHTS_WHITE, this);
 	m_fxArray[FX_LIGHTS_WHITE_IN] = new CFxLights(FX_LIGHTS_WHITE_IN, this);
 	m_fxArray[FX_LIGHTS_WHITE_OUT] = new CFxLights(FX_LIGHTS_WHITE_OUT, this);
+	m_fxArray[FX_TEXT_SCROLLER] = new CFxTextScroller(FX_TEXT_SCROLLER, this);
 }
 
 void CFxManager::FxOff()

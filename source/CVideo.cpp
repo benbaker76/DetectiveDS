@@ -16,7 +16,7 @@ CVideo::~CVideo()
 void CVideo::InitializeTitleScreen()
 {
 	videoSetMode(MODE_0_2D | DISPLAY_SPR_ACTIVE | DISPLAY_SPR_1D_LAYOUT | DISPLAY_BG1_ACTIVE | DISPLAY_BG2_ACTIVE | DISPLAY_BG3_ACTIVE);
-	videoSetModeSub(MODE_0_2D | DISPLAY_WIN0_ON | DISPLAY_SPR_ACTIVE | DISPLAY_SPR_1D_LAYOUT | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE | DISPLAY_BG2_ACTIVE | DISPLAY_BG3_ACTIVE);
+	videoSetModeSub(MODE_0_2D | DISPLAY_WIN0_ON | DISPLAY_WIN1_ON | DISPLAY_SPR_ACTIVE | DISPLAY_SPR_1D_LAYOUT | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE | DISPLAY_BG2_ACTIVE | DISPLAY_BG3_ACTIVE);
 	
 	vramSetMainBanks(VRAM_A_MAIN_BG, VRAM_B_MAIN_SPRITE, VRAM_C_SUB_BG, VRAM_D_SUB_SPRITE);
 	//vramSetMainBanks(VRAM_A_MAIN_SPRITE, VRAM_B_MAIN_BG, VRAM_C_SUB_BG, VRAM_D_SUB_SPRITE);
@@ -62,6 +62,13 @@ void CVideo::InitializeTitleScreen()
 	SUB_WIN0_X0 = 0;
 	SUB_WIN0_X1 = 255;
 	
+	SUB_WIN_IN = WIN1_BG0 | WIN1_BG1 | WIN1_BG2 | WIN1_BG3 | WIN1_SPRITES | WIN1_BLENDS;
+	SUB_WIN_OUT = WIN1_BG1 | WIN1_BG2 | WIN1_BG3 | WIN1_SPRITES | WIN1_BLENDS;
+	SUB_WIN1_Y0 = 0;
+	SUB_WIN1_Y1 = 192;
+	SUB_WIN1_X0 = 8;
+	SUB_WIN1_X1 = 248;
+	
 	//DrawText("@2009 HEADSOFT", 9, 1, true);
 	DrawText("INTRODUCING", 4, 17, true);
 	DrawText("THE CAST..", 5, 18, true);
@@ -86,7 +93,7 @@ void CVideo::Initialize()
 	//vramSetBankA(VRAM_A_MAIN_SPRITE);
 	//vramSetBankD(VRAM_D_SUB_SPRITE);
 	
-	bgInit(0, BgType_Text4bpp, BgSize_T_256x256, BG0_MAP_BASE, BG0_TILE_BASE);
+	bgInit(0, BgType_Text4bpp, BgSize_T_512x256, BG0_MAP_BASE, BG0_TILE_BASE);
 	bgInit(1, BgType_Text8bpp, BgSize_T_256x256, BG1_MAP_BASE, BG1_TILE_BASE);
 	bgInit(2, BgType_Text8bpp, BgSize_T_256x256, BG2_MAP_BASE, BG2_TILE_BASE);
 	bgInit(3, BgType_Text8bpp, BgSize_T_256x256, BG3_MAP_BASE, BG3_TILE_BASE);
@@ -135,15 +142,22 @@ void CVideo::Initialize()
 	WIN0_X0 = 0;
 	WIN0_X1 = 255;
 	
+	//WIN_IN |= WIN1_BG0 | WIN1_BG1 | WIN1_BG2 | WIN1_BG3 | WIN1_SPRITES | WIN1_BLENDS;
+	//WIN_OUT |= WIN1_BG1 | WIN1_BG2 | WIN1_BG3 | WIN1_SPRITES | WIN1_BLENDS;
+	//WIN1_Y0 = 0;
+	//WIN1_Y1 = 192;
+	//WIN1_X0 = 8;
+	//WIN1_X1 = 248;
+	
 	//DrawText("@2009 HEADSOFT", 9, 1, false);
 	DrawText("INTRODUCING", 4, 17, false);
 	DrawText("THE CAST..", 5, 18, false);
 	
-	DrawTextLarge("\"GRENADE!\" SHOUTS THE MAJOR.", 0, 11, false);
+	//DrawTextLarge("\"GRENADE!\" SHOUTS THE MAJOR.", 0, 11, false);
 	
 	//oamInit(&oamMain, SpriteMapping_1D_32, false);
 	//oamInit(&oamSub, SpriteMapping_1D_32, false);
 	
-	//oamInit(&oamMain, SpriteMapping_Bmp_1D_128, false);
+	oamInit(&oamMain, SpriteMapping_Bmp_1D_128, false);
 	oamInit(&oamSub, SpriteMapping_Bmp_1D_128, false);
 }

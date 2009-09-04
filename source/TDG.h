@@ -96,14 +96,14 @@
 #define BG3_MAP_BASE				30
 #define BG3_MAP_BASE_SUB			30
 
-#define BG0_TILE_BASE				7
-#define BG0_TILE_BASE_SUB			7
+#define BG0_TILE_BASE				6
+#define BG0_TILE_BASE_SUB			6
 
-#define BG1_TILE_BASE				5
-#define BG1_TILE_BASE_SUB			5
+#define BG1_TILE_BASE				4
+#define BG1_TILE_BASE_SUB			4
 
-#define BG2_TILE_BASE				6
-#define BG2_TILE_BASE_SUB			6
+#define BG2_TILE_BASE				2
+#define BG2_TILE_BASE_SUB			2
 
 #define BG3_TILE_BASE				0
 #define BG3_TILE_BASE_SUB			0

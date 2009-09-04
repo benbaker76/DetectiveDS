@@ -2,6 +2,8 @@
 #define __CFXMANAGER_H__
 
 #include "CFx.h"
+#include "CFxFade.h"
+#include "CFxTextScroller.h"
 
 class CFxManager
 {

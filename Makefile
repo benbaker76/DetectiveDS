@@ -34,7 +34,7 @@ SOUNDBANK_NAME	:=	soundbank
 #---------------------------------------------------------------------------------
 # Header variables
 #---------------------------------------------------------------------------------
-NAME		:=	DetectiveGameDS
+NAME		:=	DetectiveDS
 AUTHOR		:=	By HeadKaze
 VERSION		:=	www.headsoft.com.au
 NITRODIR	:=	-d efsroot

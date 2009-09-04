@@ -1,7 +1,7 @@
 #include <nds.h>
 #include <stdio.h>
-#include "CGame.h"
 #include "TDG.h"
+#include "CGame.h"
 #include "Text.h"
 #include "Gfx.h"
 
@@ -219,7 +219,8 @@ void CGame::Initialize()
 	
 	m_fxManager.Initialize();
 	m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
-	
+	m_fxManager.SetFx(FX_TEXT_SCROLLER, true);
+
 	m_menu.DrawMenu();
 	
 	m_watch = new CWatch(113, 21);
@@ -298,6 +299,8 @@ void CGame::Update()
 						mmEffectEx(&g_sfx_opendoor);
 					}
 				}
+				
+				((CFxTextScroller*)m_fxManager.GetFx(FX_TEXT_SCROLLER))->AddText(g_colName[collisionType]);
 			}
 		default:
 			break;
@@ -522,7 +525,7 @@ void CGame::Update()
 	AnimateCharacters(elapsedTime);
 	DrawCharacters();
 	
-	//oamUpdate(&oamMain);
+	oamUpdate(&oamMain);
 	oamUpdate(&oamSub);
 }
 
