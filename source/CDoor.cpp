@@ -13,6 +13,14 @@ CDoor::CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoo
 	
 	for(int i=0; i<MAX_DOOR_RECT; i++)
 		memset(&m_rectArray[i], 0, sizeof(RECT));
+	
+	m_pRoomIn->GetColMapRect((CollisionType) m_doorType, &m_rect);
+	
+	m_pRoomIn->GetColMapRect(COL_DOOR_CLOSED, &m_rectArray[DOORRECT_CLOSED]);
+	m_pRoomIn->GetColMapRect(COL_DOOR_OPEN, &m_rectArray[DOORRECT_OPEN]);
+	m_pRoomIn->GetColMapRect(COL_DOOR_SMALL_CLOSED, &m_rectArray[DOORRECT_SMALL_CLOSED]);
+	m_pRoomIn->GetColMapRect(COL_DOOR_SMALL_OPEN, &m_rectArray[DOORRECT_SMALL_OPEN]);
+	m_pRoomIn->GetColMapRect(COL_DOOR_SMALL_HIDDEN, &m_rectArray[DOORRECT_SMALL_HIDDEN]);
 }
 
 CDoor::~CDoor()
@@ -31,14 +39,6 @@ void CDoor::Initialize()
 				m_pDoorOut = pDoor;
 		}
 	}
-	
-	m_pRoomIn->GetColMapRect((CollisionType) m_doorType, &m_rect);
-	
-	m_pRoomIn->GetColMapRect(COL_DOOR_CLOSED, &m_rectArray[DOORRECT_CLOSED]);
-	m_pRoomIn->GetColMapRect(COL_DOOR_OPEN, &m_rectArray[DOORRECT_OPEN]);
-	m_pRoomIn->GetColMapRect(COL_DOOR_SMALL_CLOSED, &m_rectArray[DOORRECT_SMALL_CLOSED]);
-	m_pRoomIn->GetColMapRect(COL_DOOR_SMALL_OPEN, &m_rectArray[DOORRECT_SMALL_OPEN]);
-	m_pRoomIn->GetColMapRect(COL_DOOR_SMALL_HIDDEN, &m_rectArray[DOORRECT_SMALL_HIDDEN]);
 	
 	//char buf[256];
 	//sprintf(buf, "X:%d, Y:%d, Width:%d, Height:%d", m_rect.X, m_rect.Y, m_rect.Width, m_rect.Height);

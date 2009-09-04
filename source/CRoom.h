@@ -6,6 +6,8 @@
 
 #define MAX_ROOMS			31
 #define MAX_DOORS			10
+#define MAX_ROOM_RECT		5
+#define MAX_TORCH_RECT		3
 
 enum RoomType
 {
@@ -42,6 +44,22 @@ enum RoomType
 	ROOM_GRAVEYARD
 };
 
+enum RoomRect
+{
+	ROOMRECT_TORCH1,
+	ROOMRECT_TORCH2,
+	ROOMRECT_FIREPLACE1,
+	ROOMRECT_FIREPLACE2,
+	ROOMRECT_FIREPLACE3
+};
+
+enum TorchRect
+{
+	TORCHRECT_TORCH1,
+	TORCHRECT_TORCH2,
+	TORCHRECT_TORCH3
+};
+
 class CDoor;
 
 class CRoom
@@ -54,6 +72,7 @@ public:
 	void InitializeDoors();
 	void InitializeOverlay();
 	void Draw();
+	void Animate(int elapsedTime);
 	void MoveMap(PRECT rectSrc, PRECT rectDest);
 	bool Scroll(DirectionType directionType);
 	
@@ -84,6 +103,13 @@ private:
 	int m_y;
 	
 	int m_overlayY;
+	
+	RECT m_rectArray[MAX_ROOM_RECT];
+	RECT m_rectTorch[MAX_TORCH_RECT];
+	RECT m_rectFireplace;
+	
+	int m_lastUpdate;
+	int m_frameNum;
 	
 	CDoor* m_doorArray[MAX_DOORS];
 };

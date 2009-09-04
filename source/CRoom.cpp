@@ -13,6 +13,22 @@ CRoom::CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const unsigned char* p
 	
 	for(int i=0; i<MAX_DOORS; i++)
 		m_doorArray[i] = NULL;
+		
+	GetColMapRect(COL_TORCH_LOC1, &m_rectTorch[TORCHRECT_TORCH1]);
+	GetColMapRect(COL_TORCH_LOC2, &m_rectTorch[TORCHRECT_TORCH2]);
+	GetColMapRect(COL_TORCH_LOC3, &m_rectTorch[TORCHRECT_TORCH3]);
+	
+	GetColMapRect(COL_FIREPLACE_LOC, &m_rectFireplace);
+	
+	//char buf[256];
+	//sprintf(buf, "X:%d, Y:%d, Width:%d, Height:%d", m_rectFireplace.X, m_rectFireplace.Y, m_rectFireplace.Width, m_rectFireplace.Height);
+	//fprintf(stderr, buf);
+
+	GetColMapRect(COL_TORCH1, &m_rectArray[ROOMRECT_TORCH1]);
+	GetColMapRect(COL_TORCH2, &m_rectArray[ROOMRECT_TORCH2]);
+	GetColMapRect(COL_FIREPLACE1, &m_rectArray[ROOMRECT_FIREPLACE1]);
+	GetColMapRect(COL_FIREPLACE2, &m_rectArray[ROOMRECT_FIREPLACE2]);
+	GetColMapRect(COL_FIREPLACE3, &m_rectArray[ROOMRECT_FIREPLACE3]);
 }
 
 CRoom::~CRoom()
@@ -70,6 +86,44 @@ void CRoom::Draw()
 	for(int i=0; i < MAX_DOORS; i++)
 		if(m_doorArray[i] != NULL)
 			m_doorArray[i]->Draw();
+}
+
+void CRoom::Animate(int elapsedTime)
+{
+	m_lastUpdate += elapsedTime;
+	
+	if(m_lastUpdate > 100)
+	{
+		m_lastUpdate = 0;
+		
+		int num = rand() % 2;
+		
+		if(num == 0)
+		{
+			for(int i=0; i<MAX_TORCH_RECT; i++)
+				MoveMap(&m_rectArray[ROOMRECT_TORCH1], &m_rectTorch[i]);
+		} else
+		{
+			for(int i=0; i<MAX_TORCH_RECT; i++)
+				MoveMap(&m_rectArray[ROOMRECT_TORCH2], &m_rectTorch[i]);
+		}
+		
+		switch(m_frameNum)
+		{
+			case 0:
+				MoveMap(&m_rectArray[ROOMRECT_FIREPLACE1], &m_rectFireplace);
+				break;
+			case 1:
+				MoveMap(&m_rectArray[ROOMRECT_FIREPLACE2], &m_rectFireplace);
+				break;
+			case 2:
+				MoveMap(&m_rectArray[ROOMRECT_FIREPLACE3], &m_rectFireplace);
+				break;
+		}
+		
+		if(m_frameNum++ == 3)
+			m_frameNum = 0;
+	}
 }
 
 void CRoom::MoveMap(PRECT rectSrc, PRECT rectDst)
