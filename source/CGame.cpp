@@ -223,6 +223,9 @@ void CGame::Initialize()
 
 	m_menu.DrawMenu();
 	
+	m_textConsole.AddText("THE DETECTIVE GAME");
+	m_textConsole.AddText("CONSOLE TEST...");
+	
 	m_watch = new CWatch(113, 21);
 	m_timer = new CTimer(9, 10, 0, 0);
 	m_timer->Start();
@@ -252,6 +255,7 @@ void CGame::Update()
 	
 	//DrawTime(m_timer->pCurrentTime());
 	m_watch->Draw(m_timer->pCurrentTime());
+	m_textConsole.Update(elapsedTime);
 	
 	if(keys_pressed & KEY_TOUCH)
 	{
@@ -582,16 +586,10 @@ void CGame::UpdateVBlank()
 
 void CGame::UpdateHBlank()
 {
-	/* if(REG_VCOUNT == 0)
-	{
-		REG_DISPCNT_SUB &= ~DISPLAY_SPRITE_ATTR_MASK;
-		REG_DISPCNT_SUB |= SpriteMapping_1D_32;
-	}
-	if(REG_VCOUNT == 40)
-	{
-		REG_DISPCNT_SUB &= ~DISPLAY_SPRITE_ATTR_MASK;
-		REG_DISPCNT_SUB |= SpriteMapping_Bmp_1D_128;
-	} */
+	if(REG_VCOUNT < 80)
+		REG_DISPCNT |= DISPLAY_BG2_ACTIVE;
+	else if(REG_VCOUNT > 80)
+		REG_DISPCNT &= ~DISPLAY_BG2_ACTIVE;
 
 	m_fxManager.UpdateHBlank();
 }

@@ -93,7 +93,7 @@ void CVideo::Initialize()
 	//vramSetBankA(VRAM_A_MAIN_SPRITE);
 	//vramSetBankD(VRAM_D_SUB_SPRITE);
 	
-	bgInit(0, BgType_Text4bpp, BgSize_T_512x256, BG0_MAP_BASE, BG0_TILE_BASE);
+	bgInit(0, BgType_Text4bpp, BgSize_T_256x256, BG0_MAP_BASE, BG0_TILE_BASE);
 	bgInit(1, BgType_Text8bpp, BgSize_T_256x256, BG1_MAP_BASE, BG1_TILE_BASE);
 	bgInit(2, BgType_Text8bpp, BgSize_T_256x256, BG2_MAP_BASE, BG2_TILE_BASE);
 	bgInit(3, BgType_Text8bpp, BgSize_T_256x256, BG3_MAP_BASE, BG3_TILE_BASE);
@@ -136,11 +136,18 @@ void CVideo::Initialize()
 	dmaCopy(menu_bottomMap, BG_MAP_RAM(BG3_MAP_BASE), menu_bottomMapLen);
 	
 	WIN_IN = WIN0_BG0 | WIN0_BG1 | WIN0_BG2 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;
-	WIN_OUT = WIN0_BG0 | WIN0_BG1 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;
+	WIN_OUT = WIN0_BG1 | WIN0_BG2 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;
 	WIN0_Y0 = 0;
-	WIN0_Y1 = 80;
-	WIN0_X0 = 0;
-	WIN0_X1 = 255;
+	WIN0_Y1 = 192;
+	WIN0_X0 = 8;
+	WIN0_X1 = 248;
+	
+	//WIN_IN = WIN0_BG0 | WIN0_BG1 | WIN0_BG2 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;
+	//WIN_OUT = WIN0_BG0 | WIN0_BG1 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;
+	//WIN0_Y0 = 0;
+	//WIN0_Y1 = 80;
+	//WIN0_X0 = 0;
+	//WIN0_X1 = 255;
 	
 	//WIN_IN |= WIN1_BG0 | WIN1_BG1 | WIN1_BG2 | WIN1_BG3 | WIN1_SPRITES | WIN1_BLENDS;
 	//WIN_OUT |= WIN1_BG1 | WIN1_BG2 | WIN1_BG3 | WIN1_SPRITES | WIN1_BLENDS;
@@ -150,8 +157,8 @@ void CVideo::Initialize()
 	//WIN1_X1 = 248;
 	
 	//DrawText("@2009 HEADSOFT", 9, 1, false);
-	DrawText("INTRODUCING", 4, 17, false);
-	DrawText("THE CAST..", 5, 18, false);
+	//DrawText("INTRODUCING", 4, 17, false);
+	//DrawText("THE CAST..", 5, 18, false);
 	
 	//DrawTextLarge("\"GRENADE!\" SHOUTS THE MAJOR.", 0, 11, false);
 	

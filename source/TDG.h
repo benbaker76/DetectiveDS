@@ -16,6 +16,7 @@
 #include "CTimer.h"
 #include "CEvent.h"
 #include "CWatch.h"
+#include "CTextConsole.h"
 
 #include "map_cellar.h"
 #include "map_clock.h"

@@ -34,6 +34,7 @@ private:
 	GameType m_gameType;
 	CFxManager m_fxManager;
 	CMenu m_menu;
+	CTextConsole m_textConsole;
 	
 	CCharacter* m_characterArray[MAX_CHARACTERS];
 	CSprite* m_spriteArray[MAX_SPRITES];

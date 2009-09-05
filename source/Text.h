@@ -15,6 +15,7 @@ extern const char* g_itemName[];
 extern const char* g_colName[];
 extern const char* g_iconName[];
 
+void DrawChar(char c, int x, int y, bool sub);
 void DrawText(const char* string, int x, int y, bool sub);
 void DrawTextLarge(const char* string, int x, int y, bool sub);
 void DrawCharLarge(char c, int x, int y, bool sub);

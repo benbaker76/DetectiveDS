@@ -22,7 +22,8 @@ public:
 
 private:
 
-	u16 m_scrollPos;
+	//u16 m_scrollPos;
+	u8 m_scrollPos;
 	const char* m_charPos;
 	u32 m_textPos;
 	const char* m_textArray[MAX_TEXT_SCROLLER];

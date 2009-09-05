@@ -233,6 +233,13 @@ const int g_largeTextMap[] =
 	0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 };
 
+void DrawChar(char c, int x, int y, bool sub)
+{
+	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)) + (x + y * 32);
+	
+	*pMap = c - 0x20;
+}
+
 void DrawText(const char* string, int x, int y, bool sub)
 {
 	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)) + (x + y * 32);

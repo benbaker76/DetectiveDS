@@ -37,11 +37,13 @@ void CFxTextScroller::UpdateVBlank()
 	{
 		if(m_charPos == NULL)
 		{
-			DrawCharLarge(' ', (((m_scrollPos - 8) >> 3) & 0x1F), (((((m_scrollPos - 8) >> 3) >> 5) & 1) << 5) + 11, false);
+			//DrawCharLarge(' ', (((m_scrollPos - 8) >> 3) & 0x1F), (((((m_scrollPos - 8) >> 3) >> 5) & 1) << 5) + 11, false);
+			DrawCharLarge(' ', m_scrollPos >> 3, 11, false);
 		}
 		else
 		{
-			DrawCharLarge(*m_charPos, (((m_scrollPos - 8) >> 3) & 0x1F), (((((m_scrollPos - 8) >> 3) >> 5) & 1) << 5) + 11, false);
+			//DrawCharLarge(*m_charPos, (((m_scrollPos - 8) >> 3) & 0x1F), (((((m_scrollPos - 8) >> 3) >> 5) & 1) << 5) + 11, false);
+			DrawCharLarge(*m_charPos, m_scrollPos >> 3, 11, false);
 			
 			if(*(++m_charPos) == '\0')
 			{
@@ -57,9 +59,9 @@ void CFxTextScroller::UpdateVBlank()
 
 void CFxTextScroller::UpdateHBlank()
 {
-	if(REG_VCOUNT == 80)
+	if(REG_VCOUNT > 80 && REG_VCOUNT < 104)
 		BACKGROUND.scroll[0].x = m_scrollPos;
-	else if(REG_VCOUNT == 104)
+	else if(REG_VCOUNT > 104)
 		BACKGROUND.scroll[0].x = 0;
 }
 
