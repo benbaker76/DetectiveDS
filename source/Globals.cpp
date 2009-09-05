@@ -1,8 +1,21 @@
+#include <stdio.h>
 #include "TDG.h"
 
 bool IsRectEmpty(PRECT pRect)
 {
 	return (pRect->X == 0 && pRect->Y == 0 && pRect->Width == 0 && pRect->Height == 0);
+}
+
+bool IntersectRect(PRECT pRectA, PRECT pRectB)
+{
+	return !(pRectA->X >= pRectB->X + pRectB->Width || pRectA->X + pRectA->Width <= pRectB->X || pRectA->Y >= pRectB->Y + pRectB->Height || pRectA->Y + pRectA->Height <= pRectB->Y);
+}
+
+void PrintRect(PRECT pRect)
+{
+	char buf[256];
+	sprintf(buf, "X:%d, Y:%d, Width:%d, Height:%d", pRect->X, pRect->Y, pRect->Width, pRect->Height);
+	fprintf(stderr, buf);
 }
 
 const int g_snideHeadFrames[] = { FRAME_SPEAK, FRAME_SPEAK, FRAME_SPEAK, FRAME_SPEAK | FRAME_DOWN, FRAME_RIGHT, FRAME_UP, FRAME_LEFT, FRAME_DEAD };

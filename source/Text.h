@@ -14,6 +14,7 @@ extern const int g_largeTextMap[];
 extern const char* g_itemName[];
 extern const char* g_colName[];
 extern const char* g_iconName[];
+extern const char* g_roomName[];
 
 void DrawChar(char c, int x, int y, bool sub);
 void DrawText(const char* string, int x, int y, bool sub);

@@ -1,12 +1,17 @@
 #include <nds.h>
+#include <stdio.h>
 #include "Text.h"
 #include "CTextConsole.h"
 
 CTextConsole::CTextConsole()
 {
-	m_cursorX = CONSOLE_X;
-	m_cursorY = CONSOLE_Y;
 	m_cursorPing = true;
+	m_lastUpdate = 0;
+	m_charPos = NULL;
+	m_textPos = 0;
+	
+	for(int i=0; i<MAX_TEXT_CONSOLE; i++)
+		m_textArray[i] = NULL;
 	
 	ClearText();
 }
@@ -17,10 +22,14 @@ CTextConsole::~CTextConsole()
 
 void CTextConsole::ClearText()
 {
+	m_cursorX = CONSOLE_X;
+	m_cursorY = CONSOLE_Y;
+	
 	for(int i=0; i<MAX_TEXT_CONSOLE; i++)
 	{
-		m_textArray[i] = NULL;
-		DrawText("                   ", CONSOLE_X, CONSOLE_Y + i, false);
+		char buf[256];
+		sprintf(buf, "%*s", CONSOLE_WIDTH, "");
+		DrawText(buf, CONSOLE_X, CONSOLE_Y + i, false);
 	}
 }
 
@@ -51,26 +60,59 @@ void CTextConsole::Update(int elapsedTime)
 {
 	m_lastUpdate += elapsedTime;
 	
-	if(m_lastUpdate > 50)
+	if(m_charPos == NULL)
 	{
-		m_lastUpdate = 0;
-		
-		if(m_charPos == NULL)
+		for(int i=m_textPos; i<MAX_TEXT_CONSOLE; i++)
 		{
-			for(int i=m_textPos; i<MAX_TEXT_CONSOLE; i++)
+			if(m_textArray[i] != NULL)
 			{
-				if(m_textArray[i] != NULL)
+				ClearText();
+				m_charPos = m_textArray[i];
+				
+				if(*m_charPos == '\0')
 				{
-					m_charPos = m_textArray[i];
-					break;
+					m_textArray[i] = NULL;
+					m_charPos = NULL;
+					
+					if(++m_textPos == MAX_TEXT_CONSOLE)
+						m_textPos = 0;
 				}
+				
+				break;
 			}
 		}
+	}
 
-		if(m_charPos != NULL)
+	if(m_charPos != NULL)
+	{
+		DrawChar(123 + CURSOR_FRAMES, m_cursorX, m_cursorY, false);
+		
+		switch(*m_charPos)
 		{
-			DrawChar(*m_charPos, m_cursorX, m_cursorY, false);
+		case '\E':		// Clear Console
+			m_charPos++;
+			ClearText();
+			break;
+		case '\n':		// New line
+			m_charPos++;
+			m_cursorX = CONSOLE_X;
+			m_cursorY++;
 			
+			if(m_cursorY == CONSOLE_Y + CONSOLE_HEIGHT)
+				ClearText();
+			break;
+		case '\0':		// NULL Character (end of text)
+			m_cursorX = CONSOLE_X;
+			m_cursorY++;
+			m_charPos = NULL;
+			m_textArray[m_textPos] = NULL;
+
+			if(++m_textPos == MAX_TEXT_CONSOLE)
+				m_textPos = 0;
+			break;
+		default:
+			DrawChar(*m_charPos, m_cursorX, m_cursorY, false);
+		
 			m_cursorX++;
 			m_charPos++;
 			
@@ -80,37 +122,15 @@ void CTextConsole::Update(int elapsedTime)
 				m_cursorY++;
 				
 				if(m_cursorY == CONSOLE_Y + CONSOLE_HEIGHT)
-				{
 					ClearText();
-					m_cursorX = CONSOLE_X;
-					m_cursorY = CONSOLE_Y;
-				}
 			}
-			
-			if(*m_charPos == '\n')
-			{
-				m_cursorX = CONSOLE_X;
-				m_cursorY++;
-				
-				if(m_cursorY == CONSOLE_Y + CONSOLE_HEIGHT)
-				{
-					ClearText();
-					m_cursorX = CONSOLE_X;
-					m_cursorY = CONSOLE_Y;
-				}
-			}
-			
-			if(*m_charPos == '\0')
-			{
-				m_cursorX = CONSOLE_X;
-				m_cursorY++;
-				m_charPos = NULL;
-				m_textArray[m_textPos] = NULL;
-
-				if(++m_textPos == MAX_TEXT_CONSOLE)
-					m_textPos = 0;
-			}
+			break;
 		}
+	}
+	
+	if(m_lastUpdate > 50)
+	{
+		m_lastUpdate = 0;
 		
 		DrawCursor();
 	}

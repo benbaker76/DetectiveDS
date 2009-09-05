@@ -73,6 +73,7 @@ public:
 	void InitializeOverlay();
 	void Draw();
 	void Animate(int elapsedTime);
+	bool DoorIntersect(PRECT pRect);
 	void MoveMap(PRECT rectSrc, PRECT rectDest);
 	bool Scroll(DirectionType directionType);
 	
@@ -84,6 +85,8 @@ public:
 	
 	void SetOverlay(PMAP pOverlay, int overlayY) { m_pOverlay = pOverlay; m_overlayY = overlayY; }
 	void SetColMap(const u8* pColMap) { m_pColMap = pColMap; }
+	
+	RoomType GetRoomType() { return m_roomType; }
 	
 	int X() const { return m_x; }
 	int Y() const { return m_y; }

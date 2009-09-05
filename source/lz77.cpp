@@ -18,4 +18,5 @@ void decompressToVRAM(const void* source, void* dest)
    decStream.getResult = NULL;
    decStream.readByte = readByte;
    swiDecompressLZSSVram((void*)source, dest, 0, &decStream);
+   
 }

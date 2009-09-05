@@ -49,6 +49,7 @@ public:
 	void Draw();
 	
 	PRECT pRect() const { return (PRECT) &m_rect; }
+	PRECT pRectOpen() const { return (PRECT) &m_rectOpen; }
 	DoorType GetDoorType() const { return  m_doorType; };
 	DoorState GetDoorState() const { return  m_doorState; };
 	CRoom* pRoomIn() const { return m_pRoomIn; }
@@ -63,6 +64,7 @@ private:
 	CDoor* m_pDoorOut;
 	
 	RECT m_rect;
+	RECT m_rectOpen;
 	RECT m_rectArray[MAX_DOOR_RECT];
 	
 	void GetPosition();

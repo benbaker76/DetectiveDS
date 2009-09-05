@@ -101,11 +101,13 @@ void CRoom::Animate(int elapsedTime)
 		if(num == 0)
 		{
 			for(int i=0; i<MAX_TORCH_RECT; i++)
-				MoveMap(&m_rectArray[ROOMRECT_TORCH1], &m_rectTorch[i]);
+				if(!DoorIntersect(&m_rectTorch[i]))
+					MoveMap(&m_rectArray[ROOMRECT_TORCH1], &m_rectTorch[i]);
 		} else
 		{
 			for(int i=0; i<MAX_TORCH_RECT; i++)
-				MoveMap(&m_rectArray[ROOMRECT_TORCH2], &m_rectTorch[i]);
+				if(!DoorIntersect(&m_rectTorch[i]))
+					MoveMap(&m_rectArray[ROOMRECT_TORCH2], &m_rectTorch[i]);
 		}
 		
 		switch(m_frameNum)
@@ -124,6 +126,20 @@ void CRoom::Animate(int elapsedTime)
 		if(m_frameNum++ == 3)
 			m_frameNum = 0;
 	}
+}
+
+bool CRoom::DoorIntersect(PRECT pRect)
+{
+	for(int i=0; i < MAX_DOORS; i++)
+	{
+		CDoor* pDoor = m_doorArray[i];
+		
+		if(pDoor != NULL)
+			if(pDoor->GetDoorState() == DOORSTATE_OPEN && IntersectRect(pDoor->pRectOpen(), pRect))
+				return true;
+	}
+	
+	return false;
 }
 
 void CRoom::MoveMap(PRECT rectSrc, PRECT rectDst)

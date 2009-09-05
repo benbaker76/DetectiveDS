@@ -197,7 +197,12 @@ const char* g_colName[] =
 	"DINGLE'S BODY!",
 	"PIANO AND A SQUASHED CYNTHIA SLUDGEBUCKET!",
 	"GABRIEL'S BODY!",
-	"STABBED DOCTOR!"
+	"STABBED DOCTOR!",
+	"",
+	"",
+	"",
+	"ANGUS MCFUNGUS' HEADSTONE",
+	"A HEADSTONE"
 };
 
 const char* g_iconName[] =
@@ -221,6 +226,41 @@ const char* g_iconName[] =
 	"TIME",
 	"PLACE",
 	"BAG"
+};
+
+const char* g_roomName[] =
+{
+	"YOU ARE IN\nYOUR ROOM.",
+	"YOU ARE IN\nTHE REVEREND'S ROOM.",
+	"YOU ARE IN\nBENTLEY'S ROOM.",
+	"YOU ARE IN\nCOOK'S ROOM.",
+	"YOU ARE IN\nGABRIEL'S ROOM.",
+	"YOU ARE IN\nCYNTHIA'S ROOM.",
+	"YOU ARE IN\nTHE PROFESSOR'S ROOM.",
+	"YOU ARE IN\nTHE DOCTOR'S ROOM.",
+	"YOU ARE IN\nTHE MAJOR'S ROOM.",
+	"YOU ARE IN\nDINGLE'S ROOM.",
+	"",										// Outside 1
+	"",										// Outside 2
+	"",										// Outside 3
+	"",										// Outside 4
+	"YOU ARE\nOUTSIDE",						// Passage 1
+	"",										// Passage 2
+	"",										// Passage 3
+	"",										// Hall 1
+	"",										// Hall 2
+	"",										// Hall 3
+	"",										// Hall 4
+	"YOU ARE ON THE\nLANDING.",
+	"YOU ARE IN\nTHE KITCHEN",
+	"YOU ARE IN\nTHE HALL",
+	"YOU ARE IN\nTHE STUDY",
+	"",										// Clock
+	"YOU ARE IN\nTHE CELLAR",
+	"YOU ARE IN\nTHE DRAWING ROOM",
+	"YOU ARE IN\nTHE LIBRARY",
+	"YOU ARE IN\nTHE GARDEN",
+	"YOU ARE IN\nTHE GRAVEYARD"
 };
 
 const int g_largeTextMap[] =

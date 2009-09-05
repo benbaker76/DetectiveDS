@@ -26,6 +26,12 @@ typedef struct
 	int Height;
 } RECT, *PRECT;
 
+typedef struct
+{
+	int X;
+	int Y;
+} POINT, *PPOINT;
+
 enum DirectionType
 {
 	DIRECTION_UP,
@@ -37,6 +43,8 @@ enum DirectionType
 #endif
 
 bool IsRectEmpty(PRECT pRect);
+bool IntersectRect(PRECT pRectA, PRECT pRectB);
+void PrintRect(PRECT pRect);
 
 extern const int g_snideHeadFrames[];
 extern const int g_snideBodyFrames[];

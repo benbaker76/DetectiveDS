@@ -16,6 +16,11 @@ CDoor::CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoo
 	
 	m_pRoomIn->GetColMapRect((CollisionType) m_doorType, &m_rect);
 	
+	m_rectOpen.X = m_rect.X - m_rect.Width;
+	m_rectOpen.Y = m_rect.Y;
+	m_rectOpen.Width = m_rect.Width;
+	m_rectOpen.Height = m_rect.Height;
+	
 	m_pRoomIn->GetColMapRect(COL_DOOR_CLOSED, &m_rectArray[DOORRECT_CLOSED]);
 	m_pRoomIn->GetColMapRect(COL_DOOR_OPEN, &m_rectArray[DOORRECT_OPEN]);
 	m_pRoomIn->GetColMapRect(COL_DOOR_SMALL_CLOSED, &m_rectArray[DOORRECT_SMALL_CLOSED]);
@@ -68,16 +73,7 @@ void CDoor::Draw()
 		break;
 	case DOORSTATE_OPEN:
 		if(topDoor)
-		{
-			RECT destRect;
-	
-			destRect.X = m_rect.X - m_rect.Width;
-			destRect.Y = m_rect.Y;
-			destRect.Width = m_rect.Width;
-			destRect.Height = m_rect.Height;
-			
-			m_pRoomIn->MoveMap(&m_rectArray[DOORRECT_OPEN], &destRect);
-		}
+			m_pRoomIn->MoveMap(&m_rectArray[DOORRECT_OPEN], &m_rectOpen);
 		else
 			m_pRoomIn->MoveMap(&m_rectArray[DOORRECT_SMALL_OPEN], &m_rect);
 		break;
@@ -88,10 +84,6 @@ void CDoor::Draw()
 			m_pRoomIn->MoveMap(&m_rectArray[DOORRECT_SMALL_HIDDEN], &m_rect);
 		break;
 	}
-	
-	//char buf[256];
-	//sprintf(buf, "X:%d, Y:%d, Width:%d, Height:%d", m_rect.X, m_rect.Y, m_rect.Width, m_rect.Height);
-	//fprintf(stderr, buf);
 }
 
 
