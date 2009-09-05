@@ -223,6 +223,8 @@ void CGame::Initialize()
 	m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 	m_fxManager.SetFx(FX_TEXT_SCROLLER, true);
 	
+	//m_keyboard.Initialize();
+	
 	((CFxTextScroller*)m_fxManager.GetFx(FX_TEXT_SCROLLER))->AddText("BENTLY ADVANCES: \"THIS WAY TO YOUR ROOM SIR\"");
 
 	m_menu.DrawMenu();
@@ -260,7 +262,8 @@ void CGame::Update()
 	
 	if(keys_pressed & KEY_TOUCH)
 	{
-		IconType iconType = m_menu.CheckIconClick(touch.px, touch.py);
+		IconType iconType = m_menu.CheckIconTouch(touch.px, touch.py);
+		//m_keyboard.CheckKeyTouch(touch.px, touch.py);
 		
 		//DrawText("                                ", 0, 0, false);
 		//DrawText(g_iconName[(int) iconType], 0, 0, false);

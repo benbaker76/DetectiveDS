@@ -17,6 +17,7 @@
 #include "CEvent.h"
 #include "CWatch.h"
 #include "CTextConsole.h"
+#include "CKeyboard.h"
 
 #include "map_cellar.h"
 #include "map_clock.h"
@@ -79,6 +80,8 @@
 #include "menu_top.h"
 #include "menu_bottom.h"
 #include "menu_questions.h"
+
+#include "keyboard.h"
 
 #include "font.h"
 #include "font_large.h"

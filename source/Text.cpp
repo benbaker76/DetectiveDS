@@ -5,97 +5,16 @@
 #include "TDG.h"
 #include "lz77.h"
 
-const char* g_snideText[] =
-{
-	"INSPECTOR SNIDE:      ",
-	"SCOTLAND YARD         ",
-	"DETECTIVE PLAYED BY   ",
-	"YOURSELF.             ",
-	"                      "
-};
-
-const char* g_reverandText[] =
-{
-	"REVERAND WRINKLEBUM:  ",
-	"LOCAL VICAR WHOSE     ",
-	"WIFE DISSAPEARED IN   ",
-	"MYSTERIOUS            ",
-	"CIRCUMSTANCES         "
-};
-
-const char* g_bentleyText[] =
-{
-	"BENTLEY THE BUTLER:   ",
-	"LIFELONG SERVANT TO   ",
-	"THE MCFUNGUS FAMILY.  ",
-	"EXHIBITS SLIGHTLY     ",
-	"HOSTILE BEHAVIOR..    "
-};
-
-const char* g_cookText[] =
-{
-	"HILDA CRUMBLE:        ",
-	"FAMILY COOK.          ",
-	"NOTORIOUS FOR HER     ",
-	"MACARONI  CHEESE.     ",
-	"                      "
-};
-
-
-
-const char* g_gabrielText[] =
-{
-	"GABRIEL GASBAG:       ",
-	"THE MAID. OBEDIENT    ",
-	"AND AGREEABLE, BUT    ",
-	"NOT VERY BRIGHT.      ",
-	"                      "
-};
-
-const char* g_cynthiaText[] =
-{
-	"CYNTHIA SLUDGEBUCKET: ",
-	"ARROGANT AND SELF     ",
-	"CENTRED DAUGHTER OF   ",
-	"THE MAJOR.            ",
-	"                      "
-};
-
-const char* g_professorText[] =
-{
-	"PROFESSOR BULL:       ",
-	"OLD FRIEND OF THE     ",
-	"LATE MR. MCFUNGUS.    ",
-	"SCATTERBRAINED AND    ",
-	"COMPLETELY MAD.       "
-};
-
-const char* g_doctorText[] =
-{
-	"DOCTOR MORTEM:        ",
-	"SHORTSIGHTED FAMILY   ",
-	"DOCTOR.               ",
-	"                      ",
-	"                      "
-};
-
-const char* g_majorText[] =
-{
-	"MAJOR SLUDGEBUCKET:   ",
-	"RETIRED MAJOR.        ",
-	"DISTURBED BUT         ",
-	"HARMLESS.             ",
-	"                      "
-};
-
-const char* g_dingleText[] =
-{
-	"MR DINGLE:            ",
-	"FAMILY SOLICITOR.     ",
-	"HERE TO READ THE      ",
-	"WILL.                 ",
-	"                      "
-};
+const char* g_snideText = "INSPECTOR SNIDE:\nSCOTLAND YARD\nDETECTIVE PLAYED BY\nYOURSELF.";
+const char* g_reverandText = "REVERAND WRINKLEBUM:\nLOCAL VICAR WHOSE\nWIFE DISSAPEARED IN\nMYSTERIOUS\nCIRCUMSTANCES";
+const char* g_bentleyText = "BENTLEY THE BUTLER:\nLIFELONG SERVANT TO\nTHE MCFUNGUS FAMILY.\nEXHIBITS SLIGHTLY\nHOSTILE BEHAVIOR..";
+const char* g_cookText = "HILDA CRUMBLE:\nFAMILY COOK.\nNOTORIOUS FOR HER\nMACARONI  CHEESE.";
+const char* g_gabrielText = "GABRIEL GASBAG:\nTHE MAID. OBEDIENT\nAND AGREEABLE, BUT\nNOT VERY BRIGHT.";
+const char* g_cynthiaText = "CYNTHIA SLUDGEBUCKET:\nARROGANT AND SELF\nCENTRED DAUGHTER OF\nTHE MAJOR.";
+const char* g_professorText = "PROFESSOR BULL:\nOLD FRIEND OF THE\nLATE MR. MCFUNGUS.\nSCATTERBRAINED AND\nCOMPLETELY MAD.";
+const char* g_doctorText = "DOCTOR MORTEM:\nSHORTSIGHTED FAMILY\nDOCTOR.";
+const char* g_majorText = "MAJOR SLUDGEBUCKET:\nRETIRED MAJOR.\nDISTURBED BUT\nHARMLESS.";
+const char* g_dingleText = "MR DINGLE:\nFAMILY SOLICITOR.\nHERE TO READ THE\nWILL.";
 
 const char* g_itemName[] =
 {
@@ -261,6 +180,17 @@ const char* g_roomName[] =
 	"YOU ARE IN\nTHE LIBRARY",
 	"YOU ARE IN\nTHE GARDEN",
 	"YOU ARE IN\nTHE GRAVEYARD"
+};
+
+const char* g_KeyboardText[] =
+{
+	"    1 2 3 4 5 6 7 8 9 0 EXIT    ",
+	"                                ",
+	"    Q W E R T Y U I O P BKSP    ",
+	"                                ",
+	"     A S D F G H J K L ENTER    ",
+	"                                ",
+	"      Z X C V B N M  SPACE      "
 };
 
 const int g_largeTextMap[] =

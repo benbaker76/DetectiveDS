@@ -39,7 +39,7 @@ public:
 	bool RemoveIcon(IconType iconType);
 	void DrawMenu();
 	void DrawIcon(IconType iconType, int x, int y, bool sub);
-	IconType CheckIconClick(int touchX, int touchY);
+	IconType CheckIconTouch(int touchX, int touchY);
 
 private:
 	IconType m_iconArray[MAX_ICONS];

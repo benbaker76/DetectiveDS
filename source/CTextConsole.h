@@ -1,5 +1,5 @@
 #ifndef __CTEXTCONSOLE_H__
-#define __CTIMER_H__
+#define __CTEXTCONSOLE_H__
 
 #include <nds.h>
 

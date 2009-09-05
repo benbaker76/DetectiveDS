@@ -73,7 +73,7 @@ void CMenu::DrawIcon(IconType iconType, int x, int y, bool sub)
 			*(pMap+x+y*32) = iconType * 6 + x + y * 3;
 }
 
-IconType CMenu::CheckIconClick(int touchX, int touchY)
+IconType CMenu::CheckIconTouch(int touchX, int touchY)
 {
 	int mapX = touchX / 8;
 	int mapY = touchY / 8;
