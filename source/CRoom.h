@@ -5,7 +5,7 @@
 #include "Globals.h"
 
 #define MAX_ROOMS			31
-#define MAX_DOORS			10
+#define MAX_DOORS			9
 #define MAX_ROOM_RECT		5
 #define MAX_TORCH_RECT		3
 

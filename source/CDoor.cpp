@@ -36,12 +36,12 @@ void CDoor::Initialize()
 {
 	for(int i=0; i < MAX_DOORS; i++)
 	{
-		CDoor* pDoor = m_pRoomOut->GetDoor(i);
+		CDoor* pDoorOut = m_pRoomOut->GetDoor(i);
 	
-		if(pDoor != NULL)
+		if(pDoorOut != NULL)
 		{	
-			if(m_pRoomIn == pDoor->pRoomOut())
-				m_pDoorOut = pDoor;
+			if(m_pRoomIn == pDoorOut->pRoomOut())
+				m_pDoorOut = pDoorOut;
 		}
 	}
 	
@@ -54,8 +54,11 @@ void CDoor::SetDoorState(DoorState doorState)
 {
 	m_doorState = doorState;
 	
-	if(m_pDoorOut->GetDoorState() != doorState)
-		m_pDoorOut->SetDoorState(doorState);
+	if(m_pDoorOut != NULL)
+	{
+		if(m_pDoorOut->GetDoorState() != doorState)
+			m_pDoorOut->SetDoorState(doorState);
+	}
 }
 
 void CDoor::Draw()

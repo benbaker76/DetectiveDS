@@ -8,6 +8,7 @@
 CGame::CGame(GameType gameType)
 {
 	m_gameType = gameType;
+	m_gameMode = GAMEMODE_RUNNING;
 }
 
 CGame::~CGame()
@@ -219,6 +220,11 @@ void CGame::Initialize()
 		m_characterArray[i]->SetFrameType(FRAME_SPEAK);
 		m_characterArray[i]->Show();
 	} */
+	
+	ClearBG(1, true);
+	
+	dmaCopy(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), watchTilesLen);
+	dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
 		
 	m_fxManager.Initialize();
 	m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
@@ -277,21 +283,24 @@ void CGame::Update()
 			{
 				CollisionType collisionType = m_snide->CheckCollision(m_snide->Facing(), m_currentRoom);
 				
-				if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
+				if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
 				{
 					CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
 					
-					if(pDoor->GetDoorState() == DOORSTATE_CLOSED || pDoor->GetDoorState() == DOORSTATE_LOCKED)
+					if(pDoor != NULL)
 					{
-						pDoor->SetDoorState(DOORSTATE_OPEN);
-						m_currentRoom->Draw();
-						mmEffectEx(&g_sfx_opendoor);
-					}
-					else if(pDoor->GetDoorState() == DOORSTATE_OPEN)
-					{
-						pDoor->SetDoorState(DOORSTATE_CLOSED);
-						m_currentRoom->Draw();
-						mmEffectEx(&g_sfx_closedoor);
+						if(pDoor->GetDoorState() == DOORSTATE_CLOSED || pDoor->GetDoorState() == DOORSTATE_LOCKED)
+						{
+							pDoor->SetDoorState(DOORSTATE_OPEN);
+							m_currentRoom->Draw();
+							mmEffectEx(&g_sfx_opendoor);
+						}
+						else if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+						{
+							pDoor->SetDoorState(DOORSTATE_CLOSED);
+							m_currentRoom->Draw();
+							mmEffectEx(&g_sfx_closedoor);
+						}
 					}
 				}
 			}
@@ -300,17 +309,20 @@ void CGame::Update()
 			{
 				CollisionType collisionType = m_snide->CheckCollision(m_snide->Facing(), m_currentRoom);
 				
-				if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
+				if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
 				{
 					CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
 					
-					if(pDoor->GetDoorState() == DOORSTATE_HIDDEN)
+					if(pDoor != NULL)
 					{
-						pDoor->SetDoorState(DOORSTATE_OPEN);
-						m_currentRoom->Draw();
-						mmEffectEx(&g_sfx_opendoor);
-						
-						m_textConsole->AddText("YOU FIND:\nA SECRET PASSAGE!");
+						if(pDoor->GetDoorState() == DOORSTATE_HIDDEN)
+						{
+							pDoor->SetDoorState(DOORSTATE_OPEN);
+							m_currentRoom->Draw();
+							mmEffectEx(&g_sfx_opendoor);
+							
+							m_textConsole->AddText("YOU FIND:\nA SECRET PASSAGE!");
+						}
 					}
 				}
 				else
@@ -373,7 +385,7 @@ void CGame::Update()
 		else
 			m_snide->Face(DIRECTION_UP);
 		
-		if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
+		if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
 		{
 			CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
 			
@@ -394,7 +406,9 @@ void CGame::Update()
 					if(xRoom < 0) xRoom = 0;
 				
 					if(xDoor< 128) xChar = xDoor;
-					if(xDoor > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - xDoor);	
+					if(xDoor > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - xDoor);
+					
+					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 					
 					m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 					
@@ -421,7 +435,7 @@ void CGame::Update()
 		else
 			m_snide->Face(DIRECTION_DOWN);
 		
-		if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
+		if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
 		{
 			CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
 			
@@ -444,6 +458,8 @@ void CGame::Update()
 					if(xDoor < 128) xChar = xDoor;
 					if(xDoor > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - xDoor);
 					
+					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
+					
 					m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 					
 					m_currentRoom->Initialize(xRoom);
@@ -464,7 +480,7 @@ void CGame::Update()
 	{
 		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_LEFT, m_currentRoom);
 		
-		if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
+		if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
 		{
 			CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
 			
@@ -474,6 +490,8 @@ void CGame::Update()
 				
 				int xChar = 256 - m_characterArray[CHARACTER_SNIDE]->Width() - 8;
 				//int yChar =  pDoor->pDoorOut()->Y() + (pDoor->pDoorOut()->Height() / 2) -  m_characterArray[CHARACTER_SNIDE]->Height();
+				
+				pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 				
 				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 				
@@ -505,7 +523,7 @@ void CGame::Update()
 	{
 		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_RIGHT, m_currentRoom);
 		
-		if(collisionType >= COL_DOOR1 && collisionType <= COL_SECRET_PASSAGE)
+		if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
 		{
 			CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
 			
@@ -515,6 +533,8 @@ void CGame::Update()
 				
 				int xChar = 8;
 				//int yChar = pDoor->pDoorOut()->Y() + (pDoor->pDoorOut()->Height() / 2) -  m_characterArray[CHARACTER_SNIDE]->Height();
+				
+				pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 				
 				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 				

@@ -7,6 +7,12 @@
 #include "soundbank_bin.h"
 #include "soundbank.h"
 
+enum GameMode
+{
+	GAMEMODE_RUNNING,
+	GAMEMODE_PAUSED
+};
+
 enum GameType
 {
 	GAMETYPE_NORMAL
@@ -32,6 +38,8 @@ public:
 
 private:
 	GameType m_gameType;
+	GameMode m_gameMode;
+	
 	CFxManager m_fxManager;
 	CMenu m_menu;
 	CCursor m_cursor;

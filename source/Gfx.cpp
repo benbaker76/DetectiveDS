@@ -103,3 +103,22 @@ void dmaTransfer(uint8 channel, const void* src, void* dest, uint32 size, uint32
 	DMA_DEST(channel) = (uint32)dest;
 	DMA_CR(channel) = (size | mode);
 };
+
+void ClearBG(int bg, bool sub)
+{
+	switch(bg)
+	{
+		case 0:
+			dmaFillHalfWords(0, (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)), 2048);
+			break;
+		case 1:
+			dmaFillHalfWords(0, (sub ? BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB) : BG_MAP_RAM(BG1_MAP_BASE)), 2048);
+			break;
+		case 2:
+			dmaFillHalfWords(0, (sub ? BG_MAP_RAM_SUB(BG2_MAP_BASE_SUB) : BG_MAP_RAM(BG2_MAP_BASE)), 2048);
+			break;
+		case 3:
+			dmaFillHalfWords(0, (sub ? BG_MAP_RAM_SUB(BG3_MAP_BASE_SUB) : BG_MAP_RAM(BG3_MAP_BASE)), 2048);
+			break;
+	}
+}
