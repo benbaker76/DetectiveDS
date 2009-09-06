@@ -16,6 +16,7 @@ extern const char* g_colName[];
 extern const char* g_iconName[];
 extern const char* g_roomName[];
 extern const char* g_KeyboardText[];
+extern const char* g_KeyboardHit[];
 
 void DrawChar(char c, int x, int y, bool sub);
 void DrawText(const char* string, int x, int y, bool sub);

@@ -4,8 +4,9 @@
 #include "Text.h"
 #include "CKeyboard.h"
 
-CKeyboard::CKeyboard()
+CKeyboard::CKeyboard(CCursor* pCursor)
 {
+	m_pCursor = pCursor;
 }
 
 CKeyboard::~CKeyboard()
@@ -22,6 +23,8 @@ void CKeyboard::Initialize()
 	
 	for(int i=0; i<7; i++)
 		DrawText(g_KeyboardText[i], 0, 16 + i, false);
+		
+	m_pCursor->SetPosition(m_charPos + 1, 11);
 }
 
 void CKeyboard::Shutdown()
@@ -38,18 +41,37 @@ void CKeyboard::CheckKeyTouch(int touchX, int touchY)
 	if(mapY < 16)
 		return;
 		
-	if(m_charPos < MAX_TEXT_ENTRY)
+	char c = g_KeyboardHit[mapY - 16][mapX];
+	
+	switch(c)
 	{
-		char c = g_KeyboardText[mapY - 16][mapX];
-		
-		if(c != ' ')
+	case '\e':
+		break;
+	case '\b':
+		if(m_charPos > 0)
 		{
-			m_textEntry[m_charPos] = c;
-			m_textEntry[m_charPos+1] = NULL;
+			DrawText("  ", m_charPos, 11, false);
+			m_textEntry[--m_charPos] = '\0';
 			
 			DrawText(m_textEntry, 1, 11, false);
-			
-			m_charPos++;
+			m_pCursor->SetPosition(m_charPos + 1, 11);
 		}
+		break;
+	case '\0':
+		break;
+	case '\n':
+		break;
+	default:
+		if(m_charPos < MAX_TEXT_ENTRY)
+		{
+			m_textEntry[m_charPos++] = c;
+			m_textEntry[m_charPos] = '\0';
+			
+			DrawText(m_textEntry, 1, 11, false);
+			m_pCursor->SetPosition(m_charPos + 1, 11);
+		}
+		break;
 	}
+	
+	m_pCursor->Draw();
 }

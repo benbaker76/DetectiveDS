@@ -2,6 +2,7 @@
 #define __CTEXTCONSOLE_H__
 
 #include <nds.h>
+#include "CCursor.h"
 
 #define CONSOLE_X		1
 #define CONSOLE_Y		15
@@ -10,12 +11,10 @@
 
 #define MAX_TEXT_CONSOLE	CONSOLE_HEIGHT
 
-#define CURSOR_FRAMES	4
-
 class CTextConsole
 {
 public:
-	CTextConsole();
+	CTextConsole(CCursor* pCursor);
 	~CTextConsole();
 	
 	void ClearText();
@@ -23,19 +22,16 @@ public:
 	void Update(int elapsedTime);
 	
 private:
+	CCursor* m_pCursor;
+	
+	int m_x;
+	int m_y;
 
 	int m_lastUpdate;
-	
-	int m_cursorX;
-	int m_cursorY;
-	int m_cursorFrame;
-	bool m_cursorPing;
 	
 	const char* m_charPos;
 	u32 m_textPos;
 	const char* m_textArray[MAX_TEXT_CONSOLE];
-	
-	void DrawCursor();
 };
 
 #endif

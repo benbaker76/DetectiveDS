@@ -208,7 +208,8 @@ void CGame::Initialize()
 	m_currentRoom = m_roomArray[ROOM_STAIRS];
 	m_currentRoom->Initialize(69);
 	
-	m_textConsole.AddText(g_roomName[m_currentRoom->GetRoomType()]);
+	m_textConsole = new CTextConsole(&m_cursor);
+	m_textConsole->AddText(g_roomName[m_currentRoom->GetRoomType()]);
 	
 	m_characterArray[CHARACTER_ANGUS]->SetAlpha(0x7);
 	
@@ -223,7 +224,8 @@ void CGame::Initialize()
 	m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 	m_fxManager.SetFx(FX_TEXT_SCROLLER, true);
 	
-	//m_keyboard.Initialize();
+	//m_keyboard = new CKeyboard(&m_cursor);
+	//m_keyboard->Initialize();
 	
 	((CFxTextScroller*)m_fxManager.GetFx(FX_TEXT_SCROLLER))->AddText("BENTLY ADVANCES: \"THIS WAY TO YOUR ROOM SIR\"");
 
@@ -258,12 +260,14 @@ void CGame::Update()
 	
 	//DrawTime(m_timer->pCurrentTime());
 	m_watch->Draw(m_timer->pCurrentTime());
-	m_textConsole.Update(elapsedTime);
+	m_textConsole->Update(elapsedTime);
+	m_cursor.Update(elapsedTime);
+	m_cursor.Draw();
 	
 	if(keys_pressed & KEY_TOUCH)
 	{
 		IconType iconType = m_menu.CheckIconTouch(touch.px, touch.py);
-		//m_keyboard.CheckKeyTouch(touch.px, touch.py);
+		//m_keyboard->CheckKeyTouch(touch.px, touch.py);
 		
 		//DrawText("                                ", 0, 0, false);
 		//DrawText(g_iconName[(int) iconType], 0, 0, false);
@@ -306,11 +310,11 @@ void CGame::Update()
 						m_currentRoom->Draw();
 						mmEffectEx(&g_sfx_opendoor);
 						
-						m_textConsole.AddText("YOU FIND:\nA SECRET PASSAGE!");
+						m_textConsole->AddText("YOU FIND:\nA SECRET PASSAGE!");
 					}
 				}
 				else
-					m_textConsole.AddText(g_colName[collisionType]);
+					m_textConsole->AddText(g_colName[collisionType]);
 			}
 		default:
 			break;
@@ -387,7 +391,7 @@ void CGame::Update()
 					m_currentRoom->Initialize(xRoom);
 					m_snide->SetPosition(xChar, yChar);
 					
-					m_textConsole.AddText(g_roomName[m_currentRoom->GetRoomType()]);
+					m_textConsole->AddText(g_roomName[m_currentRoom->GetRoomType()]);
 					
 					//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
 					
@@ -435,7 +439,7 @@ void CGame::Update()
 					m_currentRoom->Initialize(xRoom);
 					m_snide->SetPosition(xChar, yChar);
 					
-					m_textConsole.AddText(g_roomName[m_currentRoom->GetRoomType()]);
+					m_textConsole->AddText(g_roomName[m_currentRoom->GetRoomType()]);
 					
 					//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
 					
@@ -467,7 +471,7 @@ void CGame::Update()
 				//m_snide->SetPosition(xChar, yChar);
 				m_snide->SetX(xChar);
 				
-				m_textConsole.AddText(g_roomName[m_currentRoom->GetRoomType()]);
+				m_textConsole->AddText(g_roomName[m_currentRoom->GetRoomType()]);
 			}
 		}
 		else if(collisionType == COL_NOTHING_HERE)
@@ -508,7 +512,7 @@ void CGame::Update()
 				//m_snide->SetPosition(xChar, yChar);
 				m_snide->SetX(xChar);
 				
-				m_textConsole.AddText(g_roomName[m_currentRoom->GetRoomType()]);
+				m_textConsole->AddText(g_roomName[m_currentRoom->GetRoomType()]);
 			}
 		}
 		else if(collisionType == COL_NOTHING_HERE)

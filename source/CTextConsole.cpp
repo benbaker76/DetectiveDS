@@ -3,10 +3,9 @@
 #include "Text.h"
 #include "CTextConsole.h"
 
-CTextConsole::CTextConsole()
+CTextConsole::CTextConsole(CCursor* pCursor)
 {
-	m_cursorPing = true;
-	m_lastUpdate = 0;
+	m_pCursor = pCursor;
 	m_charPos = NULL;
 	m_textPos = 0;
 	
@@ -22,8 +21,9 @@ CTextConsole::~CTextConsole()
 
 void CTextConsole::ClearText()
 {
-	m_cursorX = CONSOLE_X;
-	m_cursorY = CONSOLE_Y;
+	m_x = CONSOLE_X;
+	m_y = CONSOLE_Y;
+	m_pCursor->SetPosition(m_x, m_y);
 	
 	for(int i=0; i<MAX_TEXT_CONSOLE; i++)
 	{
@@ -85,25 +85,27 @@ void CTextConsole::Update(int elapsedTime)
 
 	if(m_charPos != NULL)
 	{
-		DrawChar(123 + CURSOR_FRAMES, m_cursorX, m_cursorY, false);
+		DrawChar(123 + CURSOR_FRAMES, m_x, m_y, false);
 		
 		switch(*m_charPos)
 		{
-		case '\E':		// Clear Console
+		case '\e':		// Clear Console
 			m_charPos++;
 			ClearText();
 			break;
 		case '\n':		// New line
 			m_charPos++;
-			m_cursorX = CONSOLE_X;
-			m_cursorY++;
+			m_x = CONSOLE_X;
+			m_y++;
+			m_pCursor->SetPosition(m_x, m_y);
 			
-			if(m_cursorY == CONSOLE_Y + CONSOLE_HEIGHT)
+			if(m_y == CONSOLE_Y + CONSOLE_HEIGHT)
 				ClearText();
 			break;
 		case '\0':		// NULL Character (end of text)
-			m_cursorX = CONSOLE_X;
-			m_cursorY++;
+			m_x = CONSOLE_X;
+			m_y++;
+			m_pCursor->SetPosition(m_x, m_y);
 			m_charPos = NULL;
 			m_textArray[m_textPos] = NULL;
 
@@ -111,43 +113,22 @@ void CTextConsole::Update(int elapsedTime)
 				m_textPos = 0;
 			break;
 		default:
-			DrawChar(*m_charPos, m_cursorX, m_cursorY, false);
+			DrawChar(*m_charPos, m_x, m_y, false);
 		
-			m_cursorX++;
+			m_x++;
 			m_charPos++;
+			m_pCursor->SetPosition(m_x, m_y);
 			
-			if(m_cursorX >= CONSOLE_X + CONSOLE_WIDTH)
+			if(m_x >= CONSOLE_X + CONSOLE_WIDTH)
 			{
-				m_cursorX = CONSOLE_X;
-				m_cursorY++;
+				m_x = CONSOLE_X;
+				m_y++;
+				m_pCursor->SetPosition(m_x, m_y);
 				
-				if(m_cursorY == CONSOLE_Y + CONSOLE_HEIGHT)
+				if(m_y == CONSOLE_Y + CONSOLE_HEIGHT)
 					ClearText();
 			}
 			break;
 		}
-	}
-	
-	if(m_lastUpdate > 50)
-	{
-		m_lastUpdate = 0;
-		
-		DrawCursor();
-	}
-}
-
-void CTextConsole::DrawCursor()
-{
-	DrawChar(123 + m_cursorFrame, m_cursorX, m_cursorY, false);
-	
-	if(m_cursorPing)
-	{
-		if(++m_cursorFrame >= CURSOR_FRAMES-1)
-			m_cursorPing = !m_cursorPing;
-	}
-	else
-	{
-		if(--m_cursorFrame <= 0)
-			m_cursorPing = !m_cursorPing;
 	}
 }
