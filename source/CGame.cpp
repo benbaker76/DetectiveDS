@@ -316,6 +316,16 @@ void CGame::Update()
 				else
 					m_textConsole->AddText(g_colName[collisionType]);
 			}
+			break;
+		case ICON_TIME:
+			{
+				char buf[512];
+				sprintf(buf, " THE TIME IS NOW:\n\n      %02d: %02d\n\n PAUSED..PRESS\nFIRE TO CONTINUE.", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes);
+				//m_textConsole->AddText("  THE TIME IS NOW:");
+				m_textConsole->AddText(buf);
+				//m_textConsole->AddText("  PAUSED..PRESS");
+				//m_textConsole->AddText("FIRE TO CONTINUE.");
+			}
 		default:
 			break;
 		}

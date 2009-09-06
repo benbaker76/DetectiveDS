@@ -8,7 +8,7 @@ bool IsRectEmpty(PRECT pRect)
 
 bool IntersectRect(PRECT pRectA, PRECT pRectB)
 {
-	return !(pRectA->X >= pRectB->X + pRectB->Width || pRectA->X + pRectA->Width <= pRectB->X || pRectA->Y >= pRectB->Y + pRectB->Height || pRectA->Y + pRectA->Height <= pRectB->Y);
+	return (pRectA->X < pRectB->X + pRectB->Width && pRectA->X + pRectA->Width > pRectB->X && pRectA->Y < pRectB->Y + pRectB->Height && pRectA->Y + pRectA->Height > pRectB->Y);
 }
 
 void PrintRect(PRECT pRect)
