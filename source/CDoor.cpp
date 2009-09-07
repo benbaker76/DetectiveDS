@@ -10,16 +10,20 @@ CDoor::CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoo
 	m_pDoorOut = NULL;
 	
 	memset(&m_rect, 0, sizeof(RECT));
+	memset(&m_rectOpen, 0, sizeof(RECT));
 	
 	for(int i=0; i<MAX_DOOR_RECT; i++)
 		memset(&m_rectArray[i], 0, sizeof(RECT));
 	
 	m_pRoomIn->GetColMapRect((CollisionType) m_doorType, &m_rect);
 	
-	m_rectOpen.X = m_rect.X - m_rect.Width;
-	m_rectOpen.Y = m_rect.Y;
-	m_rectOpen.Width = m_rect.Width;
-	m_rectOpen.Height = m_rect.Height;
+	if(!IsRectEmpty(&m_rect))
+	{
+		m_rectOpen.X = m_rect.X - m_rect.Width;
+		m_rectOpen.Y = m_rect.Y;
+		m_rectOpen.Width = m_rect.Width;
+		m_rectOpen.Height = m_rect.Height;
+	}
 	
 	m_pRoomIn->GetColMapRect(COL_DOOR_CLOSED, &m_rectArray[DOORRECT_CLOSED]);
 	m_pRoomIn->GetColMapRect(COL_DOOR_OPEN, &m_rectArray[DOORRECT_OPEN]);
@@ -63,7 +67,7 @@ void CDoor::SetDoorState(DoorState doorState)
 
 void CDoor::Draw()
 {
-	bool topDoor = (m_rect.Y < 23);
+	bool topDoor = (m_rect.Y < 23 && m_rect.Width > 1);
 		
 	switch(m_doorState)
 	{
