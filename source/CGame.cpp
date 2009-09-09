@@ -202,6 +202,10 @@ void CGame::Initialize()
 	
 	InitializeDoors();
 	
+	m_characterArray[CHARACTER_BENTLEY]->SetPosition(110, 121);
+	m_characterArray[CHARACTER_BENTLEY]->SetFrameType(FRAME_SPEAK);
+	m_characterArray[CHARACTER_BENTLEY]->Show();
+	
 	m_snide = m_characterArray[CHARACTER_SNIDE];
 	m_snide->SetPosition(142, 105);
 	m_snide->Show();
@@ -210,7 +214,7 @@ void CGame::Initialize()
 	m_currentRoom->Initialize(69);
 	
 	m_textConsole = new CTextConsole(&m_cursor);
-	m_textConsole->AddText(g_roomName[m_currentRoom->GetRoomType()]);
+	m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
 	
 	m_characterArray[CHARACTER_ANGUS]->SetAlpha(0x7);
 	
@@ -233,7 +237,18 @@ void CGame::Initialize()
 	//m_keyboard = new CKeyboard(&m_cursor);
 	//m_keyboard->Initialize();
 	
-	((CFxTextScroller*)m_fxManager.GetFx(FX_TEXT_SCROLLER))->AddText("BENTLY ADVANCES: \"THIS WAY TO YOUR ROOM SIR\"");
+	CPath* path = new CPath(m_roomArray);
+	path->FindRoute(m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_SNIDE]);
+	
+	/* for(int i=0; i<MAX_ROOMS; i++)
+	{
+		CRoom* pRoom = path->GetRoom(i);
+
+		if(m_returnArray[i] != NULL)
+			fprintf(stderr, g_roomName[path->GetRoom(i)->GetRoomType()]);
+	} */
+	
+	((CFxTextScroller*)m_fxManager.GetFx(FX_TEXT_SCROLLER))->AddText("BENTLY ADVANCES:\"THIS WAY TO YOUR ROOM SIR\"");
 
 	m_menu.DrawMenu();
 	
@@ -402,9 +417,6 @@ void CGame::Update()
 					int xChar = 128;
 					int yChar = ((pDoorRect->Y + pDoorRect->Height - 1) * 8) - m_characterArray[CHARACTER_SNIDE]->Height();
 					
-					if(xRoom + 256 > m_currentRoom->Width()) xRoom = m_currentRoom->Width() - 256;
-					if(xRoom < 0) xRoom = 0;
-				
 					if(xDoor< 128) xChar = xDoor;
 					if(xDoor > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - xDoor);
 					
@@ -415,7 +427,7 @@ void CGame::Update()
 					m_currentRoom->Initialize(xRoom);
 					m_snide->SetPosition(xChar, yChar);
 					
-					m_textConsole->AddText(g_roomName[m_currentRoom->GetRoomType()]);
+					m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
 					
 					//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
 					
@@ -452,9 +464,6 @@ void CGame::Update()
 					int xChar = 128;
 					int yChar = ((pDoorRect->Y + pDoorRect->Height - 1) * 8) - m_characterArray[CHARACTER_SNIDE]->Height() + 16;
 					
-					if(xRoom + 256 > m_currentRoom->Width()) xRoom = m_currentRoom->Width() - 256;
-					if(xRoom < 0) xRoom = 0;
-					
 					if(xDoor < 128) xChar = xDoor;
 					if(xDoor > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - xDoor);
 					
@@ -465,7 +474,7 @@ void CGame::Update()
 					m_currentRoom->Initialize(xRoom);
 					m_snide->SetPosition(xChar, yChar);
 					
-					m_textConsole->AddText(g_roomName[m_currentRoom->GetRoomType()]);
+					m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
 					
 					//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
 					
@@ -499,7 +508,7 @@ void CGame::Update()
 				//m_snide->SetPosition(xChar, yChar);
 				m_snide->SetX(xChar);
 				
-				m_textConsole->AddText(g_roomName[m_currentRoom->GetRoomType()]);
+				m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
 			}
 		}
 		else if(collisionType == COL_NOTHING_HERE)
@@ -542,7 +551,7 @@ void CGame::Update()
 				//m_snide->SetPosition(xChar, yChar);
 				m_snide->SetX(xChar);
 				
-				m_textConsole->AddText(g_roomName[m_currentRoom->GetRoomType()]);
+				m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
 			}
 		}
 		else if(collisionType == COL_NOTHING_HERE)

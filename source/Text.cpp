@@ -149,6 +149,41 @@ const char* g_iconName[] =
 
 const char* g_roomName[] =
 {
+	"SNIDE",
+	"REVEREND",
+	"BENTLEY",
+	"COOK",
+	"GABRIEL",
+	"CYNTHIA",
+	"PROFESSOR",
+	"DOCTOR",
+	"MAJOR",
+	"DINGLE",
+	"OUTSIDE1",
+	"OUTSIDE2",
+	"OUTSIDE3",
+	"OUTSIDE4",
+	"PASSAGE1",
+	"PASSAGE2",
+	"PASSAGE3",
+	"HALL1",
+	"HALL2",
+	"HALL3",
+	"HALL4",
+	"LANDING",
+	"KITCHEN",
+	"STAIRS",
+	"STUDY",
+	"CLOCK",
+	"CELLAR",
+	"DRAWING",
+	"LIBRARY",
+	"GARDEN",
+	"GRAVEYARD"
+};
+
+const char* g_enterRoomText[] =
+{
 	"YOU ARE IN\nYOUR ROOM.",
 	"YOU ARE IN\nTHE REVEREND'S\nROOM.",
 	"YOU ARE IN\nBENTLEY'S ROOM.",

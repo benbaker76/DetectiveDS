@@ -8,6 +8,7 @@ CDoor::CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoo
 	m_pRoomIn = pRoomIn;
 	m_pRoomOut = pRoomOut;
 	m_pDoorOut = NULL;
+	m_hidden = (doorState == DOORSTATE_HIDDEN);
 	
 	memset(&m_rect, 0, sizeof(RECT));
 	memset(&m_rectOpen, 0, sizeof(RECT));

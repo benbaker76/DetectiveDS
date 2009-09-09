@@ -55,6 +55,7 @@ public:
 	CRoom* pRoomIn() const { return m_pRoomIn; }
 	CRoom* pRoomOut() const { return m_pRoomOut; }
 	CDoor* pDoorOut() const { return m_pDoorOut; }
+	bool Hidden() const { return m_hidden; }
 
 private:
 	DoorType m_doorType;
@@ -62,6 +63,8 @@ private:
 	CRoom* m_pRoomIn;
 	CRoom* m_pRoomOut;
 	CDoor* m_pDoorOut;
+	
+	bool m_hidden;
 	
 	RECT m_rect;
 	RECT m_rectOpen;

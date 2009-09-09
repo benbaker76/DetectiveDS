@@ -103,7 +103,7 @@ void CSprite::Draw()
 	//oamSet(&oamSub, m_oamIndex, round(m_x), round(m_y), m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxSub, -1, false, false, false, false, false);	
 	
 	//oamSet(&oamMain, m_oamIndex, round(m_x), round(m_y), m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxMain, -1, false, false, false, false, false);	
-	oamSet(&oamSub, m_oamIndex, round(m_x), round(m_y), m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxSub, -1, false, false, false, false, false);	
+	oamSet(&oamSub, m_oamIndex, (int)round(m_x) & 0xFF, round(m_y), m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxSub, -1, false, false, false, false, false);	
 }
 
 void CSprite::SetFrameType(FrameType frameType)

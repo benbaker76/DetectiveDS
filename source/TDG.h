@@ -18,6 +18,7 @@
 #include "CWatch.h"
 #include "CTextConsole.h"
 #include "CKeyboard.h"
+#include "CPath.h"
 
 #include "map_cellar.h"
 #include "map_clock.h"

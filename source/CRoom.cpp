@@ -39,6 +39,9 @@ void CRoom::Initialize(int x)
 {
 	m_x = x;
 	
+	if(x + 256 > m_pMap->Width) m_x = m_pMap->Width - 256;
+	if(m_x < 0) m_x = 0;
+	
 	//dmaCopy(m_pMap->pTiles, BG_TILE_RAM_SUB(BG3_TILE_BASE_SUB), m_pMap->TilesLen);
 	decompressToVRAM(m_pMap->pTiles, BG_TILE_RAM_SUB(BG3_TILE_BASE_SUB));
 	dmaCopy(m_pMap->pPalette, BG_PALETTE_SUB, m_pMap->PaletteLen);
