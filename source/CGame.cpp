@@ -215,6 +215,12 @@ void CGame::Initialize()
 	m_characterArray[CHARACTER_BENTLEY]->SetPosition(176, 120);
 	m_characterArray[CHARACTER_BENTLEY]->SetRoom(m_roomArray[ROOM_STAIRS]);
 	m_characterArray[CHARACTER_BENTLEY]->SetFrameType(FRAME_SPEAK);
+	
+	m_characterArray[CHARACTER_COOK]->SetPosition(104, 120);
+	m_characterArray[CHARACTER_COOK]->SetRoom(m_roomArray[ROOM_KITCHEN]);
+	
+	m_characterArray[CHARACTER_GABRIEL]->SetPosition(208, 120);
+	m_characterArray[CHARACTER_GABRIEL]->SetRoom(m_roomArray[ROOM_KITCHEN]);
 
 	m_characterArray[CHARACTER_CYNTHIA]->SetPosition(232, 120);
 	m_characterArray[CHARACTER_CYNTHIA]->SetRoom(m_roomArray[ROOM_CYNTHIA]);
@@ -228,6 +234,11 @@ void CGame::Initialize()
 	m_characterArray[CHARACTER_MAJOR]->SetPosition(232, 120);
 	m_characterArray[CHARACTER_MAJOR]->SetRoom(m_roomArray[ROOM_MAJOR]);
 	
+	m_characterArray[CHARACTER_DINGLE]->SetPosition(240, 120);
+	m_characterArray[CHARACTER_DINGLE]->SetRoom(m_roomArray[ROOM_DRAWING]);
+	
+	m_characterArray[CHARACTER_ANGUS]->SetPosition(352, 120);
+	m_characterArray[CHARACTER_ANGUS]->SetRoom(m_roomArray[ROOM_HALL4]);
 	m_characterArray[CHARACTER_ANGUS]->SetAlpha(0x7);
 	
 	m_textConsole = new CTextConsole(&m_cursor);

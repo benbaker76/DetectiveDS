@@ -65,7 +65,7 @@ int main(void)
 	mmLoadEffect(SFX_CLOSEDOOR);
 	mmStart(MOD_DETECTIVE, MM_PLAY_ONCE);
 	//mmStart(MOD_DETECTIVE, MM_PLAY_LOOP);
-	//mmPosition(1);
+	mmPosition(2);
 	
 	consoleDebugInit(DebugDevice_NOCASH);
 	

@@ -99,10 +99,10 @@ void CSprite::Draw()
 	//dmaCopy(m_pBmp + (m_frameNum * 512), m_gfxMain, 32 * 32 * 2);
 	dmaCopy(m_pBmp + (m_frameNum * 512), m_gfxSub, 32 * 32 * 2);
 	
-	//oamSet(&oamMain, m_oamIndex, round(m_x), round(m_y), m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxMain, -1, false, false, false, false, false);	
-	//oamSet(&oamSub, m_oamIndex, round(m_x), round(m_y), m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxSub, -1, false, false, false, false, false);	
+	//oamSet(&oamMain, m_oamIndex, m_x, m_y, m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxMain, -1, false, false, false, false, false);	
+	//oamSet(&oamSub, m_oamIndex, m_x, m_y, m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxSub, -1, false, false, false, false, false);	
 	
-	//oamSet(&oamMain, m_oamIndex, round(m_x), round(m_y), m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxMain, -1, false, false, false, false, false);	
+	//oamSet(&oamMain, m_oamIndex, m_x, m_y, m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxMain, -1, false, false, false, false, false);	
 	oamSet(&oamSub, m_oamIndex, m_x, m_y, m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxSub, -1, false, false, false, false, false);	
 }
 
