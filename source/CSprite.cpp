@@ -3,8 +3,8 @@
 #include "CSprite.h"
 #include "TDG.h"
 
-//CSprite::CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u16* pPalette, int paletteLen, const int* frameArray, int frameCount)
-CSprite::CSprite(SpriteType spriteType, const u32* pBmp, const int* frameArray, int frameCount)
+//CSprite::CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u16* pPalette, int paletteLen, const u32* frameArray, int frameCount)
+CSprite::CSprite(SpriteType spriteType, const u32* pBmp, const u32* frameArray, int frameCount)
 {
 	m_spriteType = spriteType;
 	m_pBmp = pBmp;

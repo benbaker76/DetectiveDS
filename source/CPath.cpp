@@ -43,6 +43,9 @@ void CPath::FindRoute(CRoom* pRoomStart, CRoom* pRoomEnd)
 	
 	m_returnArray[0] =  pRoomNodeStart;
 	FindNextRoom(1, pRoomEnd, pRoomNodeStart);
+	
+	//m_returnArray[0] =  pRoomNodeStart;
+	FindNextRoom(0, pRoomEnd, pRoomNodeStart);
 }
 
 bool CPath::FindNextRoom(int count, CRoom* destination, CRoomNode* currNode)

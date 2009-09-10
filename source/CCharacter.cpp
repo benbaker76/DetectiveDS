@@ -6,13 +6,19 @@
 CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite, int width, int height)
 {
 	m_characterType = characterType;
+	m_characterMode = CHARMODE_NONE;
 	m_pHeadSprite = pHeadSprite;
 	m_pBodySprite = pBodySprite;
 	m_x = 0;
 	m_y = 0;
 	m_width = width;
 	m_height = height;
-
+	
+	m_visible = false;
+	m_green = false;
+	
+	m_pathPosition = 0;
+	
 	//m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_col1Tiles, sprite_col1TilesLen, sprite_col1Pal, sprite_col1PalLen, NULL, 0);
 	//m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_col2Tiles, sprite_col2TilesLen, sprite_col2Pal, sprite_col2PalLen, NULL, 0);
 	
@@ -38,6 +44,51 @@ void CCharacter::SetPosition(float x, float y)
 
 void CCharacter::UpdatePosition()
 {
+	if(m_characterMode == CHARMODE_WALKING)
+	{
+		CRoom* pRoom = m_path[m_pathPosition];
+		
+		if(pRoom != NULL)
+		{
+			CDoor* pDoor = m_pRoom->GetRoomDoor(pRoom);
+			int xDoor = pDoor->pPoint()->X;
+			int yDoor = pDoor->pPoint()->Y;
+			int xChar = xDoor * 8 - pPoint()->X;
+			int yChar = yDoor * 8 - pPoint()->Y;
+			
+			float direction = atan2(yChar, xChar);
+			
+			if(xChar != 0 && yChar != 0)
+			{
+				if(xChar < 0)
+					SetFrameType(FRAME_LEFT);
+				else
+					SetFrameType(FRAME_RIGHT);
+				
+				m_x += cos(direction) * 0.5f;
+				m_y += sin(direction) * 0.5f;
+			}
+			else
+			{
+				m_pathPosition++;
+				m_pRoom = pRoom;
+				
+				pDoor->SetDoorState(DOORSTATE_OPEN);
+				
+				int xDoor = pDoor->pDoorOut()->pPoint()->X;
+				int yDoor = pDoor->pDoorOut()->pPoint()->Y;
+				m_x = xDoor * 8;
+				m_y = yDoor * 8 - m_height;
+			}
+			
+			//char buf[256];
+			//sprintf(buf, "X:%d, Y:%d", xDoor, yDoor);
+			//DrawText(buf, 0, 0, false);
+		}
+		else
+			SetCharacterMode(CHARMODE_WAITING);
+	}
+	
 	m_pHeadSprite->SetPosition(m_x - m_pRoom->X(), m_y);
 	m_pBodySprite->SetPosition(m_x - m_pRoom->X(), m_y+HEAD_HEIGHT);
 }
@@ -92,16 +143,16 @@ void CCharacter::Face(DirectionType directionType)
 	switch(directionType)
 	{
 		case DIRECTION_UP:
-			SetFrameType(FRAME_UP);
+			(m_green ? SetFrameType(FRAME_GREEN_UP) : SetFrameType(FRAME_UP));
 			break;
 		case DIRECTION_DOWN:
-			SetFrameType(FRAME_DOWN);
+			(m_green ? SetFrameType(FRAME_GREEN_DOWN) : SetFrameType(FRAME_DOWN));
 			break;
 		case DIRECTION_LEFT:
-			SetFrameType(FRAME_LEFT);
+			(m_green ? SetFrameType(FRAME_GREEN_LEFT) : SetFrameType(FRAME_LEFT));
 			break;
 		case DIRECTION_RIGHT:
-			SetFrameType(FRAME_RIGHT);
+			(m_green ? SetFrameType(FRAME_GREEN_RIGHT) : SetFrameType(FRAME_RIGHT));
 			break;
 	}
 }
@@ -113,19 +164,19 @@ void CCharacter::Move(DirectionType directionType)
 	switch(directionType)
 	{
 		case DIRECTION_UP:
-			SetFrameType(FRAME_UP);
+			(m_green ? SetFrameType(FRAME_GREEN_UP) : SetFrameType(FRAME_UP));
 			SetPosition(m_x + 1.33, m_y - 0.66);
 			break;
 		case DIRECTION_DOWN:
-			SetFrameType(FRAME_DOWN);
+			(m_green ? SetFrameType(FRAME_GREEN_DOWN) : SetFrameType(FRAME_DOWN));
 			SetPosition(m_x - 1.33, m_y + 0.66);
 			break;
 		case DIRECTION_LEFT:
-			SetFrameType(FRAME_LEFT);
+			(m_green ? SetFrameType(FRAME_GREEN_LEFT) : SetFrameType(FRAME_LEFT));
 			SetPosition(m_x - 1, m_y);
 			break;
 		case DIRECTION_RIGHT:
-			SetFrameType(FRAME_RIGHT);
+			(m_green ? SetFrameType(FRAME_GREEN_RIGHT) : SetFrameType(FRAME_RIGHT));
 			SetPosition(m_x + 1, m_y);
 			break;
 	}
@@ -134,11 +185,8 @@ void CCharacter::Move(DirectionType directionType)
 CollisionType CCharacter::CheckCollision(DirectionType directionType)
 {
 	CollisionType retType = COL_NOTHING_HERE;
-	//float x = (pRoom->X() + m_x) + (m_width / 2) - 8;
-	//float y = m_y + (m_height - 8);
-	
-	float x = m_x + (m_width / 2) - 8;
-	float y = m_y + (m_height - 8);
+	int x = pPoint()->X;
+	int y = pPoint()->Y;
 	
 	//float x2 = m_x + (m_width / 2) - 8 + 4;
 	//float y2 = m_y + (m_height - 8) + 4;
@@ -186,7 +234,25 @@ void CCharacter::SetFrameType(FrameType frameType)
 	m_pBodySprite->SetFrameType(frameType);
 }
 
-void CCharacter::SetRoom(CRoom* pRoom, CDoor* pDoor)
-{
-	m_pRoom = pRoom;
+void CCharacter::SetCharacterMode(CharacterMode characterMode)
+{	
+	m_characterMode = characterMode;
+
+	switch(characterMode)
+	{
+	case CHARMODE_NONE:
+		SetFrameType(FRAME_NONE);
+		break;
+	case CHARMODE_WAITING:
+		SetFrameType(FRAME_WAITING);
+		break;
+	case CHARMODE_WALKING:
+		Face(m_facing);
+		break;
+	case CHARMODE_TALKING:
+		(m_green ? SetFrameType(FRAME_GREEN_SPEAK) : SetFrameType(FRAME_SPEAK));
+		break;
+	case CHARMOND_DEAD:
+		break;
+	}
 }

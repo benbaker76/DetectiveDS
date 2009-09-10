@@ -8,19 +8,21 @@
 enum FrameType
 {
 	FRAME_NONE = 0,
-	FRAME_SPEAK = BIT(0),
-	FRAME_LEFT = BIT(1),
-	FRAME_RIGHT = BIT(2),
-	FRAME_UP = BIT(3),
-	FRAME_DOWN = BIT(4),
-	FRAME_DEAD = BIT(5),
-	FRAME_GREEN_SPEAK = BIT(6),
-	FRAME_GREEN_LEFT = BIT(7),
-	FRAME_GREEN_RIGHT = BIT(8),
-	FRAME_GREEN_UP = BIT(9),
-	FRAME_GREEN_DOWN = BIT(10),
-	FRAME_MAGNIFYER = BIT(11),
-	FRAME_ARROW = BIT(12)
+	FRAME_WAITING = BIT(0),
+	FRAME_SPEAK = BIT(1),
+	FRAME_LEFT = BIT(2),
+	FRAME_RIGHT = BIT(3),
+	FRAME_UP = BIT(4),
+	FRAME_DOWN = BIT(5),
+	FRAME_DEAD = BIT(6),
+	FRAME_BOMB = BIT(7),
+	FRAME_GREEN_SPEAK = BIT(8),
+	FRAME_GREEN_LEFT = BIT(9),
+	FRAME_GREEN_RIGHT = BIT(10),
+	FRAME_GREEN_UP = BIT(11),
+	FRAME_GREEN_DOWN = BIT(12),
+	FRAME_MAGNIFYER = BIT(13),
+	FRAME_ARROW = BIT(14)
 };
 
 enum SpriteType
@@ -54,7 +56,7 @@ enum SpriteType
 class CSprite
 {
 public:
-	CSprite(SpriteType spriteType, const u32* pBmp, const int* frameArray, int frameCount);
+	CSprite(SpriteType spriteType, const u32* pBmp, const u32* frameArray, int frameCount);
 	//CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u16* pPalette, int paletteLen, const int* frameArray, int frameCount);
 	~CSprite();
 	
@@ -84,7 +86,7 @@ private:
 	//int m_tilesLen;
 	//int m_paletteLen;
 	
-	const int* m_frameArray;
+	const u32* m_frameArray;
 	FrameType m_frameType;
 	int m_frameNum;
 	int m_frameCount;

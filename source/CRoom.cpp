@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "CRoom.h"
 #include "TDG.h"
+#include "Text.h"
 #include "lz77.h"
 
 CRoom::CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const unsigned char* pColMap)
@@ -236,4 +237,16 @@ bool CRoom::GetColMapRect(CollisionType colType, PRECT rect)
 	}
 	
 	return mapFound;
+}
+
+
+CDoor* CRoom::GetRoomDoor(CRoom* pRoom)
+{
+	for(int i=0; i<MAX_DOORS; i++)
+	{
+		if(m_doorArray[i]->pRoomOut() == pRoom)
+			return m_doorArray[i];
+	}
+	
+	return NULL;
 }

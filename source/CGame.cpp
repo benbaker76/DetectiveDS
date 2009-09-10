@@ -58,8 +58,8 @@ void CGame::Initialize()
 		m_spriteArray[SPRITE_ANGUS_HEAD] = new CSprite(SPRITE_ANGUS_HEAD, sprite_angus_headTiles, sprite_angus_headTilesLen, sprite_angus_headPal, sprite_angus_headPalLen, g_angusHeadFrames, 5);
 		m_spriteArray[SPRITE_ANGUS_BODY] = new CSprite(SPRITE_ANGUS_BODY, sprite_angus_bodyTiles, sprite_angus_bodyTilesLen, sprite_angus_bodyPal, sprite_angus_bodyPalLen, g_angusBodyFrames, 7); */
 		
-		m_spriteArray[SPRITE_SNIDE_HEAD] = new CSprite(SPRITE_SNIDE_HEAD, sprite_snide_headBitmap, g_snideHeadFrames, 8);
-		m_spriteArray[SPRITE_SNIDE_BODY] = new CSprite(SPRITE_SNIDE_BODY, sprite_snide_bodyBitmap, g_snideBodyFrames, 17);
+		m_spriteArray[SPRITE_SNIDE_HEAD] = new CSprite(SPRITE_SNIDE_HEAD, sprite_snide_headBitmap, g_snideHeadFrames, 16);
+		m_spriteArray[SPRITE_SNIDE_BODY] = new CSprite(SPRITE_SNIDE_BODY, sprite_snide_bodyBitmap, g_snideBodyFrames, 18);
 		m_spriteArray[SPRITE_REVEREND_HEAD] = new CSprite(SPRITE_REVEREND_HEAD, sprite_reverend_headBitmap, g_reverendHeadFrames, 4);
 		m_spriteArray[SPRITE_REVEREND_BODY] = new CSprite(SPRITE_REVEREND_BODY, sprite_reverend_bodyBitmap, g_reverendBodyFrames, 6);
 		m_spriteArray[SPRITE_BENTLEY_HEAD] = new CSprite(SPRITE_BENTLEY_HEAD, sprite_bentley_headBitmap, g_bentleyHeadFrames, 4);
@@ -81,17 +81,17 @@ void CGame::Initialize()
 		m_spriteArray[SPRITE_ANGUS_HEAD] = new CSprite(SPRITE_ANGUS_HEAD, sprite_angus_headBitmap, g_angusHeadFrames, 5);
 		m_spriteArray[SPRITE_ANGUS_BODY] = new CSprite(SPRITE_ANGUS_BODY, sprite_angus_bodyBitmap, g_angusBodyFrames, 7);
 		
-		m_characterArray[CHARACTER_SNIDE] = new CCharacter(CHARACTER_SNIDE, m_spriteArray[SPRITE_SNIDE_HEAD], m_spriteArray[SPRITE_SNIDE_BODY], 24, 53);
-		m_characterArray[CHARACTER_REVEREND] = new CCharacter(CHARACTER_REVEREND, m_spriteArray[SPRITE_REVEREND_HEAD], m_spriteArray[SPRITE_REVEREND_BODY], 24, 53);
-		m_characterArray[CHARACTER_BENTLEY] = new CCharacter(CHARACTER_BENTLEY, m_spriteArray[SPRITE_BENTLEY_HEAD], m_spriteArray[SPRITE_BENTLEY_BODY], 24, 53);
-		m_characterArray[CHARACTER_COOK] = new CCharacter(CHARACTER_COOK, m_spriteArray[SPRITE_COOK_HEAD], m_spriteArray[SPRITE_COOK_BODY], 24, 44);
-		m_characterArray[CHARACTER_GABRIEL] = new CCharacter(CHARACTER_GABRIEL, m_spriteArray[SPRITE_GABRIEL_HEAD], m_spriteArray[SPRITE_GABRIEL_BODY], 24, 48);
-		m_characterArray[CHARACTER_CYNTHIA] = new CCharacter(CHARACTER_CYNTHIA, m_spriteArray[SPRITE_CYNTHIA_HEAD], m_spriteArray[SPRITE_CYNTHIA_BODY], 24, 49);
-		m_characterArray[CHARACTER_PROFESSOR] = new CCharacter(CHARACTER_PROFESSOR, m_spriteArray[SPRITE_PROFESSOR_HEAD], m_spriteArray[SPRITE_PROFESSOR_BODY], 24, 48);
-		m_characterArray[CHARACTER_DOCTOR] = new CCharacter(CHARACTER_DOCTOR, m_spriteArray[SPRITE_DOCTOR_HEAD], m_spriteArray[SPRITE_DOCTOR_BODY], 24, 49);
-		m_characterArray[CHARACTER_MAJOR] = new CCharacter(CHARACTER_MAJOR, m_spriteArray[SPRITE_MAJOR_HEAD], m_spriteArray[SPRITE_MAJOR_BODY], 24, 46);
-		m_characterArray[CHARACTER_DINGLE] = new CCharacter(CHARACTER_DINGLE, m_spriteArray[SPRITE_DINGLE_HEAD], m_spriteArray[SPRITE_DINGLE_BODY], 24, 48);
-		m_characterArray[CHARACTER_ANGUS] = new CCharacter(CHARACTER_ANGUS, m_spriteArray[SPRITE_ANGUS_HEAD], m_spriteArray[SPRITE_ANGUS_BODY], 24, 48);
+		m_characterArray[CHARTYPE_SNIDE] = new CCharacter(CHARTYPE_SNIDE, m_spriteArray[SPRITE_SNIDE_HEAD], m_spriteArray[SPRITE_SNIDE_BODY], 24, 53);
+		m_characterArray[CHARTYPE_REVEREND] = new CCharacter(CHARTYPE_REVEREND, m_spriteArray[SPRITE_REVEREND_HEAD], m_spriteArray[SPRITE_REVEREND_BODY], 24, 53);
+		m_characterArray[CHARTYPE_BENTLEY] = new CCharacter(CHARTYPE_BENTLEY, m_spriteArray[SPRITE_BENTLEY_HEAD], m_spriteArray[SPRITE_BENTLEY_BODY], 24, 53);
+		m_characterArray[CHARTYPE_COOK] = new CCharacter(CHARTYPE_COOK, m_spriteArray[SPRITE_COOK_HEAD], m_spriteArray[SPRITE_COOK_BODY], 24, 44);
+		m_characterArray[CHARTYPE_GABRIEL] = new CCharacter(CHARTYPE_GABRIEL, m_spriteArray[SPRITE_GABRIEL_HEAD], m_spriteArray[SPRITE_GABRIEL_BODY], 24, 48);
+		m_characterArray[CHARTYPE_CYNTHIA] = new CCharacter(CHARTYPE_CYNTHIA, m_spriteArray[SPRITE_CYNTHIA_HEAD], m_spriteArray[SPRITE_CYNTHIA_BODY], 24, 49);
+		m_characterArray[CHARTYPE_PROFESSOR] = new CCharacter(CHARTYPE_PROFESSOR, m_spriteArray[SPRITE_PROFESSOR_HEAD], m_spriteArray[SPRITE_PROFESSOR_BODY], 24, 48);
+		m_characterArray[CHARTYPE_DOCTOR] = new CCharacter(CHARTYPE_DOCTOR, m_spriteArray[SPRITE_DOCTOR_HEAD], m_spriteArray[SPRITE_DOCTOR_BODY], 24, 49);
+		m_characterArray[CHARTYPE_MAJOR] = new CCharacter(CHARTYPE_MAJOR, m_spriteArray[SPRITE_MAJOR_HEAD], m_spriteArray[SPRITE_MAJOR_BODY], 24, 46);
+		m_characterArray[CHARTYPE_DINGLE] = new CCharacter(CHARTYPE_DINGLE, m_spriteArray[SPRITE_DINGLE_HEAD], m_spriteArray[SPRITE_DINGLE_BODY], 24, 48);
+		m_characterArray[CHARTYPE_ANGUS] = new CCharacter(CHARTYPE_ANGUS, m_spriteArray[SPRITE_ANGUS_HEAD], m_spriteArray[SPRITE_ANGUS_BODY], 24, 48);
 		
 		m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, &g_room1Map, NULL, col_room1);
 		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, &g_room1Map, NULL, col_room1);
@@ -205,48 +205,49 @@ void CGame::Initialize()
 	m_currentRoom = m_roomArray[ROOM_STAIRS];
 	m_currentRoom->Initialize(69);
 	
-	m_snide = m_characterArray[CHARACTER_SNIDE];
+	m_snide = m_characterArray[CHARTYPE_SNIDE];
 	m_snide->SetRoom(m_currentRoom);
 	m_snide->SetPosition(208, 104);
 	
-	m_characterArray[CHARACTER_REVEREND]->SetPosition(168, 120);
-	m_characterArray[CHARACTER_REVEREND]->SetRoom(m_roomArray[ROOM_DRAWING]);
+	m_characterArray[CHARTYPE_REVEREND]->SetPosition(168, 168 - m_characterArray[CHARTYPE_REVEREND]->Height());
+	m_characterArray[CHARTYPE_REVEREND]->SetRoom(m_roomArray[ROOM_DRAWING]);
 	
-	m_characterArray[CHARACTER_BENTLEY]->SetPosition(176, 120);
-	m_characterArray[CHARACTER_BENTLEY]->SetRoom(m_roomArray[ROOM_STAIRS]);
-	m_characterArray[CHARACTER_BENTLEY]->SetFrameType(FRAME_SPEAK);
+	m_characterArray[CHARTYPE_BENTLEY]->SetPosition(176, 168 - m_characterArray[CHARTYPE_BENTLEY]->Height());
+	m_characterArray[CHARTYPE_BENTLEY]->SetRoom(m_roomArray[ROOM_STAIRS]);
+	//m_characterArray[CHARTYPE_BENTLEY]->SetCharacterMode(CHARMODE_TALKING);
+	m_characterArray[CHARTYPE_BENTLEY]->SetCharacterMode(CHARMODE_WALKING);
 	
-	m_characterArray[CHARACTER_COOK]->SetPosition(104, 120);
-	m_characterArray[CHARACTER_COOK]->SetRoom(m_roomArray[ROOM_KITCHEN]);
+	m_characterArray[CHARTYPE_COOK]->SetPosition(104, 168 - m_characterArray[CHARTYPE_COOK]->Height());
+	m_characterArray[CHARTYPE_COOK]->SetRoom(m_roomArray[ROOM_KITCHEN]);
 	
-	m_characterArray[CHARACTER_GABRIEL]->SetPosition(208, 120);
-	m_characterArray[CHARACTER_GABRIEL]->SetRoom(m_roomArray[ROOM_KITCHEN]);
+	m_characterArray[CHARTYPE_GABRIEL]->SetPosition(208, 168 - m_characterArray[CHARTYPE_GABRIEL]->Height());
+	m_characterArray[CHARTYPE_GABRIEL]->SetRoom(m_roomArray[ROOM_KITCHEN]);
 
-	m_characterArray[CHARACTER_CYNTHIA]->SetPosition(232, 120);
-	m_characterArray[CHARACTER_CYNTHIA]->SetRoom(m_roomArray[ROOM_CYNTHIA]);
+	m_characterArray[CHARTYPE_CYNTHIA]->SetPosition(232, 168 - m_characterArray[CHARTYPE_CYNTHIA]->Height());
+	m_characterArray[CHARTYPE_CYNTHIA]->SetRoom(m_roomArray[ROOM_CYNTHIA]);
 	
-	m_characterArray[CHARACTER_PROFESSOR]->SetPosition(136, 120);
-	m_characterArray[CHARACTER_PROFESSOR]->SetRoom(m_roomArray[ROOM_LIBRARY]);
+	m_characterArray[CHARTYPE_PROFESSOR]->SetPosition(136, 168 - m_characterArray[CHARTYPE_PROFESSOR]->Height());
+	m_characterArray[CHARTYPE_PROFESSOR]->SetRoom(m_roomArray[ROOM_LIBRARY]);
 	
-	m_characterArray[CHARACTER_DOCTOR]->SetPosition(176, 120);
-	m_characterArray[CHARACTER_DOCTOR]->SetRoom(m_roomArray[ROOM_OUTSIDE3]);
+	m_characterArray[CHARTYPE_DOCTOR]->SetPosition(176, 168 - m_characterArray[CHARTYPE_DOCTOR]->Height());
+	m_characterArray[CHARTYPE_DOCTOR]->SetRoom(m_roomArray[ROOM_OUTSIDE3]);
 	
-	m_characterArray[CHARACTER_MAJOR]->SetPosition(232, 120);
-	m_characterArray[CHARACTER_MAJOR]->SetRoom(m_roomArray[ROOM_MAJOR]);
+	m_characterArray[CHARTYPE_MAJOR]->SetPosition(232, 168 - m_characterArray[CHARTYPE_MAJOR]->Height());
+	m_characterArray[CHARTYPE_MAJOR]->SetRoom(m_roomArray[ROOM_MAJOR]);
 	
-	m_characterArray[CHARACTER_DINGLE]->SetPosition(240, 120);
-	m_characterArray[CHARACTER_DINGLE]->SetRoom(m_roomArray[ROOM_DRAWING]);
+	m_characterArray[CHARTYPE_DINGLE]->SetPosition(240, 168 - m_characterArray[CHARTYPE_DINGLE]->Height());
+	m_characterArray[CHARTYPE_DINGLE]->SetRoom(m_roomArray[ROOM_DRAWING]);
 	
-	m_characterArray[CHARACTER_ANGUS]->SetPosition(352, 120);
-	m_characterArray[CHARACTER_ANGUS]->SetRoom(m_roomArray[ROOM_HALL4]);
-	m_characterArray[CHARACTER_ANGUS]->SetAlpha(0x7);
+	m_characterArray[CHARTYPE_ANGUS]->SetPosition(352, 168 - m_characterArray[CHARTYPE_ANGUS]->Height());
+	m_characterArray[CHARTYPE_ANGUS]->SetRoom(m_roomArray[ROOM_HALL4]);
+	m_characterArray[CHARTYPE_ANGUS]->SetAlpha(0x7);
 	
 	m_textConsole = new CTextConsole(&m_cursor);
 	m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
 	
 	/* for(int i=1; i<MAX_CHARACTERS; i++)
 	{
-		m_characterArray[i]->SetPosition((i - 1) * CHARACTER_WIDTH, 168 - CHARACTER_HEIGHT);
+		m_characterArray[i]->SetPosition((i - 1) * CHARTYPE_WIDTH, 168 - CHARTYPE_HEIGHT);
 		m_characterArray[i]->SetFrameType(FRAME_SPEAK);
 		m_characterArray[i]->Show();
 	} */
@@ -266,13 +267,8 @@ void CGame::Initialize()
 	CPath* path = new CPath(m_roomArray);
 	path->FindRoute(m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_SNIDE]);
 	
-	/* for(int i=0; i<MAX_ROOMS; i++)
-	{
-		CRoom* pRoom = path->GetRoom(i);
-
-		if(m_returnArray[i] != NULL)
-			fprintf(stderr, g_roomName[path->GetRoom(i)->GetRoomType()]);
-	} */
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_characterArray[CHARTYPE_BENTLEY]->SetPath(i, path->GetRoom(i));
 	
 	((CFxTextScroller*)m_fxManager.GetFx(FX_TEXT_SCROLLER))->AddText("BENTLY ADVANCES:\"THIS WAY TO YOUR ROOM SIR\"");
 
@@ -532,7 +528,7 @@ void CGame::Update()
 				
 				pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 				
-				int xChar = 256 - m_characterArray[CHARACTER_SNIDE]->Width() - 8;
+				int xChar = 256 - m_characterArray[CHARTYPE_SNIDE]->Width() - 8;
 				
 				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 			
@@ -579,11 +575,11 @@ void CGame::Update()
 	}
 	else if(keys_held & KEY_A)
 	{
-		m_snide->SetFrameType(FRAME_SPEAK);
+		m_snide->SetCharacterMode(CHARMODE_TALKING);
 	}
 	else
 	{
-		m_snide->SetFrameType(FRAME_NONE);
+		m_snide->SetCharacterMode(CHARMODE_NONE);
 	}
 	
 	m_currentRoom->Animate(elapsedTime);
@@ -628,7 +624,7 @@ void CGame::SortSprites()
 			m_characterArray[i]->SetPriority(1);
 		
 		//char buf[256];
-		//sprintf(buf, "%d",m_characterArray[CHARACTER_SNIDE]->Priority());
+		//sprintf(buf, "%d",m_characterArray[CHARTYPE_SNIDE]->Priority());
 		//DrawText(buf, 0, 0, false);
 	}
 }

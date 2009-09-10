@@ -79,6 +79,7 @@ public:
 	
 	void SetDoor(int doorType, CDoor* pDoor) { m_doorArray[doorType] = pDoor; }
 	CDoor* GetDoor(int doorType) const { return m_doorArray[doorType]; }
+	CDoor* GetRoomDoor(CRoom* pRoom);
 	
 	void SetX(int x) { m_x = x; }
 	

@@ -4,25 +4,35 @@
 #include "TDG.h"
 
 #define MAX_CHARACTERS			11
+#define MAX_ROOMS				31
 
 #define CHARACTER_WIDTH			24
 #define CHARACTER_HEIGHT		53
 
 #define HEAD_HEIGHT				21
 
+enum CharacterMode
+{
+	CHARMODE_NONE,
+	CHARMODE_WAITING,
+	CHARMODE_WALKING,
+	CHARMODE_TALKING,
+	CHARMOND_DEAD
+};
+
 enum CharacterType
 {
-	CHARACTER_SNIDE,
-	CHARACTER_REVEREND,
-	CHARACTER_BENTLEY,
-	CHARACTER_COOK,
-	CHARACTER_GABRIEL,
-	CHARACTER_CYNTHIA,
-	CHARACTER_PROFESSOR,
-	CHARACTER_DOCTOR,
-	CHARACTER_MAJOR,
-	CHARACTER_DINGLE,
-	CHARACTER_ANGUS
+	CHARTYPE_SNIDE,
+	CHARTYPE_REVEREND,
+	CHARTYPE_BENTLEY,
+	CHARTYPE_COOK,
+	CHARTYPE_GABRIEL,
+	CHARTYPE_CYNTHIA,
+	CHARTYPE_PROFESSOR,
+	CHARTYPE_DOCTOR,
+	CHARTYPE_MAJOR,
+	CHARTYPE_DINGLE,
+	CHARTYPE_ANGUS
 };
 
 class CRoom;
@@ -46,16 +56,21 @@ public:
 	void Move(DirectionType directionType);
 	CollisionType CheckCollision(DirectionType directionType);
 	
-	void SetFrameType(FrameType frameType);
+	void SetCharacterMode(CharacterMode characterMode);
 	
 	void SetRoom(CRoom* pRoom) { m_pRoom = pRoom; }
-	void SetRoom(CRoom* pRoom, CDoor* pDoor);
 	CRoom* GetRoom() const { return m_pRoom; }
 	
 	void SetX(float x) { m_x = x; SetPosition(m_x, m_y); }
 	void SetY(float y) { m_y = y; SetPosition(m_x, m_y); }
 	
+	void SetPoint(int x, int y) { m_point.X = x; m_point.Y = y; }
+	PPOINT pPoint() { SetPoint(m_x + (m_width / 2) - 8, m_y + (m_height - 8)); return (PPOINT) &m_point; }
+	
+	void SetPath(int index, CRoom* pRoom) { m_path[index] = pRoom; }
+	
 	void SetAlpha(int alpha) { m_pHeadSprite->SetAlpha(alpha); m_pBodySprite->SetAlpha(alpha); }
+	void SetGreen(bool value) { m_green = value; }
 	
 	float X() const { return m_x; }
 	float Y() const { return m_y; }
@@ -71,6 +86,7 @@ public:
 
 private:
 	CharacterType m_characterType;
+	CharacterMode m_characterMode;
 	CSprite* m_pHeadSprite;
 	CSprite* m_pBodySprite;
 	
@@ -81,12 +97,20 @@ private:
 	
 	DirectionType m_facing;
 	
+	CRoom* m_path[MAX_ROOMS];
+	int m_pathPosition;
+	
 	bool m_visible;
+	bool m_green;
 	
 	float m_x;
 	float m_y;
 	int m_width;
 	int m_height;
+	
+	POINT m_point;
+	
+	void SetFrameType(FrameType frameType);
 };
 
 #endif
