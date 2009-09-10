@@ -48,6 +48,7 @@ public:
 	void SetDoorState(DoorState doorState);
 	void Draw();
 	
+	PPOINT pPoint() const { return (PPOINT) &m_point; }
 	PRECT pRect() const { return (PRECT) &m_rect; }
 	PRECT pRectOpen() const { return (PRECT) &m_rectOpen; }
 	DoorType GetDoorType() const { return  m_doorType; };
@@ -66,6 +67,7 @@ private:
 	
 	bool m_hidden;
 	
+	POINT m_point;
 	RECT m_rect;
 	RECT m_rectOpen;
 	RECT m_rectArray[MAX_DOOR_RECT];

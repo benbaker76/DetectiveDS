@@ -28,8 +28,7 @@ public:
 	void Update();
 	void InitializeDoors();
 	void SortSprites();
-	void AnimateCharacters(int elapsedTime);
-	void DrawCharacters();
+	void UpdateCharacters(int elapsedTime);
 	
 	void UpdateVBlank();
 	void UpdateHBlank();

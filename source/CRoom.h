@@ -81,7 +81,6 @@ public:
 	CDoor* GetDoor(int doorType) const { return m_doorArray[doorType]; }
 	
 	void SetX(int x) { m_x = x; }
-	void SetY(int y) { m_y = y; }
 	
 	void SetOverlay(PMAP pOverlay, int overlayY) { m_pOverlay = pOverlay; m_overlayY = overlayY; }
 	void SetColMap(const u8* pColMap) { m_pColMap = pColMap; }
@@ -89,7 +88,6 @@ public:
 	RoomType GetRoomType() { return m_roomType; }
 	
 	int X() const { return m_x; }
-	int Y() const { return m_y; }
 	int Width() const { return m_pMap->Width; }
 	int Height() const { return m_pMap->Height; }
 	int OverlayY() const { return m_overlayY; }
@@ -103,7 +101,6 @@ private:
 	const u8* m_pColMap;
 	
 	int m_x;
-	int m_y;
 	
 	int m_overlayY;
 	

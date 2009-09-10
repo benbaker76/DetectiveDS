@@ -12,6 +12,7 @@ CDoor::CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoo
 	
 	memset(&m_rect, 0, sizeof(RECT));
 	memset(&m_rectOpen, 0, sizeof(RECT));
+	memset(&m_point, 0, sizeof(POINT));
 	
 	for(int i=0; i<MAX_DOOR_RECT; i++)
 		memset(&m_rectArray[i], 0, sizeof(RECT));
@@ -20,6 +21,9 @@ CDoor::CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoo
 	
 	if(!IsRectEmpty(&m_rect))
 	{
+		m_point.X = ((m_rect.X + (m_rect.Width / 2)) - 1);
+		m_point.Y = (m_rect.Y + m_rect.Height - 1);
+		
 		m_rectOpen.X = m_rect.X - m_rect.Width;
 		m_rectOpen.Y = m_rect.Y;
 		m_rectOpen.Width = m_rect.Width;

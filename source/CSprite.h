@@ -58,7 +58,7 @@ public:
 	//CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u16* pPalette, int paletteLen, const int* frameArray, int frameCount);
 	~CSprite();
 	
-	void SetPosition(float x, float y);
+	void SetPosition(int x, int y);
 	void Animate(int elapsedTime);
 	void Hide();
 	void Draw();
@@ -72,8 +72,8 @@ public:
 	void SetPriority(int priority) { m_priority = priority; }
 	int Priority() const { return m_priority; }
 	
-	float X() const { return m_x; }
-	float Y() const { return m_y; }
+	int X() const { return m_x; }
+	int Y() const { return m_y; }
 
 private:
 	SpriteType m_spriteType;
@@ -96,8 +96,8 @@ private:
 	u16* m_gfxMain;
 	u16* m_gfxSub;
 	
-	float m_x;
-	float m_y;
+	int m_x;
+	int m_y;
 	
 	int m_alpha;
 };

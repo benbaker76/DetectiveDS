@@ -31,8 +31,15 @@ void CCharacter::SetPosition(float x, float y)
 {
 	m_x = x;
 	m_y = y;
-	m_pHeadSprite->SetPosition(x, y);
-	m_pBodySprite->SetPosition(x, y+HEAD_HEIGHT);
+
+	m_pHeadSprite->SetPosition(m_x - m_pRoom->X(), m_y);
+	m_pBodySprite->SetPosition(m_x - m_pRoom->X(), m_y+HEAD_HEIGHT);
+}
+
+void CCharacter::UpdatePosition()
+{
+	m_pHeadSprite->SetPosition(m_x - m_pRoom->X(), m_y);
+	m_pBodySprite->SetPosition(m_x - m_pRoom->X(), m_y+HEAD_HEIGHT);
 }
 
 void CCharacter::SetOamIndex(int index)
@@ -124,11 +131,15 @@ void CCharacter::Move(DirectionType directionType)
 	}
 }
 
-CollisionType CCharacter::CheckCollision(DirectionType directionType, CRoom* pRoom)
+CollisionType CCharacter::CheckCollision(DirectionType directionType)
 {
 	CollisionType retType = COL_NOTHING_HERE;
-	float x = (pRoom->X() + m_x) + (m_width / 2) - 8;
-	float y = (pRoom->Y() + m_y) + (m_height - 8);
+	//float x = (pRoom->X() + m_x) + (m_width / 2) - 8;
+	//float y = m_y + (m_height - 8);
+	
+	float x = m_x + (m_width / 2) - 8;
+	float y = m_y + (m_height - 8);
+	
 	//float x2 = m_x + (m_width / 2) - 8 + 4;
 	//float y2 = m_y + (m_height - 8) + 4;
 	
@@ -138,25 +149,25 @@ CollisionType CCharacter::CheckCollision(DirectionType directionType, CRoom* pRo
 	switch(directionType)
 	{
 		case DIRECTION_UP:
-			retType = (CollisionType) pRoom->ColMap(ceil((x + 8) / 8), ceil((y - 8) / 8));
+			retType = (CollisionType) m_pRoom->ColMap(ceil((x + 8) / 8), ceil((y - 8) / 8));
 					
 			//m_spriteCol2->SetPosition(ceil(x2 + 8), ceil(y2 - 8));
 			//m_spriteCol2->Draw();
 			break;
 		case DIRECTION_DOWN:
-			retType = (CollisionType) pRoom->ColMap(floor((x - 8) / 8), floor((y + 8) / 8));
+			retType = (CollisionType) m_pRoom->ColMap(floor((x - 8) / 8), floor((y + 8) / 8));
 			
 			//m_spriteCol2->SetPosition(floor(x2 - 8), floor(y2 + 8));
 			//m_spriteCol2->Draw();
 			break;
 		case DIRECTION_LEFT:
-			retType = (CollisionType) pRoom->ColMap(round((x - 8) / 8), round(y / 8));
+			retType = (CollisionType) m_pRoom->ColMap(round((x - 8) / 8), round(y / 8));
 			
 			//m_spriteCol2->SetPosition(round(x2 - 8), round(y2));
 			//m_spriteCol2->Draw();
 			break;
 		case DIRECTION_RIGHT:
-			retType = (CollisionType) pRoom->ColMap(round((x + 8) / 8), round(y / 8));
+			retType = (CollisionType) m_pRoom->ColMap(round((x + 8) / 8), round(y / 8));
 			
 			//m_spriteCol2->SetPosition(round(x2 + 8), round(y2));
 			//m_spriteCol2->Draw();
@@ -173,4 +184,9 @@ void CCharacter::SetFrameType(FrameType frameType)
 {
 	m_pHeadSprite->SetFrameType(frameType);
 	m_pBodySprite->SetFrameType(frameType);
+}
+
+void CCharacter::SetRoom(CRoom* pRoom, CDoor* pDoor)
+{
+	m_pRoom = pRoom;
 }

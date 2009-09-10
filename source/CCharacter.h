@@ -34,6 +34,7 @@ public:
 	~CCharacter();
 	
 	void SetPosition(float x, float y);
+	void UpdatePosition();
 	void SetOamIndex(int index);
 	void SetPriority(int priority);
 	void Animate(int elapsedTime);
@@ -43,9 +44,13 @@ public:
 	void Draw();
 	void Face(DirectionType directionType);
 	void Move(DirectionType directionType);
-	CollisionType CheckCollision(DirectionType directionType, CRoom* pRoom);
+	CollisionType CheckCollision(DirectionType directionType);
 	
 	void SetFrameType(FrameType frameType);
+	
+	void SetRoom(CRoom* pRoom) { m_pRoom = pRoom; }
+	void SetRoom(CRoom* pRoom, CDoor* pDoor);
+	CRoom* GetRoom() const { return m_pRoom; }
 	
 	void SetX(float x) { m_x = x; SetPosition(m_x, m_y); }
 	void SetY(float y) { m_y = y; SetPosition(m_x, m_y); }
@@ -54,6 +59,8 @@ public:
 	
 	float X() const { return m_x; }
 	float Y() const { return m_y; }
+	float SpriteX() const { return m_pHeadSprite->X(); }
+	float SpriteY() const { return m_pHeadSprite->Y(); }
 	float Width() const { return m_width; }
 	float Height() const { return m_height; }
 	DirectionType Facing() const { return m_facing; }
@@ -66,6 +73,8 @@ private:
 	CharacterType m_characterType;
 	CSprite* m_pHeadSprite;
 	CSprite* m_pBodySprite;
+	
+	CRoom* m_pRoom;
 	
 	CSprite* m_spriteCol1;
 	CSprite* m_spriteCol2;

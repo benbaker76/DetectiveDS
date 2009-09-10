@@ -202,21 +202,36 @@ void CGame::Initialize()
 	
 	InitializeDoors();
 	
-	m_characterArray[CHARACTER_BENTLEY]->SetPosition(110, 121);
-	m_characterArray[CHARACTER_BENTLEY]->SetFrameType(FRAME_SPEAK);
-	m_characterArray[CHARACTER_BENTLEY]->Show();
-	
-	m_snide = m_characterArray[CHARACTER_SNIDE];
-	m_snide->SetPosition(142, 105);
-	m_snide->Show();
-	
 	m_currentRoom = m_roomArray[ROOM_STAIRS];
 	m_currentRoom->Initialize(69);
 	
-	m_textConsole = new CTextConsole(&m_cursor);
-	m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+	m_snide = m_characterArray[CHARACTER_SNIDE];
+	m_snide->SetRoom(m_currentRoom);
+	m_snide->SetPosition(208, 104);
+	
+	m_characterArray[CHARACTER_REVEREND]->SetPosition(168, 120);
+	m_characterArray[CHARACTER_REVEREND]->SetRoom(m_roomArray[ROOM_DRAWING]);
+	
+	m_characterArray[CHARACTER_BENTLEY]->SetPosition(176, 120);
+	m_characterArray[CHARACTER_BENTLEY]->SetRoom(m_roomArray[ROOM_STAIRS]);
+	m_characterArray[CHARACTER_BENTLEY]->SetFrameType(FRAME_SPEAK);
+
+	m_characterArray[CHARACTER_CYNTHIA]->SetPosition(232, 120);
+	m_characterArray[CHARACTER_CYNTHIA]->SetRoom(m_roomArray[ROOM_CYNTHIA]);
+	
+	m_characterArray[CHARACTER_PROFESSOR]->SetPosition(136, 120);
+	m_characterArray[CHARACTER_PROFESSOR]->SetRoom(m_roomArray[ROOM_LIBRARY]);
+	
+	m_characterArray[CHARACTER_DOCTOR]->SetPosition(176, 120);
+	m_characterArray[CHARACTER_DOCTOR]->SetRoom(m_roomArray[ROOM_OUTSIDE3]);
+	
+	m_characterArray[CHARACTER_MAJOR]->SetPosition(232, 120);
+	m_characterArray[CHARACTER_MAJOR]->SetRoom(m_roomArray[ROOM_MAJOR]);
 	
 	m_characterArray[CHARACTER_ANGUS]->SetAlpha(0x7);
+	
+	m_textConsole = new CTextConsole(&m_cursor);
+	m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
 	
 	/* for(int i=1; i<MAX_CHARACTERS; i++)
 	{
@@ -296,7 +311,7 @@ void CGame::Update()
 		{
 		case ICON_OPEN:
 			{
-				CollisionType collisionType = m_snide->CheckCollision(m_snide->Facing(), m_currentRoom);
+				CollisionType collisionType = m_snide->CheckCollision(m_snide->Facing());
 				
 				if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
 				{
@@ -322,7 +337,7 @@ void CGame::Update()
 			break;
 		case ICON_EXAMINE:
 			{
-				CollisionType collisionType = m_snide->CheckCollision(m_snide->Facing(), m_currentRoom);
+				CollisionType collisionType = m_snide->CheckCollision(m_snide->Facing());
 				
 				if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
 				{
@@ -393,9 +408,9 @@ void CGame::Update()
 	
 	if(keys_held & KEY_UP)
 	{
-		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_UP, m_currentRoom);
+		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_UP);
 		
-		if(m_snide->X() < 256 - m_snide->Width() - 8 && collisionType == COL_NOTHING_HERE)
+		if(m_snide->SpriteX() < 256 - m_snide->Width() - 8 && collisionType == COL_NOTHING_HERE)
 			m_snide->Move(DIRECTION_UP);
 		else
 			m_snide->Face(DIRECTION_UP);
@@ -409,22 +424,22 @@ void CGame::Update()
 				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
 				{
 					m_currentRoom = pDoor->pRoomOut();
-					PRECT pDoorRect = pDoor->pDoorOut()->pRect();
+					PPOINT pDoorPoint = pDoor->pDoorOut()->pPoint();
 					
-					int xDoor = ((pDoorRect->X + (pDoorRect->Width / 2)) - 1) * 8;
+					int xDoor = pDoorPoint->X * 8;
+					int yDoor = pDoorPoint->Y * 8;
+					
 					int xRoom = xDoor - 128;
 					
-					int xChar = 128;
-					int yChar = ((pDoorRect->Y + pDoorRect->Height - 1) * 8) - m_characterArray[CHARACTER_SNIDE]->Height();
-					
-					if(xDoor< 128) xChar = xDoor;
-					if(xDoor > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - xDoor);
-					
+					int xChar = xDoor;
+					int yChar = yDoor - m_snide->Height();
+						
 					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 					
 					m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 					
 					m_currentRoom->Initialize(xRoom);
+					m_snide->SetRoom(m_currentRoom);
 					m_snide->SetPosition(xChar, yChar);
 					
 					m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
@@ -440,9 +455,9 @@ void CGame::Update()
 	}
 	else if(keys_held & KEY_DOWN)
 	{
-		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_DOWN, m_currentRoom);
+		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_DOWN);
 		
-		if(m_snide->X() > 8 && collisionType == COL_NOTHING_HERE)
+		if(m_snide->SpriteX() > 8 && collisionType == COL_NOTHING_HERE)
 			m_snide->Move(DIRECTION_DOWN);
 		else
 			m_snide->Face(DIRECTION_DOWN);
@@ -456,22 +471,22 @@ void CGame::Update()
 				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
 				{
 					m_currentRoom = pDoor->pRoomOut();
-					PRECT pDoorRect = pDoor->pDoorOut()->pRect();
+					PPOINT pDoorPoint = pDoor->pDoorOut()->pPoint();
 						
-					int xDoor = ((pDoorRect->X + (pDoorRect->Width / 2)) - 1) * 8;
+					int xDoor = pDoorPoint->X * 8;
+					int yDoor = pDoorPoint->Y * 8;
+					
 					int xRoom = xDoor - 128;
 					
-					int xChar = 128;
-					int yChar = ((pDoorRect->Y + pDoorRect->Height - 1) * 8) - m_characterArray[CHARACTER_SNIDE]->Height() + 16;
-					
-					if(xDoor < 128) xChar = xDoor;
-					if(xDoor > m_currentRoom->Width() - 128) xChar = 256 - (m_currentRoom->Width() - xDoor);
+					int xChar = xDoor;
+					int yChar = yDoor - m_snide->Height() + 16;
 					
 					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 					
 					m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 					
 					m_currentRoom->Initialize(xRoom);
+					m_snide->SetRoom(m_currentRoom);
 					m_snide->SetPosition(xChar, yChar);
 					
 					m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
@@ -487,9 +502,16 @@ void CGame::Update()
 	}
 	else if(keys_held & KEY_LEFT)
 	{
-		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_LEFT, m_currentRoom);
+		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_LEFT);
 		
-		if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
+		if(collisionType == COL_NOTHING_HERE)
+		{
+			m_snide->Move(DIRECTION_LEFT);
+			
+			if(m_snide->SpriteX() < 128)
+				m_currentRoom->Scroll(DIRECTION_LEFT);
+		}
+		else if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
 		{
 			CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
 			
@@ -497,42 +519,32 @@ void CGame::Update()
 			{
 				m_currentRoom = pDoor->pRoomOut();
 				
-				int xChar = 256 - m_characterArray[CHARACTER_SNIDE]->Width() - 8;
-				//int yChar =  pDoor->pDoorOut()->Y() + (pDoor->pDoorOut()->Height() / 2) -  m_characterArray[CHARACTER_SNIDE]->Height();
-				
 				pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 				
-				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+				int xChar = 256 - m_characterArray[CHARACTER_SNIDE]->Width() - 8;
 				
+				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+			
 				m_currentRoom->Initialize(m_currentRoom->Width() - 256);
-				//m_snide->SetPosition(xChar, yChar);
+				m_snide->SetRoom(m_currentRoom);
 				m_snide->SetX(xChar);
 				
 				m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
 			}
 		}
-		else if(collisionType == COL_NOTHING_HERE)
-		{
-			if(m_snide->X() > 128)
-			{
-				m_snide->Move(DIRECTION_LEFT);
-			}
-			else
-			{
-				if(!m_currentRoom->Scroll(DIRECTION_LEFT))
-					m_snide->Move(DIRECTION_LEFT);
-				else
-					m_snide->Face(DIRECTION_LEFT);
-			}
-		}
-		else
-			m_snide->Face(DIRECTION_LEFT);
 	}
 	else if(keys_held & KEY_RIGHT)
 	{
-		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_RIGHT, m_currentRoom);
+		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_RIGHT);
 		
-		if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
+		if(collisionType == COL_NOTHING_HERE)
+		{
+			m_snide->Move(DIRECTION_RIGHT);
+			
+			if(m_snide->SpriteX() > 128)
+				m_currentRoom->Scroll(DIRECTION_RIGHT);
+		}
+		else if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
 		{
 			CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
 			
@@ -540,36 +552,19 @@ void CGame::Update()
 			{
 				m_currentRoom = pDoor->pRoomOut();
 				
-				int xChar = 8;
-				//int yChar = pDoor->pDoorOut()->Y() + (pDoor->pDoorOut()->Height() / 2) -  m_characterArray[CHARACTER_SNIDE]->Height();
-				
 				pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 				
-				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+				int xChar = 8;
 				
+				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+						
 				m_currentRoom->Initialize(0);
-				//m_snide->SetPosition(xChar, yChar);
+				m_snide->SetRoom(m_currentRoom);
 				m_snide->SetX(xChar);
 				
 				m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
 			}
 		}
-		else if(collisionType == COL_NOTHING_HERE)
-		{
-			if(m_snide->X() < 128)
-			{
-				m_snide->Move(DIRECTION_RIGHT);
-			}
-			else
-			{
-				if(!m_currentRoom->Scroll(DIRECTION_RIGHT))
-					m_snide->Move(DIRECTION_RIGHT);
-				else
-					m_snide->Face(DIRECTION_RIGHT);
-			}
-		}
-		else
-			m_snide->Face(DIRECTION_RIGHT);
 	}
 	else if(keys_held & KEY_A)
 	{
@@ -583,8 +578,11 @@ void CGame::Update()
 	m_currentRoom->Animate(elapsedTime);
 	
 	SortSprites();
-	AnimateCharacters(elapsedTime);
-	DrawCharacters();
+	UpdateCharacters(elapsedTime);
+	
+	//char buf[256];
+	//sprintf(buf, "xRoom: %05d, xChar: %03d, yChar: %03d", m_currentRoom->X(), (int)m_snide->X(),  (int)m_snide->Y());
+	//DrawText(buf, 0, 1, false);
 	
 	oamUpdate(&oamMain);
 	oamUpdate(&oamSub);
@@ -624,16 +622,20 @@ void CGame::SortSprites()
 	}
 }
 
-void CGame::AnimateCharacters(int elapsedTime)
+void CGame::UpdateCharacters(int elapsedTime)
 {
 	for (int i=0; i < MAX_CHARACTERS; i++)
+	{
 		m_characterArray[i]->Animate(elapsedTime);
-}
-
-void CGame::DrawCharacters()
-{
-	for (int i=0; i < MAX_CHARACTERS; i++)
+		m_characterArray[i]->UpdatePosition();
+		
+		if(m_characterArray[i]->GetRoom() == m_currentRoom)
+			m_characterArray[i]->Show();
+		else
+			m_characterArray[i]->Hide();
+		
 		m_characterArray[i]->Draw();
+	}
 }
 
 void CGame::UpdateVBlank()
