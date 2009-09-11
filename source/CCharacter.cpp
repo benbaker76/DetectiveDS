@@ -85,7 +85,7 @@ void CCharacter::UpdatePosition()
 				
 			if(abs(xDist) > 8 || abs(yDist) > 8)
 			{						
-				if(abs(xDist) < 20)	 		// Near the door
+				if(abs(xDist) < 32)	 		// Near the door
 				{			
 					if(xDist < 0)			// Move directly towards it
 						m_x -= 0.6f;		// left
@@ -120,8 +120,8 @@ void CCharacter::UpdatePosition()
 					
 						float direction = atan2(yDist, xDist);
 						// Move directly towards door
-						m_x += cos(direction) * 0.5f;
-						//m_y += sin(direction) * 0.5f;
+						m_x += cos(direction) * 0.6f;
+						//m_y += sin(direction) * 0.3f;
 					}
 				}
 			}
