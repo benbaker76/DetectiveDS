@@ -34,12 +34,18 @@ void InterruptHandlerTimer2()
 
 mm_word mmEventHandler(mm_word msg, mm_word param)
 {
+	char buf[256];
+	
 	switch( msg )
 	{
 
 	case MMCB_SONGMESSAGE:
+		//sprintf(buf, "MMCB_SONGMESSAGE: msg: %d, param: %d", msg, param);
+		//fprintf(stderr, buf);
         break;
 	case MMCB_SONGFINISHED:
+		//sprintf(buf, "MMCB_SONGFINISHED: msg: %d, param: %d", msg, param);
+		//fprintf(stderr, buf);
 		break;
     }
 	
@@ -60,9 +66,12 @@ int main(void)
 	mmInitDefaultMem((mm_addr)soundbank_bin);
 	mmSetEventHandler(mmEventHandler);
 	mmLoad(MOD_DETECTIVE);
+	mmLoad(MOD_WEATHER);
 	mmLoadEffect(SFX_FOOTSTEPS);
 	mmLoadEffect(SFX_OPENDOOR);
 	mmLoadEffect(SFX_CLOSEDOOR);
+	//mmStart(MOD_WEATHER, MM_PLAY_LOOP);
+	mmJingle(MOD_WEATHER);
 	mmStart(MOD_DETECTIVE, MM_PLAY_ONCE);
 	//mmStart(MOD_DETECTIVE, MM_PLAY_LOOP);
 	mmPosition(2);

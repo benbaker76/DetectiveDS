@@ -421,94 +421,100 @@ void CGame::Update()
 	
 	if(keys_held & KEY_UP)
 	{
-		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_UP);
-		
-		if(m_snide->SpriteX() < 256 - m_snide->Width() - 8 && collisionType == COL_NOTHING_HERE)
-			m_snide->Move(DIRECTION_UP);
-		else
-			m_snide->Face(DIRECTION_UP);
-		
-		if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
+		if(m_snide->SpriteX() < 256 - m_snide->Width() - 8)
 		{
-			CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
+			CollisionType collisionType = m_snide->CheckCollision(DIRECTION_UP);
 			
-			if(pDoor != NULL)
+			if(collisionType == COL_NOTHING_HERE)
+				m_snide->Move(DIRECTION_UP);
+			else
+				m_snide->Face(DIRECTION_UP);
+			
+			if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
 			{
-				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+				CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
+				
+				if(pDoor != NULL)
 				{
-					m_currentRoom = pDoor->pRoomOut();
-					PPOINT pDoorPoint = pDoor->pDoorOut()->pPoint();
-					
-					int xDoor = pDoorPoint->X * 8;
-					int yDoor = pDoorPoint->Y * 8;
-					
-					int xRoom = xDoor - 128;
-					
-					int xChar = xDoor;
-					int yChar = yDoor - m_snide->Height();
+					if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+					{
+						m_currentRoom = pDoor->pRoomOut();
+						PPOINT pDoorPoint = pDoor->pDoorOut()->pPoint();
 						
-					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
-					
-					m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
-					
-					m_currentRoom->Initialize(xRoom);
-					m_snide->SetRoom(m_currentRoom);
-					m_snide->SetPosition(xChar, yChar);
-					
-					m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
-					
-					//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
-					
-					//char buf[256];
-					//sprintf(buf, "xDoor: %05d, xRoom: %05d, xChar: %05d", xDoor, xRoom, xChar);
-					//DrawText(buf, 0, 1, false);
+						int xDoor = pDoorPoint->X * 8;
+						int yDoor = pDoorPoint->Y * 8;
+						
+						int xRoom = xDoor - 128;
+						
+						int xChar = xDoor;
+						int yChar = yDoor - m_snide->Height();
+							
+						pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
+						
+						m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+						
+						m_currentRoom->Initialize(xRoom);
+						m_snide->SetRoom(m_currentRoom);
+						m_snide->SetPosition(xChar, yChar);
+						
+						m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+						
+						//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
+						
+						//char buf[256];
+						//sprintf(buf, "xDoor: %05d, xRoom: %05d, xChar: %05d", xDoor, xRoom, xChar);
+						//DrawText(buf, 0, 1, false);
+					}
 				}
 			}
 		}
 	}
 	else if(keys_held & KEY_DOWN)
 	{
-		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_DOWN);
-		
-		if(m_snide->SpriteX() > 8 && collisionType == COL_NOTHING_HERE)
-			m_snide->Move(DIRECTION_DOWN);
-		else
-			m_snide->Face(DIRECTION_DOWN);
-		
-		if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
+		if(m_snide->SpriteX() > 8)
 		{
-			CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
+			CollisionType collisionType = m_snide->CheckCollision(DIRECTION_DOWN);
 			
-			if(pDoor != NULL)
+			if(collisionType == COL_NOTHING_HERE)
+				m_snide->Move(DIRECTION_DOWN);
+			else
+				m_snide->Face(DIRECTION_DOWN);
+			
+			if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
 			{
-				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+				CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
+				
+				if(pDoor != NULL)
 				{
-					m_currentRoom = pDoor->pRoomOut();
-					PPOINT pDoorPoint = pDoor->pDoorOut()->pPoint();
+					if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+					{
+						m_currentRoom = pDoor->pRoomOut();
+						PPOINT pDoorPoint = pDoor->pDoorOut()->pPoint();
+							
+						int xDoor = pDoorPoint->X * 8;
+						int yDoor = pDoorPoint->Y * 8;
 						
-					int xDoor = pDoorPoint->X * 8;
-					int yDoor = pDoorPoint->Y * 8;
-					
-					int xRoom = xDoor - 128;
-					
-					int xChar = xDoor;
-					int yChar = yDoor - m_snide->Height() + 16;
-					
-					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
-					
-					m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
-					
-					m_currentRoom->Initialize(xRoom);
-					m_snide->SetRoom(m_currentRoom);
-					m_snide->SetPosition(xChar, yChar);
-					
-					m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
-					
-					//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
-					
-					//char buf[256];
-					//sprintf(buf, "xDoor: %05d, xRoom: %05d, xChar: %05d", xDoor, xRoom, xChar);
-					//DrawText(buf, 0, 1, false);
+						int xRoom = xDoor - 128;
+						
+						int xChar = xDoor;
+						int yChar = yDoor - m_snide->Height() + 16;
+						
+						pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
+						
+						m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+						
+						m_currentRoom->Initialize(xRoom);
+						m_snide->SetRoom(m_currentRoom);
+						m_snide->SetPosition(xChar, yChar);
+						
+						m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+						
+						//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
+						
+						//char buf[256];
+						//sprintf(buf, "xDoor: %05d, xRoom: %05d, xChar: %05d", xDoor, xRoom, xChar);
+						//DrawText(buf, 0, 1, false);
+					}
 				}
 			}
 		}
@@ -534,7 +540,7 @@ void CGame::Update()
 				
 				pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 				
-				int xChar = 256 - m_characterArray[CHARTYPE_SNIDE]->Width() - 8;
+				int xChar = m_currentRoom->Width() - m_snide->Width() - 8;
 				
 				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 			

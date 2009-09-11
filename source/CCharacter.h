@@ -61,11 +61,11 @@ public:
 	void SetRoom(CRoom* pRoom) { m_pRoom = pRoom; }
 	CRoom* GetRoom() const { return m_pRoom; }
 	
-	void SetX(float x) { m_x = x; SetPosition(m_x, m_y); }
-	void SetY(float y) { m_y = y; SetPosition(m_x, m_y); }
+	void SetX(float x) { SetPosition(x, m_y); }
+	void SetY(float y) { SetPosition(y, m_y); }
 	
 	void SetPoint(int x, int y) { m_point.X = x; m_point.Y = y; }
-	PPOINT pPoint() { SetPoint(m_x + (m_width / 2) - 8, m_y + (m_height - 8)); return (PPOINT) &m_point; }
+	PPOINT pPoint() { SetPoint(m_x + (m_width / 2), m_y + (m_height - 8)); return (PPOINT) &m_point; }
 	
 	void SetPath(int index, CRoom* pRoom) { m_path[index] = pRoom; }
 	
