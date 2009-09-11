@@ -84,52 +84,40 @@ void CCharacter::UpdatePosition()
 			int yDist = yEnd - yPos;
 				
 			if(abs(xDist) > 8 || abs(yDist) > 8)
-			{
-				if(abs(xDist) > abs(yDist))
-				{
-					if(xDist < 0)
-						SetFrameType(FRAME_LEFT);
-					else
-						SetFrameType(FRAME_RIGHT);
-				}
-				else
-				{
-					if(yDist < 0)
-						SetFrameType(FRAME_RIGHT);
-					else
-						SetFrameType(FRAME_LEFT);
-				}
-					
-				//char buf[256];
-				//sprintf(buf, "%d, %d", xDist, yDist);
-				//fprintf(stderr, buf);
-				
+			{						
 				if(abs(xDist) < 20)	 		// Near the door
-				{
-					if(xDist > 0)			// Move directly towards it
-						m_x += 0.6f;		// right
-					else
+				{			
+					if(xDist < 0)			// Move directly towards it
 						m_x -= 0.6f;		// left
-						
-					if(yDist > 0)			// Move directly towards it
-						m_y += 0.3f;		// down
 					else
+						m_x += 0.6f;		// right						
+						
+					if(yDist < 0)			// Move directly towards it
 						m_y -= 0.3f;		// up
+					else
+						m_y += 0.3f;		// down						
 				}
 				else
 				{
 					if(yPos > m_pRoom->CentreY())			// Below centre of room so move up diagonally
 					{
+						SetFrameType(FRAME_RIGHT);
 						m_x += 0.6f;
 						m_y -= 0.3f;
 					}
 					else if(yPos < m_pRoom->CentreY()) 	// Above centre of room so move down diagonally
 					{
+						SetFrameType(FRAME_LEFT);
 						m_x -= 0.6f;
 						m_y += 0.3f;
 					}
 					else
 					{
+						if(xDist < 0)
+							SetFrameType(FRAME_LEFT);
+						else
+							SetFrameType(FRAME_RIGHT);
+					
 						float direction = atan2(yDist, xDist);
 						// Move directly towards door
 						m_x += cos(direction) * 0.5f;
@@ -149,10 +137,6 @@ void CCharacter::UpdatePosition()
 				m_x = xDoor * 8;
 				m_y = yDoor * 8 - m_height;
 			}
-			
-			//char buf[256];
-			//sprintf(buf, "X:%d, Y:%d", xDoor, yDoor);
-			//DrawText(buf, 0, 0, false);
 		}
 		else
 			SetCharacterMode(CHARMODE_WAITING);
