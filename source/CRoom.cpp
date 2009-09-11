@@ -4,13 +4,14 @@
 #include "Text.h"
 #include "lz77.h"
 
-CRoom::CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const unsigned char* pColMap)
+CRoom::CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const unsigned char* pColMap, int centreY)
 {
 	m_roomType = roomType;
 	m_pMap = pMap;
 	m_pOverlay = pOverlay;
 	m_pColMap = pColMap;
 	m_overlayY = pMap->Height;
+	m_centreY = centreY;
 	
 	for(int i=0; i<MAX_DOORS; i++)
 		m_doorArray[i] = NULL;

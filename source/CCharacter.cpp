@@ -42,6 +42,31 @@ void CCharacter::SetPosition(float x, float y)
 	m_pBodySprite->SetPosition(m_x - m_pRoom->X(), m_y+HEAD_HEIGHT);
 }
 
+/* Up(m_x + 1.33, m_y - 0.66);
+Down(m_x - 1.33, m_y + 0.66);
+
+public void move(float startX, float startY, float endX, float endY)
+{
+	int diff = startX - endX;
+	
+	if(diff < 20 || diff > -20)
+	{
+		if(diff > 0)
+			startX += 0.5f
+		else
+			startX -= 0.5f
+		}
+		else
+		{
+			//Do you angle caculation to the door
+			Angle = GetAngle(Location);
+			Object.X += cos(Angle) * 0.5f;
+			Object.Y += sin(Angle) * 0.5f;
+		}
+	}
+} */
+
+
 void CCharacter::UpdatePosition()
 {
 	if(m_characterMode == CHARMODE_WALKING)
@@ -51,22 +76,66 @@ void CCharacter::UpdatePosition()
 		if(pRoom != NULL)
 		{
 			CDoor* pDoor = m_pRoom->GetRoomDoor(pRoom);
-			int xDoor = pDoor->pPoint()->X;
-			int yDoor = pDoor->pPoint()->Y;
-			int xChar = xDoor * 8 - pPoint()->X;
-			int yChar = yDoor * 8 - pPoint()->Y;
-			
-			float direction = atan2(yChar, xChar);
-			
-			if(xChar != 0 && yChar != 0)
-			{
-				if(xChar < 0)
-					SetFrameType(FRAME_LEFT);
-				else
-					SetFrameType(FRAME_RIGHT);
+			int xPos = pPoint()->X;
+			int yPos = pPoint()->Y;
+			int xEnd = pDoor->pPoint()->X * 8;
+			int yEnd = pDoor->pPoint()->Y * 8;
+			int xDist = xEnd - xPos;
+			int yDist = yEnd - yPos;
 				
-				m_x += cos(direction) * 0.5f;
-				m_y += sin(direction) * 0.5f;
+			if(abs(xDist) > 8 || abs(yDist) > 8)
+			{
+				if(abs(xDist) > abs(yDist))
+				{
+					if(xDist < 0)
+						SetFrameType(FRAME_LEFT);
+					else
+						SetFrameType(FRAME_RIGHT);
+				}
+				else
+				{
+					if(yDist < 0)
+						SetFrameType(FRAME_RIGHT);
+					else
+						SetFrameType(FRAME_LEFT);
+				}
+					
+				//char buf[256];
+				//sprintf(buf, "%d, %d", xDist, yDist);
+				//fprintf(stderr, buf);
+				
+				if(abs(xDist) < 20)	 		// Near the door
+				{
+					if(xDist > 0)			// Move directly towards it
+						m_x += 0.6f;		// right
+					else
+						m_x -= 0.6f;		// left
+						
+					if(yDist > 0)			// Move directly towards it
+						m_y += 0.3f;		// down
+					else
+						m_y -= 0.3f;		// up
+				}
+				else
+				{
+					if(yPos > m_pRoom->CentreY())			// Below centre of room so move up diagonally
+					{
+						m_x += 0.6f;
+						m_y -= 0.3f;
+					}
+					else if(yPos < m_pRoom->CentreY()) 	// Above centre of room so move down diagonally
+					{
+						m_x -= 0.6f;
+						m_y += 0.3f;
+					}
+					else
+					{
+						float direction = atan2(yDist, xDist);
+						// Move directly towards door
+						m_x += cos(direction) * 0.5f;
+						//m_y += sin(direction) * 0.5f;
+					}
+				}
 			}
 			else
 			{

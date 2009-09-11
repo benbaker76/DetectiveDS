@@ -93,37 +93,37 @@ void CGame::Initialize()
 		m_characterArray[CHARTYPE_DINGLE] = new CCharacter(CHARTYPE_DINGLE, m_spriteArray[SPRITE_DINGLE_HEAD], m_spriteArray[SPRITE_DINGLE_BODY], 24, 48);
 		m_characterArray[CHARTYPE_ANGUS] = new CCharacter(CHARTYPE_ANGUS, m_spriteArray[SPRITE_ANGUS_HEAD], m_spriteArray[SPRITE_ANGUS_BODY], 24, 48);
 		
-		m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, &g_room1Map, NULL, col_room1);
-		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, &g_room1Map, NULL, col_room1);
-		m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, &g_room2Map, NULL, col_room2);
-		m_roomArray[ROOM_COOK] = new CRoom(ROOM_COOK, &g_room2Map, NULL, col_room2);
-		m_roomArray[ROOM_GABRIEL] = new CRoom(ROOM_GABRIEL, &g_room2Map, NULL, col_room2);
-		m_roomArray[ROOM_CYNTHIA] = new CRoom(ROOM_CYNTHIA, &g_room1Map, NULL, col_room1);
-		m_roomArray[ROOM_PROFESSOR] = new CRoom(ROOM_PROFESSOR, &g_room1Map, NULL, col_room1);
-		m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, &g_room1Map, NULL, col_room1);		
-		m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, &g_room1Map, NULL, col_room1);
-		m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, &g_room1Map, NULL, col_room1);
-		m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, &g_outside1Map, NULL, col_outside1);
-		m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, &g_outside2Map, &g_outside2_frontMap, col_outside2);
-		m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, &g_outside1Map, NULL, col_outside1);
-		m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, &g_outside2Map, &g_outside2_frontMap, col_outside2);
-		m_roomArray[ROOM_PASSAGE1] = new CRoom(ROOM_PASSAGE1, &g_passage1Map, NULL, col_passage1);
-		m_roomArray[ROOM_PASSAGE2] = new CRoom(ROOM_PASSAGE2, &g_passage2Map, NULL, col_passage2);
-		m_roomArray[ROOM_PASSAGE3] = new CRoom(ROOM_PASSAGE3, &g_passage1Map, NULL, col_passage1);
-		m_roomArray[ROOM_HALL1] = new CRoom(ROOM_HALL1, &g_hall1Map, NULL, col_hall1);
-		m_roomArray[ROOM_HALL2] = new CRoom(ROOM_HALL2, &g_hall2Map, NULL, col_hall2);
-		m_roomArray[ROOM_HALL3] = new CRoom(ROOM_HALL3, &g_hall3Map, NULL, col_hall3);
-		m_roomArray[ROOM_HALL4] = new CRoom(ROOM_HALL4, &g_hall4Map, NULL, col_hall4);
-		m_roomArray[ROOM_LANDING] = new CRoom(ROOM_LANDING, &g_landingMap, &g_landing_front1Map, col_landing);
-		m_roomArray[ROOM_KITCHEN] = new CRoom(ROOM_KITCHEN, &g_kitchenMap, NULL, col_kitchen);
-		m_roomArray[ROOM_STAIRS] = new CRoom(ROOM_STAIRS, &g_stairsMap, NULL, col_stairs);
-		m_roomArray[ROOM_STUDY] = new CRoom(ROOM_STUDY, &g_studyMap, NULL, col_study);
-		m_roomArray[ROOM_CLOCK] = new CRoom(ROOM_CLOCK, &g_clockMap, NULL, col_clock);
-		m_roomArray[ROOM_CELLAR] = new CRoom(ROOM_CELLAR, &g_cellarMap, NULL, col_cellar);
-		m_roomArray[ROOM_DRAWING] = new CRoom(ROOM_DRAWING, &g_drawingMap, NULL, col_drawing);
-		m_roomArray[ROOM_LIBRARY] = new CRoom(ROOM_LIBRARY, &g_libraryMap, NULL, col_library);
-		m_roomArray[ROOM_GARDEN] = new CRoom(ROOM_GARDEN, &g_gardenMap, &g_garden_frontMap, col_garden);
-		m_roomArray[ROOM_GRAVEYARD] = new CRoom(ROOM_GRAVEYARD, &g_graveyardMap, &g_graveyard_frontMap, col_graveyard);
+		m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, &g_room1Map, NULL, col_room1, 144);
+		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, &g_room1Map, NULL, col_room1, 144);
+		m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, &g_room2Map, NULL, col_room2, 168);
+		m_roomArray[ROOM_COOK] = new CRoom(ROOM_COOK, &g_room2Map, NULL, col_room2, 168);
+		m_roomArray[ROOM_GABRIEL] = new CRoom(ROOM_GABRIEL, &g_room2Map, NULL, col_room2, 168);
+		m_roomArray[ROOM_CYNTHIA] = new CRoom(ROOM_CYNTHIA, &g_room1Map, NULL, col_room1, 144);
+		m_roomArray[ROOM_PROFESSOR] = new CRoom(ROOM_PROFESSOR, &g_room1Map, NULL, col_room1, 144);
+		m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, &g_room1Map, NULL, col_room1, 144);		
+		m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, &g_room1Map, NULL, col_room1, 144);
+		m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, &g_room1Map, NULL, col_room1, 144);
+		m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, &g_outside1Map, NULL, col_outside1, 160);
+		m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, &g_outside2Map, &g_outside2_frontMap, col_outside2, 152);
+		m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, &g_outside1Map, NULL, col_outside1, 160);
+		m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, &g_outside2Map, &g_outside2_frontMap, col_outside2, 152);
+		m_roomArray[ROOM_PASSAGE1] = new CRoom(ROOM_PASSAGE1, &g_passage1Map, NULL, col_passage1, 152);
+		m_roomArray[ROOM_PASSAGE2] = new CRoom(ROOM_PASSAGE2, &g_passage2Map, NULL, col_passage2, 152);
+		m_roomArray[ROOM_PASSAGE3] = new CRoom(ROOM_PASSAGE3, &g_passage1Map, NULL, col_passage1, 152);
+		m_roomArray[ROOM_HALL1] = new CRoom(ROOM_HALL1, &g_hall1Map, NULL, col_hall1, 160);
+		m_roomArray[ROOM_HALL2] = new CRoom(ROOM_HALL2, &g_hall2Map, NULL, col_hall2, 160);
+		m_roomArray[ROOM_HALL3] = new CRoom(ROOM_HALL3, &g_hall3Map, NULL, col_hall3, 160);
+		m_roomArray[ROOM_HALL4] = new CRoom(ROOM_HALL4, &g_hall4Map, NULL, col_hall4, 160);
+		m_roomArray[ROOM_LANDING] = new CRoom(ROOM_LANDING, &g_landingMap, &g_landing_front1Map, col_landing, 144);
+		m_roomArray[ROOM_KITCHEN] = new CRoom(ROOM_KITCHEN, &g_kitchenMap, NULL, col_kitchen, 160);
+		m_roomArray[ROOM_STAIRS] = new CRoom(ROOM_STAIRS, &g_stairsMap, NULL, col_stairs, 168);
+		m_roomArray[ROOM_STUDY] = new CRoom(ROOM_STUDY, &g_studyMap, NULL, col_study, 160);
+		m_roomArray[ROOM_CLOCK] = new CRoom(ROOM_CLOCK, &g_clockMap, NULL, col_clock, 160);
+		m_roomArray[ROOM_CELLAR] = new CRoom(ROOM_CELLAR, &g_cellarMap, NULL, col_cellar, 160);
+		m_roomArray[ROOM_DRAWING] = new CRoom(ROOM_DRAWING, &g_drawingMap, NULL, col_drawing, 160);
+		m_roomArray[ROOM_LIBRARY] = new CRoom(ROOM_LIBRARY, &g_libraryMap, NULL, col_library, 160);
+		m_roomArray[ROOM_GARDEN] = new CRoom(ROOM_GARDEN, &g_gardenMap, &g_garden_frontMap, col_garden, 152);
+		m_roomArray[ROOM_GRAVEYARD] = new CRoom(ROOM_GRAVEYARD, &g_graveyardMap, &g_graveyard_frontMap, col_graveyard, 160);
 		
 		//m_roomArray[ROOM_STAIRS]->SetOverlay(&g_stairs_frontMap, 168);
 		m_roomArray[ROOM_GRAVEYARD]->SetOverlay(&g_graveyard_frontMap, 176);
@@ -267,8 +267,14 @@ void CGame::Initialize()
 	CPath* path = new CPath(m_roomArray);
 	path->FindRoute(m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_SNIDE]);
 	
-	for(int i=0; i<MAX_ROOMS; i++)
-		m_characterArray[CHARTYPE_BENTLEY]->SetPath(i, path->GetRoom(i));
+	for(int i=1; i<MAX_ROOMS; i++)
+	{
+		if(path->GetRoom(i) != NULL)
+		{
+			//fprintf(stderr, g_roomName[path->GetRoom(i)->GetRoomType()]);
+			m_characterArray[CHARTYPE_BENTLEY]->SetPath(i - 1, path->GetRoom(i));
+		}
+	}
 	
 	((CFxTextScroller*)m_fxManager.GetFx(FX_TEXT_SCROLLER))->AddText("BENTLY ADVANCES:\"THIS WAY TO YOUR ROOM SIR\"");
 

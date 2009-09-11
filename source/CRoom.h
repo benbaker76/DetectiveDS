@@ -65,7 +65,7 @@ class CDoor;
 class CRoom
 {
 public:
-	CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const u8* colMap);
+	CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const u8* colMap, int centreY);
 	~CRoom();
 	
 	void Initialize(int x);
@@ -92,6 +92,7 @@ public:
 	int Width() const { return m_pMap->Width; }
 	int Height() const { return m_pMap->Height; }
 	int OverlayY() const { return m_overlayY; }
+	int CentreY() const { return m_centreY; }
 	u8 ColMap(int x, int y) const { return (m_pColMap == NULL ? 0 : *(m_pColMap + x + y * (m_pMap->Width / 8))); }
 	bool GetColMapRect(CollisionType, PRECT rect);
 
@@ -102,7 +103,8 @@ private:
 	const u8* m_pColMap;
 	
 	int m_x;
-	
+	int m_centreY;
+
 	int m_overlayY;
 	
 	RECT m_rectArray[MAX_ROOM_RECT];
