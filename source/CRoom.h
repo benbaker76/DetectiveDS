@@ -93,7 +93,7 @@ public:
 	int Height() const { return m_pMap->Height; }
 	int OverlayY() const { return m_overlayY; }
 	int CentreY() const { return m_centreY; }
-	u8 ColMap(int x, int y) const { return (m_pColMap == NULL ? 0 : *(m_pColMap + x + y * (m_pMap->Width / 8))); }
+	u8 ColMap(int x, int y);
 	bool GetColMapRect(CollisionType, PRECT rect);
 
 private:

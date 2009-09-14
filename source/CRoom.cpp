@@ -251,3 +251,14 @@ CDoor* CRoom::GetRoomDoor(CRoom* pRoom)
 	
 	return NULL;
 }
+
+u8 CRoom::ColMap(int x, int y)
+{
+	if(m_pColMap != NULL)
+	{
+		if(x >=0 && x < m_pMap->Width / 8 && y >=0 && y < m_pMap ->Height / 8)
+			return *(m_pColMap + x + y * (m_pMap->Width / 8));
+	}
+	
+	return 0;
+}

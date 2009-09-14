@@ -88,8 +88,6 @@ void CConsole::HideMenu()
 
 bool CConsole::AddText(const char* text)
 {
-	ClearText();
-	
 	for(int i=m_textPos; i<CONSOLE_MAX_TEXT; i++)
 	{
 		if(m_textArray[i] == NULL)
@@ -119,7 +117,7 @@ void CConsole::Update()
 		{
 			if(m_textArray[i] != NULL)
 			{
-				//ClearText();
+				ClearText();
 				m_charPos = m_textArray[i];
 				
 				if(*m_charPos == '\0')
