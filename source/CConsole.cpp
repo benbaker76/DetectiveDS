@@ -12,6 +12,10 @@ CConsole::CConsole(CCursor* pCursor)
 	m_menuOffset = 0;
 	m_menuCount = 0;
 	
+	m_gfxArrow = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
+	
+	dmaCopy(sprite_miscTiles + 256 * 6, m_gfxArrow, 32 * 32);
+	
 	for(int i=0; i<CONSOLE_MAX_TEXT; i++)
 		m_textArray[i] = NULL;
 		
@@ -55,6 +59,10 @@ void CConsole::CreateMenu(const char* menuArray[], int menuCount)
 	m_menuCount = menuCount;
 	m_menuPos = 0;
 	m_menuOffset = 0;
+	
+	for(int i=0; i<CONSOLE_MENU_MAX_TEXT; i++)
+		m_menuArray[i] = NULL;
+	
 	ClearMenu();
 	
 	for(int i=0; i<menuCount; i++)
@@ -67,6 +75,15 @@ void CConsole::DrawMenu()
 {
 	for(int i=0; i<CONSOLE_MENU_VISIBLE_TEXT; i++)
 		DrawText(m_menuArray[m_menuOffset + i], CONSOLE_MENU_MAP_X, CONSOLE_MENU_MAP_Y + i, CONSOLE_MENU_MAP_WIDTH, false);
+	
+	if(m_menuCount > CONSOLE_MENU_VISIBLE_TEXT)
+		ShowArrow();
+}
+
+void CConsole::HideMenu()
+{
+	HideSelectorBar();
+	HideArrow();
 }
 
 bool CConsole::AddText(const char* text)
@@ -94,10 +111,8 @@ bool CConsole::AddText(const char* text)
 	return false;
 }
 
-void CConsole::Update(int elapsedTime)
+void CConsole::Update()
 {
-	m_lastUpdate += elapsedTime;
-	
 	if(m_charPos == NULL)
 	{
 		for(int i=m_textPos; i<CONSOLE_MAX_TEXT; i++)
@@ -206,4 +221,15 @@ void CConsole::HideSelectorBar()
 {
 	m_selector.Hide();
 }
+
+void CConsole::HideArrow()
+{
+	oamSet(&oamMain, 120, 140, 176, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxArrow, 0, false, true, false, false, false);
+}
+
+void CConsole::ShowArrow()
+{
+	oamSet(&oamMain, 120, 140, 176, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxArrow,	0,	false, false, false, false,	 false);
+}
+
 

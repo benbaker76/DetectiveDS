@@ -38,6 +38,7 @@ public:
 	void SetMenuIcons(CollisionType colNear, CollisionType colFar);
 	bool TryGetDoor(CollisionType colNear, CollisionType colFar, CDoor*& pDoor);
 	void ProcessMenu(int x, int y);
+	void PostProcessMenu();
 	void InitializeDoors();
 	void SortSprites();
 	void UpdateCharacters(int elapsedTime);
@@ -68,6 +69,8 @@ private:
 	CCharacter* m_snide;
 	CWatch* m_watch;
 	CTimer* m_timer;
+	
+	IconType m_lastIconType;
 	
 	DisplayMode m_displayMode;
 	

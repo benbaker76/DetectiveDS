@@ -41,12 +41,15 @@ public:
 	void ClearMenu();
 	void CreateMenu(const char* menuArray[], int menuCount);
 	void DrawMenu();
+	void HideMenu();
 	bool AddText(const char* text);
-	void Update(int elapsedTime);
+	void Update();
 
 	void MoveSelectorBar(DirectionType directionType);
 	void DrawSelectorBar();
 	void HideSelectorBar();
+	void HideArrow();
+	void ShowArrow();
 	
 	int MenuItem() const { return (m_menuOffset + m_menuPos); }
 	
@@ -60,6 +63,8 @@ private:
 	
 	int m_x;
 	int m_y;
+	
+	u16* m_gfxArrow;
 
 	int m_lastUpdate;
 	

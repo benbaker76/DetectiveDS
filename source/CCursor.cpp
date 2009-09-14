@@ -12,9 +12,8 @@ CCursor::~CCursor()
 {
 }
 
-void CCursor::Update(int elapsedTime)
+void CCursor::Update()
 {
-	//m_lastUpdate += elapsedTime;
 	m_lastUpdate ++;
 	
 	if(m_lastUpdate > 4)

@@ -17,7 +17,7 @@ public:
 	float Y() const { return m_y; }
 	
 	void Draw();
-	void Update(int elapsedTime);
+	void Update();
 	
 private:
 	int m_x;

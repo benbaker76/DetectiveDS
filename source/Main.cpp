@@ -79,8 +79,6 @@ int main(void)
 	consoleDebugInit(DebugDevice_NOCASH);
 	
 	m_video.Initialize();
-	//m_video.InitializeTitleScreen();
-
 	m_game.Initialize();
 
 	while(1)

@@ -369,8 +369,8 @@ void CGame::Update()
 	
 	//DrawTime(m_timer->pCurrentTime());
 	m_watch->Draw(m_timer->pCurrentTime());
-	m_console->Update(elapsedTime);
-	m_cursor->Update(elapsedTime);
+	m_console->Update();
+	m_cursor->Update();
 	m_cursor->Draw();
 	
 	for(int i=0; i<MAX_EVENTS; i++)
@@ -462,14 +462,7 @@ void CGame::Update()
 	{
 		if(keys_released & KEY_A)
 		{
-			m_displayMode = DISPLAYMODE_GAME;
-			m_pointer->Hide();
-			m_menu->HideBox();
-			m_console->HideSelectorBar();
-			
-			//char buf[256];
-			//sprintf(buf, g_accuseName[m_console->MenuItem()]);
-			//fprintf(stderr, buf);
+			PostProcessMenu();
 		}
 		else if(keys_released & KEY_UP)
 		{
@@ -715,6 +708,7 @@ void CGame::ProcessMenu(int x, int y)
 	static char buf[512];
 	CollisionType colNear, colFar;
 	IconType iconType = m_menu->CheckIconHit(x, y);
+	m_lastIconType = iconType;
 	CDoor* pDoor = NULL;
 	
 	//DrawText("                                ", 0, 0, false);
@@ -723,72 +717,128 @@ void CGame::ProcessMenu(int x, int y)
 	{
 	case ICON_DOOR_OPEN:
 	case ICON_DOOR_CLOSE:
+		m_snide->CheckCollision(m_snide->Facing(), &colNear, &colFar);
+		
+		if(TryGetDoor(colNear, colFar, pDoor))
 		{
-			m_snide->CheckCollision(m_snide->Facing(), &colNear, &colFar);
-			
-			if(TryGetDoor(colNear, colFar, pDoor))
+			if(pDoor->GetDoorState() == DOORSTATE_CLOSED || pDoor->GetDoorState() == DOORSTATE_LOCKED)
 			{
-				if(pDoor->GetDoorState() == DOORSTATE_CLOSED || pDoor->GetDoorState() == DOORSTATE_LOCKED)
-				{
-					pDoor->SetDoorState(DOORSTATE_OPEN);
-					m_currentRoom->Draw();
-					mmEffectEx(&g_sfx_opendoor);
-					SetMenuIcons(colNear, colFar);
-				}
-				else if(pDoor->GetDoorState() == DOORSTATE_OPEN)
-				{
-					pDoor->SetDoorState(DOORSTATE_CLOSED);
-					m_currentRoom->Draw();
-					mmEffectEx(&g_sfx_closedoor);
-					SetMenuIcons(colNear, colFar);
-				}
+				pDoor->SetDoorState(DOORSTATE_OPEN);
+				m_currentRoom->Draw();
+				mmEffectEx(&g_sfx_opendoor);
+				SetMenuIcons(colNear, colFar);
+			}
+			else if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+			{
+				pDoor->SetDoorState(DOORSTATE_CLOSED);
+				m_currentRoom->Draw();
+				mmEffectEx(&g_sfx_closedoor);
+				SetMenuIcons(colNear, colFar);
 			}
 		}
 		break;
 	case ICON_EXAMINE:
-		{
-			m_snide->CheckCollision(m_snide->Facing(), &colNear, &colFar);
-			
-			if(TryGetDoor(colNear, colFar, pDoor))
-			{			
-				if(pDoor->GetDoorState() == DOORSTATE_HIDDEN)
-				{
-					pDoor->SetDoorState(DOORSTATE_OPEN);
-					m_currentRoom->Draw();
-					mmEffectEx(&g_sfx_opendoor);
-					
-					m_console->AddText("YOU FIND:\nA SECRET PASSAGE!");
-				}
+		m_snide->CheckCollision(m_snide->Facing(), &colNear, &colFar);
+		
+		if(TryGetDoor(colNear, colFar, pDoor))
+		{			
+			if(pDoor->GetDoorState() == DOORSTATE_HIDDEN)
+			{
+				pDoor->SetDoorState(DOORSTATE_OPEN);
+				m_currentRoom->Draw();
+				mmEffectEx(&g_sfx_opendoor);
+				
+				m_console->AddText("YOU FIND:\nA SECRET PASSAGE!");
 			}
-			else
-				m_console->AddText(g_colName[colNear]);
 		}
+		else
+			m_console->AddText(g_colName[colNear]);
 		break;
 	case ICON_TIME:
-		{
-			sprintf(buf, " THE TIME IS NOW:\n\n      %02d: %02d\n\n PAUSED..PRESS\nA TO CONTINUE.", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes);
-			m_console->AddText(buf);
-			m_gameMode = GAMEMODE_PAUSED;
-			m_timer->Stop();
-		}
+		sprintf(buf, " THE TIME IS NOW:\n\n      %02d: %02d\n\n PAUSED..PRESS\nA TO CONTINUE.", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes);
+		m_console->AddText(buf);
+		m_gameMode = GAMEMODE_PAUSED;
+		m_timer->Stop();
 		break;
 	case ICON_INVENTORY:
+		m_displayMode = DISPLAYMODE_CONSOLE;
+		
+		if(false)
 		{
 			m_console->AddText("YOU ARE CARRYING:");
-			m_displayMode = DISPLAYMODE_CONSOLE;
+			m_console->CreateMenu(NULL, 0);
 			m_console->DrawSelectorBar();
+		}
+		else
+		{
+			m_displayMode = DISPLAYMODE_GAME;
+			m_console->AddText("YOU ARE CARRYING:\n\nNOTHING...");
 		}
 		break;
 	case ICON_USE:
-		m_console->AddText("USE:");
 		m_displayMode = DISPLAYMODE_CONSOLE;
-		m_console->DrawSelectorBar();
+		
+		if(false)
+		{
+			m_console->AddText("USE:");
+			m_console->CreateMenu(NULL, 0);
+			m_console->DrawSelectorBar();
+		}
+		else
+		{
+			m_displayMode = DISPLAYMODE_GAME;
+			m_console->AddText("USE:\n\nNOTHING...");
+		}
 		break;
 	case ICON_ACCUSE:
-		m_console->AddText("WHO IS THE\nMURDERER?");
 		m_displayMode = DISPLAYMODE_CONSOLE;
+		
+		m_console->AddText("WHO IS THE\nMURDERER?");
 		m_console->CreateMenu(g_accuseName, 9);
 		m_console->DrawSelectorBar();
+		break;
+	default:
+		break;
+	}
+}
+
+void CGame::PostProcessMenu()
+{
+	switch(m_lastIconType)
+	{
+	case ICON_DOOR_OPEN:
+	case ICON_DOOR_CLOSE:
+		break;
+	case ICON_EXAMINE:
+		break;
+	case ICON_TIME:
+		m_displayMode = DISPLAYMODE_GAME;
+		m_console->ClearText();
+		break;
+	case ICON_INVENTORY:
+		m_displayMode = DISPLAYMODE_GAME;
+		m_console->ClearText();
+		m_pointer->Hide();
+		m_menu->HideBox();
+		m_console->HideMenu();
+		break;
+	case ICON_USE:
+		m_displayMode = DISPLAYMODE_GAME;
+		m_console->ClearText();
+		m_pointer->Hide();
+		m_menu->HideBox();
+		m_console->HideMenu();
+		break;
+	case ICON_ACCUSE:
+		m_displayMode = DISPLAYMODE_GAME;
+		m_console->AddText("YOU DO NOT HAVE\nTHE EVIDENCE TO\nPROVE IT.");
+		m_pointer->Hide();
+		m_menu->HideBox();
+		m_console->HideMenu();
+		
+		//char buf[256];
+		//sprintf(buf, g_accuseName[m_console->MenuItem()]);
+		//fprintf(stderr, buf);
 		break;
 	default:
 		break;
