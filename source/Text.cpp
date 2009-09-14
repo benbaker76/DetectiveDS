@@ -16,6 +16,19 @@ const char* g_doctorText = "DOCTOR MORTEM:\nSHORTSIGHTED FAMILY\nDOCTOR.";
 const char* g_majorText = "MAJOR SLUDGEBUCKET:\nRETIRED MAJOR.\nDISTURBED BUT\nHARMLESS.";
 const char* g_dingleText = "MR DINGLE:\nFAMILY SOLICITOR.\nHERE TO READ THE\nWILL.";
 
+const char* g_accuseName[] =
+{
+	"THE REVEREND",
+	"BENTLEY",
+	"COOK",
+	"GABRIEL",
+	"CYNTHIA",
+	"THE PROFESSOR",
+	"THE DOCTOR",
+	"THE MAJOR",
+	"DINGLE"
+};
+
 const char* g_itemName[] =
 {
 	"NOTHING HERE",
@@ -261,6 +274,14 @@ void DrawText(const char* string, int x, int y, bool sub)
 	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)) + (x + y * 32);
 	
 	for(u32 i=0; i<strlen(string); i++)
+		*pMap++ = string[i] - 0x20;
+}
+
+void DrawText(const char* string, int x, int y, int count, bool sub)
+{
+	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)) + (x + y * 32);
+	
+	for(u32 i=0; i<strlen(string) && i < count; i++)
 		*pMap++ = string[i] - 0x20;
 }
 

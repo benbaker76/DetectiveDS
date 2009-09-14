@@ -34,7 +34,7 @@ void InterruptHandlerTimer2()
 
 mm_word mmEventHandler(mm_word msg, mm_word param)
 {
-	char buf[256];
+	//char buf[256];
 	
 	switch( msg )
 	{

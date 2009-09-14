@@ -16,9 +16,10 @@
 #include "CTimer.h"
 #include "CEvent.h"
 #include "CWatch.h"
-#include "CTextConsole.h"
+#include "CConsole.h"
 #include "CKeyboard.h"
 #include "CPath.h"
+#include "CPointer.h"
 
 #include "map_cellar.h"
 #include "map_clock.h"
@@ -70,6 +71,8 @@
 #include "sprite_dingle_body.h"
 #include "sprite_angus_head.h"
 #include "sprite_angus_body.h"
+
+#include "sprite_misc.h"
 
 #include "sprite_col1.h"
 #include "sprite_col2.h"

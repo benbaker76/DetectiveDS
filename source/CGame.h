@@ -13,6 +13,14 @@ enum GameMode
 	GAMEMODE_PAUSED
 };
 
+enum DisplayMode
+{
+	DISPLAYMODE_GAME,
+	DISPLAYMODE_MENU,
+	DISPLAYMODE_CONSOLE,
+	DISPLAYMODE_KEYBOARD
+};
+
 enum GameType
 {
 	GAMETYPE_NORMAL
@@ -26,6 +34,10 @@ public:
 	
 	void Initialize();
 	void Update();
+	void ProcessSnideMovement(int keys_held);
+	void SetMenuIcons(CollisionType colNear, CollisionType colFar);
+	bool TryGetDoor(CollisionType colNear, CollisionType colFar, CDoor*& pDoor);
+	void ProcessMenu(int x, int y);
 	void InitializeDoors();
 	void SortSprites();
 	void UpdateCharacters(int elapsedTime);
@@ -40,9 +52,10 @@ private:
 	GameMode m_gameMode;
 	
 	CFxManager m_fxManager;
-	CMenu m_menu;
-	CCursor m_cursor;
-	CTextConsole* m_textConsole;
+	CMenu* m_menu;
+	CCursor* m_cursor;
+	CPointer* m_pointer;
+	CConsole* m_console;
 	CKeyboard* m_keyboard;
 	
 	CCharacter* m_characterArray[MAX_CHARACTERS];
@@ -55,6 +68,8 @@ private:
 	CCharacter* m_snide;
 	CWatch* m_watch;
 	CTimer* m_timer;
+	
+	DisplayMode m_displayMode;
 	
 	int m_bg2MainVScroll;
 };

@@ -54,7 +54,7 @@ public:
 	void Draw();
 	void Face(DirectionType directionType);
 	void Move(DirectionType directionType);
-	CollisionType CheckCollision(DirectionType directionType);
+	void CheckCollision(DirectionType directionType, CollisionType* colNear, CollisionType* colFar);
 	
 	void SetCharacterMode(CharacterMode characterMode);
 	
@@ -65,7 +65,7 @@ public:
 	void SetY(float y) { SetPosition(y, m_y); }
 	
 	void SetPoint(int x, int y) { m_point.X = x; m_point.Y = y; }
-	PPOINT pPoint() { SetPoint(m_x + (m_width / 2), m_y + (m_height - 8)); return (PPOINT) &m_point; }
+	PPOINT pPoint() { SetPoint(m_x + (m_width / 2), m_y + (m_height - 8) + 4); return (PPOINT) &m_point; }
 	
 	void SetPath(int index, CRoom* pRoom) { m_path[index] = pRoom; }
 	

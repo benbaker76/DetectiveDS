@@ -22,11 +22,11 @@ CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprit
 	//m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_col1Tiles, sprite_col1TilesLen, sprite_col1Pal, sprite_col1PalLen, NULL, 0);
 	//m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_col2Tiles, sprite_col2TilesLen, sprite_col2Pal, sprite_col2PalLen, NULL, 0);
 	
-	//m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_col1Bitmap, NULL, 0);
-	//m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_col2Bitmap, NULL, 0);
+	m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_col1Bitmap, NULL, 0);
+	m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_col2Bitmap, NULL, 0);
 	
-	//m_spriteCol1->SetOamIndex(122);
-	//m_spriteCol2->SetOamIndex(123);
+	m_spriteCol1->SetOamIndex(122);
+	m_spriteCol2->SetOamIndex(123);
 }
 
 CCharacter::~CCharacter()
@@ -41,31 +41,6 @@ void CCharacter::SetPosition(float x, float y)
 	m_pHeadSprite->SetPosition(m_x - m_pRoom->X(), m_y);
 	m_pBodySprite->SetPosition(m_x - m_pRoom->X(), m_y+HEAD_HEIGHT);
 }
-
-/* Up(m_x + 1.33, m_y - 0.66);
-Down(m_x - 1.33, m_y + 0.66);
-
-public void move(float startX, float startY, float endX, float endY)
-{
-	int diff = startX - endX;
-	
-	if(diff < 20 || diff > -20)
-	{
-		if(diff > 0)
-			startX += 0.5f
-		else
-			startX -= 0.5f
-		}
-		else
-		{
-			//Do you angle caculation to the door
-			Angle = GetAngle(Location);
-			Object.X += cos(Angle) * 0.5f;
-			Object.Y += sin(Angle) * 0.5f;
-		}
-	}
-} */
-
 
 void CCharacter::UpdatePosition()
 {
@@ -235,50 +210,52 @@ void CCharacter::Move(DirectionType directionType)
 	}
 }
 
-CollisionType CCharacter::CheckCollision(DirectionType directionType)
+void CCharacter::CheckCollision(DirectionType directionType, CollisionType* colNear, CollisionType* colFar)
 {
-	CollisionType retType = COL_NOTHING_HERE;
-	int x = pPoint()->X;
-	int y = pPoint()->Y;
-	
-	//float x2 = m_x + (m_width / 2) - 8 + 4;
-	//float y2 = m_y + (m_height - 8) + 4;
-	
-	//m_spriteCol1->SetPosition(x2, y2);
-	//m_spriteCol1->Draw();
+	*colNear = COL_NOTHING_HERE;
+	*colFar = COL_NOTHING_HERE;
+	int x = pPoint()->X / 8;
+	int y = pPoint()->Y / 8;
 	
 	switch(directionType)
 	{
 		case DIRECTION_UP:
-			retType = (CollisionType) m_pRoom->ColMap(ceil((x + 8) / 8), ceil((y - 8) / 8));
-					
-			//m_spriteCol2->SetPosition(ceil(x2 + 8), ceil(y2 - 8));
+			*colNear = (CollisionType) m_pRoom->ColMap(x + 1, y - 1);
+			*colFar = (CollisionType) m_pRoom->ColMap(x + 1, y - 2);
+			
+			//m_spriteCol1->SetPosition((x + 1) * 8 - m_pRoom->X(), (y - 1) * 8);
+			//m_spriteCol2->SetPosition((x + 1) * 8 - m_pRoom->X(), (y - 2) * 8);
+			//m_spriteCol1->Draw();
 			//m_spriteCol2->Draw();
 			break;
 		case DIRECTION_DOWN:
-			retType = (CollisionType) m_pRoom->ColMap(floor((x - 8) / 8), floor((y + 8) / 8));
+			*colNear = (CollisionType) m_pRoom->ColMap(x - 1, y + 1);
+			*colFar = (CollisionType) m_pRoom->ColMap(x - 1, y + 2);
 			
-			//m_spriteCol2->SetPosition(floor(x2 - 8), floor(y2 + 8));
+			//m_spriteCol1->SetPosition((x - 1) * 8 - m_pRoom->X(), (y + 1) * 8);
+			//m_spriteCol2->SetPosition((x - 1) * 8 - m_pRoom->X(), (y + 2) * 8);
+			//m_spriteCol1->Draw();
 			//m_spriteCol2->Draw();
 			break;
 		case DIRECTION_LEFT:
-			retType = (CollisionType) m_pRoom->ColMap(round((x - 8) / 8), round(y / 8));
+			*colNear = (CollisionType) m_pRoom->ColMap(x - 1, y);
+			*colFar = (CollisionType) m_pRoom->ColMap(x - 2, y);
 			
-			//m_spriteCol2->SetPosition(round(x2 - 8), round(y2));
+			//m_spriteCol1->SetPosition((x - 1) * 8 - m_pRoom->X(), y * 8);
+			//m_spriteCol2->SetPosition((x - 2) * 8 - m_pRoom->X(), y * 8);
+			//m_spriteCol1->Draw();
 			//m_spriteCol2->Draw();
 			break;
 		case DIRECTION_RIGHT:
-			retType = (CollisionType) m_pRoom->ColMap(round((x + 8) / 8), round(y / 8));
+			*colNear = (CollisionType) m_pRoom->ColMap(x + 1, y);
+			*colFar = (CollisionType) m_pRoom->ColMap(x + 2, y);
 			
-			//m_spriteCol2->SetPosition(round(x2 + 8), round(y2));
+			//m_spriteCol1->SetPosition((x + 1) * 8 - m_pRoom->X(), y * 8);
+			//m_spriteCol2->SetPosition((x + 2) * 8 - m_pRoom->X(), y * 8);
+			//m_spriteCol1->Draw();
 			//m_spriteCol2->Draw();
 			break;
 	}
-	
-	//DrawText("                                ", 0, 0, false);
-	//DrawText(g_colName[(int) retType], 0, 0, false);
-	
-	return retType;
 }
 
 void CCharacter::SetFrameType(FrameType frameType)

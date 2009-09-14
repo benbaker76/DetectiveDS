@@ -14,7 +14,7 @@ public:
 	
 	void Initialize();
 	void Shutdown();
-	void CheckKeyTouch(int touchX, int touchY);
+	void CheckKeyTouch(int x, int y);
 	
 private:
 

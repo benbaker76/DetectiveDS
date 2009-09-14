@@ -11,6 +11,8 @@ extern const char* g_dingleText;
 
 extern const int g_largeTextMap[];
 
+extern const char* g_accuseName[];
+
 extern const char* g_itemName[];
 extern const char* g_colName[];
 extern const char* g_iconName[];
@@ -21,5 +23,6 @@ extern const char* g_KeyboardHit[];
 
 void DrawChar(char c, int x, int y, bool sub);
 void DrawText(const char* string, int x, int y, bool sub);
+void DrawText(const char* string, int x, int y, int count, bool sub);
 void DrawTextLarge(const char* string, int x, int y, bool sub);
 void DrawCharLarge(char c, int x, int y, bool sub);

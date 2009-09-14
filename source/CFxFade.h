@@ -40,4 +40,23 @@ private:
 	u16 m_fadeValue; 
 };
 
+class CFxColourPulse : public CFx
+{
+public:
+
+	CFxColourPulse(FxType fxType, CFxManager* fxManager) : CFx(fxType, fxManager) {}
+	~CFxColourPulse() {}
+
+	void Initialize();
+	void Shutdown();
+	void UpdateVBlank();
+	void UpdateHBlank();
+
+private:
+
+	bool m_ping;
+
+	u8 m_fadeValue; 
+};
+
 #endif

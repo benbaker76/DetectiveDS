@@ -3,7 +3,8 @@
 
 #include "TDG.h"
 
-#define MAX_ITEMS				54
+#define MAX_ITEMS				53
+#define ITEM_CAPACITY			5
 
 enum ItemType
 {
@@ -65,16 +66,14 @@ enum ItemType
 class CItem
 {
 public:
-	CItem(ItemType itemType);
+	CItem(ItemType itemType, bool evidence);
 	~CItem();
 	
-	void ClearItems();
-	bool AddItem(CItem* pItem);
-	bool RemoveItem(CItem* pItem);
-
 private:
 	ItemType m_itemType;
-	CItem* m_itemArray[MAX_ITEMS];
+	bool m_evidence;
+	
+	CItem* m_itemArray[ITEM_CAPACITY];
 };
 
 #endif

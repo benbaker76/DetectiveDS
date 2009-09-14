@@ -40,8 +40,8 @@ void CVideo::Initialize()
 	
 	lcdMainOnBottom();
 	
-	//dmaCopy(sprite_snide_bodyPal, SPRITE_PALETTE, sprite_snide_bodyPalLen);
-	//dmaCopy(sprite_snide_bodyPal, SPRITE_PALETTE_SUB, sprite_snide_bodyPalLen);
+	dmaCopy(sprite_miscPal, SPRITE_PALETTE, sprite_miscPalLen);
+	dmaCopy(sprite_watchPal, SPRITE_PALETTE_SUB, sprite_watchPalLen);
 	
 	//dmaCopy(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), watchTilesLen);
 	//dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);

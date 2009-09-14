@@ -9,6 +9,7 @@ CGame::CGame(GameType gameType)
 {
 	m_gameType = gameType;
 	m_gameMode = GAMEMODE_RUNNING;
+	m_displayMode = DISPLAYMODE_GAME;
 }
 
 CGame::~CGame()
@@ -195,6 +196,60 @@ void CGame::Initialize()
 		m_roomArray[ROOM_GARDEN]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_GARDEN], m_roomArray[ROOM_OUTSIDE4]));
 		m_roomArray[ROOM_GRAVEYARD]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_LOCKED, m_roomArray[ROOM_GRAVEYARD], m_roomArray[ROOM_GARDEN]));
 		
+		m_itemArray[ITEM_NOTHING_HERE] = new CItem(ITEM_NOTHING_HERE, false);
+		m_itemArray[ITEM_A_HOT_WATER_BOTTLE] = new CItem(ITEM_A_HOT_WATER_BOTTLE, false);
+		m_itemArray[ITEM_BLANK_BULLETS] = new CItem(ITEM_BLANK_BULLETS, false);
+		m_itemArray[ITEM_A_CANDLESTICK] = new CItem(ITEM_A_CANDLESTICK, false);
+		m_itemArray[ITEM_THE_WILL] = new CItem(ITEM_THE_WILL, true); // Clue #1
+		m_itemArray[ITEM_A_KNIFE] = new CItem(ITEM_A_KNIFE, true); // Clue #8
+		m_itemArray[ITEM_NEWSPAPER_CUTTING] = new CItem(ITEM_NEWSPAPER_CUTTING, false);
+		m_itemArray[ITEM_A_NOTE] = new CItem(ITEM_A_NOTE, true); // Clue #4
+		m_itemArray[ITEM_A_SMALL_BOTTLE] = new CItem(ITEM_A_SMALL_BOTTLE, true); // Clue #6
+		m_itemArray[ITEM_A_CRAVATE] = new CItem(ITEM_A_CRAVATE, true); // Clue #3
+		m_itemArray[ITEM_A_SOGGY_ENVELOPE] = new CItem(ITEM_A_SOGGY_ENVELOPE, false);
+		m_itemArray[ITEM_A_LETTER] = new CItem(ITEM_A_LETTER, false);
+		m_itemArray[ITEM_SCALPELS] = new CItem(ITEM_SCALPELS, false);
+		m_itemArray[ITEM_A_SYRINGE] = new CItem(ITEM_A_SYRINGE, true); // Clue #9
+		m_itemArray[ITEM_A_BOTTLE_OF_PILLS] = new CItem(ITEM_A_BOTTLE_OF_PILLS, false);
+		m_itemArray[ITEM_A_HAMMER] = new CItem(ITEM_A_HAMMER, false);
+		m_itemArray[ITEM_A_BUNCH_OF_KEYS] = new CItem(ITEM_A_BUNCH_OF_KEYS, false);
+		m_itemArray[ITEM_A_BIG_IRON_KEY] = new CItem(ITEM_A_BIG_IRON_KEY, false);
+		m_itemArray[ITEM_A_SILVER_TRAY] = new CItem(ITEM_A_SILVER_TRAY, false);
+		m_itemArray[ITEM_A_BOTTLE_OF_WINE] = new CItem(ITEM_A_BOTTLE_OF_WINE, false);
+		m_itemArray[ITEM_A_COMB] = new CItem(ITEM_A_COMB, false);
+		m_itemArray[ITEM_A_HARDBACK_BOOK] = new CItem(ITEM_A_HARDBACK_BOOK, false);
+		m_itemArray[ITEM_A_FOLDED_DOCUMENT] = new CItem(ITEM_A_FOLDED_DOCUMENT, true); // Clue #2
+		m_itemArray[ITEM_AN_ELEPHANT_GUN] = new CItem(ITEM_AN_ELEPHANT_GUN, false);
+		m_itemArray[ITEM_A_DIARY] = new CItem(ITEM_A_DIARY, false);
+		m_itemArray[ITEM_A_BLACK_BAG] = new CItem(ITEM_A_BLACK_BAG, false);
+		m_itemArray[ITEM_COLOGNE] = new CItem(ITEM_COLOGNE, false);
+		m_itemArray[ITEM_A_SMALL_BOOK] = new CItem(ITEM_A_SMALL_BOOK, false);
+		m_itemArray[ITEM_DIRTY_PLATES] = new CItem(ITEM_DIRTY_PLATES, false);
+		m_itemArray[ITEM_A_PICTURE] = new CItem(ITEM_A_PICTURE, false);
+		m_itemArray[ITEM_A_WAD_OF_NOTES] = new CItem(ITEM_A_WAD_OF_NOTES, true); // Clue #5
+		m_itemArray[ITEM_A_LOCKET] = new CItem(ITEM_A_LOCKET, false);
+		m_itemArray[ITEM_A_SCREWDRIVER] = new CItem(ITEM_A_SCREWDRIVER, false);
+		m_itemArray[ITEM_AN_OPEN_LOCKET] = new CItem(ITEM_AN_OPEN_LOCKET, true); // Clue #10
+		m_itemArray[ITEM_BROKEN_PLATES] = new CItem(ITEM_BROKEN_PLATES, false);
+		m_itemArray[ITEM_BROKEN_GLASS] = new CItem(ITEM_BROKEN_GLASS, false);
+		m_itemArray[ITEM_SHREDDED_PAPER] = new CItem(ITEM_SHREDDED_PAPER, false);
+		m_itemArray[ITEM_BOOKS1] = new CItem(ITEM_BOOKS1, false);
+		m_itemArray[ITEM_BOOKS2] = new CItem(ITEM_BOOKS2, false);
+		m_itemArray[ITEM_A_LETTER_OPENER] = new CItem(ITEM_A_LETTER_OPENER, false);
+		m_itemArray[ITEM_A_JACKET] = new CItem(ITEM_A_JACKET, false);
+		m_itemArray[ITEM_NOTEBOOKS] = new CItem(ITEM_NOTEBOOKS, false);
+		m_itemArray[ITEM_PLANS] = new CItem(ITEM_PLANS, false);
+		m_itemArray[ITEM_A_MIRROR] = new CItem(ITEM_A_MIRROR, false);
+		m_itemArray[ITEM_CUTLERY] = new CItem(ITEM_CUTLERY, false);
+		m_itemArray[ITEM_A_PIECE_OF_CARD] = new CItem(ITEM_A_PIECE_OF_CARD, false);
+		m_itemArray[ITEM_A_BRIEFCASE] = new CItem(ITEM_A_BRIEFCASE, false);
+		m_itemArray[ITEM_A_FOLDER] = new CItem(ITEM_A_FOLDER, false);
+		m_itemArray[ITEM_A_PAPERWEIGHT] = new CItem(ITEM_A_PAPERWEIGHT, false);
+		m_itemArray[ITEM_PADDED_ENVELOPES] = new CItem(ITEM_PADDED_ENVELOPES, false);
+		m_itemArray[ITEM_A_BOMB] = new CItem(ITEM_A_BOMB, true); // Clue #7
+		m_itemArray[ITEM_A_SMALL_KEY] = new CItem(ITEM_A_SMALL_KEY, false);
+		m_itemArray[ITEM_BULLETS] = new CItem(ITEM_BULLETS, false);
+		
 		m_eventArray[EVENT_SHOW_ROOM] = new CEvent(EVENT_SHOW_ROOM, new CTime(9, 10, 0, 0));
 		m_eventArray[EVENT_GET_SHOT] = new CEvent(EVENT_SHOW_ROOM, new CTime(12, 0, 0, 0));
 		break;
@@ -242,9 +297,12 @@ void CGame::Initialize()
 	m_characterArray[CHARTYPE_ANGUS]->SetRoom(m_roomArray[ROOM_HALL4]);
 	m_characterArray[CHARTYPE_ANGUS]->SetAlpha(0x7);
 	
-	m_textConsole = new CTextConsole(&m_cursor);
-	m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+	m_cursor = new CCursor();
+	m_pointer = new CPointer();
 	
+	m_console = new CConsole(m_cursor);
+	m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+		
 	/* for(int i=1; i<MAX_CHARACTERS; i++)
 	{
 		m_characterArray[i]->SetPosition((i - 1) * CHARTYPE_WIDTH, 168 - CHARTYPE_HEIGHT);
@@ -260,6 +318,7 @@ void CGame::Initialize()
 	m_fxManager.Initialize();
 	m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
 	m_fxManager.SetFx(FX_TEXT_SCROLLER, true);
+	m_fxManager.SetFx(FX_COLOUR_PULSE, true);
 	
 	//m_keyboard = new CKeyboard(&m_cursor);
 	//m_keyboard->Initialize();
@@ -278,7 +337,8 @@ void CGame::Initialize()
 	
 	((CFxTextScroller*)m_fxManager.GetFx(FX_TEXT_SCROLLER))->AddText("BENTLY ADVANCES:\"THIS WAY TO YOUR ROOM SIR\"");
 
-	m_menu.DrawMenu();
+	m_menu = new CMenu();
+	m_menu->DrawMenu();
 	
 	m_watch = new CWatch(113, 21);
 	m_timer = new CTimer(9, 10, 0, 0);
@@ -309,83 +369,9 @@ void CGame::Update()
 	
 	//DrawTime(m_timer->pCurrentTime());
 	m_watch->Draw(m_timer->pCurrentTime());
-	m_textConsole->Update(elapsedTime);
-	m_cursor.Update(elapsedTime);
-	m_cursor.Draw();
-	
-	if(keys_pressed & KEY_TOUCH)
-	{
-		IconType iconType = m_menu.CheckIconTouch(touch.px, touch.py);
-		//m_keyboard->CheckKeyTouch(touch.px, touch.py);
-		
-		//DrawText("                                ", 0, 0, false);
-		//DrawText(g_iconName[(int) iconType], 0, 0, false);
-		switch(iconType)
-		{
-		case ICON_OPEN:
-			{
-				CollisionType collisionType = m_snide->CheckCollision(m_snide->Facing());
-				
-				if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
-				{
-					CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
-					
-					if(pDoor != NULL)
-					{
-						if(pDoor->GetDoorState() == DOORSTATE_CLOSED || pDoor->GetDoorState() == DOORSTATE_LOCKED)
-						{
-							pDoor->SetDoorState(DOORSTATE_OPEN);
-							m_currentRoom->Draw();
-							mmEffectEx(&g_sfx_opendoor);
-						}
-						else if(pDoor->GetDoorState() == DOORSTATE_OPEN)
-						{
-							pDoor->SetDoorState(DOORSTATE_CLOSED);
-							m_currentRoom->Draw();
-							mmEffectEx(&g_sfx_closedoor);
-						}
-					}
-				}
-			}
-			break;
-		case ICON_EXAMINE:
-			{
-				CollisionType collisionType = m_snide->CheckCollision(m_snide->Facing());
-				
-				if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
-				{
-					CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
-					
-					if(pDoor != NULL)
-					{
-						if(pDoor->GetDoorState() == DOORSTATE_HIDDEN)
-						{
-							pDoor->SetDoorState(DOORSTATE_OPEN);
-							m_currentRoom->Draw();
-							mmEffectEx(&g_sfx_opendoor);
-							
-							m_textConsole->AddText("YOU FIND:\nA SECRET PASSAGE!");
-						}
-					}
-				}
-				else
-					m_textConsole->AddText(g_colName[collisionType]);
-			}
-			break;
-		case ICON_TIME:
-			{
-				char buf[512];
-				sprintf(buf, " THE TIME IS NOW:\n\n      %02d: %02d\n\n PAUSED..PRESS\nFIRE TO CONTINUE.", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes);
-				//m_textConsole->AddText("  THE TIME IS NOW:");
-				m_textConsole->AddText(buf);
-				//m_textConsole->AddText("  PAUSED..PRESS");
-				//m_textConsole->AddText("FIRE TO CONTINUE.");
-			}
-		default:
-			break;
-		}
-	}
-	
+	m_console->Update(elapsedTime);
+	m_cursor->Update(elapsedTime);
+	m_cursor->Draw();
 	
 	for(int i=0; i<MAX_EVENTS; i++)
 	{
@@ -401,197 +387,104 @@ void CGame::Update()
 	
 	BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
 	
-	if((keys_released & KEY_UP) ||
-		(keys_released & KEY_DOWN) ||
-		(keys_released & KEY_LEFT) ||
-		(keys_released & KEY_RIGHT))
+	if(keys_released & KEY_L || keys_released & KEY_R)
 	{
-		mmEffectCancel(footsteps);
-		footsteps = 0;
+		lcdSwap();
 	}
 	
-	if(((keys_held & KEY_UP) ||
-		(keys_held & KEY_DOWN) ||
-		(keys_held & KEY_LEFT) ||
-		(keys_held & KEY_RIGHT)) &&
-		(footsteps == 0))
+	if(m_gameMode == GAMEMODE_PAUSED)
 	{
-		footsteps = mmEffectEx(&g_sfx_footsteps);
+		if(keys_released & KEY_A)
+		{
+			m_gameMode = GAMEMODE_RUNNING;
+			m_console->ClearText();
+			m_timer->Start();
+		}
+		
+		return;
 	}
 	
-	if(keys_held & KEY_UP)
+	if(m_displayMode == DISPLAYMODE_GAME)
 	{
-		if(m_snide->SpriteX() < 256 - m_snide->Width() - 8)
+		if((keys_released & KEY_UP) ||
+			(keys_released & KEY_DOWN) ||
+			(keys_released & KEY_LEFT) ||
+			(keys_released & KEY_RIGHT))
 		{
-			CollisionType collisionType = m_snide->CheckCollision(DIRECTION_UP);
-			
-			if(collisionType == COL_NOTHING_HERE)
-				m_snide->Move(DIRECTION_UP);
-			else
-				m_snide->Face(DIRECTION_UP);
-			
-			if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
-			{
-				CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
-				
-				if(pDoor != NULL)
-				{
-					if(pDoor->GetDoorState() == DOORSTATE_OPEN)
-					{
-						m_currentRoom = pDoor->pRoomOut();
-						PPOINT pDoorPoint = pDoor->pDoorOut()->pPoint();
-						
-						int xDoor = pDoorPoint->X * 8;
-						int yDoor = pDoorPoint->Y * 8;
-						
-						int xRoom = xDoor - 128;
-						
-						int xChar = xDoor;
-						int yChar = yDoor - m_snide->Height();
-							
-						pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
-						
-						m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
-						
-						m_currentRoom->Initialize(xRoom);
-						m_snide->SetRoom(m_currentRoom);
-						m_snide->SetPosition(xChar, yChar);
-						
-						m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
-						
-						//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
-						
-						//char buf[256];
-						//sprintf(buf, "xDoor: %05d, xRoom: %05d, xChar: %05d", xDoor, xRoom, xChar);
-						//DrawText(buf, 0, 1, false);
-					}
-				}
-			}
+			mmEffectCancel(footsteps);
+			footsteps = 0;
 		}
-	}
-	else if(keys_held & KEY_DOWN)
-	{
-		if(m_snide->SpriteX() > 8)
-		{
-			CollisionType collisionType = m_snide->CheckCollision(DIRECTION_DOWN);
-			
-			if(collisionType == COL_NOTHING_HERE)
-				m_snide->Move(DIRECTION_DOWN);
-			else
-				m_snide->Face(DIRECTION_DOWN);
-			
-			if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
-			{
-				CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
-				
-				if(pDoor != NULL)
-				{
-					if(pDoor->GetDoorState() == DOORSTATE_OPEN)
-					{
-						m_currentRoom = pDoor->pRoomOut();
-						PPOINT pDoorPoint = pDoor->pDoorOut()->pPoint();
-							
-						int xDoor = pDoorPoint->X * 8;
-						int yDoor = pDoorPoint->Y * 8;
-						
-						int xRoom = xDoor - 128;
-						
-						int xChar = xDoor;
-						int yChar = yDoor - m_snide->Height() + 16;
-						
-						pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
-						
-						m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
-						
-						m_currentRoom->Initialize(xRoom);
-						m_snide->SetRoom(m_currentRoom);
-						m_snide->SetPosition(xChar, yChar);
-						
-						m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
-						
-						//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
-						
-						//char buf[256];
-						//sprintf(buf, "xDoor: %05d, xRoom: %05d, xChar: %05d", xDoor, xRoom, xChar);
-						//DrawText(buf, 0, 1, false);
-					}
-				}
-			}
-		}
-	}
-	else if(keys_held & KEY_LEFT)
-	{
-		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_LEFT);
 		
-		if(collisionType == COL_NOTHING_HERE)
+		if(((keys_held & KEY_UP) ||
+			(keys_held & KEY_DOWN) ||
+			(keys_held & KEY_LEFT) ||
+			(keys_held & KEY_RIGHT)) &&
+			(footsteps == 0))
 		{
-			m_snide->Move(DIRECTION_LEFT);
-			
-			if(m_snide->SpriteX() < 128)
-				m_currentRoom->Scroll(DIRECTION_LEFT);
+			footsteps = mmEffectEx(&g_sfx_footsteps);
 		}
-		else if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
-		{
-			CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
-			
-			if(pDoor != NULL)
-			{
-				m_currentRoom = pDoor->pRoomOut();
-				
-				pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
-				
-				int xChar = m_currentRoom->Width() - m_snide->Width() - 8;
-				
-				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
-			
-				m_currentRoom->Initialize(m_currentRoom->Width() - 256);
-				m_snide->SetRoom(m_currentRoom);
-				m_snide->SetX(xChar);
-				
-				m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
-			}
+	
+		if(keys_pressed & KEY_TOUCH)
+		{		
+			ProcessMenu(touch.px, touch.py);
 		}
-	}
-	else if(keys_held & KEY_RIGHT)
-	{
-		CollisionType collisionType = m_snide->CheckCollision(DIRECTION_RIGHT);
+	
+		ProcessSnideMovement(keys_held);
 		
-		if(collisionType == COL_NOTHING_HERE)
+		if(keys_released & KEY_A)
 		{
-			m_snide->Move(DIRECTION_RIGHT);
-			
-			if(m_snide->SpriteX() > 128)
-				m_currentRoom->Scroll(DIRECTION_RIGHT);
-		}
-		else if(collisionType >= COL_DOOR1 && collisionType <= COL_DOOR8)
-		{
-			CDoor* pDoor = m_currentRoom->GetDoor((int)collisionType);
-			
-			if(pDoor != NULL)
-			{
-				m_currentRoom = pDoor->pRoomOut();
-				
-				pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
-				
-				int xChar = 8;
-				
-				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
-						
-				m_currentRoom->Initialize(0);
-				m_snide->SetRoom(m_currentRoom);
-				m_snide->SetX(xChar);
-				
-				m_textConsole->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
-			}
+			m_displayMode = DISPLAYMODE_MENU;
+			m_snide->SetCharacterMode(CHARMODE_NONE);
+			m_pointer->SetRect(MENU_X, MENU_Y, MENU_WIDTH, MENU_HEIGHT);
+			//m_pointer->SetRect(CONSOLE_MENU_X, CONSOLE_MENU_Y, CONSOLE_MENU_WIDTH, CONSOLE_MENU_HEIGHT);
 		}
 	}
-	else if(keys_held & KEY_A)
+	else if(m_displayMode == DISPLAYMODE_MENU)
 	{
-		m_snide->SetCharacterMode(CHARMODE_TALKING);
+		if(keys_released & KEY_A)
+		{
+			m_displayMode = DISPLAYMODE_GAME;
+
+			PPOINT pPoint = m_pointer->pPoint();
+			ProcessMenu(pPoint->X, pPoint->Y);
+			m_pointer->Hide();
+			m_menu->HideBox();
+		}
+		else
+		{
+			PPOINT pPoint = m_pointer->pPoint();
+			m_pointer->Move(keys_held);
+			m_pointer->Draw();
+			m_menu->DrawBox(pPoint->X, pPoint->Y);
+		}
 	}
-	else
+	else if(m_displayMode == DISPLAYMODE_CONSOLE)
 	{
-		m_snide->SetCharacterMode(CHARMODE_NONE);
+		if(keys_released & KEY_A)
+		{
+			m_displayMode = DISPLAYMODE_GAME;
+			m_pointer->Hide();
+			m_menu->HideBox();
+			m_console->HideSelectorBar();
+			
+			//char buf[256];
+			//sprintf(buf, g_accuseName[m_console->MenuItem()]);
+			//fprintf(stderr, buf);
+		}
+		else if(keys_released & KEY_UP)
+		{
+			m_console->MoveSelectorBar(DIRECTION_UP);
+			m_console->DrawSelectorBar();
+		}
+		else if(keys_released & KEY_DOWN)
+		{
+			m_console->MoveSelectorBar(DIRECTION_DOWN);
+			m_console->DrawSelectorBar();
+		}
+	}
+	else if(m_displayMode == DISPLAYMODE_KEYBOARD)
+	{
+		m_keyboard->CheckKeyTouch(touch.px, touch.py);
 	}
 	
 	m_currentRoom->Animate(elapsedTime);
@@ -605,6 +498,301 @@ void CGame::Update()
 	
 	oamUpdate(&oamMain);
 	oamUpdate(&oamSub);
+}
+
+void CGame::ProcessSnideMovement(int keys_held)
+{
+	CollisionType colNear, colFar;
+	CDoor* pDoor = NULL;
+	
+	if(keys_held & KEY_UP)
+	{
+		if(m_snide->SpriteX() < 256 - m_snide->Width() - 8)
+		{
+			m_snide->CheckCollision(DIRECTION_UP, &colNear, &colFar);
+			
+			SetMenuIcons(colNear, colFar);
+			
+			if(colNear == COL_NOTHING_HERE)
+				m_snide->Move(DIRECTION_UP);
+			else
+				m_snide->Face(DIRECTION_UP);
+			
+			if(TryGetDoor(colNear, colNear, pDoor))
+			{
+				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+				{		
+					m_currentRoom = pDoor->pRoomOut();
+					PPOINT pDoorPoint = pDoor->pDoorOut()->pPoint();
+					
+					int xDoor = pDoorPoint->X * 8;
+					int yDoor = pDoorPoint->Y * 8;
+					
+					int xRoom = xDoor - 128;
+					
+					int xChar = xDoor;
+					int yChar = yDoor - m_snide->Height();
+						
+					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
+					
+					m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+					
+					m_currentRoom->Initialize(xRoom);
+					m_snide->SetRoom(m_currentRoom);
+					m_snide->SetPosition(xChar, yChar);
+					
+					m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+					
+					//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
+					
+					//char buf[256];
+					//sprintf(buf, "xDoor: %05d, xRoom: %05d, xChar: %05d", xDoor, xRoom, xChar);
+					//DrawText(buf, 0, 1, false);
+				}
+			}
+		}
+	}
+	else if(keys_held & KEY_DOWN)
+	{
+		if(m_snide->SpriteX() > 8)
+		{
+			m_snide->CheckCollision(DIRECTION_DOWN, &colNear, &colFar);
+			
+			SetMenuIcons(colNear, colFar);
+			
+			if(colNear == COL_NOTHING_HERE)
+				m_snide->Move(DIRECTION_DOWN);
+			else
+				m_snide->Face(DIRECTION_DOWN);
+			
+			if(TryGetDoor(colNear, colNear, pDoor))
+			{
+				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+				{
+					m_currentRoom = pDoor->pRoomOut();
+					PPOINT pDoorPoint = pDoor->pDoorOut()->pPoint();
+						
+					int xDoor = pDoorPoint->X * 8;
+					int yDoor = pDoorPoint->Y * 8;
+					
+					int xRoom = xDoor - 128;
+					
+					int xChar = xDoor;
+					int yChar = yDoor - m_snide->Height() + 16;
+					
+					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
+					
+					m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+					
+					m_currentRoom->Initialize(xRoom);
+					m_snide->SetRoom(m_currentRoom);
+					m_snide->SetPosition(xChar, yChar);
+					
+					m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+					
+					//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
+					
+					//char buf[256];
+					//sprintf(buf, "xDoor: %05d, xRoom: %05d, xChar: %05d", xDoor, xRoom, xChar);
+					//DrawText(buf, 0, 1, false);
+				}
+			}
+		}
+	}
+	else if(keys_held & KEY_LEFT)
+	{
+		m_snide->CheckCollision(DIRECTION_LEFT, &colNear, &colFar);
+		
+		SetMenuIcons(colNear, colFar);
+		
+		if(colNear == COL_NOTHING_HERE)
+		{
+			m_snide->Move(DIRECTION_LEFT);
+			
+			if(m_snide->SpriteX() < 128)
+				m_currentRoom->Scroll(DIRECTION_LEFT);
+		}
+		else
+		{
+			if(TryGetDoor(colNear, colFar, pDoor))
+			{
+				m_currentRoom = pDoor->pRoomOut();
+				
+				pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
+				
+				int xChar = m_currentRoom->Width() - m_snide->Width() - 8;
+				
+				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+			
+				m_currentRoom->Initialize(m_currentRoom->Width() - 256);
+				m_snide->SetRoom(m_currentRoom);
+				m_snide->SetX(xChar);
+				
+				m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+			}
+		}
+	}
+	else if(keys_held & KEY_RIGHT)
+	{
+		m_snide->CheckCollision(DIRECTION_RIGHT, &colNear, &colFar);
+		
+		SetMenuIcons(colNear, colFar);
+		
+		if(colNear == COL_NOTHING_HERE)
+		{
+			m_snide->Move(DIRECTION_RIGHT);
+			
+			if(m_snide->SpriteX() > 128)
+				m_currentRoom->Scroll(DIRECTION_RIGHT);
+		}
+		else
+		{
+			if(TryGetDoor(colNear, colFar, pDoor))
+			{
+				m_currentRoom = pDoor->pRoomOut();
+				
+				pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
+				
+				int xChar = 8;
+				
+				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+						
+				m_currentRoom->Initialize(0);
+				m_snide->SetRoom(m_currentRoom);
+				m_snide->SetX(xChar);
+				
+				m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+			}
+		}
+	}
+	else
+		m_snide->SetCharacterMode(CHARMODE_NONE);
+}
+
+void CGame::SetMenuIcons(CollisionType colNear, CollisionType colFar)
+{
+	CDoor* pDoor = NULL;
+	
+	if(colNear == COL_NOTHING_HERE && colFar == COL_NOTHING_HERE)
+		m_menu->AddIconSet(ICONSET_GENERAL);
+	else
+	{
+		if(TryGetDoor(colNear, colFar, pDoor))
+		{
+			if(!pDoor->Hidden())
+			{
+				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+					m_menu->AddIconSet(ICONSET_DOOR_CLOSE);
+				else
+					m_menu->AddIconSet(ICONSET_DOOR_OPEN);
+			}
+		}
+	}
+}
+
+bool CGame::TryGetDoor(CollisionType colNear, CollisionType colFar, CDoor*& pDoor)
+{
+	pDoor = NULL;
+	
+	if(colNear >= COL_DOOR1 && colNear <= COL_DOOR8)
+	{
+		pDoor = m_currentRoom->GetDoor((int)colNear);
+		
+		return true;
+	}
+	else if(colFar >= COL_DOOR1 && colFar <= COL_DOOR8)
+	{
+		pDoor = m_currentRoom->GetDoor((int)colFar);
+		
+		return true;
+	}
+	
+	return false;
+}
+
+void CGame::ProcessMenu(int x, int y)
+{
+	static char buf[512];
+	CollisionType colNear, colFar;
+	IconType iconType = m_menu->CheckIconHit(x, y);
+	CDoor* pDoor = NULL;
+	
+	//DrawText("                                ", 0, 0, false);
+	//DrawText(g_iconName[(int) iconType], 0, 0, false);
+	switch(iconType)
+	{
+	case ICON_DOOR_OPEN:
+	case ICON_DOOR_CLOSE:
+		{
+			m_snide->CheckCollision(m_snide->Facing(), &colNear, &colFar);
+			
+			if(TryGetDoor(colNear, colFar, pDoor))
+			{
+				if(pDoor->GetDoorState() == DOORSTATE_CLOSED || pDoor->GetDoorState() == DOORSTATE_LOCKED)
+				{
+					pDoor->SetDoorState(DOORSTATE_OPEN);
+					m_currentRoom->Draw();
+					mmEffectEx(&g_sfx_opendoor);
+					SetMenuIcons(colNear, colFar);
+				}
+				else if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+				{
+					pDoor->SetDoorState(DOORSTATE_CLOSED);
+					m_currentRoom->Draw();
+					mmEffectEx(&g_sfx_closedoor);
+					SetMenuIcons(colNear, colFar);
+				}
+			}
+		}
+		break;
+	case ICON_EXAMINE:
+		{
+			m_snide->CheckCollision(m_snide->Facing(), &colNear, &colFar);
+			
+			if(TryGetDoor(colNear, colFar, pDoor))
+			{			
+				if(pDoor->GetDoorState() == DOORSTATE_HIDDEN)
+				{
+					pDoor->SetDoorState(DOORSTATE_OPEN);
+					m_currentRoom->Draw();
+					mmEffectEx(&g_sfx_opendoor);
+					
+					m_console->AddText("YOU FIND:\nA SECRET PASSAGE!");
+				}
+			}
+			else
+				m_console->AddText(g_colName[colNear]);
+		}
+		break;
+	case ICON_TIME:
+		{
+			sprintf(buf, " THE TIME IS NOW:\n\n      %02d: %02d\n\n PAUSED..PRESS\nA TO CONTINUE.", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes);
+			m_console->AddText(buf);
+			m_gameMode = GAMEMODE_PAUSED;
+			m_timer->Stop();
+		}
+		break;
+	case ICON_INVENTORY:
+		{
+			m_console->AddText("YOU ARE CARRYING:");
+			m_displayMode = DISPLAYMODE_CONSOLE;
+			m_console->DrawSelectorBar();
+		}
+		break;
+	case ICON_USE:
+		m_console->AddText("USE:");
+		m_displayMode = DISPLAYMODE_CONSOLE;
+		m_console->DrawSelectorBar();
+		break;
+	case ICON_ACCUSE:
+		m_console->AddText("WHO IS THE\nMURDERER?");
+		m_displayMode = DISPLAYMODE_CONSOLE;
+		m_console->CreateMenu(g_accuseName, 9);
+		m_console->DrawSelectorBar();
+		break;
+	default:
+		break;
+	}
 }
 
 void CGame::InitializeDoors()

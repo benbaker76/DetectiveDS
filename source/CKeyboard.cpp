@@ -35,10 +35,10 @@ void CKeyboard::Shutdown()
 	dmaCopy(menu_bottomMap, BG_MAP_RAM(BG3_MAP_BASE), menu_bottomMapLen);
 }
 
-void CKeyboard::CheckKeyTouch(int touchX, int touchY)
+void CKeyboard::CheckKeyTouch(int x, int y)
 {
-	int mapX = touchX / 8;
-	int mapY = touchY / 8;
+	int mapX = x / 8;
+	int mapY = y / 8;
 	
 	if(mapY < 16)
 		return;

@@ -163,3 +163,37 @@ void CFxLights::UpdateVBlank()
 void CFxLights::UpdateHBlank()
 {
 }
+
+// ------------------------------------------------
+
+void CFxColourPulse::Initialize()
+{
+	m_ping = true;
+	m_fadeValue = false;
+}
+
+void CFxColourPulse::Shutdown()
+{
+	*(SPRITE_PALETTE + 47)  = 0xFFF;
+	dmaTransfer(1, NULL, NULL, 0, 0);
+}
+
+void CFxColourPulse::UpdateVBlank()
+{
+	*(SPRITE_PALETTE + 47) = (m_fadeValue << 10) | (m_fadeValue << 5) | m_fadeValue;
+
+	if(m_ping)
+	{
+		if(++m_fadeValue >= 0x1F-1)
+			m_ping = !m_ping;
+	}
+	else
+	{
+		if(--m_fadeValue <= 8)
+			m_ping = !m_ping;
+	}
+}
+
+void CFxColourPulse::UpdateHBlank()
+{
+}

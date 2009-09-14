@@ -10,9 +10,9 @@ CWatch::CWatch(int x, int y)
 	m_gfxMinutes = oamAllocateGfx(&oamSub, SpriteSize_32x32, SpriteColorFormat_256Color);
 	m_gfxSeconds = oamAllocateGfx(&oamSub, SpriteSize_32x32, SpriteColorFormat_256Color);
 	
-	dmaCopy(sprite_watchTiles, m_gfxHours, 32 * 32);
-	dmaCopy(sprite_watchTiles + 256, m_gfxMinutes, 32 * 32);
-	dmaCopy(sprite_watchTiles + 512, m_gfxSeconds, 32 * 32);
+	dmaCopy(sprite_watchTiles + 256 * 0, m_gfxHours, 32 * 32);
+	dmaCopy(sprite_watchTiles + 256 * 1, m_gfxMinutes, 32 * 32);
+	dmaCopy(sprite_watchTiles + 256 * 2, m_gfxSeconds, 32 * 32);
 }
 
 CWatch::~CWatch()
