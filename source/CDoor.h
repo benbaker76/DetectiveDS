@@ -44,7 +44,7 @@ public:
 	CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoomOut);
 	~CDoor();
 	
-	void Initialize();
+	bool  Initialize();
 	void SetDoorState(DoorState doorState);
 	void Draw();
 	
@@ -66,6 +66,7 @@ private:
 	CDoor* m_pDoorOut;
 	
 	bool m_hidden;
+	bool m_topDoor;
 	
 	POINT m_point;
 	RECT m_rect;

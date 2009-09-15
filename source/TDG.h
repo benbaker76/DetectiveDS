@@ -21,9 +21,17 @@
 #include "CPath.h"
 #include "CPointer.h"
 
+#include "map_angus_landing.h"
+#include "map_angus_room1.h"
+#include "map_angus_room2.h"
+#include "map_angus_secret.h"
+#include "map_angus_stairs.h"
 #include "map_cellar.h"
 #include "map_clock.h"
+#include "map_courtyard.h"
 #include "map_drawing.h"
+#include "map_garden.h"
+#include "map_graveyard.h"
 #include "map_hall1.h"
 #include "map_hall2.h"
 #include "map_hall3.h"
@@ -39,15 +47,18 @@
 #include "map_room2.h"
 #include "map_stairs.h"
 #include "map_study.h"
-#include "map_garden.h"
-#include "map_graveyard.h"
+#include "map_utility.h"
 
+#include "map_angus_landing_front.h"
+#include "map_angus_room_front.h"
+#include "map_angus_secret_front.h"
+#include "map_courtyard_front.h"
+#include "map_garden_front.h"
+#include "map_graveyard_front.h"
 #include "map_landing_front1.h"
 #include "map_landing_front2.h"
 #include "map_outside2_front.h"
 #include "map_stairs_front.h"
-#include "map_garden_front.h"
-#include "map_graveyard_front.h"
 
 #include "sprite_snide_head.h"
 #include "sprite_snide_body.h"
@@ -104,14 +115,14 @@
 #define BG3_MAP_BASE				30
 #define BG3_MAP_BASE_SUB			30
 
-#define BG0_TILE_BASE				6
-#define BG0_TILE_BASE_SUB			6
+#define BG0_TILE_BASE				7
+#define BG0_TILE_BASE_SUB			7
 
-#define BG1_TILE_BASE				4
-#define BG1_TILE_BASE_SUB			4
+#define BG1_TILE_BASE				5
+#define BG1_TILE_BASE_SUB			5
 
-#define BG2_TILE_BASE				2
-#define BG2_TILE_BASE_SUB			2
+#define BG2_TILE_BASE				3
+#define BG2_TILE_BASE_SUB			3
 
 #define BG3_TILE_BASE				0
 #define BG3_TILE_BASE_SUB			0

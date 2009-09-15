@@ -37,9 +37,9 @@ void CCharacter::SetPosition(float x, float y)
 {
 	m_x = x;
 	m_y = y;
-
-	m_pHeadSprite->SetPosition(m_x - m_pRoom->X(), m_y);
-	m_pBodySprite->SetPosition(m_x - m_pRoom->X(), m_y+HEAD_HEIGHT);
+	
+	m_pHeadSprite->SetPosition(AbsX(), m_y);
+	m_pBodySprite->SetPosition(AbsX(), m_y+HEAD_HEIGHT);
 }
 
 void CCharacter::UpdatePosition()
@@ -117,8 +117,7 @@ void CCharacter::UpdatePosition()
 			SetCharacterMode(CHARMODE_WAITING);
 	}
 	
-	m_pHeadSprite->SetPosition(m_x - m_pRoom->X(), m_y);
-	m_pBodySprite->SetPosition(m_x - m_pRoom->X(), m_y+HEAD_HEIGHT);
+	SetPosition(m_x, m_y);
 }
 
 void CCharacter::SetOamIndex(int index)
@@ -137,6 +136,14 @@ void CCharacter::Animate(int elapsedTime)
 {
 	m_pHeadSprite->Animate(elapsedTime);
 	m_pBodySprite->Animate(elapsedTime);
+}
+
+void CCharacter::SetVisible(CRoom* pRoom)
+{
+	if(m_pRoom == pRoom && AbsX() + m_width > 0 && AbsX() < 256)
+		Show();
+	else
+		Hide();
 }
 
 void CCharacter::Show()
@@ -285,4 +292,9 @@ void CCharacter::SetCharacterMode(CharacterMode characterMode)
 	case CHARMOND_DEAD:
 		break;
 	}
+}
+
+int CCharacter::AbsX()
+{
+	return m_x - m_pRoom->X();
 }

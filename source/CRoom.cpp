@@ -16,11 +16,11 @@ CRoom::CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const unsigned char* p
 	for(int i=0; i<MAX_DOORS; i++)
 		m_doorArray[i] = NULL;
 		
-	GetColMapRect(COL_TORCH_LOC1, &m_rectTorch[TORCHRECT_TORCH1]);
-	GetColMapRect(COL_TORCH_LOC2, &m_rectTorch[TORCHRECT_TORCH2]);
-	GetColMapRect(COL_TORCH_LOC3, &m_rectTorch[TORCHRECT_TORCH3]);
+	GetColMapRect(COL_TORCH_ANIM1, &m_rectTorch[TORCHRECT_TORCH1]);
+	GetColMapRect(COL_TORCH_ANIM2, &m_rectTorch[TORCHRECT_TORCH2]);
+	GetColMapRect(COL_TORCH_ANIM3, &m_rectTorch[TORCHRECT_TORCH3]);
 	
-	GetColMapRect(COL_FIREPLACE_LOC, &m_rectFireplace);
+	GetColMapRect(COL_FIREPLACE_ANIM, &m_rectFireplace);
 	
 	//char buf[256];
 	//sprintf(buf, "X:%d, Y:%d, Width:%d, Height:%d", m_rectFireplace.X, m_rectFireplace.Y, m_rectFireplace.Width, m_rectFireplace.Height);
@@ -150,6 +150,9 @@ bool CRoom::DoorIntersect(PRECT pRect)
 void CRoom::MoveMap(PRECT rectSrc, PRECT rectDst)
 {
 	if(IsRectEmpty(rectSrc) || IsRectEmpty(rectDst))
+		return;
+		
+	if(rectSrc->Width != rectDst->Width || rectSrc->Height != rectSrc->Height)
 		return;
 
 	int scrollX = m_x / 256;

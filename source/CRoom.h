@@ -4,7 +4,7 @@
 #include <nds.h>
 #include "Globals.h"
 
-#define MAX_ROOMS			31
+#define MAX_ROOMS			37
 #define MAX_DOORS			9
 #define MAX_ROOM_RECT		5
 #define MAX_TORCH_RECT		3
@@ -40,8 +40,14 @@ enum RoomType
 	ROOM_CELLAR,
 	ROOM_DRAWING,
 	ROOM_LIBRARY,
+	ROOM_UTILITY,
 	ROOM_GARDEN,
-	ROOM_GRAVEYARD
+	ROOM_GRAVEYARD,
+	ROOM_COURTYARD,
+	ROOM_ANGUS_LANDING,
+	ROOM_ANGUS_ROOM,
+	ROOM_ANGUS_SECRET,
+	ROOM_ANGUS_STAIRS
 };
 
 enum RoomRect

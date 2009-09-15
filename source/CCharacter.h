@@ -4,7 +4,7 @@
 #include "TDG.h"
 
 #define MAX_CHARACTERS			11
-#define MAX_ROOMS				31
+#define MAX_ROOMS				37
 
 #define CHARACTER_WIDTH			24
 #define CHARACTER_HEIGHT		53
@@ -48,6 +48,7 @@ public:
 	void SetOamIndex(int index);
 	void SetPriority(int priority);
 	void Animate(int elapsedTime);
+	void SetVisible(CRoom* pRoom);
 	void Show();
 	void Hide();
 	void Disable();
@@ -74,10 +75,11 @@ public:
 	
 	float X() const { return m_x; }
 	float Y() const { return m_y; }
-	float SpriteX() const { return m_pHeadSprite->X(); }
-	float SpriteY() const { return m_pHeadSprite->Y(); }
-	float Width() const { return m_width; }
-	float Height() const { return m_height; }
+	int AbsX(); // const { return m_x - m_pRoom->X(); }
+	int SpriteX() const { return m_pHeadSprite->X(); }
+	int SpriteY() const { return m_pHeadSprite->Y(); }
+	int Width() const { return m_width; }
+	int Height() const { return m_height; }
 	DirectionType Facing() const { return m_facing; }
 	bool Visible() const { return m_visible; }
 	

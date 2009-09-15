@@ -44,13 +44,17 @@ enum CollisionType
 	COL_PIANO_AND_A_SQUASHED_CYNTHIA_SLUDGEBUCKET = 39,
 	COL_GABRIELS_BODY = 40,
 	COL_STABBED_DOCTOR = 41,
-	COL_TORCH_LOC1 = 42,
-	COL_TORCH_LOC2 = 43,
-	COL_TORCH_LOC3 = 44,
+	COL_TORCH_ANIM1 = 42,
+	COL_TORCH_ANIM2 = 43,
+	COL_TORCH_ANIM3 = 44,
 	COL_HEADSTONE1 = 45,
 	COL_HEADSTONE2 = 46,
 	COL_CLOCK_FACE = 47,
-	COL_FIREPLACE_LOC = 48,
+	COL_FIREPLACE_ANIM = 48,
+	COL_FOUNTAIN = 49,
+	COL_GARGOYLE1 = 50,
+	COL_GARGOYLE2 = 51,
+	COL_GARGOYLE3 = 52,
 	
 	// ------- Hidden objects
 	
@@ -66,8 +70,14 @@ enum CollisionType
 	COL_FIREPLACE3 = 73
 };
 
+extern const unsigned char col_angus_landing[];
+extern const unsigned char col_angus_room1[];
+extern const unsigned char col_angus_room2[];
+extern const unsigned char col_angus_secret[];
+extern const unsigned char col_angus_stairs[];
 extern const unsigned char col_cellar[];
 extern const unsigned char col_clock[];
+extern const unsigned char col_courtyard[];
 extern const unsigned char col_drawing[];
 extern const unsigned char col_garden[];
 extern const unsigned char col_graveyard[];
@@ -89,3 +99,4 @@ extern const unsigned char col_room3[];
 extern const unsigned char col_stairs[];
 extern const unsigned char col_stairs_front[];
 extern const unsigned char col_study[];
+extern const unsigned char col_utility[];
