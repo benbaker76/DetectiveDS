@@ -12,6 +12,7 @@ public:
 
 	void Initialize();
 	void Shutdown();
+	void Reset();
 	void UpdateVBlank();
 	void UpdateHBlank();
 
@@ -21,21 +22,22 @@ private:
 	bool m_lightsEnabled;
 };
 
-class CFxLights : public CFx
+class CFxFadeRamp : public CFx
 {
 public:
 
-	CFxLights(FxType fxType, CFxManager* fxManager) : CFx(fxType, fxManager) {}
-	~CFxLights() {}
+	CFxFadeRamp(FxType fxType, CFxManager* fxManager) : CFx(fxType, fxManager) {}
+	~CFxFadeRamp() {}
 
 	void Initialize();
 	void Shutdown();
+	void Reset();
 	void UpdateVBlank();
 	void UpdateHBlank();
 
 private:
 
-	u16 m_map_light[SCREEN_HEIGHT];
+	u16 m_map_ramp[SCREEN_HEIGHT];
 	u16 m_map_mix[SCREEN_HEIGHT];
 	u16 m_fadeValue; 
 };
@@ -49,6 +51,7 @@ public:
 
 	void Initialize();
 	void Shutdown();
+	void Reset();
 	void UpdateVBlank();
 	void UpdateHBlank();
 

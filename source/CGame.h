@@ -34,15 +34,20 @@ public:
 	
 	void Initialize();
 	void Update();
-	void ProcessSnideMovement(int keys_held);
+	void UpdateSnideMovement(int keys_held);
 	void SetMenuIcons(CollisionType colNear, CollisionType colFar);
 	bool TryGetDoor(CollisionType colNear, CollisionType colFar, CDoor*& pDoor);
 	void ProcessMenu(int x, int y);
 	void PostProcessMenu();
+	
+	void InitRoom();
+	void UpdateFx();
+
 	void InitializeDoors();
 	void SortSprites();
 	void UpdateCharacters(int elapsedTime);
 	
+	mm_word MusicEventHandler(mm_word msg, mm_word param);
 	void UpdateVBlank();
 	void UpdateHBlank();
 	void UpdateTimer1();

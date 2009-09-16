@@ -19,6 +19,10 @@ void CFx::Shutdown()
 {
 }
 
+void CFx::Reset()
+{
+}
+
 void CFx::UpdateVBlank()
 {
 }

@@ -16,8 +16,8 @@ public:
 	void UpdateVBlank();
 	void UpdateHBlank();
 	
-	void SetFx(int fxType, bool state) { m_fxArray[fxType]->SetEnabled(state); }
-	CFx* GetFx(int fxType) { return m_fxArray[fxType]; }
+	void SetFx(FxType fxType, FxMode fxMode, bool state) { m_fxArray[fxType]->SetEnabled(fxMode, state); }
+	CFx* GetFx(FxType fxType) { return m_fxArray[fxType]; }
 
 private:
 

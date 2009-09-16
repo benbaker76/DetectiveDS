@@ -92,6 +92,9 @@ public:
 	void SetOverlay(PMAP pOverlay, int overlayY) { m_pOverlay = pOverlay; m_overlayY = overlayY; }
 	void SetColMap(const u8* pColMap) { m_pColMap = pColMap; }
 	
+	void SetPalette(u16* pPalette) { dmaCopy(pPalette, BG_PALETTE_SUB, 512); }
+	void RestorePalette() { dmaCopy(m_pMap->pPalette, BG_PALETTE_SUB, m_pMap->PaletteLen); }
+	
 	RoomType GetRoomType() { return m_roomType; }
 	
 	int X() const { return m_x; }

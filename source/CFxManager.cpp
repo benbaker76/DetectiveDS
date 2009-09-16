@@ -2,6 +2,7 @@
 #include "Text.h"
 #include "CFxFade.h"
 #include "CFxTextScroller.h"
+#include "CFxParticles.h"
 
 CFxManager::CFxManager()
 {
@@ -15,25 +16,18 @@ CFxManager::~CFxManager()
 
 void CFxManager::Initialize()
 {
-	m_fxArray[FX_FADE_BLACK_IN] = new CFxFade(FX_FADE_BLACK_IN, this);
-	m_fxArray[FX_FADE_BLACK_OUT] = new CFxFade(FX_FADE_BLACK_OUT, this);
-	m_fxArray[FX_FADE_WHITE_IN] = new CFxFade(FX_FADE_WHITE_IN, this);
-	m_fxArray[FX_FADE_WHITE_OUT] = new CFxFade(FX_FADE_WHITE_OUT, this);
-	m_fxArray[FX_LIGHTS_BLACK] = new CFxLights(FX_LIGHTS_BLACK, this);
-	m_fxArray[FX_LIGHTS_BLACK_IN] = new CFxLights(FX_LIGHTS_BLACK_IN, this);
-	m_fxArray[FX_LIGHTS_BLACK_OUT] = new CFxLights(FX_LIGHTS_BLACK_OUT, this);
-	m_fxArray[FX_LIGHTS_WHITE] = new CFxLights(FX_LIGHTS_WHITE, this);
-	m_fxArray[FX_LIGHTS_WHITE_IN] = new CFxLights(FX_LIGHTS_WHITE_IN, this);
-	m_fxArray[FX_LIGHTS_WHITE_OUT] = new CFxLights(FX_LIGHTS_WHITE_OUT, this);
-	m_fxArray[FX_TEXT_SCROLLER] = new CFxTextScroller(FX_TEXT_SCROLLER, this);
-	m_fxArray[FX_COLOUR_PULSE] = new CFxColourPulse(FX_COLOUR_PULSE, this);
+	m_fxArray[FXTYPE_FADE] = new CFxFade(FXTYPE_FADE, this);
+	m_fxArray[FXTYPE_FADE_RAMP] = new CFxFadeRamp(FXTYPE_FADE_RAMP, this);
+	m_fxArray[FXTYPE_TEXT_SCROLLER] = new CFxTextScroller(FXTYPE_TEXT_SCROLLER, this);
+	m_fxArray[FXTYPE_COLOUR] = new CFxColourPulse(FXTYPE_COLOUR, this);
+	m_fxArray[FXTYPE_PARTICLES] = new CFxParticles(FXTYPE_PARTICLES, this);
 }
 
 void CFxManager::FxOff()
 {
 		for(int i=0; i<MAX_FX; i++)
 		if(m_fxArray[i] != NULL)
-			m_fxArray[i]->SetEnabled(false);
+			m_fxArray[i]->SetEnabled( m_fxArray[i]->GetFxMode(), false);
 }
 
 void CFxManager::UpdateVBlank()

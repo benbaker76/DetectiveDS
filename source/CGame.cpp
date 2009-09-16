@@ -286,6 +286,7 @@ void CGame::Initialize()
 	
 	m_characterArray[CHARTYPE_REVEREND]->SetPosition(168, 168 - m_characterArray[CHARTYPE_REVEREND]->Height());
 	m_characterArray[CHARTYPE_REVEREND]->SetRoom(m_roomArray[ROOM_DRAWING]);
+	m_characterArray[CHARTYPE_REVEREND]->SetCharacterMode(CHARMODE_TALKING);
 	
 	m_characterArray[CHARTYPE_BENTLEY]->SetPosition(176, 168 - m_characterArray[CHARTYPE_BENTLEY]->Height());
 	m_characterArray[CHARTYPE_BENTLEY]->SetRoom(m_roomArray[ROOM_STAIRS]);
@@ -294,28 +295,36 @@ void CGame::Initialize()
 	
 	m_characterArray[CHARTYPE_COOK]->SetPosition(104, 168 - m_characterArray[CHARTYPE_COOK]->Height());
 	m_characterArray[CHARTYPE_COOK]->SetRoom(m_roomArray[ROOM_KITCHEN]);
+	m_characterArray[CHARTYPE_COOK]->SetCharacterMode(CHARMODE_TALKING);
 	
 	m_characterArray[CHARTYPE_GABRIEL]->SetPosition(208, 168 - m_characterArray[CHARTYPE_GABRIEL]->Height());
 	m_characterArray[CHARTYPE_GABRIEL]->SetRoom(m_roomArray[ROOM_KITCHEN]);
+	m_characterArray[CHARTYPE_GABRIEL]->SetCharacterMode(CHARMODE_TALKING);
 
 	m_characterArray[CHARTYPE_CYNTHIA]->SetPosition(232, 168 - m_characterArray[CHARTYPE_CYNTHIA]->Height());
 	m_characterArray[CHARTYPE_CYNTHIA]->SetRoom(m_roomArray[ROOM_CYNTHIA]);
+	m_characterArray[CHARTYPE_CYNTHIA]->SetCharacterMode(CHARMODE_TALKING);
 	
 	m_characterArray[CHARTYPE_PROFESSOR]->SetPosition(136, 168 - m_characterArray[CHARTYPE_PROFESSOR]->Height());
 	m_characterArray[CHARTYPE_PROFESSOR]->SetRoom(m_roomArray[ROOM_LIBRARY]);
+	m_characterArray[CHARTYPE_PROFESSOR]->SetCharacterMode(CHARMODE_TALKING);
 	
 	m_characterArray[CHARTYPE_DOCTOR]->SetPosition(176, 168 - m_characterArray[CHARTYPE_DOCTOR]->Height());
 	m_characterArray[CHARTYPE_DOCTOR]->SetRoom(m_roomArray[ROOM_OUTSIDE3]);
+	m_characterArray[CHARTYPE_DOCTOR]->SetCharacterMode(CHARMODE_TALKING);
 	
 	m_characterArray[CHARTYPE_MAJOR]->SetPosition(232, 168 - m_characterArray[CHARTYPE_MAJOR]->Height());
 	m_characterArray[CHARTYPE_MAJOR]->SetRoom(m_roomArray[ROOM_MAJOR]);
+	m_characterArray[CHARTYPE_MAJOR]->SetCharacterMode(CHARMODE_TALKING);
 	
 	m_characterArray[CHARTYPE_DINGLE]->SetPosition(240, 168 - m_characterArray[CHARTYPE_DINGLE]->Height());
 	m_characterArray[CHARTYPE_DINGLE]->SetRoom(m_roomArray[ROOM_DRAWING]);
+	m_characterArray[CHARTYPE_DINGLE]->SetCharacterMode(CHARMODE_TALKING);
 	
 	m_characterArray[CHARTYPE_ANGUS]->SetPosition(232, 168 - m_characterArray[CHARTYPE_ANGUS]->Height());
 	m_characterArray[CHARTYPE_ANGUS]->SetRoom(m_roomArray[ROOM_ANGUS_ROOM]);
 	m_characterArray[CHARTYPE_ANGUS]->SetAlpha(0x7);
+	m_characterArray[CHARTYPE_ANGUS]->SetCharacterMode(CHARMODE_TALKING);
 	
 	m_cursor = new CCursor();
 	m_pointer = new CPointer();
@@ -325,8 +334,9 @@ void CGame::Initialize()
 		
 	/* for(int i=1; i<MAX_CHARACTERS; i++)
 	{
-		m_characterArray[i]->SetPosition((i - 1) * CHARTYPE_WIDTH, 168 - CHARTYPE_HEIGHT);
-		m_characterArray[i]->SetFrameType(FRAME_SPEAK);
+		m_characterArray[i]->SetPosition(i * m_characterArray[i]->Width(), 168 - m_characterArray[i]->Height());
+		m_characterArray[i]->SetCharacterMode(CHARMODE_TALKING);
+		m_characterArray[i]->SetRoom(m_roomArray[ROOM_STAIRS]);
 		m_characterArray[i]->Show();
 	} */
 	
@@ -336,9 +346,9 @@ void CGame::Initialize()
 	dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
 		
 	m_fxManager.Initialize();
-	m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
-	m_fxManager.SetFx(FX_TEXT_SCROLLER, true);
-	m_fxManager.SetFx(FX_COLOUR_PULSE, true);
+	m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
+	m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
+	m_fxManager.SetFx(FXTYPE_COLOUR, FXMODE_NORMAL, true);
 	
 	//m_keyboard = new CKeyboard(&m_cursor);
 	//m_keyboard->Initialize();
@@ -355,7 +365,7 @@ void CGame::Initialize()
 		}
 	}
 	
-	((CFxTextScroller*)m_fxManager.GetFx(FX_TEXT_SCROLLER))->AddText("BENTLY ADVANCES:\"THIS WAY TO YOUR ROOM SIR\"");
+	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("BENTLY ADVANCES:\"THIS WAY TO YOUR ROOM SIR\"");
 
 	m_menu = new CMenu();
 	m_menu->DrawMenu();
@@ -449,7 +459,7 @@ void CGame::Update()
 			ProcessMenu(touch.px, touch.py);
 		}
 	
-		ProcessSnideMovement(keys_held);
+		UpdateSnideMovement(keys_held);
 		
 		if(keys_released & KEY_A)
 		{
@@ -509,11 +519,13 @@ void CGame::Update()
 	//sprintf(buf, " X: %04d", m_characterArray[CHARTYPE_BENTLEY]->AbsX());
 	//DrawText(buf, 0, 1, false);
 	
+	UpdateFx();
+	
 	oamUpdate(&oamMain);
 	oamUpdate(&oamSub);
 }
 
-void CGame::ProcessSnideMovement(int keys_held)
+void CGame::UpdateSnideMovement(int keys_held)
 {
 	CollisionType colNear, colFar;
 	CDoor* pDoor = NULL;
@@ -548,13 +560,15 @@ void CGame::ProcessSnideMovement(int keys_held)
 						
 					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 					
-					m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+					m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
 					
 					m_currentRoom->Initialize(xRoom);
 					m_snide->SetRoom(m_currentRoom);
 					m_snide->SetPosition(xChar, yChar);
 					
 					m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+					
+					InitRoom();
 					
 					//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
 					
@@ -595,13 +609,15 @@ void CGame::ProcessSnideMovement(int keys_held)
 					
 					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 					
-					m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+					m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
 					
 					m_currentRoom->Initialize(xRoom);
 					m_snide->SetRoom(m_currentRoom);
 					m_snide->SetPosition(xChar, yChar);
 					
 					m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+					
+					InitRoom();
 					
 					//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
 					
@@ -635,13 +651,15 @@ void CGame::ProcessSnideMovement(int keys_held)
 				
 				int xChar = m_currentRoom->Width() - m_snide->Width() - 8;
 				
-				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+				m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
 			
 				m_currentRoom->Initialize(m_currentRoom->Width() - 256);
 				m_snide->SetRoom(m_currentRoom);
 				m_snide->SetX(xChar);
 				
 				m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+				
+				InitRoom();
 			}
 		}
 	}
@@ -668,13 +686,15 @@ void CGame::ProcessSnideMovement(int keys_held)
 				
 				int xChar = 8;
 				
-				m_fxManager.SetFx(FX_LIGHTS_BLACK_OUT, true);
+				m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
 						
 				m_currentRoom->Initialize(0);
 				m_snide->SetRoom(m_currentRoom);
 				m_snide->SetX(xChar);
 				
 				m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+				
+				InitRoom();
 			}
 		}
 	}
@@ -867,6 +887,61 @@ void CGame::PostProcessMenu()
 	}
 }
 
+void CGame::InitRoom()
+{
+	switch(m_currentRoom->GetRoomType())
+	{
+	case ROOM_OUTSIDE1:
+	case ROOM_OUTSIDE2:
+	case ROOM_OUTSIDE3:
+	case ROOM_OUTSIDE4:
+	case ROOM_GARDEN:
+	case ROOM_GRAVEYARD:
+	case ROOM_COURTYARD:
+		//mmJingle(MOD_WEATHER);
+		mmSetJingleVolume(1024);
+		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, true);
+		break;
+	default:
+		mmSetJingleVolume(0);
+		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
+		break;
+	}
+}
+
+void CGame::UpdateFx()
+{
+	switch(m_currentRoom->GetRoomType())
+	{
+	case ROOM_OUTSIDE1:
+	case ROOM_OUTSIDE2:
+	case ROOM_OUTSIDE3:
+	case ROOM_OUTSIDE4:
+	case ROOM_GARDEN:
+	case ROOM_GRAVEYARD:
+	case ROOM_COURTYARD:
+		{
+			static int frameCount = 0;
+			
+			frameCount++;
+			
+			if(frameCount == 8)
+			{
+				frameCount = 0;
+				int x = rand() % 32;
+				
+				if(x == 31)
+					m_currentRoom->SetPalette(g_lightningPal);
+				else
+					m_currentRoom->RestorePalette();
+			}
+		}
+		break;
+	default:
+		break;
+	}
+}
+
 void CGame::InitializeDoors()
 {
 	for (int i=0; i < MAX_ROOMS; i++)
@@ -910,6 +985,27 @@ void CGame::UpdateCharacters(int elapsedTime)
 		m_characterArray[i]->SetVisible(m_currentRoom);		
 		m_characterArray[i]->Draw();
 	}
+}
+
+mm_word CGame::MusicEventHandler(mm_word msg, mm_word param)
+{
+	//char buf[256];
+	
+	switch( msg )
+	{
+
+	case MMCB_SONGMESSAGE:
+		//sprintf(buf, "MMCB_SONGMESSAGE: msg: %d, param: %d", msg, param);
+		//fprintf(stderr, buf);
+        break;
+	case MMCB_SONGFINISHED:
+		mmJingle(MOD_WEATHER);
+		//sprintf(buf, "MMCB_SONGFINISHED: msg: %d, param: %d", msg, param);
+		//fprintf(stderr, buf);
+		break;
+    }
+	
+	return 0;
 }
 
 void CGame::UpdateVBlank()

@@ -93,6 +93,8 @@ bool CConsole::AddText(const char* text)
 		if(m_textArray[i] == NULL)
 		{
 			m_textArray[i] = text;
+			
+			Update();
 			return true;
 		}
 	}
@@ -102,6 +104,8 @@ bool CConsole::AddText(const char* text)
 		if(m_textArray[i] == NULL)
 		{
 			m_textArray[i] = text;
+			
+			Update();
 			return true;
 		}
 	}

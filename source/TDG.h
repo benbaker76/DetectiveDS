@@ -84,6 +84,7 @@
 #include "sprite_angus_body.h"
 
 #include "sprite_misc.h"
+#include "sprite_fx.h"
 
 #include "sprite_col1.h"
 #include "sprite_col2.h"

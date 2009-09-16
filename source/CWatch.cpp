@@ -38,11 +38,11 @@ void CWatch::Draw(CTime* pTime)
 	int minuteHandRotation = (pTime->Minutes * 6);
 	int secondHandRotation = (pTime->Seconds * 6);
 	
-	oamRotateScale(&oamSub, 0, degreesToAngle(-hourHandRotation), intToFixed(1, 8), intToFixed(1, 8));
-	oamRotateScale(&oamSub, 1, degreesToAngle(-minuteHandRotation), intToFixed(1, 8), intToFixed(1, 8));
-	oamRotateScale(&oamSub, 2, degreesToAngle(-secondHandRotation), intToFixed(1, 8), intToFixed(1, 8));
+	oamRotateScale(&oamSub, 1, degreesToAngle(-hourHandRotation), intToFixed(1, 8), intToFixed(1, 8));
+	oamRotateScale(&oamSub, 2, degreesToAngle(-minuteHandRotation), intToFixed(1, 8), intToFixed(1, 8));
+	oamRotateScale(&oamSub, 3, degreesToAngle(-secondHandRotation), intToFixed(1, 8), intToFixed(1, 8));
 	
-	oamSet(&oamSub, 125, m_x, m_y, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxHours,	0,	false, false, false, false,	 false);
-	oamSet(&oamSub, 126, m_x, m_y, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxMinutes, 1, false, false, false, false, false);
-	oamSet(&oamSub, 127, m_x, m_y, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxSeconds, 2, false, false, false, false, false);
+	oamSet(&oamSub, 125, m_x, m_y, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxHours,	1,	false, false, false, false,	 false);
+	oamSet(&oamSub, 126, m_x, m_y, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxMinutes, 2, false, false, false, false, false);
+	oamSet(&oamSub, 127, m_x, m_y, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxSeconds, 3, false, false, false, false, false);
 }
