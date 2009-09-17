@@ -5,18 +5,41 @@
 #include "TDG.h"
 #include "lz77.h"
 
-void DrawPixel(int x, int y, int colorIndex)
+void SaveTiles(PRECT pRect, u16* pDest)
 {
-	u16 tileId = *(BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB) + (x / 8) + (y / 8) * 32);
-	u16* pTile = BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB) + tileId * 32 + ((x % 8) / 2) + (y % 8) * 4;
-	*pTile = ((x % 2) == 0 ? ((*pTile &~ 0xFF) | colorIndex) : ((*pTile &~ 0xFF00) | (colorIndex << 8)));
+	for(int y=pRect->Y; y < pRect->Y + pRect->Height; y++)
+	{
+		for(int x=pRect->X; x < pRect->X + pRect->Width; x++)
+		{
+			u16 tileId = *(BG_MAP_RAM_SUB(BG3_MAP_BASE_SUB) + x + y * 32);
+			u16* pTile = BG_TILE_RAM_SUB(BG3_TILE_BASE_SUB) + tileId * 32;
+			
+			dmaCopy(pTile, pDest, 64);
+			pDest += 32;
+		}
+	}
 }
 
-void DrawPixelDouble(int x, int y, int colorIndex)
+void RestoreTiles(PRECT pRect, u16* pSrc)
 {
-	u16 tileId = *(BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB) + (x / 8) + (y / 8) * 32);
-	u16* pTile = BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB) + tileId * 32 + ((x % 8) / 2) + (y % 8) * 4;
-	*pTile = (colorIndex | colorIndex << 8);
+	for(int y=pRect->Y; y < pRect->Y + pRect->Height; y++)
+	{
+		for(int x=pRect->X; x < pRect->X + pRect->Width; x++)
+		{
+			u16 tileId = *(BG_MAP_RAM_SUB(BG3_MAP_BASE_SUB) + x + y * 32);
+			u16* pTile = BG_TILE_RAM_SUB(BG3_TILE_BASE_SUB) + tileId * 32;
+			
+			dmaCopy(pSrc, pTile, 64);
+			pSrc += 32;
+		}
+	}
+}
+
+void DrawPixel(int x, int y, int colorIndex)
+{
+	u16 tileId = *(BG_MAP_RAM_SUB(BG3_MAP_BASE_SUB) + (x / 8) + (y / 8) * 32);
+	u16* pTile = BG_TILE_RAM_SUB(BG3_TILE_BASE_SUB) + tileId * 32 + ((x % 8) / 2) + (y % 8) * 4;
+	*pTile = ((x % 2) == 0 ? ((*pTile &~ 0xFF) | colorIndex) : ((*pTile &~ 0xFF00) | (colorIndex << 8)));
 }
 
 void DrawLine(int x0, int y0, int x1, int y1, int colorIndex)
@@ -68,32 +91,28 @@ void DrawLine(int x0, int y0, int x1, int y1, int colorIndex)
 	}
 }
 
-void DrawTime(CTime* pTime)
+void DrawTime(CTime* pTime, int x, int y)
 {
-	dmaCopy(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), watchTilesLen);
-	//dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
-	//dmaCopy(watchPal, BG_PALETTE_SUB, watchPalLen);
-
 	float radians;
-	int x, y;
+	int x2, y2;
 	
 	int secondHandRotation = (pTime->Seconds * 6) - 90;
 	radians = secondHandRotation * (PI / 180);
-	x = 112 + cos(radians) * 10;
-	y = 20 + sin(radians) * 10;
-	DrawLine(112, 20, x, y, 3);
+	x2 = x + cos(radians) * 5;
+	y2 = y + sin(radians) * 5;
+	DrawLine(x, y, x2, y2, 3);
 	
 	int minuteHandRotation = (pTime->Minutes * 6) - 90;
 	radians = minuteHandRotation * (PI / 180);
-	x = 112 + cos(radians) * 10;
-	y = 20 + sin(radians) * 10;
-	DrawLine(112, 20, x, y, 3);
+	x2 = x + cos(radians) * 5;
+	y2 = y + sin(radians) * 5;
+	DrawLine(x, y, x2, y2, 3);
 	
 	int hourHandRotation = (pTime->Hours * 30) + (pTime->Minutes * 0.5) - 90;
 	radians = hourHandRotation * (PI / 180);
-	x = 112 + cos(radians) * 8;
-	y = 20 + sin(radians) * 8;
-	DrawLine(112, 20, x, y, 3);
+	x2 = x + cos(radians) * 4;
+	y2 = y + sin(radians) * 4;
+	DrawLine(x, y, x2, y2, 3);
 }
 
 void dmaTransfer(uint8 channel, const void* src, void* dest, uint32 size, uint32 mode)

@@ -35,11 +35,11 @@ CDoor::CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoo
 		}
 	}
 	
-	m_pRoomIn->GetColMapRect(COL_DOOR_CLOSED, &m_rectArray[DOORRECT_CLOSED]);
-	m_pRoomIn->GetColMapRect(COL_DOOR_OPEN, &m_rectArray[DOORRECT_OPEN]);
-	m_pRoomIn->GetColMapRect(COL_DOOR_SMALL_CLOSED, &m_rectArray[DOORRECT_SMALL_CLOSED]);
-	m_pRoomIn->GetColMapRect(COL_DOOR_SMALL_OPEN, &m_rectArray[DOORRECT_SMALL_OPEN]);
-	m_pRoomIn->GetColMapRect(COL_DOOR_SMALL_HIDDEN, &m_rectArray[DOORRECT_SMALL_HIDDEN]);
+	m_pRoomIn->GetColMapRect(COL_SRC_DOOR_CLOSED, &m_rectArray[DOORRECT_CLOSED]);
+	m_pRoomIn->GetColMapRect(COL_SRC_DOOR_OPEN, &m_rectArray[DOORRECT_OPEN]);
+	m_pRoomIn->GetColMapRect(COL_SRC_DOOR_SMALL_CLOSED, &m_rectArray[DOORRECT_SMALL_CLOSED]);
+	m_pRoomIn->GetColMapRect(COL_SRC_DOOR_SMALL_OPEN, &m_rectArray[DOORRECT_SMALL_OPEN]);
+	m_pRoomIn->GetColMapRect(COL_SRC_DOOR_SMALL_HIDDEN, &m_rectArray[DOORRECT_SMALL_HIDDEN]);
 }
 
 CDoor::~CDoor()

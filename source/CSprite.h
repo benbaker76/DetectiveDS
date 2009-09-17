@@ -55,7 +55,7 @@ class CSprite
 {
 public:
 	CSprite(SpriteType spriteType, const u32* pBmp, const u32* frameArray, int frameCount);
-	//CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u16* pPalette, int paletteLen, const int* frameArray, int frameCount);
+	CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u16* pPalette, int paletteLen, const u32* frameArray, int frameCount);
 	~CSprite();
 	
 	void SetPosition(int x, int y);
@@ -78,11 +78,13 @@ public:
 private:
 	SpriteType m_spriteType;
 	const u32* m_pBmp;
-	//const u32* m_pTiles;
-	//const u16* m_pPalette;
+	const u32* m_pTiles;
+	const u16* m_pPalette;
 	
-	//int m_tilesLen;
-	//int m_paletteLen;
+	int m_tilesLen;
+	int m_paletteLen;
+	
+	bool m_bitmapSprite;
 	
 	const u32* m_frameArray;
 	FrameType m_frameType;

@@ -112,4 +112,6 @@ extern mm_sound_effect g_sfx_footsteps;
 extern mm_sound_effect g_sfx_opendoor;
 extern mm_sound_effect g_sfx_closedoor;
 
-extern u16 g_lightningPal[];
+extern u16 g_lightningBgPal[];
+extern u16 g_lightningSpritePal[];
+

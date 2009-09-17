@@ -36,7 +36,7 @@ void CGame::Initialize()
 	switch(m_gameType)
 	{
 	case GAMETYPE_NORMAL:
-		/* m_spriteArray[SPRITE_SNIDE_HEAD] = new CSprite(SPRITE_SNIDE_HEAD, sprite_snide_headTiles, sprite_snide_headTilesLen, sprite_snide_headPal, sprite_snide_headPalLen, g_snideHeadFrames, 8);
+		m_spriteArray[SPRITE_SNIDE_HEAD] = new CSprite(SPRITE_SNIDE_HEAD, sprite_snide_headTiles, sprite_snide_headTilesLen, sprite_snide_headPal, sprite_snide_headPalLen, g_snideHeadFrames, 8);
 		m_spriteArray[SPRITE_SNIDE_BODY] = new CSprite(SPRITE_SNIDE_BODY, sprite_snide_bodyTiles, sprite_snide_bodyTilesLen, sprite_snide_bodyPal, sprite_snide_bodyPalLen, g_snideBodyFrames, 17);
 		m_spriteArray[SPRITE_REVEREND_HEAD] = new CSprite(SPRITE_REVEREND_HEAD, sprite_reverend_headTiles, sprite_reverend_headTilesLen, sprite_reverend_headPal, sprite_reverend_headPalLen, g_reverendHeadFrames, 4);
 		m_spriteArray[SPRITE_REVEREND_BODY] = new CSprite(SPRITE_REVEREND_BODY, sprite_reverend_bodyTiles, sprite_reverend_bodyTilesLen, sprite_reverend_bodyPal, sprite_reverend_bodyPalLen, g_reverendBodyFrames, 6);
@@ -56,10 +56,10 @@ void CGame::Initialize()
 		m_spriteArray[SPRITE_MAJOR_BODY] = new CSprite(SPRITE_MAJOR_BODY, sprite_major_bodyTiles, sprite_major_bodyTilesLen, sprite_major_bodyPal, sprite_major_bodyPalLen, g_majorBodyFrames, 6);		
 		m_spriteArray[SPRITE_DINGLE_HEAD] = new CSprite(SPRITE_DINGLE_HEAD, sprite_dingle_headTiles, sprite_dingle_headTilesLen, sprite_dingle_headPal, sprite_dingle_headPalLen, g_dingleHeadFrames, 5);
 		m_spriteArray[SPRITE_DINGLE_BODY] = new CSprite(SPRITE_DINGLE_BODY, sprite_dingle_bodyTiles, sprite_dingle_bodyTilesLen, sprite_dingle_bodyPal, sprite_dingle_bodyPalLen, g_dingleBodyFrames, 7);
-		m_spriteArray[SPRITE_ANGUS_HEAD] = new CSprite(SPRITE_ANGUS_HEAD, sprite_angus_headTiles, sprite_angus_headTilesLen, sprite_angus_headPal, sprite_angus_headPalLen, g_angusHeadFrames, 5);
+		/* m_spriteArray[SPRITE_ANGUS_HEAD] = new CSprite(SPRITE_ANGUS_HEAD, sprite_angus_headTiles, sprite_angus_headTilesLen, sprite_angus_headPal, sprite_angus_headPalLen, g_angusHeadFrames, 5);
 		m_spriteArray[SPRITE_ANGUS_BODY] = new CSprite(SPRITE_ANGUS_BODY, sprite_angus_bodyTiles, sprite_angus_bodyTilesLen, sprite_angus_bodyPal, sprite_angus_bodyPalLen, g_angusBodyFrames, 7); */
 		
-		m_spriteArray[SPRITE_SNIDE_HEAD] = new CSprite(SPRITE_SNIDE_HEAD, sprite_snide_headBitmap, g_snideHeadFrames, 16);
+		/* m_spriteArray[SPRITE_SNIDE_HEAD] = new CSprite(SPRITE_SNIDE_HEAD, sprite_snide_headBitmap, g_snideHeadFrames, 16);
 		m_spriteArray[SPRITE_SNIDE_BODY] = new CSprite(SPRITE_SNIDE_BODY, sprite_snide_bodyBitmap, g_snideBodyFrames, 18);
 		m_spriteArray[SPRITE_REVEREND_HEAD] = new CSprite(SPRITE_REVEREND_HEAD, sprite_reverend_headBitmap, g_reverendHeadFrames, 4);
 		m_spriteArray[SPRITE_REVEREND_BODY] = new CSprite(SPRITE_REVEREND_BODY, sprite_reverend_bodyBitmap, g_reverendBodyFrames, 6);
@@ -78,7 +78,7 @@ void CGame::Initialize()
 		m_spriteArray[SPRITE_MAJOR_HEAD] = new CSprite(SPRITE_MAJOR_HEAD, sprite_major_headBitmap, g_majorHeadFrames, 4);
 		m_spriteArray[SPRITE_MAJOR_BODY] = new CSprite(SPRITE_MAJOR_BODY, sprite_major_bodyBitmap, g_majorBodyFrames, 6);		
 		m_spriteArray[SPRITE_DINGLE_HEAD] = new CSprite(SPRITE_DINGLE_HEAD, sprite_dingle_headBitmap, g_dingleHeadFrames, 5);
-		m_spriteArray[SPRITE_DINGLE_BODY] = new CSprite(SPRITE_DINGLE_BODY, sprite_dingle_bodyBitmap, g_dingleBodyFrames, 7);
+		m_spriteArray[SPRITE_DINGLE_BODY] = new CSprite(SPRITE_DINGLE_BODY, sprite_dingle_bodyBitmap, g_dingleBodyFrames, 7); */
 		m_spriteArray[SPRITE_ANGUS_HEAD] = new CSprite(SPRITE_ANGUS_HEAD, sprite_angus_headBitmap, g_angusHeadFrames, 5);
 		m_spriteArray[SPRITE_ANGUS_BODY] = new CSprite(SPRITE_ANGUS_BODY, sprite_angus_bodyBitmap, g_angusBodyFrames, 7);
 		
@@ -510,7 +510,7 @@ void CGame::Update()
 		m_keyboard->CheckKeyTouch(touch.px, touch.py);
 	}
 	
-	m_currentRoom->Animate(elapsedTime);
+	m_currentRoom->Animate(m_timer->pCurrentTime());
 	
 	SortSprites();
 	UpdateCharacters(elapsedTime);
@@ -543,7 +543,7 @@ void CGame::UpdateSnideMovement(int keys_held)
 			else
 				m_snide->Face(DIRECTION_UP);
 			
-			if(TryGetDoor(colNear, colNear, pDoor))
+			if(TryGetDoor(colNear, colNear, &pDoor))
 			{
 				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
 				{		
@@ -592,7 +592,7 @@ void CGame::UpdateSnideMovement(int keys_held)
 			else
 				m_snide->Face(DIRECTION_DOWN);
 			
-			if(TryGetDoor(colNear, colNear, pDoor))
+			if(TryGetDoor(colNear, colNear, &pDoor))
 			{
 				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
 				{
@@ -643,7 +643,7 @@ void CGame::UpdateSnideMovement(int keys_held)
 		}
 		else
 		{
-			if(TryGetDoor(colNear, colFar, pDoor))
+			if(TryGetDoor(colNear, colFar, &pDoor))
 			{
 				m_currentRoom = pDoor->pRoomOut();
 				
@@ -678,7 +678,7 @@ void CGame::UpdateSnideMovement(int keys_held)
 		}
 		else
 		{
-			if(TryGetDoor(colNear, colFar, pDoor))
+			if(TryGetDoor(colNear, colFar, &pDoor))
 			{
 				m_currentRoom = pDoor->pRoomOut();
 				
@@ -710,7 +710,7 @@ void CGame::SetMenuIcons(CollisionType colNear, CollisionType colFar)
 		m_menu->AddIconSet(ICONSET_GENERAL);
 	else
 	{
-		if(TryGetDoor(colNear, colFar, pDoor))
+		if(TryGetDoor(colNear, colFar, &pDoor))
 		{
 			if(!pDoor->Hidden())
 			{
@@ -723,22 +723,22 @@ void CGame::SetMenuIcons(CollisionType colNear, CollisionType colFar)
 	}
 }
 
-bool CGame::TryGetDoor(CollisionType colNear, CollisionType colFar, CDoor*& pDoor)
+bool CGame::TryGetDoor(CollisionType colNear, CollisionType colFar, CDoor** pDoor)
 {
-	pDoor = NULL;
+	*pDoor = NULL;
 	
 	if(colNear >= COL_DOOR1 && colNear <= COL_DOOR8)
 	{
-		pDoor = m_currentRoom->GetDoor((int)colNear);
+		*pDoor = m_currentRoom->GetDoor((int)colNear);
 		
-		if(pDoor != NULL)
+		if(*pDoor != NULL)
 			return true;
 	}
 	else if(colFar >= COL_DOOR1 && colFar <= COL_DOOR8)
 	{
-		pDoor = m_currentRoom->GetDoor((int)colFar);
+		*pDoor = m_currentRoom->GetDoor((int)colFar);
 		
-		if(pDoor != NULL)		
+		if(*pDoor != NULL)		
 			return true;
 	}
 	
@@ -761,7 +761,7 @@ void CGame::ProcessMenu(int x, int y)
 	case ICON_DOOR_CLOSE:
 		m_snide->CheckCollision(m_snide->Facing(), &colNear, &colFar);
 		
-		if(TryGetDoor(colNear, colFar, pDoor))
+		if(TryGetDoor(colNear, colFar, &pDoor))
 		{
 			if(pDoor->GetDoorState() == DOORSTATE_CLOSED || pDoor->GetDoorState() == DOORSTATE_LOCKED)
 			{
@@ -782,7 +782,7 @@ void CGame::ProcessMenu(int x, int y)
 	case ICON_EXAMINE:
 		m_snide->CheckCollision(m_snide->Facing(), &colNear, &colFar);
 		
-		if(TryGetDoor(colNear, colFar, pDoor))
+		if(TryGetDoor(colNear, colFar, &pDoor))
 		{			
 			if(pDoor->GetDoorState() == DOORSTATE_HIDDEN)
 			{
@@ -907,6 +907,8 @@ void CGame::InitRoom()
 		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
 		break;
 	}
+	
+	dmaCopy(sprite_watchPal, SPRITE_PALETTE_SUB, sprite_watchPalLen);
 }
 
 void CGame::UpdateFx()
@@ -931,9 +933,15 @@ void CGame::UpdateFx()
 				int x = rand() % 32;
 				
 				if(x == 31)
-					m_currentRoom->SetPalette(g_lightningPal);
+				{
+					m_currentRoom->SetPalette(g_lightningBgPal);
+					dmaCopy(g_lightningSpritePal, SPRITE_PALETTE_SUB, 512);
+				}
 				else
+				{
 					m_currentRoom->RestorePalette();
+					dmaCopy(sprite_watchPal, SPRITE_PALETTE_SUB, sprite_watchPalLen);
+				}
 			}
 		}
 		break;

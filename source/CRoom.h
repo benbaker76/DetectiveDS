@@ -3,11 +3,11 @@
 
 #include <nds.h>
 #include "Globals.h"
+#include "CTimer.h"
 
 #define MAX_ROOMS			37
 #define MAX_DOORS			9
-#define MAX_ROOM_RECT		5
-#define MAX_TORCH_RECT		3
+#define MAX_ROOM_RECT		7
 
 enum RoomType
 {
@@ -54,16 +54,11 @@ enum RoomRect
 {
 	ROOMRECT_TORCH1,
 	ROOMRECT_TORCH2,
+	ROOMRECT_TORCH3,
 	ROOMRECT_FIREPLACE1,
 	ROOMRECT_FIREPLACE2,
-	ROOMRECT_FIREPLACE3
-};
-
-enum TorchRect
-{
-	TORCHRECT_TORCH1,
-	TORCHRECT_TORCH2,
-	TORCHRECT_TORCH3
+	ROOMRECT_FIREPLACE3,
+	ROOMRECT_CLOCK
 };
 
 class CDoor;
@@ -78,7 +73,7 @@ public:
 	void InitializeDoors();
 	void InitializeOverlay();
 	void Draw();
-	void Animate(int elapsedTime);
+	void Animate(CTime* pTime);
 	bool DoorIntersect(PRECT pRect);
 	void MoveMap(PRECT rectSrc, PRECT rectDest);
 	bool Scroll(DirectionType directionType);
@@ -116,9 +111,10 @@ private:
 
 	int m_overlayY;
 	
-	RECT m_rectArray[MAX_ROOM_RECT];
-	RECT m_rectTorch[MAX_TORCH_RECT];
-	RECT m_rectFireplace;
+	RECT m_rectSrc[MAX_ROOM_RECT];
+	RECT m_rectDst[MAX_ROOM_RECT];
+	
+	u16 m_clockTiles[6 * 32];
 	
 	int m_lastUpdate;
 	int m_frameNum;

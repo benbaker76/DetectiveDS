@@ -36,7 +36,7 @@ public:
 	void Update();
 	void UpdateSnideMovement(int keys_held);
 	void SetMenuIcons(CollisionType colNear, CollisionType colFar);
-	bool TryGetDoor(CollisionType colNear, CollisionType colFar, CDoor*& pDoor);
+	bool TryGetDoor(CollisionType colNear, CollisionType colFar, CDoor** pDoor);
 	void ProcessMenu(int x, int y);
 	void PostProcessMenu();
 	
