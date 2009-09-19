@@ -43,8 +43,16 @@
 #include "map_outside2.h"
 #include "map_passage1.h"
 #include "map_passage2.h"
-#include "map_room1.h"
-#include "map_room2.h"
+#include "map_bentley.h"
+#include "map_cook.h"
+#include "map_cynthia.h"
+#include "map_dingle.h"
+#include "map_doctor.h"
+#include "map_gabriel.h"
+#include "map_major.h"
+#include "map_professor.h"
+#include "map_reverend.h"
+#include "map_snide.h"
 #include "map_stairs.h"
 #include "map_study.h"
 #include "map_utility.h"
@@ -86,8 +94,7 @@
 #include "sprite_misc.h"
 #include "sprite_fx.h"
 
-#include "sprite_col1.h"
-#include "sprite_col2.h"
+#include "sprite_col.h"
 
 #include "sprite_watch.h"
 

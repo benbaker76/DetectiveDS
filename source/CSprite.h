@@ -59,7 +59,7 @@ public:
 	~CSprite();
 	
 	void SetPosition(int x, int y);
-	void Animate(int elapsedTime);
+	void Animate();
 	void Hide();
 	void Draw();
 	void SetFrameType(FrameType frameType);

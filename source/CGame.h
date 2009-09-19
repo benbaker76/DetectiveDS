@@ -45,7 +45,8 @@ public:
 
 	void InitializeDoors();
 	void SortSprites();
-	void UpdateCharacters(int elapsedTime);
+	void UpdateCharacters();
+	bool CheckCharacterCollision(DirectionType directionType, CharacterType* charNear, CharacterType* charFar);
 	
 	mm_word MusicEventHandler(mm_word msg, mm_word param);
 	void UpdateVBlank();

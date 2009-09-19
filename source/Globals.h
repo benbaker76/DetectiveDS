@@ -20,6 +20,7 @@ typedef struct
 
 typedef struct
 {
+	//RECT(int x, int y, int width, int height) : X(x), Y(y), Width(width), Height(height) {}
 	int X;
 	int Y;
 	int Width;
@@ -28,6 +29,7 @@ typedef struct
 
 typedef struct
 {
+	//POINT(int x, int y) : X(x), Y(y) {}
 	int X;
 	int Y;
 } POINT, *PPOINT;
@@ -91,8 +93,16 @@ extern MAP g_outside1Map;
 extern MAP g_outside2Map;
 extern MAP g_passage1Map;
 extern MAP g_passage2Map;
-extern MAP g_room1Map;
-extern MAP g_room2Map;
+extern MAP g_bentleyMap;
+extern MAP g_cookMap;
+extern MAP g_cynthiaMap;
+extern MAP g_dingleMap;
+extern MAP g_doctorMap;
+extern MAP g_gabrielMap;
+extern MAP g_majorMap;
+extern MAP g_professorMap;
+extern MAP g_reverendMap;
+extern MAP g_snideMap;
 extern MAP g_stairsMap;
 extern MAP g_studyMap;
 extern MAP g_utilityMap;

@@ -67,14 +67,14 @@ void CSprite::SetPosition(int x, int y)
 	m_y = y;
 }
 
-void CSprite::Animate(int elapsedTime)
+void CSprite::Animate()
 {
-	m_lastUpdate += elapsedTime;
+	m_lastUpdate++;
 	
 	if (m_frameType == FRAME_NONE)
 		return;
 	
-	if(m_lastUpdate > 200)
+	if(m_lastUpdate > 8)
 	{
 		m_lastUpdate = 0;
 	
@@ -145,6 +145,6 @@ void CSprite::SetFrameType(FrameType frameType)
 	if(m_frameType != frameType)
 	{
 		m_frameType = frameType;
-		Animate(1000);
+		Animate();
 	}
 }

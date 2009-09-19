@@ -22,7 +22,8 @@ enum CharacterMode
 
 enum CharacterType
 {
-	CHARTYPE_SNIDE,
+	CHARTYPE_NONE = -1,
+	CHARTYPE_SNIDE = 0,
 	CHARTYPE_REVEREND,
 	CHARTYPE_BENTLEY,
 	CHARTYPE_COOK,
@@ -36,6 +37,7 @@ enum CharacterType
 };
 
 class CRoom;
+class CCharacter;
 
 class CCharacter
 {
@@ -47,7 +49,7 @@ public:
 	void UpdatePosition();
 	void SetOamIndex(int index);
 	void SetPriority(int priority);
-	void Animate(int elapsedTime);
+	void Animate();
 	void SetVisible(CRoom* pRoom);
 	void Show();
 	void Hide();
@@ -55,7 +57,8 @@ public:
 	void Draw();
 	void Face(DirectionType directionType);
 	void Move(DirectionType directionType);
-	void CheckCollision(DirectionType directionType, CollisionType* colNear, CollisionType* colFar);
+	bool CheckCollision(DirectionType directionType, CollisionType* colNear, CollisionType* colFar);
+	bool CheckCollision(DirectionType directionType, CCharacter* character, CharacterType* charNear, CharacterType* charFar);
 	
 	void SetCharacterMode(CharacterMode characterMode);
 	
@@ -85,6 +88,8 @@ public:
 	
 	int OamIndex() const { return m_pHeadSprite->OamIndex(); }
 	int Priority() const { return m_pHeadSprite->Priority(); }
+	CharacterType GetCharacterType() const { return m_characterType; }
+	CharacterMode GetCharacterMode() const { return m_characterMode; }
 
 private:
 	CharacterType m_characterType;

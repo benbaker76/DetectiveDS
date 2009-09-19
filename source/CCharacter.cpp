@@ -19,14 +19,14 @@ CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprit
 	
 	m_pathPosition = 0;
 	
-	m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_col1Tiles, sprite_col1TilesLen, sprite_col1Pal, sprite_col1PalLen, NULL, 0);
-	m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_col2Tiles, sprite_col2TilesLen, sprite_col2Pal, sprite_col2PalLen, NULL, 0);
+	//m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_colTiles + 256 * 0, sprite_colTilesLen, sprite_colPal, sprite_colPalLen, NULL, 0);
+	//m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_colTiles + 256 * 1, sprite_colTilesLen, sprite_colPal, sprite_colPalLen, NULL, 0);
 	
-	//m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_col1Bitmap, NULL, 0);
-	//m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_col2Bitmap, NULL, 0);
+	//m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_colBitmap, NULL, 0);
+	//m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_colBitmap, NULL, 0);
 	
-	m_spriteCol1->SetOamIndex(122);
-	m_spriteCol2->SetOamIndex(123);
+	//m_spriteCol1->SetOamIndex(122);
+	//m_spriteCol2->SetOamIndex(123);
 }
 
 CCharacter::~CCharacter()
@@ -132,10 +132,10 @@ void CCharacter::SetPriority(int priority)
 	m_pBodySprite->SetPriority(priority);
 }
 
-void CCharacter::Animate(int elapsedTime)
+void CCharacter::Animate()
 {
-	m_pHeadSprite->Animate(elapsedTime);
-	m_pBodySprite->Animate(elapsedTime);
+	m_pHeadSprite->Animate();
+	m_pBodySprite->Animate();
 }
 
 void CCharacter::SetVisible(CRoom* pRoom)
@@ -217,7 +217,7 @@ void CCharacter::Move(DirectionType directionType)
 	}
 }
 
-void CCharacter::CheckCollision(DirectionType directionType, CollisionType* colNear, CollisionType* colFar)
+bool CCharacter::CheckCollision(DirectionType directionType, CollisionType* colNear, CollisionType* colFar)
 {
 	*colNear = COL_NOTHING_HERE;
 	*colFar = COL_NOTHING_HERE;
@@ -263,6 +263,74 @@ void CCharacter::CheckCollision(DirectionType directionType, CollisionType* colN
 			//m_spriteCol2->Draw();
 			break;
 	}
+	
+	if(*colNear != COL_NOTHING_HERE || *colFar != COL_NOTHING_HERE)
+		return true;
+	
+	return false;
+}
+
+bool CCharacter::CheckCollision(DirectionType directionType, CCharacter* character, CharacterType* charNear, CharacterType* charFar)
+{
+	RECT rectMe, rectYou;
+	
+	*charNear = CHARTYPE_NONE;
+	*charFar = CHARTYPE_NONE;
+	
+	rectMe.X = m_x - m_width;
+	rectMe.Y = m_y + m_height - 4;
+	rectMe.Width = m_width;
+	rectMe.Height = 8;
+	
+	rectYou.X = character->X() - character->Width();
+	rectYou.Y = character->Y() + character->Height() - 4;
+	rectYou.Width = character->Width();
+	rectYou.Height = 8;
+	
+	switch(directionType)
+	{
+		case DIRECTION_UP:
+			if(IntersectRect(&rectMe, &rectYou))
+				*charNear = character->GetCharacterType();
+			
+			rectYou.Y -= 8;
+			
+			if(IntersectRect(&rectMe, &rectYou))
+				*charFar = character->GetCharacterType();
+			break;
+		case DIRECTION_DOWN:
+			if(IntersectRect(&rectMe, &rectYou))
+				*charNear = character->GetCharacterType();
+			
+			rectYou.Y += 8;
+			
+			if(IntersectRect(&rectMe, &rectYou))
+				*charFar = character->GetCharacterType();
+			break;
+		case DIRECTION_LEFT:
+			if(IntersectRect(&rectMe, &rectYou))
+				*charNear = character->GetCharacterType();
+			
+			rectYou.X -= 8;
+			
+			if(IntersectRect(&rectMe, &rectYou))
+				*charFar = character->GetCharacterType();
+			break;
+		case DIRECTION_RIGHT:
+			if(IntersectRect(&rectMe, &rectYou))
+				*charNear = character->GetCharacterType();
+			
+			rectYou.X += 8;
+			
+			if(IntersectRect(&rectMe, &rectYou))
+				*charFar = character->GetCharacterType();
+			break;
+	}
+	
+	if(*charNear != CHARTYPE_NONE || *charFar != CHARTYPE_NONE)
+		return true;
+	
+	return false;
 }
 
 void CCharacter::SetFrameType(FrameType frameType)

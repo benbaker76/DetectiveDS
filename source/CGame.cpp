@@ -4,6 +4,7 @@
 #include "CGame.h"
 #include "Text.h"
 #include "Gfx.h"
+#include "CFxParticles.h"
 
 CGame::CGame(GameType gameType)
 {
@@ -94,16 +95,16 @@ void CGame::Initialize()
 		m_characterArray[CHARTYPE_DINGLE] = new CCharacter(CHARTYPE_DINGLE, m_spriteArray[SPRITE_DINGLE_HEAD], m_spriteArray[SPRITE_DINGLE_BODY], 24, 48);
 		m_characterArray[CHARTYPE_ANGUS] = new CCharacter(CHARTYPE_ANGUS, m_spriteArray[SPRITE_ANGUS_HEAD], m_spriteArray[SPRITE_ANGUS_BODY], 24, 48);
 		
-		m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, &g_room1Map, NULL, col_room1, 144);
-		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, &g_room1Map, NULL, col_room1, 144);
-		m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, &g_room2Map, NULL, col_room2, 168);
-		m_roomArray[ROOM_COOK] = new CRoom(ROOM_COOK, &g_room2Map, NULL, col_room2, 168);
-		m_roomArray[ROOM_GABRIEL] = new CRoom(ROOM_GABRIEL, &g_room2Map, NULL, col_room2, 168);
-		m_roomArray[ROOM_CYNTHIA] = new CRoom(ROOM_CYNTHIA, &g_room1Map, NULL, col_room1, 144);
-		m_roomArray[ROOM_PROFESSOR] = new CRoom(ROOM_PROFESSOR, &g_room1Map, NULL, col_room1, 144);
-		m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, &g_room1Map, NULL, col_room1, 144);		
-		m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, &g_room1Map, NULL, col_room1, 144);
-		m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, &g_room1Map, NULL, col_room1, 144);
+		m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, &g_snideMap, NULL, col_room1, 144);
+		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, &g_reverendMap, NULL, col_room1, 144);
+		m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, &g_bentleyMap, NULL, col_room2, 168);
+		m_roomArray[ROOM_COOK] = new CRoom(ROOM_COOK, &g_cookMap, NULL, col_room2, 168);
+		m_roomArray[ROOM_GABRIEL] = new CRoom(ROOM_GABRIEL, &g_gabrielMap, NULL, col_room2, 168);
+		m_roomArray[ROOM_CYNTHIA] = new CRoom(ROOM_CYNTHIA, &g_cynthiaMap, NULL, col_room1, 144);
+		m_roomArray[ROOM_PROFESSOR] = new CRoom(ROOM_PROFESSOR, &g_professorMap, NULL, col_room1, 144);
+		m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, &g_doctorMap, NULL, col_room1, 144);		
+		m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, &g_majorMap, NULL, col_room1, 144);
+		m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, &g_dingleMap, NULL, col_room1, 144);
 		m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, &g_outside1Map, NULL, col_outside1, 160);
 		m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, &g_outside2Map, &g_outside2_frontMap, col_outside2, 152);
 		m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, &g_outside1Map, NULL, col_outside1, 160);
@@ -513,7 +514,7 @@ void CGame::Update()
 	m_currentRoom->Animate(m_timer->pCurrentTime());
 	
 	SortSprites();
-	UpdateCharacters(elapsedTime);
+	UpdateCharacters();
 	
 	//char buf[256];
 	//sprintf(buf, " X: %04d", m_characterArray[CHARTYPE_BENTLEY]->AbsX());
@@ -528,6 +529,7 @@ void CGame::Update()
 void CGame::UpdateSnideMovement(int keys_held)
 {
 	CollisionType colNear, colFar;
+	CharacterType charNear, charFar;
 	CDoor* pDoor = NULL;
 	
 	if(keys_held & KEY_UP)
@@ -535,6 +537,11 @@ void CGame::UpdateSnideMovement(int keys_held)
 		if(m_snide->SpriteX() < 256 - m_snide->Width() - 8)
 		{
 			m_snide->CheckCollision(DIRECTION_UP, &colNear, &colFar);
+			
+			if(CheckCharacterCollision(DIRECTION_UP, &charNear, &charFar))
+				DrawText("DIRECTION_UP", 0, 0, false);
+			else
+				DrawText("                  ", 0, 0, false);
 			
 			SetMenuIcons(colNear, colFar);
 			
@@ -585,6 +592,11 @@ void CGame::UpdateSnideMovement(int keys_held)
 		{
 			m_snide->CheckCollision(DIRECTION_DOWN, &colNear, &colFar);
 			
+			if(CheckCharacterCollision(DIRECTION_DOWN, &charNear, &charFar))
+				DrawText("DIRECTION_DOWN", 0, 0, false);
+			else
+				DrawText("                  ", 0, 0, false);
+			
 			SetMenuIcons(colNear, colFar);
 			
 			if(colNear == COL_NOTHING_HERE)
@@ -632,6 +644,11 @@ void CGame::UpdateSnideMovement(int keys_held)
 	{
 		m_snide->CheckCollision(DIRECTION_LEFT, &colNear, &colFar);
 		
+		if(CheckCharacterCollision(DIRECTION_LEFT, &charNear, &charFar))
+			DrawText("DIRECTION_LEFT", 0, 0, false);
+		else
+			DrawText("                  ", 0, 0, false);
+		
 		SetMenuIcons(colNear, colFar);
 		
 		if(colNear == COL_NOTHING_HERE)
@@ -666,6 +683,11 @@ void CGame::UpdateSnideMovement(int keys_held)
 	else if(keys_held & KEY_RIGHT)
 	{
 		m_snide->CheckCollision(DIRECTION_RIGHT, &colNear, &colFar);
+		
+		if(CheckCharacterCollision(DIRECTION_RIGHT, &charNear, &charFar))
+			DrawText("DIRECTION_RIGHT", 0, 0, false);
+		else
+			DrawText("                  ", 0, 0, false);
 		
 		SetMenuIcons(colNear, colFar);
 		
@@ -923,13 +945,15 @@ void CGame::UpdateFx()
 	case ROOM_GRAVEYARD:
 	case ROOM_COURTYARD:
 		{
-			static int frameCount = 0;
+			static int lastUpdate = 0;
 			
-			frameCount++;
+			lastUpdate++;
 			
-			if(frameCount == 8)
+			((CFxParticles*)m_fxManager.GetFx(FXTYPE_PARTICLES))->SetXOffset(m_currentRoom->Width() - m_currentRoom->X());
+			
+			if(lastUpdate == 8)
 			{
-				frameCount = 0;
+				lastUpdate = 0;
 				int x = rand() % 32;
 				
 				if(x == 31)
@@ -984,15 +1008,29 @@ void CGame::SortSprites()
 	}
 }
 
-void CGame::UpdateCharacters(int elapsedTime)
+void CGame::UpdateCharacters()
 {
 	for (int i=0; i < MAX_CHARACTERS; i++)
 	{
-		m_characterArray[i]->Animate(elapsedTime);
+		m_characterArray[i]->Animate();
 		m_characterArray[i]->UpdatePosition();
 		m_characterArray[i]->SetVisible(m_currentRoom);		
 		m_characterArray[i]->Draw();
 	}
+}
+
+bool CGame::CheckCharacterCollision(DirectionType directionType, CharacterType* charNear, CharacterType* charFar)
+{
+	for (int i=1; i < MAX_CHARACTERS; i++)
+	{
+		if(m_characterArray[i]->GetRoom() == m_currentRoom)
+		{
+			if(m_snide->CheckCollision(directionType, m_characterArray[i], charNear, charFar))
+				return true;
+		}
+	}
+	
+	return false;
 }
 
 mm_word CGame::MusicEventHandler(mm_word msg, mm_word param)

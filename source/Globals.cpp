@@ -63,8 +63,18 @@ MAP g_outside1Map = { 400, 248, map_outside1Tiles, map_outside1TilesLen, map_out
 MAP g_outside2Map = { 544, 248, map_outside2Tiles, map_outside2TilesLen, map_outside2Map, map_outside2MapLen, map_outside2Pal, map_outside2PalLen };
 MAP g_passage1Map = { 256, 248, map_passage1Tiles, map_passage1TilesLen, map_passage1Map, map_passage1MapLen, map_passage1Pal, map_passage1PalLen };
 MAP g_passage2Map = { 256, 248, map_passage2Tiles, map_passage2TilesLen, map_passage2Map, map_passage2MapLen, map_passage2Pal, map_passage2PalLen };
-MAP g_room1Map = { 400, 248, map_room1Tiles, map_room1TilesLen, map_room1Map, map_room1MapLen, map_room1Pal, map_room1PalLen };
-MAP g_room2Map = { 344, 248, map_room2Tiles, map_room2TilesLen, map_room2Map, map_room2MapLen, map_room2Pal, map_room2PalLen };
+
+MAP g_cynthiaMap = { 400, 248, map_cynthiaTiles, map_cynthiaTilesLen, map_cynthiaMap, map_cynthiaMapLen, map_cynthiaPal, map_cynthiaPalLen };
+MAP g_dingleMap = { 400, 248, map_dingleTiles, map_dingleTilesLen, map_dingleMap, map_dingleMapLen, map_dinglePal, map_dinglePalLen };
+MAP g_doctorMap = { 400, 248, map_doctorTiles, map_doctorTilesLen, map_doctorMap, map_doctorMapLen, map_doctorPal, map_doctorPalLen };
+MAP g_majorMap = { 400, 248, map_majorTiles, map_majorTilesLen, map_majorMap, map_majorMapLen, map_majorPal, map_majorPalLen };
+MAP g_professorMap = { 400, 248, map_professorTiles, map_professorTilesLen, map_professorMap, map_professorMapLen, map_professorPal, map_professorPalLen };
+MAP g_reverendMap = { 400, 248, map_reverendTiles, map_reverendTilesLen, map_reverendMap, map_reverendMapLen, map_reverendPal, map_reverendPalLen };
+MAP g_snideMap = { 400, 248, map_snideTiles, map_snideTilesLen, map_snideMap, map_snideMapLen, map_snidePal, map_snidePalLen };
+MAP g_bentleyMap = { 344, 248, map_bentleyTiles, map_bentleyTilesLen, map_bentleyMap, map_bentleyMapLen, map_bentleyPal, map_bentleyPalLen };
+MAP g_cookMap = { 344, 248, map_cookTiles, map_cookTilesLen, map_cookMap, map_cookMapLen, map_cookPal, map_cookPalLen };
+MAP g_gabrielMap = { 344, 248, map_gabrielTiles, map_gabrielTilesLen, map_gabrielMap, map_gabrielMapLen, map_gabrielPal, map_gabrielPalLen };
+
 MAP g_stairsMap = { 416, 248, map_stairsTiles, map_stairsTilesLen, map_stairsMap, map_stairsMapLen, map_stairsPal, map_stairsPalLen };
 MAP g_studyMap = { 320, 248, map_studyTiles, map_studyTilesLen, map_studyMap, map_studyMapLen, map_studyPal, map_studyPalLen };
 MAP g_utilityMap = { 296, 248, map_utilityTiles, map_utilityTilesLen, map_utilityMap, map_utilityMapLen, map_utilityPal, map_utilityPalLen };

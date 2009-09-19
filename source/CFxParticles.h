@@ -12,6 +12,7 @@ typedef struct
 	int X;
 	int Y;
 	int Speed;
+	int Lifetime;
 } PARTICLE, *PPARTICLE;
 
 class CFxParticles : public CFx
@@ -34,10 +35,15 @@ public:
 	void Reset();
 	void UpdateVBlank();
 	void UpdateHBlank();
+	
+	void SetXOffset(int xOffset) { m_xOffset = xOffset; }
 
 private:
 
 	PARTICLE m_particleArray[MAX_PARTICLES];
+	
+	int m_lastUpdate;
+	int m_xOffset;
 };
 
 #endif

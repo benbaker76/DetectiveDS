@@ -12,7 +12,7 @@ void CFxParticles::Initialize()
 	{
 	case FXMODE_RAIN:
 		for(int i=0; i<MAX_PARTICLES; i++)
-			dmaCopy(sprite_fxTiles, m_particleArray[i].Gfx, 8 * 8);
+			dmaCopy(sprite_fxTiles, m_particleArray[i].Gfx,  8 * 8 * 2);
 		break;
 	default:
 		break;
@@ -44,8 +44,54 @@ void CFxParticles::UpdateVBlank()
 	case FXMODE_RAIN:
 		for(int i=0; i<MAX_PARTICLES; i++)
 		{
-			m_particleArray[i].X -= m_particleArray[i].Speed;
-			m_particleArray[i].Y += m_particleArray[i].Speed;
+			if(m_particleArray[i].Y > 144)
+			{
+				if(m_particleArray[i].Lifetime == 0)
+				{
+					int num = rand() % 4;
+					
+					if(num == 0)
+					{
+						m_particleArray[i].Lifetime++;
+						dmaCopy(sprite_fxTiles + (m_particleArray[i].Lifetime * 16), m_particleArray[i].Gfx, 8 * 8 * 2);
+					}
+					else
+					{
+						m_particleArray[i].X -= m_particleArray[i].Speed;
+						m_particleArray[i].Y += m_particleArray[i].Speed;
+					}
+				}
+				else
+				{
+					m_lastUpdate++;
+					
+					if(m_lastUpdate > 3)
+					{
+						m_lastUpdate = 0;
+						
+						m_particleArray[i].Lifetime++;
+						
+						if(m_particleArray[i].Lifetime == 5)
+						{
+							m_particleArray[i].X = rand() % 256;
+							m_particleArray[i].Y = rand() % 192;
+							m_particleArray[i].Speed = (rand() % 4) + 2;
+							m_particleArray[i].Lifetime = 0;
+							
+							dmaCopy(sprite_fxTiles, m_particleArray[i].Gfx, 8 * 8 * 2);
+						}
+						else
+						{
+							dmaCopy(sprite_fxTiles + (m_particleArray[i].Lifetime * 16), m_particleArray[i].Gfx, 8 * 8 * 2);
+						}
+					}
+				}
+			}
+			else
+			{
+				m_particleArray[i].X -= m_particleArray[i].Speed;
+				m_particleArray[i].Y += m_particleArray[i].Speed;
+			}
 			
 			if(m_particleArray[i].X < 0)
 				m_particleArray[i].X = 256;
@@ -53,7 +99,7 @@ void CFxParticles::UpdateVBlank()
 			if(m_particleArray[i].Y > 192)
 				m_particleArray[i].Y = 0;
 			
-			oamSet(&oamSub, PARTICLE_START + i, m_particleArray[i].X, m_particleArray[i].Y, 0, 0, SpriteSize_8x8, SpriteColorFormat_256Color, m_particleArray[i].Gfx, 0, false, false, false, false, false);
+			oamSet(&oamSub, PARTICLE_START + i, (m_xOffset + m_particleArray[i].X) & 0xFF, m_particleArray[i].Y, 1, 0, SpriteSize_8x8, SpriteColorFormat_256Color, m_particleArray[i].Gfx, 0, false, false, false, false, false);
 		}
 		break;
 	default:
