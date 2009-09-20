@@ -1,5 +1,6 @@
 #include <nds.h>
 #include <stdio.h>
+#include "sprite_misc.h"
 #include "Text.h"
 #include "CConsole.h"
 

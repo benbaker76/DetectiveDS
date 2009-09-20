@@ -1,10 +1,7 @@
 #ifndef __CITEM_H__
 #define __CITEM_H__
 
-#include "TDG.h"
-
-#define MAX_ITEMS				53
-#define ITEM_CAPACITY			5
+#define MAX_ITEMS			62
 
 enum ItemType
 {
@@ -60,20 +57,52 @@ enum ItemType
 	ITEM_PADDED_ENVELOPES,
 	ITEM_A_BOMB,					// Clue #7
 	ITEM_A_SMALL_KEY,
-	ITEM_BULLETS
+	ITEM_BULLETS,
+	ITEM_ANTLERS_HORN,
+	ITEM_SWORD,
+	ITEM_BALL_ON_CHAIN,
+	ITEM_HOURGLASS,
+	ITEM_GOLDEN_SKULL,
+	ITEM_RED_KEY,
+	ITEM_FIREPLACE_BELLOW,
+	ITEM_WASHING_POWDER,
+	ITEM_DIRTY_SHIRT
 };
+
+enum ItemAttributes
+{
+	ITEMATTRIB_NONE = 0,
+	ITEMATTRIB_EVIDENCE = BIT(0),
+	ITEMATTRIB_BOOK = BIT(1),
+	ITEMATTRIB_KEY = BIT(2),
+	ITEMATTRIB_SAFE = BIT(3),
+};
+
+enum ItemActions
+{
+	ITEMACTION_NONE = 0,
+	ITEMACTION_OPEN = BIT(0),
+	ITEMACTION_BREAK = BIT(1),
+	ITEMACTION_CUT = BIT(2),
+	ITEMACTION_EXAMINE = BIT(3),
+};
+
+class CItemCache;
 
 class CItem
 {
 public:
-	CItem(ItemType itemType, bool evidence);
+	CItem(ItemType itemType, ItemAttributes itemAttribs, ItemActions itemActions);
 	~CItem();
+	
+	void AddItemCache(CItemCache* itemCache) { m_itemCache = itemCache; }
 	
 private:
 	ItemType m_itemType;
-	bool m_evidence;
+	ItemAttributes m_itemAttribs;
+	ItemActions m_itemActions;
 	
-	CItem* m_itemArray[ITEM_CAPACITY];
+	CItemCache* m_itemCache;
 };
 
 #endif

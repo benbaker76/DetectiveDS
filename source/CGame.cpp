@@ -19,6 +19,8 @@ CGame::~CGame()
 
 void CGame::Initialize()
 {
+	CItem* itemArray[MAX_ITEM_ARRAY];
+	
 	for(int i=0; i<MAX_CHARACTERS; i++)
 		m_characterArray[i] = NULL;
 		
@@ -57,29 +59,6 @@ void CGame::Initialize()
 		m_spriteArray[SPRITE_MAJOR_BODY] = new CSprite(SPRITE_MAJOR_BODY, sprite_major_bodyTiles, sprite_major_bodyTilesLen, sprite_major_bodyPal, sprite_major_bodyPalLen, g_majorBodyFrames, 6);		
 		m_spriteArray[SPRITE_DINGLE_HEAD] = new CSprite(SPRITE_DINGLE_HEAD, sprite_dingle_headTiles, sprite_dingle_headTilesLen, sprite_dingle_headPal, sprite_dingle_headPalLen, g_dingleHeadFrames, 5);
 		m_spriteArray[SPRITE_DINGLE_BODY] = new CSprite(SPRITE_DINGLE_BODY, sprite_dingle_bodyTiles, sprite_dingle_bodyTilesLen, sprite_dingle_bodyPal, sprite_dingle_bodyPalLen, g_dingleBodyFrames, 7);
-		/* m_spriteArray[SPRITE_ANGUS_HEAD] = new CSprite(SPRITE_ANGUS_HEAD, sprite_angus_headTiles, sprite_angus_headTilesLen, sprite_angus_headPal, sprite_angus_headPalLen, g_angusHeadFrames, 5);
-		m_spriteArray[SPRITE_ANGUS_BODY] = new CSprite(SPRITE_ANGUS_BODY, sprite_angus_bodyTiles, sprite_angus_bodyTilesLen, sprite_angus_bodyPal, sprite_angus_bodyPalLen, g_angusBodyFrames, 7); */
-		
-		/* m_spriteArray[SPRITE_SNIDE_HEAD] = new CSprite(SPRITE_SNIDE_HEAD, sprite_snide_headBitmap, g_snideHeadFrames, 16);
-		m_spriteArray[SPRITE_SNIDE_BODY] = new CSprite(SPRITE_SNIDE_BODY, sprite_snide_bodyBitmap, g_snideBodyFrames, 18);
-		m_spriteArray[SPRITE_REVEREND_HEAD] = new CSprite(SPRITE_REVEREND_HEAD, sprite_reverend_headBitmap, g_reverendHeadFrames, 4);
-		m_spriteArray[SPRITE_REVEREND_BODY] = new CSprite(SPRITE_REVEREND_BODY, sprite_reverend_bodyBitmap, g_reverendBodyFrames, 6);
-		m_spriteArray[SPRITE_BENTLEY_HEAD] = new CSprite(SPRITE_BENTLEY_HEAD, sprite_bentley_headBitmap, g_bentleyHeadFrames, 4);
-		m_spriteArray[SPRITE_BENTLEY_BODY] = new CSprite(SPRITE_BENTLEY_BODY, sprite_bentley_bodyBitmap, g_bentleyBodyFrames, 6);
-		m_spriteArray[SPRITE_COOK_HEAD] = new CSprite(SPRITE_COOK_HEAD, sprite_cook_headBitmap, g_cookHeadFrames, 4);
-		m_spriteArray[SPRITE_COOK_BODY] = new CSprite(SPRITE_COOK_BODY, sprite_cook_bodyBitmap, g_cookBodyFrames, 6);
-		m_spriteArray[SPRITE_GABRIEL_HEAD] = new CSprite(SPRITE_GABRIEL_HEAD, sprite_gabriel_headBitmap, g_gabrielHeadFrames, 5);
-		m_spriteArray[SPRITE_GABRIEL_BODY] = new CSprite(SPRITE_GABRIEL_BODY, sprite_gabriel_bodyBitmap, g_gabrielBodyFrames, 7);
-		m_spriteArray[SPRITE_CYNTHIA_HEAD] = new CSprite(SPRITE_CYNTHIA_HEAD, sprite_cynthia_headBitmap, g_cynthiaHeadFrames, 4);
-		m_spriteArray[SPRITE_CYNTHIA_BODY] = new CSprite(SPRITE_CYNTHIA_BODY, sprite_cynthia_bodyBitmap, g_cynthiaBodyFrames, 6);
-		m_spriteArray[SPRITE_PROFESSOR_HEAD] = new CSprite(SPRITE_PROFESSOR_HEAD, sprite_professor_headBitmap, g_professorHeadFrames, 5);
-		m_spriteArray[SPRITE_PROFESSOR_BODY] = new CSprite(SPRITE_PROFESSOR_BODY, sprite_professor_bodyBitmap, g_professorBodyFrames, 7);
-		m_spriteArray[SPRITE_DOCTOR_HEAD] = new CSprite(SPRITE_DOCTOR_HEAD, sprite_doctor_headBitmap, g_doctorHeadFrames, 5);
-		m_spriteArray[SPRITE_DOCTOR_BODY] = new CSprite(SPRITE_DOCTOR_BODY, sprite_doctor_bodyBitmap, g_doctorBodyFrames, 7);
-		m_spriteArray[SPRITE_MAJOR_HEAD] = new CSprite(SPRITE_MAJOR_HEAD, sprite_major_headBitmap, g_majorHeadFrames, 4);
-		m_spriteArray[SPRITE_MAJOR_BODY] = new CSprite(SPRITE_MAJOR_BODY, sprite_major_bodyBitmap, g_majorBodyFrames, 6);		
-		m_spriteArray[SPRITE_DINGLE_HEAD] = new CSprite(SPRITE_DINGLE_HEAD, sprite_dingle_headBitmap, g_dingleHeadFrames, 5);
-		m_spriteArray[SPRITE_DINGLE_BODY] = new CSprite(SPRITE_DINGLE_BODY, sprite_dingle_bodyBitmap, g_dingleBodyFrames, 7); */
 		m_spriteArray[SPRITE_ANGUS_HEAD] = new CSprite(SPRITE_ANGUS_HEAD, sprite_angus_headBitmap, g_angusHeadFrames, 5);
 		m_spriteArray[SPRITE_ANGUS_BODY] = new CSprite(SPRITE_ANGUS_BODY, sprite_angus_bodyBitmap, g_angusBodyFrames, 7);
 		
@@ -94,6 +73,75 @@ void CGame::Initialize()
 		m_characterArray[CHARTYPE_MAJOR] = new CCharacter(CHARTYPE_MAJOR, m_spriteArray[SPRITE_MAJOR_HEAD], m_spriteArray[SPRITE_MAJOR_BODY], 24, 46);
 		m_characterArray[CHARTYPE_DINGLE] = new CCharacter(CHARTYPE_DINGLE, m_spriteArray[SPRITE_DINGLE_HEAD], m_spriteArray[SPRITE_DINGLE_BODY], 24, 48);
 		m_characterArray[CHARTYPE_ANGUS] = new CCharacter(CHARTYPE_ANGUS, m_spriteArray[SPRITE_ANGUS_HEAD], m_spriteArray[SPRITE_ANGUS_BODY], 24, 48);
+		
+		m_itemArray[ITEM_NOTHING_HERE] = new CItem(ITEM_NOTHING_HERE, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_HOT_WATER_BOTTLE] = new CItem(ITEM_A_HOT_WATER_BOTTLE, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_BLANK_BULLETS] = new CItem(ITEM_BLANK_BULLETS, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_CANDLESTICK] = new CItem(ITEM_A_CANDLESTICK, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_THE_WILL] = new CItem(ITEM_THE_WILL, ITEMATTRIB_EVIDENCE, ITEMACTION_NONE);							// Clue #1
+		m_itemArray[ITEM_A_KNIFE] = new CItem(ITEM_A_KNIFE, ITEMATTRIB_EVIDENCE, ITEMACTION_NONE);								// Clue #8
+		m_itemArray[ITEM_NEWSPAPER_CUTTING] = new CItem(ITEM_NEWSPAPER_CUTTING, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_NOTE] = new CItem(ITEM_A_NOTE, ITEMATTRIB_EVIDENCE, ITEMACTION_NONE);								// Clue #4
+		m_itemArray[ITEM_A_SMALL_BOTTLE] = new CItem(ITEM_A_SMALL_BOTTLE, ITEMATTRIB_EVIDENCE, ITEMACTION_NONE);				// Clue #6
+		m_itemArray[ITEM_A_CRAVATE] = new CItem(ITEM_A_CRAVATE, ITEMATTRIB_EVIDENCE, ITEMACTION_NONE);							// Clue #3
+		m_itemArray[ITEM_A_SOGGY_ENVELOPE] = new CItem(ITEM_A_SOGGY_ENVELOPE, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_LETTER] = new CItem(ITEM_A_LETTER, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_SCALPELS] = new CItem(ITEM_SCALPELS, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_SYRINGE] = new CItem(ITEM_A_SYRINGE, ITEMATTRIB_EVIDENCE, ITEMACTION_NONE);							// Clue #9
+		m_itemArray[ITEM_A_BOTTLE_OF_PILLS] = new CItem(ITEM_A_BOTTLE_OF_PILLS, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_HAMMER] = new CItem(ITEM_A_HAMMER, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_BUNCH_OF_KEYS] = new CItem(ITEM_A_BUNCH_OF_KEYS, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_BIG_IRON_KEY] = new CItem(ITEM_A_BIG_IRON_KEY, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_SILVER_TRAY] = new CItem(ITEM_A_SILVER_TRAY, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_BOTTLE_OF_WINE] = new CItem(ITEM_A_BOTTLE_OF_WINE, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_COMB] = new CItem(ITEM_A_COMB, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_HARDBACK_BOOK] = new CItem(ITEM_A_HARDBACK_BOOK, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_FOLDED_DOCUMENT] = new CItem(ITEM_A_FOLDED_DOCUMENT, ITEMATTRIB_EVIDENCE, ITEMACTION_NONE);			// Clue #2
+		m_itemArray[ITEM_AN_ELEPHANT_GUN] = new CItem(ITEM_AN_ELEPHANT_GUN, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_DIARY] = new CItem(ITEM_A_DIARY, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_BLACK_BAG] = new CItem(ITEM_A_BLACK_BAG, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_COLOGNE] = new CItem(ITEM_COLOGNE, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_SMALL_BOOK] = new CItem(ITEM_A_SMALL_BOOK, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_DIRTY_PLATES] = new CItem(ITEM_DIRTY_PLATES, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_PICTURE] = new CItem(ITEM_A_PICTURE, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_WAD_OF_NOTES] = new CItem(ITEM_A_WAD_OF_NOTES, ITEMATTRIB_EVIDENCE, ITEMACTION_NONE);				// Clue #5
+		m_itemArray[ITEM_A_LOCKET] = new CItem(ITEM_A_LOCKET, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_SCREWDRIVER] = new CItem(ITEM_A_SCREWDRIVER, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_AN_OPEN_LOCKET] = new CItem(ITEM_AN_OPEN_LOCKET, ITEMATTRIB_EVIDENCE, ITEMACTION_NONE);				// Clue #10
+		m_itemArray[ITEM_BROKEN_PLATES] = new CItem(ITEM_BROKEN_PLATES, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_BROKEN_GLASS] = new CItem(ITEM_BROKEN_GLASS, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_SHREDDED_PAPER] = new CItem(ITEM_SHREDDED_PAPER, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_BOOKS1] = new CItem(ITEM_BOOKS1, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_BOOKS2] = new CItem(ITEM_BOOKS2, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_LETTER_OPENER] = new CItem(ITEM_A_LETTER_OPENER, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_JACKET] = new CItem(ITEM_A_JACKET, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_NOTEBOOKS] = new CItem(ITEM_NOTEBOOKS, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_PLANS] = new CItem(ITEM_PLANS, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_MIRROR] = new CItem(ITEM_A_MIRROR, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_CUTLERY] = new CItem(ITEM_CUTLERY, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_PIECE_OF_CARD] = new CItem(ITEM_A_PIECE_OF_CARD, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_BRIEFCASE] = new CItem(ITEM_A_BRIEFCASE, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_FOLDER] = new CItem(ITEM_A_FOLDER, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_PAPERWEIGHT] = new CItem(ITEM_A_PAPERWEIGHT, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_PADDED_ENVELOPES] = new CItem(ITEM_PADDED_ENVELOPES, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_A_BOMB] = new CItem(ITEM_A_BOMB, ITEMATTRIB_EVIDENCE, ITEMACTION_NONE);								// Clue #7
+		m_itemArray[ITEM_A_SMALL_KEY] = new CItem(ITEM_A_SMALL_KEY, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_BULLETS] = new CItem(ITEM_BULLETS, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_ANTLERS_HORN] = new CItem(ITEM_ANTLERS_HORN, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_SWORD] = new CItem(ITEM_SWORD, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_BALL_ON_CHAIN] = new CItem(ITEM_BALL_ON_CHAIN, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_HOURGLASS] = new CItem(ITEM_HOURGLASS, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_GOLDEN_SKULL] = new CItem(ITEM_GOLDEN_SKULL, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_RED_KEY] = new CItem(ITEM_RED_KEY, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_FIREPLACE_BELLOW] = new CItem(ITEM_FIREPLACE_BELLOW, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_WASHING_POWDER] = new CItem(ITEM_WASHING_POWDER, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		m_itemArray[ITEM_DIRTY_SHIRT] = new CItem(ITEM_DIRTY_SHIRT, ITEMATTRIB_NONE, ITEMACTION_NONE);
+		
+		MAKEITEMARRAY(m_itemArray[ITEM_A_WAD_OF_NOTES], m_itemArray[ITEM_SCALPELS], m_itemArray[ITEM_A_SMALL_BOTTLE], NULL, NULL);
+		m_itemArray[ITEM_A_BLACK_BAG]->AddItemCache(new CItemCache(itemArray));
+		
+		MAKEITEMARRAY(m_itemArray[ITEM_THE_WILL], NULL, NULL, NULL, NULL);
+		m_itemArray[ITEM_A_PICTURE]->AddItemCache(new CItemCache(itemArray));
 		
 		m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, &g_snideMap, NULL, col_room1, 144);
 		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, &g_reverendMap, NULL, col_room1, 144);
@@ -217,59 +265,120 @@ void CGame::Initialize()
 		m_roomArray[ROOM_ANGUS_STAIRS]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_LOCKED, m_roomArray[ROOM_ANGUS_STAIRS], m_roomArray[ROOM_STAIRS]));
 		m_roomArray[ROOM_ANGUS_STAIRS]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_ANGUS_STAIRS], m_roomArray[ROOM_ANGUS_LANDING]));
 		
-		m_itemArray[ITEM_NOTHING_HERE] = new CItem(ITEM_NOTHING_HERE, false);
-		m_itemArray[ITEM_A_HOT_WATER_BOTTLE] = new CItem(ITEM_A_HOT_WATER_BOTTLE, false);
-		m_itemArray[ITEM_BLANK_BULLETS] = new CItem(ITEM_BLANK_BULLETS, false);
-		m_itemArray[ITEM_A_CANDLESTICK] = new CItem(ITEM_A_CANDLESTICK, false);
-		m_itemArray[ITEM_THE_WILL] = new CItem(ITEM_THE_WILL, true); // Clue #1
-		m_itemArray[ITEM_A_KNIFE] = new CItem(ITEM_A_KNIFE, true); // Clue #8
-		m_itemArray[ITEM_NEWSPAPER_CUTTING] = new CItem(ITEM_NEWSPAPER_CUTTING, false);
-		m_itemArray[ITEM_A_NOTE] = new CItem(ITEM_A_NOTE, true); // Clue #4
-		m_itemArray[ITEM_A_SMALL_BOTTLE] = new CItem(ITEM_A_SMALL_BOTTLE, true); // Clue #6
-		m_itemArray[ITEM_A_CRAVATE] = new CItem(ITEM_A_CRAVATE, true); // Clue #3
-		m_itemArray[ITEM_A_SOGGY_ENVELOPE] = new CItem(ITEM_A_SOGGY_ENVELOPE, false);
-		m_itemArray[ITEM_A_LETTER] = new CItem(ITEM_A_LETTER, false);
-		m_itemArray[ITEM_SCALPELS] = new CItem(ITEM_SCALPELS, false);
-		m_itemArray[ITEM_A_SYRINGE] = new CItem(ITEM_A_SYRINGE, true); // Clue #9
-		m_itemArray[ITEM_A_BOTTLE_OF_PILLS] = new CItem(ITEM_A_BOTTLE_OF_PILLS, false);
-		m_itemArray[ITEM_A_HAMMER] = new CItem(ITEM_A_HAMMER, false);
-		m_itemArray[ITEM_A_BUNCH_OF_KEYS] = new CItem(ITEM_A_BUNCH_OF_KEYS, false);
-		m_itemArray[ITEM_A_BIG_IRON_KEY] = new CItem(ITEM_A_BIG_IRON_KEY, false);
-		m_itemArray[ITEM_A_SILVER_TRAY] = new CItem(ITEM_A_SILVER_TRAY, false);
-		m_itemArray[ITEM_A_BOTTLE_OF_WINE] = new CItem(ITEM_A_BOTTLE_OF_WINE, false);
-		m_itemArray[ITEM_A_COMB] = new CItem(ITEM_A_COMB, false);
-		m_itemArray[ITEM_A_HARDBACK_BOOK] = new CItem(ITEM_A_HARDBACK_BOOK, false);
-		m_itemArray[ITEM_A_FOLDED_DOCUMENT] = new CItem(ITEM_A_FOLDED_DOCUMENT, true); // Clue #2
-		m_itemArray[ITEM_AN_ELEPHANT_GUN] = new CItem(ITEM_AN_ELEPHANT_GUN, false);
-		m_itemArray[ITEM_A_DIARY] = new CItem(ITEM_A_DIARY, false);
-		m_itemArray[ITEM_A_BLACK_BAG] = new CItem(ITEM_A_BLACK_BAG, false);
-		m_itemArray[ITEM_COLOGNE] = new CItem(ITEM_COLOGNE, false);
-		m_itemArray[ITEM_A_SMALL_BOOK] = new CItem(ITEM_A_SMALL_BOOK, false);
-		m_itemArray[ITEM_DIRTY_PLATES] = new CItem(ITEM_DIRTY_PLATES, false);
-		m_itemArray[ITEM_A_PICTURE] = new CItem(ITEM_A_PICTURE, false);
-		m_itemArray[ITEM_A_WAD_OF_NOTES] = new CItem(ITEM_A_WAD_OF_NOTES, true); // Clue #5
-		m_itemArray[ITEM_A_LOCKET] = new CItem(ITEM_A_LOCKET, false);
-		m_itemArray[ITEM_A_SCREWDRIVER] = new CItem(ITEM_A_SCREWDRIVER, false);
-		m_itemArray[ITEM_AN_OPEN_LOCKET] = new CItem(ITEM_AN_OPEN_LOCKET, true); // Clue #10
-		m_itemArray[ITEM_BROKEN_PLATES] = new CItem(ITEM_BROKEN_PLATES, false);
-		m_itemArray[ITEM_BROKEN_GLASS] = new CItem(ITEM_BROKEN_GLASS, false);
-		m_itemArray[ITEM_SHREDDED_PAPER] = new CItem(ITEM_SHREDDED_PAPER, false);
-		m_itemArray[ITEM_BOOKS1] = new CItem(ITEM_BOOKS1, false);
-		m_itemArray[ITEM_BOOKS2] = new CItem(ITEM_BOOKS2, false);
-		m_itemArray[ITEM_A_LETTER_OPENER] = new CItem(ITEM_A_LETTER_OPENER, false);
-		m_itemArray[ITEM_A_JACKET] = new CItem(ITEM_A_JACKET, false);
-		m_itemArray[ITEM_NOTEBOOKS] = new CItem(ITEM_NOTEBOOKS, false);
-		m_itemArray[ITEM_PLANS] = new CItem(ITEM_PLANS, false);
-		m_itemArray[ITEM_A_MIRROR] = new CItem(ITEM_A_MIRROR, false);
-		m_itemArray[ITEM_CUTLERY] = new CItem(ITEM_CUTLERY, false);
-		m_itemArray[ITEM_A_PIECE_OF_CARD] = new CItem(ITEM_A_PIECE_OF_CARD, false);
-		m_itemArray[ITEM_A_BRIEFCASE] = new CItem(ITEM_A_BRIEFCASE, false);
-		m_itemArray[ITEM_A_FOLDER] = new CItem(ITEM_A_FOLDER, false);
-		m_itemArray[ITEM_A_PAPERWEIGHT] = new CItem(ITEM_A_PAPERWEIGHT, false);
-		m_itemArray[ITEM_PADDED_ENVELOPES] = new CItem(ITEM_PADDED_ENVELOPES, false);
-		m_itemArray[ITEM_A_BOMB] = new CItem(ITEM_A_BOMB, true); // Clue #7
-		m_itemArray[ITEM_A_SMALL_KEY] = new CItem(ITEM_A_SMALL_KEY, false);
-		m_itemArray[ITEM_BULLETS] = new CItem(ITEM_BULLETS, false);
+		// ----------------------------
+		
+		m_roomArray[ROOM_SNIDE]->AddItemCache(0, new CItemCache(ITEMCACHE_FOUR_POSTER_BED));
+		MAKEITEMARRAY(m_itemArray[ITEM_PADDED_ENVELOPES], m_itemArray[ITEM_A_HOT_WATER_BOTTLE], NULL, NULL, NULL);
+		m_roomArray[ROOM_SNIDE]->AddItemCache(1, new CItemCache(ITEMCACHE_CHEST_OF_DRAWERS, itemArray));
+		
+		m_roomArray[ROOM_REVEREND]->AddItemCache(0, new CItemCache(ITEMCACHE_FOUR_POSTER_BED));
+		MAKEITEMARRAY(m_itemArray[ITEM_A_BOTTLE_OF_PILLS], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_REVEREND]->AddItemCache(1, new CItemCache(ITEMCACHE_CHEST_OF_DRAWERS, itemArray));
+		
+		MAKEITEMARRAY(m_itemArray[ITEM_A_COMB], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_BENTLEY]->AddItemCache(0, new CItemCache(ITEMCACHE_BED, itemArray));
+		MAKEITEMARRAY(m_itemArray[ITEM_A_BUNCH_OF_KEYS], m_itemArray[ITEM_A_SOGGY_ENVELOPE], NULL, NULL, NULL);
+		m_roomArray[ROOM_BENTLEY]->AddItemCache(1, new CItemCache(ITEMCACHE_CLOTHES_CUPBOARD, itemArray));
+		
+		m_roomArray[ROOM_COOK]->AddItemCache(0, new CItemCache(ITEMCACHE_BED));
+		m_roomArray[ROOM_COOK]->AddItemCache(1, new CItemCache(ITEMCACHE_CLOTHES_CUPBOARD));
+		
+		m_roomArray[ROOM_GABRIEL]->AddItemCache(0, new CItemCache(ITEMCACHE_BED));
+		m_roomArray[ROOM_GABRIEL]->AddItemCache(1, new CItemCache(ITEMCACHE_CLOTHES_CUPBOARD));
+		
+		m_roomArray[ROOM_CYNTHIA]->AddItemCache(0, new CItemCache(ITEMCACHE_FOUR_POSTER_BED));
+		MAKEITEMARRAY(m_itemArray[ITEM_A_MIRROR], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_CYNTHIA]->AddItemCache(1, new CItemCache(ITEMCACHE_CHEST_OF_DRAWERS, itemArray));
+		
+		m_roomArray[ROOM_PROFESSOR]->AddItemCache(0, new CItemCache(ITEMCACHE_FOUR_POSTER_BED));
+		MAKEITEMARRAY(m_itemArray[ITEM_NOTEBOOKS], m_itemArray[ITEM_A_SMALL_BOOK], NULL, NULL, NULL);
+		m_roomArray[ROOM_PROFESSOR]->AddItemCache(1, new CItemCache(ITEMCACHE_CHEST_OF_DRAWERS, itemArray));
+		
+		m_roomArray[ROOM_DOCTOR]->AddItemCache(0, new CItemCache(ITEMCACHE_FOUR_POSTER_BED));
+		MAKEITEMARRAY(m_itemArray[ITEM_COLOGNE], m_itemArray[ITEM_A_BLACK_BAG], NULL, NULL, NULL);
+		m_roomArray[ROOM_DOCTOR]->AddItemCache(1, new CItemCache(ITEMCACHE_CHEST_OF_DRAWERS, itemArray));
+		
+		MAKEITEMARRAY(m_itemArray[ITEM_AN_ELEPHANT_GUN], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_MAJOR]->AddItemCache(0, new CItemCache(ITEMCACHE_FOUR_POSTER_BED, itemArray));
+		MAKEITEMARRAY(m_itemArray[ITEM_BLANK_BULLETS], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_MAJOR]->AddItemCache(1, new CItemCache(ITEMCACHE_CHEST_OF_DRAWERS, itemArray));
+		
+		m_roomArray[ROOM_DINGLE]->AddItemCache(0, new CItemCache(ITEMCACHE_FOUR_POSTER_BED));
+		MAKEITEMARRAY(m_itemArray[ITEM_A_BRIEFCASE], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_DINGLE]->AddItemCache(1, new CItemCache(ITEMCACHE_CHEST_OF_DRAWERS, itemArray));
+		
+		m_roomArray[ROOM_OUTSIDE1]->AddItemCache(0, new CItemCache(ITEMCACHE_WINDOW));
+		
+		m_roomArray[ROOM_OUTSIDE3]->AddItemCache(0, new CItemCache(ITEMCACHE_WINDOW));
+		
+		MAKEITEMARRAY(m_itemArray[ITEM_A_HAMMER], m_itemArray[ITEM_A_CANDLESTICK], NULL, NULL, NULL);
+		m_roomArray[ROOM_KITCHEN]->AddItemCache(0, new CItemCache(ITEMCACHE_WOODEN_BOX, itemArray));
+		MAKEITEMARRAY(m_itemArray[ITEM_A_BOTTLE_OF_WINE], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_KITCHEN]->AddItemCache(1, new CItemCache(ITEMCACHE_CUPBOARD1, itemArray));
+		MAKEITEMARRAY(m_itemArray[ITEM_A_SILVER_TRAY], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_KITCHEN]->AddItemCache(2, new CItemCache(ITEMCACHE_CUPBOARD2, itemArray));
+		m_roomArray[ROOM_KITCHEN]->AddItemCache(3, new CItemCache(ITEMCACHE_CUPBOARD3));
+		MAKEITEMARRAY(m_itemArray[ITEM_CUTLERY], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_KITCHEN]->AddItemCache(4, new CItemCache(ITEMCACHE_CUPBOARD4, itemArray));
+		MAKEITEMARRAY(m_itemArray[ITEM_DIRTY_PLATES], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_KITCHEN]->AddItemCache(5, new CItemCache(ITEMCACHE_SINK, itemArray));
+		
+		MAKEITEMARRAY(m_itemArray[ITEM_BULLETS], m_itemArray[ITEM_A_PAPERWEIGHT], m_itemArray[ITEM_A_LETTER_OPENER], m_itemArray[ITEM_A_DIARY], NULL);
+		m_roomArray[ROOM_KITCHEN]->AddItemCache(0, new CItemCache(ITEMCACHE_DESK, itemArray));
+		MAKEITEMARRAY(m_itemArray[ITEM_A_FOLDER], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_KITCHEN]->AddItemCache(1, new CItemCache(ITEMCACHE_SHELVES, itemArray));
+		
+		m_roomArray[ROOM_CLOCK]->AddItemCache(0, new CItemCache(ITEMCACHE_CLOCK));
+		
+		MAKEITEMARRAY(m_itemArray[ITEM_A_SCREWDRIVER], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_CELLAR]->AddItemCache(0, new CItemCache(ITEMCACHE_BOXES1, itemArray));
+		MAKEITEMARRAY(m_itemArray[ITEM_A_PIECE_OF_CARD], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_CELLAR]->AddItemCache(1, new CItemCache(ITEMCACHE_BOXES2, itemArray));
+		m_roomArray[ROOM_CELLAR]->AddItemCache(2, new CItemCache(ITEMCACHE_BOXES3));
+		
+		m_roomArray[ROOM_DRAWING]->AddItemCache(0, new CItemCache(ITEMCACHE_FIREPLACE));
+		m_roomArray[ROOM_DRAWING]->AddItemCache(1, new CItemCache(ITEMCACHE_COAL_BUCKET));
+		m_roomArray[ROOM_DRAWING]->AddItemCache(2, new CItemCache(ITEMCACHE_PAINTING));
+		
+		MAKEITEMARRAY(m_itemArray[ITEM_BOOKS1], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_LIBRARY]->AddItemCache(0, new CItemCache(ITEMCACHE_BOOKCASE1, itemArray));
+		MAKEITEMARRAY(m_itemArray[ITEM_BOOKS2], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_LIBRARY]->AddItemCache(1, new CItemCache(ITEMCACHE_BOOKCASE2, itemArray));
+		
+		MAKEITEMARRAY(m_itemArray[ITEM_DIRTY_SHIRT], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_UTILITY]->AddItemCache(0, new CItemCache(ITEMCACHE_WASHING_MACHINE, itemArray));
+		m_roomArray[ROOM_UTILITY]->AddItemCache(1, new CItemCache(ITEMCACHE_WASHING_BASKET));
+		MAKEITEMARRAY(m_itemArray[ITEM_WASHING_POWDER], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_UTILITY]->AddItemCache(2, new CItemCache(ITEMCACHE_CUPBOARD, itemArray));
+		MAKEITEMARRAY(m_itemArray[ITEM_FIREPLACE_BELLOW], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_UTILITY]->AddItemCache(3, new CItemCache(ITEMCACHE_CABINET, itemArray));
+		
+		m_roomArray[ROOM_GARDEN]->AddItemCache(0, new CItemCache(ITEMCACHE_WINDOW));
+		
+		m_roomArray[ROOM_GRAVEYARD]->AddItemCache(0, new CItemCache(ITEMCACHE_HEADSTONE1));
+		m_roomArray[ROOM_GRAVEYARD]->AddItemCache(1, new CItemCache(ITEMCACHE_HEADSTONE2));
+		
+		m_roomArray[ROOM_COURTYARD]->AddItemCache(0, new CItemCache(ITEMCACHE_FOUNTAIN_WITH_RUNNING_WATER));
+		m_roomArray[ROOM_COURTYARD]->AddItemCache(1, new CItemCache(ITEMCACHE_GARGOYLE1));
+		m_roomArray[ROOM_COURTYARD]->AddItemCache(2, new CItemCache(ITEMCACHE_GARGOYLE2));
+		m_roomArray[ROOM_COURTYARD]->AddItemCache(3, new CItemCache(ITEMCACHE_GARGOYLE3));
+		
+		m_roomArray[ROOM_ANGUS_LANDING]->AddItemCache(0, new CItemCache(ITEMCACHE_GOAT_LIKE_PAINTING));
+		MAKEITEMARRAY(m_itemArray[ITEM_RED_KEY], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_ANGUS_LANDING]->AddItemCache(1, new CItemCache(ITEMCACHE_DESK_WITH_A_STATUE, itemArray));
+		MAKEITEMARRAY(m_itemArray[ITEM_ANTLERS_HORN], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_ANGUS_LANDING]->AddItemCache(2, new CItemCache(ITEMCACHE_A_TROPHY, itemArray));
+		
+		m_roomArray[ROOM_ANGUS_ROOM]->AddItemCache(0, new CItemCache(ITEMCACHE_ANGUS_BOOKCASE));
+		MAKEITEMARRAY(m_itemArray[ITEM_SWORD], m_itemArray[ITEM_BALL_ON_CHAIN], NULL, NULL, NULL);
+		m_roomArray[ROOM_ANGUS_ROOM]->AddItemCache(1, new CItemCache(ITEMCACHE_KNIGHT, itemArray));
+		m_roomArray[ROOM_ANGUS_ROOM]->AddItemCache(2, new CItemCache(ITEMCACHE_COUCH));
+		m_roomArray[ROOM_ANGUS_ROOM]->AddItemCache(3, new CItemCache(ITEMCACHE_TABLE));
+		
+		m_roomArray[ROOM_ANGUS_SECRET]->AddItemCache(0, new CItemCache(ITEMCACHE_HOURGLASS));
+		m_roomArray[ROOM_ANGUS_SECRET]->AddItemCache(1, new CItemCache(ITEMCACHE_GOLDEN_SKULL));
+		
+		// ----------------------------
 		
 		m_eventArray[EVENT_SHOW_ROOM] = new CEvent(EVENT_SHOW_ROOM, new CTime(9, 10, 0, 0));
 		m_eventArray[EVENT_GET_SHOT] = new CEvent(EVENT_SHOW_ROOM, new CTime(12, 0, 0, 0));

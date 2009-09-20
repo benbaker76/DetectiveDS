@@ -78,7 +78,7 @@ public:
 	
 	float X() const { return m_x; }
 	float Y() const { return m_y; }
-	int AbsX(); // const { return m_x - m_pRoom->X(); }
+	int AbsX();
 	int SpriteX() const { return m_pHeadSprite->X(); }
 	int SpriteY() const { return m_pHeadSprite->Y(); }
 	int Width() const { return m_width; }
@@ -90,6 +90,8 @@ public:
 	int Priority() const { return m_pHeadSprite->Priority(); }
 	CharacterType GetCharacterType() const { return m_characterType; }
 	CharacterMode GetCharacterMode() const { return m_characterMode; }
+	
+	void AddItemCache(CItemCache* itemCache) { m_itemCache = itemCache; }
 
 private:
 	CharacterType m_characterType;
@@ -116,6 +118,8 @@ private:
 	int m_height;
 	
 	POINT m_point;
+	
+	CItemCache* m_itemCache;
 	
 	void SetFrameType(FrameType frameType);
 };

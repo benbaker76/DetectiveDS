@@ -1,6 +1,7 @@
 #include <nds.h>
 #include <stdio.h>
 #include "CPath.h"
+#include "CDoor.h"
 #include "Text.h"
 
 CPath::CPath(CRoom* pRoomArray[MAX_ROOMS])

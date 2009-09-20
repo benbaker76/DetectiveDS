@@ -1,4 +1,3 @@
-#include "TDG.h"
 #include <maxmod9.h>
 
 #include "soundbank_bin.h"

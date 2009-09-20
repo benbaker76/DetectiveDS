@@ -7,6 +7,8 @@
 #include "soundbank_bin.h"
 #include "soundbank.h"
 
+#define MAKEITEMARRAY(a,b,c,d,e)	{ itemArray[0] = a; itemArray[1] = b; itemArray[2] = c; itemArray[3] = d; itemArray[4] = e; }
+
 enum GameMode
 {
 	GAMEMODE_RUNNING,

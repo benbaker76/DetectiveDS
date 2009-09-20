@@ -60,6 +60,7 @@ public:
 	
 	void SetPosition(int x, int y);
 	void Animate();
+	void GetNextFrame();
 	void Hide();
 	void Draw();
 	void SetFrameType(FrameType frameType);

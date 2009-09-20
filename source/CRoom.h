@@ -2,8 +2,10 @@
 #define __CROOM_H__
 
 #include <nds.h>
+#include "ColMap.h"
 #include "Globals.h"
 #include "CTimer.h"
+#include "CItemCache.h"
 
 #define MAX_ROOMS			37
 #define MAX_DOORS			9
@@ -90,6 +92,8 @@ public:
 	void SetPalette(u16* pPalette) { dmaCopy(pPalette, BG_PALETTE_SUB, 512); }
 	void RestorePalette() { dmaCopy(m_pMap->pPalette, BG_PALETTE_SUB, m_pMap->PaletteLen); }
 	
+	void AddItemCache(int index, CItemCache* itemCache) { m_itemCache[index] = itemCache; }
+	
 	RoomType GetRoomType() { return m_roomType; }
 	
 	int X() const { return m_x; }
@@ -120,6 +124,7 @@ private:
 	int m_frameNum;
 	
 	CDoor* m_doorArray[MAX_DOORS];
+	CItemCache* m_itemCache[MAX_ITEM_CACHE];
 };
 
 #endif

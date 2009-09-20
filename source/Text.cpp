@@ -83,7 +83,13 @@ const char* g_itemName[] =
 	"PADDED ENVELOPES",
 	"A BOMB!",
 	"A SMALL KEY",
-	"BULLETS"
+	"BULLETS",
+	"ANTLERS HORN",
+	"SWORD",
+	"BALL ON CHAIN",
+	"HOURGLASS",
+	"GOLDEN SKULL",
+	"RED KEY"
 };
 
 const char* g_colName[] =
@@ -96,7 +102,7 @@ const char* g_colName[] =
 	"DOOR5",
 	"DOOR6",
 	"DOOR7",
-	"SECRET PASSAGE",
+	"DOOR8",
 	"WALL",
 	"DUMMY",
 	"FOUR POSTER BED",
@@ -130,17 +136,27 @@ const char* g_colName[] =
 	"PIANO AND A SQUASHED CYNTHIA SLUDGEBUCKET!",
 	"GABRIEL'S BODY!",
 	"STABBED DOCTOR!",
-	"",
-	"",
-	"",
 	"MR MCFUNGUS' HEADSTONE",
 	"A HEADSTONE",
-	"",
-	"",
+	"FOUNTAIN",
 	"FOUNTAIN",
 	"GARGOYLE",
 	"GARGOYLE",
-	"GARGOYLE"
+	"GARGOYLE",
+	"GOAT LIKE PAINTING",
+	"DESK WITH A STATUE",
+	"TROPHY",
+	"BOOKCASE",
+	"KNIGHT",
+	"COUCH",
+	"HOURGLASS",
+	"GOLDEN SKULL",
+	"TABLE",
+	"BROOM",
+	"WASHING MACHINE",
+	"WASHING BASKET",
+	"CUPBOARD",
+	"CABINET"
 };
 
 const char* g_iconName[] =

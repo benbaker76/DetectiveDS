@@ -71,16 +71,33 @@ void CSprite::Animate()
 {
 	m_lastUpdate++;
 	
-	if (m_frameType == FRAME_NONE)
-		return;
-	
-	if(m_lastUpdate > 8)
+	if(m_lastUpdate > 9)
 	{
 		m_lastUpdate = 0;
 	
-		bool frameFound = false;
-		
-		for(++m_frameNum; m_frameNum < m_frameCount; m_frameNum++)
+		GetNextFrame();
+	}
+}
+
+void CSprite::GetNextFrame()
+{
+	if (m_frameType == FRAME_NONE)
+		return;
+	
+	bool frameFound = false;
+	
+	for(++m_frameNum; m_frameNum < m_frameCount; m_frameNum++)
+	{
+		if(m_frameArray[m_frameNum] & m_frameType)
+		{
+			frameFound = true;
+			break;
+		}
+	}
+	
+	if (!frameFound)
+	{
+		for(m_frameNum = 0; m_frameNum < m_frameCount; m_frameNum++)
 		{
 			if(m_frameArray[m_frameNum] & m_frameType)
 			{
@@ -88,22 +105,10 @@ void CSprite::Animate()
 				break;
 			}
 		}
-		
-		if (!frameFound)
-		{
-			for(m_frameNum = 0; m_frameNum < m_frameCount; m_frameNum++)
-			{
-				if(m_frameArray[m_frameNum] & m_frameType)
-				{
-					frameFound = true;
-					break;
-				}
-			}
-		}
-		
-		if (!frameFound)
-			m_frameNum = 0;
 	}
+	
+	if (!frameFound)
+		m_frameNum = 0;
 }
 
 void CSprite::Hide()
@@ -145,6 +150,6 @@ void CSprite::SetFrameType(FrameType frameType)
 	if(m_frameType != frameType)
 	{
 		m_frameType = frameType;
-		Animate();
+		GetNextFrame();
 	}
 }

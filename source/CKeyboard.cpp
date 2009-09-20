@@ -21,7 +21,8 @@ void CKeyboard::Initialize()
 	dmaCopy(keyboardTiles, BG_TILE_RAM(BG3_TILE_BASE), keyboardTilesLen);
 	dmaCopy(keyboardMap, BG_MAP_RAM(BG3_MAP_BASE), keyboardMapLen);
 	
-	DrawText("ENTER THE NAME OF THE BOOK:", 1, 11, false);
+	//DrawText("ENTER THE NAME OF THE BOOK:", 1, 11, false);
+	DrawText("TYPE IN THE COMBINATION:", 1, 11, false);
 	
 	for(int i=0; i<7; i++)
 		DrawText(g_KeyboardText[i], 0, 16 + i, false);
