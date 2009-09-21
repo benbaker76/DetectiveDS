@@ -93,7 +93,12 @@
 #include "sprite_angus_body.h"
 
 #include "sprite_misc.h"
-#include "sprite_fx.h"
+
+#include "sprite_fx_leak.h"
+#include "sprite_fx_rain.h"
+#include "sprite_fx_rat.h"
+#include "sprite_fx_hourglass.h"
+#include "sprite_fx_skull.h"
 
 #include "sprite_col.h"
 

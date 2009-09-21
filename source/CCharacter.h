@@ -49,7 +49,7 @@ public:
 	void UpdatePosition();
 	void SetOamIndex(int index);
 	void SetPriority(int priority);
-	void Animate();
+	void Update();
 	void SetVisible(CRoom* pRoom);
 	void Show();
 	void Hide();

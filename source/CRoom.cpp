@@ -17,21 +17,89 @@ CRoom::CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const unsigned char* p
 	for(int i=0; i<MAX_DOORS; i++)
 		m_doorArray[i] = NULL;
 		
+	for(int i=0; i<MAX_ROOM_DST_RECT; i++)
+		m_animArray[i] = NULL;
+		
 	//char buf[256];
 	//sprintf(buf, "X:%d, Y:%d, Width:%d, Height:%d", m_rectFireplace.X, m_rectFireplace.Y, m_rectFireplace.Width, m_rectFireplace.Height);
 	//fprintf(stderr, buf);
 
-	GetColMapRect(COL_SRC_TORCH1, &m_rectSrc[ROOMRECT_TORCH1]);
-	GetColMapRect(COL_SRC_TORCH2, &m_rectSrc[ROOMRECT_TORCH2]);
-	GetColMapRect(COL_SRC_FIREPLACE1, &m_rectSrc[ROOMRECT_FIREPLACE1]);
-	GetColMapRect(COL_SRC_FIREPLACE2, &m_rectSrc[ROOMRECT_FIREPLACE2]);
-	GetColMapRect(COL_SRC_FIREPLACE3, &m_rectSrc[ROOMRECT_FIREPLACE3]);
+	GetColMapRect(COL_SRC_TORCH1, &m_rectSrc[SRCRECT_TORCH1]);
+	GetColMapRect(COL_SRC_TORCH2, &m_rectSrc[SRCRECT_TORCH2]);
+	GetColMapRect(COL_SRC_FIREPLACE1, &m_rectSrc[SRCRECT_FIREPLACE1]);
+	GetColMapRect(COL_SRC_FIREPLACE2, &m_rectSrc[SRCRECT_FIREPLACE2]);
+	GetColMapRect(COL_SRC_FIREPLACE3, &m_rectSrc[SRCRECT_FIREPLACE3]);
+	GetColMapRect(COL_SRC_FIREPLACE4, &m_rectSrc[SRCRECT_FIREPLACE4]);
+	GetColMapRect(COL_SRC_FIREPLACE5, &m_rectSrc[SRCRECT_FIREPLACE5]);
+	GetColMapRect(COL_SRC_LIGHT1, &m_rectSrc[SRCRECT_LIGHT1]);
+	GetColMapRect(COL_SRC_LIGHT2, &m_rectSrc[SRCRECT_LIGHT2]);
+	GetColMapRect(COL_SRC_LIGHT3, &m_rectSrc[SRCRECT_LIGHT3]);
+	GetColMapRect(COL_SRC_LIGHT4, &m_rectSrc[SRCRECT_LIGHT4]);
+	GetColMapRect(COL_SRC_EYES1, &m_rectSrc[SRCRECT_EYES1]);
+	GetColMapRect(COL_SRC_EYES2, &m_rectSrc[SRCRECT_EYES2]);
+	GetColMapRect(COL_SRC_EYES3, &m_rectSrc[SRCRECT_EYES3]);
+	GetColMapRect(COL_SRC_EYES4, &m_rectSrc[SRCRECT_EYES4]);
+	GetColMapRect(COL_SRC_EYES5, &m_rectSrc[SRCRECT_EYES5]);
+	GetColMapRect(COL_SRC_EYES6, &m_rectSrc[SRCRECT_EYES6]);
+	GetColMapRect(COL_SRC_PENDULUM1, &m_rectSrc[SRCRECT_PENDULUM1]);
+	GetColMapRect(COL_SRC_PENDULUM2, &m_rectSrc[SRCRECT_PENDULUM2]);
+	GetColMapRect(COL_SRC_PENDULUM3, &m_rectSrc[SRCRECT_PENDULUM3]);
+	GetColMapRect(COL_SRC_WATERFALL1, &m_rectSrc[SRCRECT_WATERFALL1]);
+	GetColMapRect(COL_SRC_WATERFALL2, &m_rectSrc[SRCRECT_WATERFALL2]);
+	GetColMapRect(COL_SRC_WATERFALL3, &m_rectSrc[SRCRECT_WATERFALL3]);
+	GetColMapRect(COL_SRC_FAUCET1, &m_rectSrc[SRCRECT_FAUCET1]);
+	GetColMapRect(COL_SRC_FAUCET2, &m_rectSrc[SRCRECT_FAUCET2]);
+	GetColMapRect(COL_SRC_FAUCET3, &m_rectSrc[SRCRECT_FAUCET3]);
+	GetColMapRect(COL_SRC_FAUCET4, &m_rectSrc[SRCRECT_FAUCET4]);
+	GetColMapRect(COL_SRC_LEAK1, &m_rectSrc[SRCRECT_LEAK1]);
+	GetColMapRect(COL_SRC_LEAK2, &m_rectSrc[SRCRECT_LEAK2]);
+	GetColMapRect(COL_SRC_LEAK3, &m_rectSrc[SRCRECT_LEAK3]);
+	GetColMapRect(COL_SRC_LEAK4, &m_rectSrc[SRCRECT_LEAK4]);
+	GetColMapRect(COL_SRC_LEAK5, &m_rectSrc[SRCRECT_LEAK5]);
+	GetColMapRect(COL_SRC_LEAK6, &m_rectSrc[SRCRECT_LEAK6]);
+	GetColMapRect(COL_SRC_LEAK7, &m_rectSrc[SRCRECT_LEAK7]);
+	GetColMapRect(COL_SRC_LEAK8, &m_rectSrc[SRCRECT_LEAK8]);
+	GetColMapRect(COL_SRC_BULB1, &m_rectSrc[SRCRECT_BULB1]);
+	GetColMapRect(COL_SRC_BULB2, &m_rectSrc[SRCRECT_BULB2]);
 	
-	GetColMapRect(COL_DST_TORCH1, &m_rectDst[ROOMRECT_TORCH1]);
-	GetColMapRect(COL_DST_TORCH2, &m_rectDst[ROOMRECT_TORCH2]);
-	GetColMapRect(COL_DST_TORCH3, &m_rectDst[ROOMRECT_TORCH3]);
-	GetColMapRect(COL_DST_FIREPLACE, &m_rectDst[ROOMRECT_FIREPLACE1]);
-	GetColMapRect(COL_DST_CLOCK, &m_rectDst[ROOMRECT_CLOCK]);
+	if(GetColMapRect(COL_DST_TORCH1, &m_rectDst[DSTRECT_TORCH1]))
+		m_animArray[DSTRECT_TORCH1] = new CAnimation(ANIMTYPE_RANDOM, 0, 5, 2);
+	
+	if(GetColMapRect(COL_DST_TORCH2, &m_rectDst[DSTRECT_TORCH2]))
+		m_animArray[DSTRECT_TORCH2] = new CAnimation(ANIMTYPE_RANDOM, 0, 5, 2);
+	
+	if(GetColMapRect(COL_DST_TORCH3, &m_rectDst[DSTRECT_TORCH3]))
+		m_animArray[DSTRECT_TORCH3] = new CAnimation(ANIMTYPE_RANDOM, 0, 5, 2);
+	
+	if(GetColMapRect(COL_DST_FIREPLACE, &m_rectDst[DSTRECT_FIREPLACE]))
+		m_animArray[DSTRECT_FIREPLACE] = new CAnimation(ANIMTYPE_FORWARD, 0, 5, 5);
+	
+	if(GetColMapRect(COL_DST_CLOCK, &m_rectDst[DSTRECT_CLOCK]))
+		m_animArray[DSTRECT_CLOCK] = new CAnimation(ANIMTYPE_FORWARD, 0, 5, 1);
+	
+	if(GetColMapRect(COL_DST_LIGHT1, &m_rectDst[DSTRECT_LIGHT1]))
+		m_animArray[DSTRECT_LIGHT1] = new CAnimation(ANIMTYPE_RANDOM, 0, 5, 4);
+	
+	if(GetColMapRect(COL_DST_LIGHT2, &m_rectDst[DSTRECT_LIGHT2]))
+		m_animArray[DSTRECT_LIGHT2] = new CAnimation(ANIMTYPE_RANDOM, 0, 5, 4);
+	
+	if(GetColMapRect(COL_DST_EYES, &m_rectDst[DSTRECT_EYES]))
+		m_animArray[DSTRECT_EYES] = new CAnimation(ANIMTYPE_PINGPONG, 300, 5, 6);
+		
+	if(GetColMapRect(COL_DST_PENDULUM, &m_rectDst[DSTRECT_PENDULUM]))
+		m_animArray[DSTRECT_PENDULUM] = new CAnimation(ANIMTYPE_PINGPONG, 0, 20, 3);
+		
+	if(GetColMapRect(COL_DST_WATERFALL, &m_rectDst[DSTRECT_WATERFALL]))
+		m_animArray[DSTRECT_WATERFALL] = new CAnimation(ANIMTYPE_RANDOM, 0, 5, 3);
+		
+	if(GetColMapRect(COL_DST_FAUCET, &m_rectDst[DSTRECT_FAUCET]))
+		m_animArray[DSTRECT_FAUCET] = new CAnimation(ANIMTYPE_FORWARD, 100, 5, 4);
+		
+	if(GetColMapRect(COL_DST_LEAK, &m_rectDst[DSTRECT_LEAK]))
+		m_animArray[DSTRECT_LEAK] = new CAnimation(ANIMTYPE_FORWARD, 300, 5, 8);
+		
+	if(GetColMapRect(COL_DST_BULB, &m_rectDst[DSTRECT_BULB]))
+		m_animArray[DSTRECT_BULB] = new CAnimation(ANIMTYPE_RANDOM, 0, 30, 2);
 }
 
 CRoom::~CRoom()
@@ -59,7 +127,7 @@ void CRoom::Initialize(int x)
 	
 	Draw();
 	
-	SaveTiles(&m_rectDst[ROOMRECT_CLOCK], m_clockTiles);	
+	SaveTiles(&m_rectDst[DSTRECT_CLOCK], m_clockTiles);	
 }
 
 void CRoom::InitializeDoors()
@@ -96,50 +164,71 @@ void CRoom::Draw()
 			m_doorArray[i]->Draw();
 }
 
-void CRoom::Animate(CTime* pTime)
+void CRoom::Update(CTime* pTime)
 {
-	m_lastUpdate++;
+	if(m_animArray[DSTRECT_TORCH1] != NULL)
+		if(m_animArray[DSTRECT_TORCH1]->Update())
+			if(!DoorIntersect(&m_rectDst[DSTRECT_TORCH1]))
+				MoveMap(&m_rectSrc[SRCRECT_TORCH1] + m_animArray[DSTRECT_TORCH1]->FrameNum(), &m_rectDst[DSTRECT_TORCH1]);
 	
-	if(m_lastUpdate > 5)
+	if(m_animArray[DSTRECT_TORCH2] != NULL)	
+		if(m_animArray[DSTRECT_TORCH2]->Update())
+			if(!DoorIntersect(&m_rectDst[DSTRECT_TORCH2]))
+				MoveMap(&m_rectSrc[SRCRECT_TORCH1] + m_animArray[DSTRECT_TORCH2]->FrameNum(), &m_rectDst[DSTRECT_TORCH2]);
+
+	if(m_animArray[DSTRECT_TORCH3] != NULL)
+		if(m_animArray[DSTRECT_TORCH3]->Update())
+			if(!DoorIntersect(&m_rectDst[DSTRECT_TORCH3]))
+				MoveMap(&m_rectSrc[SRCRECT_TORCH1] + m_animArray[DSTRECT_TORCH3]->FrameNum(), &m_rectDst[DSTRECT_TORCH3]);
+
+	if(m_animArray[DSTRECT_FIREPLACE] != NULL)
+		if(m_animArray[DSTRECT_FIREPLACE]->Update())
+			MoveMap(&m_rectSrc[SRCRECT_FIREPLACE1 + m_animArray[DSTRECT_FIREPLACE]->FrameNum()], &m_rectDst[DSTRECT_FIREPLACE]);
+	
+	if(m_animArray[DSTRECT_CLOCK] != NULL)
 	{
-		m_lastUpdate = 0;
-		
-		int num = rand() % 2;
-		
-		if(num == 0)
+		if(m_animArray[DSTRECT_CLOCK]->Update())
 		{
-			for(int i=0; i<3; i++)
-				if(!DoorIntersect(&m_rectDst[ROOMRECT_TORCH1 + i]))
-					MoveMap(&m_rectSrc[ROOMRECT_TORCH1], &m_rectDst[ROOMRECT_TORCH1 + i]);
-		} else
-		{
-			for(int i=0; i<3; i++)
-				if(!DoorIntersect(&m_rectDst[ROOMRECT_TORCH1 + i]))
-					MoveMap(&m_rectSrc[ROOMRECT_TORCH2], &m_rectDst[ROOMRECT_TORCH1 + i]);
-		}
-		
-		switch(m_frameNum)
-		{
-			case 0:
-				MoveMap(&m_rectSrc[ROOMRECT_FIREPLACE1], &m_rectDst[ROOMRECT_FIREPLACE1]);
-				break;
-			case 1:
-				MoveMap(&m_rectSrc[ROOMRECT_FIREPLACE2], &m_rectDst[ROOMRECT_FIREPLACE1]);
-				break;
-			case 2:
-				MoveMap(&m_rectSrc[ROOMRECT_FIREPLACE3], &m_rectDst[ROOMRECT_FIREPLACE1]);
-				break;
-		}
-		
-		if(m_frameNum++ == 3)
-			m_frameNum = 0;
-		
-		if(!IsRectEmpty(&m_rectDst[ROOMRECT_CLOCK]))
-		{
-			RestoreTiles(&m_rectDst[ROOMRECT_CLOCK], m_clockTiles);
-			DrawTime(pTime, 124, 89);
+			if(!IsRectEmpty(&m_rectDst[DSTRECT_CLOCK]))
+			{
+				RestoreTiles(&m_rectDst[DSTRECT_CLOCK], m_clockTiles);
+				DrawTime(pTime, 124, 89);
+			}
 		}
 	}
+
+	if(m_animArray[DSTRECT_LIGHT1] != NULL)
+		if(m_animArray[DSTRECT_LIGHT1]->Update())
+			if(!DoorIntersect(&m_rectDst[DSTRECT_LIGHT1]))
+				MoveMap(&m_rectSrc[SRCRECT_LIGHT1 + m_animArray[DSTRECT_LIGHT1]->FrameNum()], &m_rectDst[DSTRECT_LIGHT1]);
+	
+	if(m_animArray[DSTRECT_LIGHT2] != NULL)
+		if(m_animArray[DSTRECT_LIGHT2]->Update())
+			MoveMap(&m_rectSrc[SRCRECT_LIGHT1 + m_animArray[DSTRECT_LIGHT2]->FrameNum()], &m_rectDst[DSTRECT_LIGHT2]);
+	
+	if(m_animArray[DSTRECT_EYES] != NULL)
+		if(m_animArray[DSTRECT_EYES]->Update())
+			MoveMap(&m_rectSrc[SRCRECT_EYES1 + m_animArray[DSTRECT_EYES]->FrameNum()], &m_rectDst[DSTRECT_EYES]);
+			
+	if(m_animArray[DSTRECT_PENDULUM] != NULL)
+		if(m_animArray[DSTRECT_PENDULUM]->Update())
+			MoveMap(&m_rectSrc[SRCRECT_PENDULUM1 + m_animArray[DSTRECT_PENDULUM]->FrameNum()], &m_rectDst[DSTRECT_PENDULUM]);
+	
+	if(m_animArray[DSTRECT_WATERFALL] != NULL)
+		if(m_animArray[DSTRECT_WATERFALL]->Update())
+			MoveMap(&m_rectSrc[SRCRECT_WATERFALL1 + m_animArray[DSTRECT_WATERFALL]->FrameNum()], &m_rectDst[DSTRECT_WATERFALL]);
+
+	if(m_animArray[DSTRECT_FAUCET] != NULL)
+		if(m_animArray[DSTRECT_FAUCET]->Update())
+			MoveMap(&m_rectSrc[SRCRECT_FAUCET1 + m_animArray[DSTRECT_FAUCET]->FrameNum()], &m_rectDst[DSTRECT_FAUCET]);
+
+	if(m_animArray[DSTRECT_LEAK] != NULL)
+		if(m_animArray[DSTRECT_LEAK]->Update())
+			MoveMap(&m_rectSrc[SRCRECT_LEAK1 + m_animArray[DSTRECT_LEAK]->FrameNum()], &m_rectDst[DSTRECT_LEAK]);
+
+	if(m_animArray[DSTRECT_BULB] != NULL)
+		if(m_animArray[DSTRECT_BULB]->Update())
+			MoveMap(&m_rectSrc[SRCRECT_BULB1 + m_animArray[DSTRECT_BULB]->FrameNum()], &m_rectDst[DSTRECT_BULB]);
 }
 
 bool CRoom::DoorIntersect(PRECT pRect)

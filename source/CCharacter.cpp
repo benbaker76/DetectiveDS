@@ -132,10 +132,10 @@ void CCharacter::SetPriority(int priority)
 	m_pBodySprite->SetPriority(priority);
 }
 
-void CCharacter::Animate()
+void CCharacter::Update()
 {
-	m_pHeadSprite->Animate();
-	m_pBodySprite->Animate();
+	m_pHeadSprite->Update();
+	m_pBodySprite->Update();
 }
 
 void CCharacter::SetVisible(CRoom* pRoom)

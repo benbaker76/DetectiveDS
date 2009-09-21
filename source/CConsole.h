@@ -66,7 +66,7 @@ private:
 	
 	u16* m_gfxArrow;
 
-	int m_lastUpdate;
+	int m_frameCount;
 	
 	const char* m_charPos;
 	u32 m_textPos;

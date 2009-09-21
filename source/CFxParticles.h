@@ -42,7 +42,7 @@ private:
 
 	PARTICLE m_particleArray[MAX_PARTICLES];
 	
-	int m_lastUpdate;
+	int m_frameCount;
 	int m_xOffset;
 };
 

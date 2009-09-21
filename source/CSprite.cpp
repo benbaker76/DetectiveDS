@@ -3,7 +3,7 @@
 #include "CSprite.h"
 #include "TDG.h"
 
-CSprite::CSprite(SpriteType spriteType, const u32* pBmp, const u32* frameArray, int frameCount)
+CSprite::CSprite(SpriteType spriteType, const u32* pBmp, const u32* frameArray, int frameTotal)
 {
 	m_spriteType = spriteType;
 	m_pBmp = pBmp;
@@ -12,11 +12,11 @@ CSprite::CSprite(SpriteType spriteType, const u32* pBmp, const u32* frameArray, 
 	m_pPalette = NULL;
 	m_paletteLen = 0;
 	m_frameArray = frameArray;
-	m_frameCount = frameCount;
+	m_frameTotal = frameTotal;
 	m_bitmapSprite = true;
 	
 	m_frameNum = 0;
-	m_lastUpdate = 0;
+	m_frameCount = 0;
 	
 	m_x = 0;
 	m_y = 0;
@@ -30,7 +30,7 @@ CSprite::CSprite(SpriteType spriteType, const u32* pBmp, const u32* frameArray, 
 	m_gfxSub = oamAllocateGfx(&oamSub, SpriteSize_32x32, SpriteColorFormat_Bmp);
 }
 
-CSprite::CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u16* pPalette, int paletteLen, const u32* frameArray, int frameCount)
+CSprite::CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u16* pPalette, int paletteLen, const u32* frameArray, int frameTotal)
 {
 	m_spriteType = spriteType;
 	m_pBmp = NULL;
@@ -39,11 +39,11 @@ CSprite::CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u
 	m_pPalette = pPalette;
 	m_paletteLen = paletteLen;
 	m_frameArray = frameArray;
-	m_frameCount = frameCount;
+	m_frameTotal = frameTotal;
 	m_bitmapSprite = false;
 	
 	m_frameNum = 0;
-	m_lastUpdate = 0;
+	m_frameCount = 0;
 	
 	m_x = 0;
 	m_y = 0;
@@ -67,13 +67,13 @@ void CSprite::SetPosition(int x, int y)
 	m_y = y;
 }
 
-void CSprite::Animate()
+void CSprite::Update()
 {
-	m_lastUpdate++;
+	m_frameCount++;
 	
-	if(m_lastUpdate > 9)
+	if(m_frameCount > 9)
 	{
-		m_lastUpdate = 0;
+		m_frameCount = 0;
 	
 		GetNextFrame();
 	}
@@ -86,7 +86,7 @@ void CSprite::GetNextFrame()
 	
 	bool frameFound = false;
 	
-	for(++m_frameNum; m_frameNum < m_frameCount; m_frameNum++)
+	for(++m_frameNum; m_frameNum < m_frameTotal; m_frameNum++)
 	{
 		if(m_frameArray[m_frameNum] & m_frameType)
 		{
@@ -97,7 +97,7 @@ void CSprite::GetNextFrame()
 	
 	if (!frameFound)
 	{
-		for(m_frameNum = 0; m_frameNum < m_frameCount; m_frameNum++)
+		for(m_frameNum = 0; m_frameNum < m_frameTotal; m_frameNum++)
 		{
 			if(m_frameArray[m_frameNum] & m_frameType)
 			{

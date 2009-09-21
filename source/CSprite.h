@@ -20,7 +20,9 @@ enum FrameType
 	FRAME_GREEN_LEFT = BIT(9),
 	FRAME_GREEN_RIGHT = BIT(10),
 	FRAME_GREEN_UP = BIT(11),
-	FRAME_GREEN_DOWN = BIT(12)
+	FRAME_GREEN_DOWN = BIT(12),
+	FRAME_ATTACK = BIT(13),
+	FRAME_SURRENDER = BIT(14),
 };
 
 enum SpriteType
@@ -59,7 +61,7 @@ public:
 	~CSprite();
 	
 	void SetPosition(int x, int y);
-	void Animate();
+	void Update();
 	void GetNextFrame();
 	void Hide();
 	void Draw();
@@ -90,8 +92,8 @@ private:
 	const u32* m_frameArray;
 	FrameType m_frameType;
 	int m_frameNum;
+	int m_frameTotal;
 	int m_frameCount;
-	int m_lastUpdate;
 	
 	int m_oamIndex;
 	int m_priority;

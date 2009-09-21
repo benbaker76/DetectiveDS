@@ -1,6 +1,8 @@
 #ifndef __CCURSOR_H__
 #define __CCURSOR_H__
 
+#include "CAnimation.h"
+
 #define CURSOR_FRAMES	4
 
 class CCursor
@@ -22,10 +24,8 @@ public:
 private:
 	int m_x;
 	int m_y;
-	int m_frameNum;
-	bool m_ping;
 	
-	int m_lastUpdate;
+	CAnimation* m_anim;
 };
 
 #endif

@@ -5,11 +5,13 @@
 #include "ColMap.h"
 #include "Globals.h"
 #include "CTimer.h"
+#include "CAnimation.h"
 #include "CItemCache.h"
 
 #define MAX_ROOMS			37
 #define MAX_DOORS			9
-#define MAX_ROOM_RECT		7
+#define MAX_ROOM_SRC_RECT	38
+#define MAX_ROOM_DST_RECT	13
 
 enum RoomType
 {
@@ -52,15 +54,69 @@ enum RoomType
 	ROOM_ANGUS_STAIRS
 };
 
-enum RoomRect
+enum SrcRect
 {
-	ROOMRECT_TORCH1,
-	ROOMRECT_TORCH2,
-	ROOMRECT_TORCH3,
-	ROOMRECT_FIREPLACE1,
-	ROOMRECT_FIREPLACE2,
-	ROOMRECT_FIREPLACE3,
-	ROOMRECT_CLOCK
+	SRCRECT_TORCH1,
+	SRCRECT_TORCH2,
+	SRCRECT_TORCH3,
+	SRCRECT_FIREPLACE1,
+	SRCRECT_FIREPLACE2,
+	SRCRECT_FIREPLACE3,
+	SRCRECT_FIREPLACE4,
+	SRCRECT_FIREPLACE5,
+	SRCRECT_LIGHT1,
+	SRCRECT_LIGHT2,
+	SRCRECT_LIGHT3,
+	SRCRECT_LIGHT4,
+	SRCRECT_EYES1,
+	SRCRECT_EYES2,
+	SRCRECT_EYES3,
+	SRCRECT_EYES4,
+	SRCRECT_EYES5,
+	SRCRECT_EYES6,
+	SRCRECT_PENDULUM1,
+	SRCRECT_PENDULUM2,
+	SRCRECT_PENDULUM3,
+	SRCRECT_WATERFALL1,
+	SRCRECT_WATERFALL2,
+	SRCRECT_WATERFALL3,
+	SRCRECT_FAUCET1,
+	SRCRECT_FAUCET2,
+	SRCRECT_FAUCET3,
+	SRCRECT_FAUCET4,
+	SRCRECT_LEAK1,
+	SRCRECT_LEAK2,
+	SRCRECT_LEAK3,
+	SRCRECT_LEAK4,
+	SRCRECT_LEAK5,
+	SRCRECT_LEAK6,
+	SRCRECT_LEAK7,
+	SRCRECT_LEAK8,
+	SRCRECT_BULB1,
+	SRCRECT_BULB2
+};
+
+enum DstRect
+{
+	DSTRECT_TORCH1,
+	DSTRECT_TORCH2,
+	DSTRECT_TORCH3,
+	DSTRECT_FIREPLACE,
+	DSTRECT_CLOCK,
+	DSTRECT_LIGHT1,
+	DSTRECT_LIGHT2,
+	DSTRECT_EYES,
+	DSTRECT_PENDULUM,
+	DSTRECT_WATERFALL,
+	DSTRECT_FAUCET,
+	DSTRECT_LEAK,
+	DSTRECT_BULB
+};
+
+class CRoomAnim : public CAnimation
+{
+public:
+private:
 };
 
 class CDoor;
@@ -75,7 +131,7 @@ public:
 	void InitializeDoors();
 	void InitializeOverlay();
 	void Draw();
-	void Animate(CTime* pTime);
+	void Update(CTime* pTime);
 	bool DoorIntersect(PRECT pRect);
 	void MoveMap(PRECT rectSrc, PRECT rectDest);
 	bool Scroll(DirectionType directionType);
@@ -115,13 +171,12 @@ private:
 
 	int m_overlayY;
 	
-	RECT m_rectSrc[MAX_ROOM_RECT];
-	RECT m_rectDst[MAX_ROOM_RECT];
+	RECT m_rectSrc[MAX_ROOM_SRC_RECT];
+	RECT m_rectDst[MAX_ROOM_DST_RECT];
+	
+	CAnimation* m_animArray[MAX_ROOM_DST_RECT];
 	
 	u16 m_clockTiles[6 * 32];
-	
-	int m_lastUpdate;
-	int m_frameNum;
 	
 	CDoor* m_doorArray[MAX_DOORS];
 	CItemCache* m_itemCache[MAX_ITEM_CACHE];

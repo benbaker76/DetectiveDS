@@ -4,8 +4,7 @@
 
 CCursor::CCursor()
 {
-	m_ping = true;
-	m_lastUpdate = 0;
+	m_anim = new CAnimation(ANIMTYPE_PINGPONG, 0, 4, CURSOR_FRAMES);
 }
 
 CCursor::~CCursor()
@@ -14,26 +13,10 @@ CCursor::~CCursor()
 
 void CCursor::Update()
 {
-	m_lastUpdate ++;
-	
-	if(m_lastUpdate > 4)
-	{
-		m_lastUpdate = 0;
-		
-		if(m_ping)
-		{
-			if(++m_frameNum >= CURSOR_FRAMES-1)
-				m_ping = !m_ping;
-		}
-		else
-		{
-			if(--m_frameNum <= 0)
-				m_ping = !m_ping;
-		}
-	}
+	m_anim->Update();
 }
 
 void CCursor::Draw()
 {
-	DrawChar(123 + m_frameNum, m_x, m_y, false);
+	DrawChar(123 + m_anim->FrameNum(), m_x, m_y, false);
 }
