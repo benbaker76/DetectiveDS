@@ -149,6 +149,7 @@ public:
 	void RestorePalette() { dmaCopy(m_pMap->pPalette, BG_PALETTE_SUB, m_pMap->PaletteLen); }
 	
 	void AddItemCache(int index, CItemCache* itemCache) { m_itemCache[index] = itemCache; }
+	CItemCache* GetItemCache(int index) const { return m_itemCache[index]; }
 	
 	RoomType GetRoomType() { return m_roomType; }
 	

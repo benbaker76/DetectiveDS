@@ -89,7 +89,10 @@ const char* g_itemName[] =
 	"BALL ON CHAIN",
 	"HOURGLASS",
 	"GOLDEN SKULL",
-	"RED KEY"
+	"RED KEY",
+	"FIREPLACE BELLOW",
+	"WASHING POWDER",
+	"DIRTY SHIRT"
 };
 
 const char* g_colName[] =
@@ -332,5 +335,4 @@ void DrawCharLarge(char c, int x, int y, bool sub)
 	*pMap = 96 * 2 + g_largeTextMap[c - 0x20] * 2;
 	*(pMap+32) = 96 * 2 + g_largeTextMap[c - 0x20] * 2 + 1;
 }
-
 

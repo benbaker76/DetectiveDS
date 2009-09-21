@@ -76,6 +76,9 @@ public:
 	bool AddItem(CItem* pItem);
 	bool RemoveItem(CItem* pItem);
 	
+	ItemCache GetItemCacheType() const { return m_itemCache; }
+	CItem* GetItem(int index) const { return m_itemArray[index]; }
+	
 private:
 	ItemCache m_itemCache;
 	CItem* m_itemArray[MAX_ITEM_ARRAY];

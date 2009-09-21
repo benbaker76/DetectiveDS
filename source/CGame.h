@@ -72,6 +72,9 @@ private:
 	CRoom* m_roomArray[MAX_ROOMS];
 	CItem* m_itemArray[MAX_ITEMS];
 	CEvent* m_eventArray[MAX_EVENTS];
+	
+	int m_itemCount;
+	CItem* m_itemMenu[MAX_ITEM_ARRAY];
 
 	CRoom* m_currentRoom;
 	CCharacter* m_snide;

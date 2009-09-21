@@ -3,6 +3,7 @@
 #include "TDG.h"
 #include "Text.h"
 #include "CKeyboard.h"
+#include "Gfx.h"
 
 CKeyboard::CKeyboard(CCursor* pCursor)
 {
@@ -13,7 +14,7 @@ CKeyboard::~CKeyboard()
 {
 }
 
-void CKeyboard::Initialize()
+void CKeyboard::Show(const char* string)
 {
 	m_textEntry[0] = NULL;
 	m_charPos = 0;
@@ -21,8 +22,7 @@ void CKeyboard::Initialize()
 	dmaCopy(keyboardTiles, BG_TILE_RAM(BG3_TILE_BASE), keyboardTilesLen);
 	dmaCopy(keyboardMap, BG_MAP_RAM(BG3_MAP_BASE), keyboardMapLen);
 	
-	//DrawText("ENTER THE NAME OF THE BOOK:", 1, 11, false);
-	DrawText("TYPE IN THE COMBINATION:", 1, 11, false);
+	DrawText(string, 1, 11, false);
 	
 	for(int i=0; i<7; i++)
 		DrawText(g_KeyboardText[i], 0, 16 + i, false);
@@ -30,19 +30,20 @@ void CKeyboard::Initialize()
 	m_pCursor->SetPosition(m_charPos + 1, 12);
 }
 
-void CKeyboard::Shutdown()
+void CKeyboard::Hide()
 {
 	dmaCopy(menu_bottomTiles, BG_TILE_RAM(BG3_TILE_BASE), menu_bottomTilesLen);
 	dmaCopy(menu_bottomMap, BG_MAP_RAM(BG3_MAP_BASE), menu_bottomMapLen);
+	ClearBG(0, false);
 }
 
-void CKeyboard::CheckKeyTouch(int x, int y)
+char CKeyboard::CheckKeyTouch(int x, int y)
 {
 	int mapX = x / 8;
 	int mapY = y / 8;
 	
 	if(mapY < 16)
-		return;
+		return '\0';
 		
 	char c = g_KeyboardHit[mapY - 16][mapX];
 	
@@ -77,4 +78,6 @@ void CKeyboard::CheckKeyTouch(int x, int y)
 	}
 	
 	m_pCursor->Draw();
+	
+	return c;
 }

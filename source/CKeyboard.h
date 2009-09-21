@@ -12,9 +12,11 @@ public:
 	CKeyboard(CCursor* pCursor);
 	~CKeyboard();
 	
-	void Initialize();
-	void Shutdown();
-	void CheckKeyTouch(int x, int y);
+	void Show(const char* string);
+	void Hide();
+	char CheckKeyTouch(int x, int y);
+	
+	const char* GetText() const { return m_textEntry; }
 	
 private:
 

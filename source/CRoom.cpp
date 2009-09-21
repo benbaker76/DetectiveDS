@@ -90,7 +90,7 @@ CRoom::CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const unsigned char* p
 		m_animArray[DSTRECT_PENDULUM] = new CAnimation(ANIMTYPE_PINGPONG, 0, 20, 3);
 		
 	if(GetColMapRect(COL_DST_WATERFALL, &m_rectDst[DSTRECT_WATERFALL]))
-		m_animArray[DSTRECT_WATERFALL] = new CAnimation(ANIMTYPE_RANDOM, 0, 5, 3);
+		m_animArray[DSTRECT_WATERFALL] = new CAnimation(ANIMTYPE_FORWARD, 0, 5, 3);
 		
 	if(GetColMapRect(COL_DST_FAUCET, &m_rectDst[DSTRECT_FAUCET]))
 		m_animArray[DSTRECT_FAUCET] = new CAnimation(ANIMTYPE_FORWARD, 100, 5, 4);

@@ -48,8 +48,8 @@ public:
 	void MoveSelectorBar(DirectionType directionType);
 	void DrawSelectorBar();
 	void HideSelectorBar();
-	void HideArrow();
-	void ShowArrow();
+	void HideArrows();
+	void ShowArrows();
 	
 	int MenuItem() const { return (m_menuOffset + m_menuPos); }
 	
@@ -64,7 +64,8 @@ private:
 	int m_x;
 	int m_y;
 	
-	u16* m_gfxArrow;
+	u16* m_gfxArrowUp;
+	u16* m_gfxArrowDown;
 
 	int m_frameCount;
 	

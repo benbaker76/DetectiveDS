@@ -143,6 +143,9 @@ void CGame::Initialize()
 		MAKEITEMARRAY(m_itemArray[ITEM_THE_WILL], NULL, NULL, NULL, NULL);
 		m_itemArray[ITEM_A_PICTURE]->AddItemCache(new CItemCache(itemArray));
 		
+		MAKEITEMARRAY(m_itemArray[ITEM_A_BUNCH_OF_KEYS], m_itemArray[ITEM_A_SOGGY_ENVELOPE], NULL, NULL, NULL);
+		m_itemArray[ITEM_A_JACKET]->AddItemCache(new CItemCache(itemArray));
+		
 		m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, &g_snideMap, NULL, col_room1, 144);
 		m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, &g_reverendMap, NULL, col_room1, 144);
 		m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, &g_bentleyMap, NULL, col_room2, 168);
@@ -277,7 +280,7 @@ void CGame::Initialize()
 		
 		MAKEITEMARRAY(m_itemArray[ITEM_A_COMB], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_BENTLEY]->AddItemCache(0, new CItemCache(ITEMCACHE_BED, itemArray));
-		MAKEITEMARRAY(m_itemArray[ITEM_A_BUNCH_OF_KEYS], m_itemArray[ITEM_A_SOGGY_ENVELOPE], NULL, NULL, NULL);
+		MAKEITEMARRAY(m_itemArray[ITEM_A_JACKET], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_BENTLEY]->AddItemCache(1, new CItemCache(ITEMCACHE_CLOTHES_CUPBOARD, itemArray));
 		
 		m_roomArray[ROOM_COOK]->AddItemCache(0, new CItemCache(ITEMCACHE_BED));
@@ -324,9 +327,9 @@ void CGame::Initialize()
 		m_roomArray[ROOM_KITCHEN]->AddItemCache(5, new CItemCache(ITEMCACHE_SINK, itemArray));
 		
 		MAKEITEMARRAY(m_itemArray[ITEM_BULLETS], m_itemArray[ITEM_A_PAPERWEIGHT], m_itemArray[ITEM_A_LETTER_OPENER], m_itemArray[ITEM_A_DIARY], NULL);
-		m_roomArray[ROOM_KITCHEN]->AddItemCache(0, new CItemCache(ITEMCACHE_DESK, itemArray));
+		m_roomArray[ROOM_STUDY]->AddItemCache(0, new CItemCache(ITEMCACHE_DESK, itemArray));
 		MAKEITEMARRAY(m_itemArray[ITEM_A_FOLDER], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_KITCHEN]->AddItemCache(1, new CItemCache(ITEMCACHE_SHELVES, itemArray));
+		m_roomArray[ROOM_STUDY]->AddItemCache(1, new CItemCache(ITEMCACHE_SHELVES, itemArray));
 		
 		m_roomArray[ROOM_CLOCK]->AddItemCache(0, new CItemCache(ITEMCACHE_CLOCK));
 		
@@ -441,6 +444,8 @@ void CGame::Initialize()
 	
 	m_console = new CConsole(m_cursor);
 	m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+	
+	m_keyboard = new CKeyboard(m_cursor);
 		
 	/* for(int i=1; i<MAX_CHARACTERS; i++)
 	{
@@ -460,9 +465,6 @@ void CGame::Initialize()
 	m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
 	m_fxManager.SetFx(FXTYPE_COLOUR, FXMODE_NORMAL, true);
 	
-	//m_keyboard = new CKeyboard(&m_cursor);
-	//m_keyboard->Initialize();
-	
 	CPath* path = new CPath(m_roomArray);
 	path->FindRoute(m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_SNIDE]);
 	
@@ -478,7 +480,7 @@ void CGame::Initialize()
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("BENTLY ADVANCES:\"THIS WAY TO YOUR ROOM SIR\"");
 
 	m_menu = new CMenu();
-	m_menu->DrawMenu();
+	m_menu->Draw();
 	
 	m_watch = new CWatch(113, 21);
 	m_timer = new CTimer(9, 10, 0, 0);
@@ -617,7 +619,32 @@ void CGame::Update()
 	}
 	else if(m_displayMode == DISPLAYMODE_KEYBOARD)
 	{
-		m_keyboard->CheckKeyTouch(touch.px, touch.py);
+		if(keys_pressed & KEY_TOUCH)
+		{		
+			char c = m_keyboard->CheckKeyTouch(touch.px, touch.py);
+			
+			switch(c)
+			{
+				case '\e':	// Exit
+					m_displayMode = DISPLAYMODE_GAME;
+					
+					m_keyboard->Hide();
+					m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
+					m_console->ClearText();
+					m_menu->Reset();
+					break;
+				case '\n':
+					m_displayMode = DISPLAYMODE_GAME;
+					
+					//fprintf(stderr, m_keyboard->GetText());
+					
+					m_keyboard->Hide();
+					m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
+					m_console->ClearText();
+					m_menu->Reset();
+					break;
+			}
+		}
 	}
 	
 	m_currentRoom->Update(m_timer->pCurrentTime());
@@ -647,10 +674,10 @@ void CGame::UpdateSnideMovement(int keys_held)
 		{
 			m_snide->CheckCollision(DIRECTION_UP, &colNear, &colFar);
 			
-			if(CheckCharacterCollision(DIRECTION_UP, &charNear, &charFar))
-				DrawText("DIRECTION_UP", 0, 0, false);
-			else
-				DrawText("                  ", 0, 0, false);
+			//if(CheckCharacterCollision(DIRECTION_UP, &charNear, &charFar))
+			//	DrawText("DIRECTION_UP", 0, 0, false);
+			//else
+			//	DrawText("                  ", 0, 0, false);
 			
 			SetMenuIcons(colNear, colFar);
 			
@@ -701,10 +728,10 @@ void CGame::UpdateSnideMovement(int keys_held)
 		{
 			m_snide->CheckCollision(DIRECTION_DOWN, &colNear, &colFar);
 			
-			if(CheckCharacterCollision(DIRECTION_DOWN, &charNear, &charFar))
-				DrawText("DIRECTION_DOWN", 0, 0, false);
-			else
-				DrawText("                  ", 0, 0, false);
+			//if(CheckCharacterCollision(DIRECTION_DOWN, &charNear, &charFar))
+			//	DrawText("DIRECTION_DOWN", 0, 0, false);
+			//else
+			//	DrawText("                  ", 0, 0, false);
 			
 			SetMenuIcons(colNear, colFar);
 			
@@ -753,10 +780,10 @@ void CGame::UpdateSnideMovement(int keys_held)
 	{
 		m_snide->CheckCollision(DIRECTION_LEFT, &colNear, &colFar);
 		
-		if(CheckCharacterCollision(DIRECTION_LEFT, &charNear, &charFar))
-			DrawText("DIRECTION_LEFT", 0, 0, false);
-		else
-			DrawText("                  ", 0, 0, false);
+		//if(CheckCharacterCollision(DIRECTION_LEFT, &charNear, &charFar))
+		//	DrawText("DIRECTION_LEFT", 0, 0, false);
+		//else
+		//	DrawText("                  ", 0, 0, false);
 		
 		SetMenuIcons(colNear, colFar);
 		
@@ -793,10 +820,10 @@ void CGame::UpdateSnideMovement(int keys_held)
 	{
 		m_snide->CheckCollision(DIRECTION_RIGHT, &colNear, &colFar);
 		
-		if(CheckCharacterCollision(DIRECTION_RIGHT, &charNear, &charFar))
-			DrawText("DIRECTION_RIGHT", 0, 0, false);
-		else
-			DrawText("                  ", 0, 0, false);
+		//if(CheckCharacterCollision(DIRECTION_RIGHT, &charNear, &charFar))
+		//	DrawText("DIRECTION_RIGHT", 0, 0, false);
+		//else
+		//	DrawText("                  ", 0, 0, false);
 		
 		SetMenuIcons(colNear, colFar);
 		
@@ -888,6 +915,65 @@ void CGame::ProcessMenu(int x, int y)
 	//DrawText(g_iconName[(int) iconType], 0, 0, false);
 	switch(iconType)
 	{
+	case ICON_OPEN:
+		{
+			m_snide->CheckCollision(m_snide->Facing(), &colNear, &colFar);
+		
+			bool cacheFound = false;
+			CItemCache* pItemCache = NULL;
+			
+			for(int i=0; i<MAX_ITEM_CACHE; i++)
+			{
+				pItemCache = m_currentRoom->GetItemCache(i);
+				
+				if(pItemCache != NULL)
+				{
+					if(pItemCache->GetItemCacheType() == (ItemCache) colNear)
+					{
+						cacheFound = true;
+						break;
+					}
+				}
+			}
+			
+			if(cacheFound)
+			{
+				m_itemCount = 0;
+				const char* menuArray[MAX_ITEM_ARRAY];
+				
+				for(int i=0; i<MAX_ITEM_ARRAY; i++)
+				{
+					CItem* pItem = pItemCache->GetItem(i);
+					
+					if(pItem != NULL)
+					{
+						m_itemCount++;
+						
+						m_itemMenu[i] = pItem;
+						menuArray[i] = g_itemName[pItem->GetItemType()];
+					}
+					else
+					{
+						m_itemMenu[i] = NULL;
+						menuArray[i] = NULL;
+					}
+				}
+				
+				if(m_itemCount > 0)
+				{
+					m_displayMode = DISPLAYMODE_CONSOLE;
+			
+					m_console->AddText("YOU FIND:");
+					m_console->CreateMenu(menuArray, m_itemCount);
+					m_console->DrawSelectorBar();
+				}
+				else
+				{
+					m_console->AddText("YOU FIND:\n\nNOTHING...");
+				}
+			}
+		}
+		break;
 	case ICON_DOOR_OPEN:
 	case ICON_DOOR_CLOSE:
 		m_snide->CheckCollision(m_snide->Facing(), &colNear, &colFar);
@@ -921,7 +1007,7 @@ void CGame::ProcessMenu(int x, int y)
 				m_currentRoom->Draw();
 				mmEffectEx(&g_sfx_opendoor);
 				
-				m_console->AddText("YOU FIND:\nA SECRET PASSAGE!");
+				m_console->AddText("YOU FIND:\n\nA SECRET PASSAGE!");
 			}
 		}
 		else
@@ -979,6 +1065,38 @@ void CGame::PostProcessMenu()
 {
 	switch(m_lastIconType)
 	{
+	case ICON_OPEN:
+		switch(m_itemMenu[m_console->MenuItem()]->GetItemType())
+		{
+			case ITEM_BOOKS1:
+			case ITEM_BOOKS2:
+				m_displayMode = DISPLAYMODE_KEYBOARD;
+				m_console->ClearText();
+				m_menu->Hide();
+				m_console->HideMenu();
+				m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, false);
+				m_keyboard->Show("ENTER THE NAME OF THE BOOK:");
+				break;
+			case ITEM_A_PICTURE:
+				m_displayMode = DISPLAYMODE_KEYBOARD;
+				m_console->ClearText();
+				m_menu->Hide();
+				m_console->HideMenu();
+				m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, false);
+				m_keyboard->Show("TYPE IN THE COMBINATION:");
+				break;
+			default:
+				m_displayMode = DISPLAYMODE_GAME;
+				m_console->ClearText();
+				m_pointer->Hide();
+				m_menu->HideBox();
+				m_console->HideMenu();
+				break;
+		}
+		//char buf[256];
+		//sprintf(buf, g_accuseName[m_console->MenuItem()]);
+		//fprintf(stderr, buf);
+		break;
 	case ICON_DOOR_OPEN:
 	case ICON_DOOR_CLOSE:
 		break;

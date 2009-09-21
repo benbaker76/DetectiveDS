@@ -96,6 +96,7 @@ public:
 	~CItem();
 	
 	void AddItemCache(CItemCache* itemCache) { m_itemCache = itemCache; }
+	ItemType GetItemType() const { return m_itemType; }
 	
 private:
 	ItemType m_itemType;

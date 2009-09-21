@@ -54,7 +54,9 @@ public:
 	void AddIconSet(IconSet iconSet);
 	bool AddIcon(IconType iconType);
 	bool RemoveIcon(IconType iconType);
-	void DrawMenu();
+	void Draw();
+	void Hide();
+	void Reset();
 	void DrawIcon(IconType iconType, int x, int y, bool sub);
 	void HideBox();
 	void DrawBox(int mapX, int mapY);
