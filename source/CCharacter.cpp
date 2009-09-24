@@ -16,6 +16,8 @@ CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprit
 	
 	m_visible = false;
 	m_green = false;
+	m_dead = false;
+	m_deadSide = false;
 	
 	m_pathPosition = 0;
 	
@@ -38,92 +40,22 @@ void CCharacter::SetPosition(float x, float y)
 	m_x = x;
 	m_y = y;
 	
-	m_pHeadSprite->SetPosition(AbsX(), m_y);
-	m_pBodySprite->SetPosition(AbsX(), m_y+HEAD_HEIGHT);
-}
-
-void CCharacter::UpdatePosition()
-{
-	if(m_characterMode == CHARMODE_WALKING)
+	if(m_dead && m_deadSide)
 	{
-		CRoom* pRoom = m_path[m_pathPosition];
-		
-		if(pRoom != NULL)
-		{
-			CDoor* pDoor = m_pRoom->GetRoomDoor(pRoom);
-			int xPos = pPoint()->X;
-			int yPos = pPoint()->Y;
-			int xEnd = pDoor->pPoint()->X * 8;
-			int yEnd = pDoor->pPoint()->Y * 8;
-			int xDist = xEnd - xPos;
-			int yDist = yEnd - yPos;
-				
-			if(abs(xDist) > 8 || abs(yDist) > 8)
-			{						
-				if(abs(xDist) < 32)	 		// Near the door
-				{			
-					if(xDist < 0)			// Move directly towards it
-						m_x -= 0.6f;		// left
-					else
-						m_x += 0.6f;		// right						
-						
-					if(yDist < 0)			// Move directly towards it
-						m_y -= 0.3f;		// up
-					else
-						m_y += 0.3f;		// down						
-				}
-				else
-				{
-					if(yPos > m_pRoom->CentreY())			// Below centre of room so move up diagonally
-					{
-						SetFrameType(FRAME_RIGHT);
-						m_x += 0.6f;
-						m_y -= 0.3f;
-					}
-					else if(yPos < m_pRoom->CentreY()) 	// Above centre of room so move down diagonally
-					{
-						SetFrameType(FRAME_LEFT);
-						m_x -= 0.6f;
-						m_y += 0.3f;
-					}
-					else
-					{
-						if(xDist < 0)
-							SetFrameType(FRAME_LEFT);
-						else
-							SetFrameType(FRAME_RIGHT);
-					
-						float direction = atan2(yDist, xDist);
-						// Move directly towards door
-						m_x += cos(direction) * 0.6f;
-						//m_y += sin(direction) * 0.3f;
-					}
-				}
-			}
-			else
-			{
-				m_pathPosition++;
-				m_pRoom = pRoom;
-				
-				pDoor->SetDoorState(DOORSTATE_OPEN);
-				
-				int xDoor = pDoor->pDoorOut()->pPoint()->X;
-				int yDoor = pDoor->pDoorOut()->pPoint()->Y;
-				m_x = xDoor * 8;
-				m_y = yDoor * 8 - m_height;
-			}
-		}
-		else
-			SetCharacterMode(CHARMODE_WAITING);
+		m_pHeadSprite->SetPosition(AbsX() - 16 + 32 , m_y + 32);
+		m_pBodySprite->SetPosition(AbsX() - 16, m_y + 32);
 	}
-	
-	SetPosition(m_x, m_y);
+	else
+	{
+		m_pHeadSprite->SetPosition(AbsX(), m_y);
+		m_pBodySprite->SetPosition(AbsX(), m_y + HEAD_HEIGHT);
+	}
 }
 
 void CCharacter::SetOamIndex(int index)
 {
 	m_pHeadSprite->SetOamIndex(index);
-	m_pBodySprite->SetOamIndex(index+1);
+	m_pBodySprite->SetOamIndex(index + 1);
 }
 
 void CCharacter::SetPriority(int priority)
@@ -134,6 +66,100 @@ void CCharacter::SetPriority(int priority)
 
 void CCharacter::Update()
 {
+	switch(m_characterMode)
+	{
+	case CHARMODE_NONE:
+		break;
+	case CHARMODE_WAITING:
+		m_waitingTime++;
+		
+		if(m_waitingTime > 500)
+			m_characterMode = CHARMODE_WALKING;
+		break;
+	case CHARMODE_WALKING:
+		{
+			CRoom* pRoom = m_path[m_pathPosition];
+			
+			if(pRoom != NULL)
+			{
+				CDoor* pDoor = m_pRoom->GetRoomDoor(pRoom);
+				int xPos = pPoint()->X;
+				int yPos = pPoint()->Y;
+				int xEnd = pDoor->pPoint()->X * 8;
+				int yEnd = pDoor->pPoint()->Y * 8;
+				int xDist = xEnd - xPos;
+				int yDist = yEnd - yPos;
+					
+				if(abs(xDist) > 8 || abs(yDist) > 8)
+				{						
+					if(abs(xDist) < 32)	 		// Near the door
+					{			
+						if(xDist < 0)			// Move directly towards it
+							m_x -= 0.6f;		// left
+						else
+							m_x += 0.6f;		// right						
+							
+						if(yDist < 0)			// Move directly towards it
+							m_y -= 0.3f;		// up
+						else
+							m_y += 0.3f;		// down						
+					}
+					else
+					{
+						if(yPos > m_pRoom->CentreY())			// Below centre of room so move up diagonally
+						{
+							SetFrameType(FRAME_RIGHT);
+							m_x += 0.6f;
+							m_y -= 0.3f;
+						}
+						else if(yPos < m_pRoom->CentreY()) 	// Above centre of room so move down diagonally
+						{
+							SetFrameType(FRAME_LEFT);
+							m_x -= 0.6f;
+							m_y += 0.3f;
+						}
+						else
+						{
+							if(xDist < 0)
+								SetFrameType(FRAME_LEFT);
+							else
+								SetFrameType(FRAME_RIGHT);
+						
+							float direction = atan2(yDist, xDist);
+							// Move directly towards door
+							m_x += cos(direction) * 0.6f;
+							//m_y += sin(direction) * 0.3f;
+						}
+					}
+				}
+				else
+				{
+					m_pathPosition++;
+					m_pRoom = pRoom;
+					
+					pDoor->SetDoorState(DOORSTATE_OPEN);
+					
+					int xDoor = pDoor->pDoorOut()->pPoint()->X;
+					int yDoor = pDoor->pDoorOut()->pPoint()->Y;
+					m_x = xDoor * 8;
+					m_y = yDoor * 8 - m_height;
+				}
+			}
+			else
+				SetCharacterMode(CHARMODE_WAITING);
+		}
+		break;
+	case CHARMODE_TALKING:
+		break;
+	case CHARMODE_DEAD:
+	case CHARMODE_BOMB:
+	case CHARMODE_ATTACK:
+	case CHARMODE_SURRENDER:
+		break;
+	}
+	
+	SetPosition(m_x, m_y);
+
 	m_pHeadSprite->Update();
 	m_pBodySprite->Update();
 }
@@ -277,13 +303,13 @@ bool CCharacter::CheckCollision(DirectionType directionType, CCharacter* charact
 	*charNear = CHARTYPE_NONE;
 	*charFar = CHARTYPE_NONE;
 	
-	rectMe.X = m_x - m_width;
-	rectMe.Y = m_y + m_height - 4;
+	rectMe.X = m_x;
+	rectMe.Y = m_y + m_height - 8;
 	rectMe.Width = m_width;
 	rectMe.Height = 8;
 	
-	rectYou.X = character->X() - character->Width();
-	rectYou.Y = character->Y() + character->Height() - 4;
+	rectYou.X = character->X();
+	rectYou.Y = character->Y() + character->Height() - 8;
 	rectYou.Width = character->Width();
 	rectYou.Height = 8;
 	
@@ -293,7 +319,8 @@ bool CCharacter::CheckCollision(DirectionType directionType, CCharacter* charact
 			if(IntersectRect(&rectMe, &rectYou))
 				*charNear = character->GetCharacterType();
 			
-			rectYou.Y -= 8;
+			rectMe.X += 8;
+			rectMe.Y -= 8;
 			
 			if(IntersectRect(&rectMe, &rectYou))
 				*charFar = character->GetCharacterType();
@@ -302,7 +329,8 @@ bool CCharacter::CheckCollision(DirectionType directionType, CCharacter* charact
 			if(IntersectRect(&rectMe, &rectYou))
 				*charNear = character->GetCharacterType();
 			
-			rectYou.Y += 8;
+			rectMe.X -= 8;
+			rectMe.Y += 8;
 			
 			if(IntersectRect(&rectMe, &rectYou))
 				*charFar = character->GetCharacterType();
@@ -311,7 +339,7 @@ bool CCharacter::CheckCollision(DirectionType directionType, CCharacter* charact
 			if(IntersectRect(&rectMe, &rectYou))
 				*charNear = character->GetCharacterType();
 			
-			rectYou.X -= 8;
+			rectMe.X -= 16;
 			
 			if(IntersectRect(&rectMe, &rectYou))
 				*charFar = character->GetCharacterType();
@@ -320,7 +348,7 @@ bool CCharacter::CheckCollision(DirectionType directionType, CCharacter* charact
 			if(IntersectRect(&rectMe, &rectYou))
 				*charNear = character->GetCharacterType();
 			
-			rectYou.X += 8;
+			rectMe.X += 16;
 			
 			if(IntersectRect(&rectMe, &rectYou))
 				*charFar = character->GetCharacterType();
@@ -340,7 +368,8 @@ void CCharacter::SetFrameType(FrameType frameType)
 }
 
 void CCharacter::SetCharacterMode(CharacterMode characterMode)
-{	
+{
+	m_lastCharacterMode = m_characterMode;
 	m_characterMode = characterMode;
 
 	switch(characterMode)
@@ -350,6 +379,9 @@ void CCharacter::SetCharacterMode(CharacterMode characterMode)
 		break;
 	case CHARMODE_WAITING:
 		SetFrameType(FRAME_WAITING);
+		m_pHeadSprite->GetNextFrame();
+		m_pBodySprite->GetNextFrame();
+		m_waitingTime = 0;
 		break;
 	case CHARMODE_WALKING:
 		Face(m_facing);
@@ -357,7 +389,26 @@ void CCharacter::SetCharacterMode(CharacterMode characterMode)
 	case CHARMODE_TALKING:
 		(m_green ? SetFrameType(FRAME_GREEN_SPEAK) : SetFrameType(FRAME_SPEAK));
 		break;
-	case CHARMOND_DEAD:
+	case CHARMODE_DEAD:
+		m_dead = true;
+		SetFrameType(FRAME_DEAD);
+		m_pHeadSprite->GetNextFrame();
+		m_pBodySprite->GetNextFrame();
+		break;
+	case CHARMODE_BOMB:
+		SetFrameType(FRAME_BOMB);
+		m_pHeadSprite->GetNextFrame();
+		m_pBodySprite->GetNextFrame();
+		break;
+	case CHARMODE_ATTACK:
+		SetFrameType(FRAME_ATTACK);
+		m_pHeadSprite->GetNextFrame();
+		m_pBodySprite->GetNextFrame();
+		break;
+	case CHARMODE_SURRENDER:
+		SetFrameType(FRAME_SURRENDER);
+		m_pHeadSprite->GetNextFrame();
+		m_pBodySprite->GetNextFrame();
 		break;
 	}
 }

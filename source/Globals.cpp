@@ -3,12 +3,12 @@
 
 bool IsRectEmpty(PRECT pRect)
 {
-	return (pRect->X == 0 && pRect->Y == 0 && pRect->Width == 0 && pRect->Height == 0);
+	return ((pRect->X == 0) && (pRect->Y == 0) && (pRect->Width == 0) && (pRect->Height == 0));
 }
 
 bool IntersectRect(PRECT pRectA, PRECT pRectB)
 {
-	return (pRectA->X < pRectB->X + pRectB->Width && pRectA->X + pRectA->Width > pRectB->X && pRectA->Y < pRectB->Y + pRectB->Height && pRectA->Y + pRectA->Height > pRectB->Y);
+	return ((pRectA->X < pRectB->X + pRectB->Width) && (pRectA->X + pRectA->Width > pRectB->X) && (pRectA->Y < pRectB->Y + pRectB->Height) && (pRectA->Y + pRectA->Height > pRectB->Y));
 }
 
 void PrintRect(PRECT pRect)

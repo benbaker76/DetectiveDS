@@ -41,7 +41,14 @@ enum IconSet
 	ICONSET_NOTHING,
 	ICONSET_GENERAL,
 	ICONSET_DOOR_OPEN,
-	ICONSET_DOOR_CLOSE
+	ICONSET_DOOR_CLOSE,
+	ICONSET_ITEM
+};
+
+enum MenuMode
+{
+	MENUMODE_GENERAL,
+	MENUMODE_ITEM
 };
 
 class CMenu
@@ -53,20 +60,23 @@ public:
 	void ClearIcons();
 	void AddIconSet(IconSet iconSet);
 	bool AddIcon(IconType iconType);
-	bool RemoveIcon(IconType iconType);
+	void Show(MenuMode menuMode);
 	void Draw();
 	void Hide();
 	void Reset();
 	void DrawIcon(IconType iconType, int x, int y, bool sub);
-	void HideBox();
 	void DrawBox(int mapX, int mapY);
 	IconType CheckIconHit(int mapX, int mapY);
+	
+	MenuMode GetMenuMode() const { return m_menuMode; }
 
 private:
 	IconType m_iconArray[MAX_ICONS];
-	IconSet m_iconSet;
+	MenuMode m_menuMode;
 	
 	u16* m_gfx;
+	
+	void HideBox();
 };
 
 #endif

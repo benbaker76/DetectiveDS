@@ -18,7 +18,7 @@ public:
 	float X() const { return m_x; }
 	float Y() const { return m_y; }
 	
-	void Draw();
+	void Show();
 	void Update();
 	
 private:

@@ -2,11 +2,10 @@
 #include "CItem.h"
 #include "CItemCache.h"
 
-CItem::CItem(ItemType itemType, ItemAttributes itemAttribs, ItemActions itemActions)
+CItem::CItem(ItemType itemType, int itemAttribs)
 {
 	m_itemType = itemType;
 	m_itemAttribs = itemAttribs;
-	m_itemActions = itemActions;
 }
 
 CItem::~CItem()

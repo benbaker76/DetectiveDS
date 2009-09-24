@@ -148,7 +148,8 @@ public:
 	void SetPalette(u16* pPalette) { dmaCopy(pPalette, BG_PALETTE_SUB, 512); }
 	void RestorePalette() { dmaCopy(m_pMap->pPalette, BG_PALETTE_SUB, m_pMap->PaletteLen); }
 	
-	void AddItemCache(int index, CItemCache* itemCache) { m_itemCache[index] = itemCache; }
+	void AddItemCache(int index, CollisionType colType) { m_itemCache[index] = new CItemCache(ITEMLOCATION_ROOM, colType, this); }
+	void AddItemCache(int index, CollisionType colType, CItem* itemArray[]) { m_itemCache[index] = new CItemCache(ITEMLOCATION_ROOM, colType, itemArray, this); }
 	CItemCache* GetItemCache(int index) const { return m_itemCache[index]; }
 	
 	RoomType GetRoomType() { return m_roomType; }

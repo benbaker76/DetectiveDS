@@ -3,13 +3,9 @@
 
 CMenu::CMenu()
 {
-	m_iconSet = ICONSET_NOTHING;
-
 	m_gfx = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
 	
 	dmaCopy(sprite_miscTiles + 256 * 2, m_gfx, 32 * 32);
-	
-	AddIconSet(ICONSET_GENERAL);
 }
 
 CMenu::~CMenu()
@@ -20,19 +16,10 @@ void CMenu::ClearIcons()
 {
 	for(int i=0; i<MAX_ICONS; i++)
 		m_iconArray[i] = ICON_NONE;
-	
-	m_iconSet = ICONSET_NOTHING;
 }
 
 void CMenu::AddIconSet(IconSet iconSet)
 {
-	if(m_iconSet == iconSet)
-		return;
-
-	ClearIcons();
-	
-	m_iconSet = iconSet;
-	
 	switch(iconSet)
 	{
 	case ICONSET_NOTHING:
@@ -44,17 +31,19 @@ void CMenu::AddIconSet(IconSet iconSet)
 		AddIcon(ICON_INVENTORY);
 		AddIcon(ICON_USE);
 		AddIcon(ICON_ACCUSE);
-		Draw();
 		break;
 	case ICONSET_DOOR_OPEN:
 		AddIcon(ICON_DOOR_OPEN);
 		AddIcon(ICON_INVENTORY);
-		Draw();
 		break;
 	case ICONSET_DOOR_CLOSE:
 		AddIcon(ICON_DOOR_CLOSE);
 		AddIcon(ICON_INVENTORY);
-		Draw();
+		break;
+	case ICONSET_ITEM:
+		AddIcon(ICON_EXAMINE);
+		AddIcon(ICON_PLACE);
+		AddIcon(ICON_OPEN);
 		break;
 	}
 }
@@ -76,26 +65,16 @@ bool CMenu::AddIcon(IconType iconType)
 	return retVal;
 }
 	
-bool CMenu::RemoveIcon(IconType iconType)
+void CMenu::Show(MenuMode menuMode)
 {
-	bool retVal = false;
-	
-	for(int i=0; i<MAX_ICONS; i++)
-	{
-		if(m_iconArray[i] == iconType)
-		{
-			m_iconArray[i] = ICON_NONE;
-			retVal = true;
-			break;
-		}
-	}
-	
-	return retVal;
+	m_menuMode = menuMode;
+			
+	Draw();
 }
 
 void CMenu::Draw()
 {
-	for(int y=0; y<2; y++)
+	for(int y=0; y<3; y++)
 		for(int x=0; x<3; x++)
 			DrawIcon(m_iconArray[x + y * ICON_WIDTH], 21 + x * ICON_WIDTH, 16 + y * ICON_HEIGHT, false);
 }
@@ -103,12 +82,7 @@ void CMenu::Draw()
 void CMenu::Hide()
 {
 	ClearIcons();
-	Draw();
-}
-
-void CMenu::Reset()
-{
-	AddIconSet(ICONSET_GENERAL);
+	HideBox();
 	Draw();
 }
 

@@ -2,6 +2,7 @@
 #define __CCHARACTER_H__
 
 #include "TDG.h"
+#include "CItemCache.h"
 
 #define MAX_CHARACTERS			11
 #define MAX_ROOMS				37
@@ -17,7 +18,10 @@ enum CharacterMode
 	CHARMODE_WAITING,
 	CHARMODE_WALKING,
 	CHARMODE_TALKING,
-	CHARMOND_DEAD
+	CHARMODE_DEAD,
+	CHARMODE_BOMB,
+	CHARMODE_ATTACK,
+	CHARMODE_SURRENDER
 };
 
 enum CharacterType
@@ -46,7 +50,6 @@ public:
 	~CCharacter();
 	
 	void SetPosition(float x, float y);
-	void UpdatePosition();
 	void SetOamIndex(int index);
 	void SetPriority(int priority);
 	void Update();
@@ -74,7 +77,8 @@ public:
 	void SetPath(int index, CRoom* pRoom) { m_path[index] = pRoom; }
 	
 	void SetAlpha(int alpha) { m_pHeadSprite->SetAlpha(alpha); m_pBodySprite->SetAlpha(alpha); }
-	void SetGreen(bool value) { m_green = value; }
+	void SetGreen(bool value) { m_green = value; Face(m_facing); }
+	void SetDeadSide(bool value) { m_deadSide = value; }
 	
 	float X() const { return m_x; }
 	float Y() const { return m_y; }
@@ -85,17 +89,23 @@ public:
 	int Height() const { return m_height; }
 	DirectionType Facing() const { return m_facing; }
 	bool Visible() const { return m_visible; }
+	bool Dead() const { return m_dead; }
 	
 	int OamIndex() const { return m_pHeadSprite->OamIndex(); }
 	int Priority() const { return m_pHeadSprite->Priority(); }
 	CharacterType GetCharacterType() const { return m_characterType; }
 	CharacterMode GetCharacterMode() const { return m_characterMode; }
 	
-	void AddItemCache(CItemCache* itemCache) { m_itemCache = itemCache; }
+	void RestoreLastCharacterMode() { m_characterMode = m_lastCharacterMode; }
+	
+	void AddItemCache() { m_itemCache = new CItemCache(ITEMLOCATION_CHARACTER, this); }
+	void AddItemCache(CItem* itemArray[]) { m_itemCache = new CItemCache(ITEMLOCATION_CHARACTER, itemArray, this); }
+	CItemCache* GetItemCache() const { return m_itemCache; }
 
 private:
 	CharacterType m_characterType;
 	CharacterMode m_characterMode;
+	CharacterMode m_lastCharacterMode;
 	CSprite* m_pHeadSprite;
 	CSprite* m_pBodySprite;
 	
@@ -111,11 +121,15 @@ private:
 	
 	bool m_visible;
 	bool m_green;
+	bool m_dead;
+	bool m_deadSide;
 	
 	float m_x;
 	float m_y;
 	int m_width;
 	int m_height;
+	
+	int m_waitingTime;
 	
 	POINT m_point;
 	

@@ -110,6 +110,10 @@
 #include "menu_bottom.h"
 #include "menu_questions.h"
 
+#include "end_top_lose.h"
+#include "end_top_win.h"
+#include "end_bottom.h"
+
 #include "keyboard.h"
 
 #include "font.h"
@@ -144,5 +148,7 @@
 #define ARRAY_LENGTH(x)		(sizeof(x) / sizeof(x[0]))
 
 #define PI 3.1415926536
+
+#define ASSERT(expr)	(if(!expr) fprintf("Error!");)
 
 #endif

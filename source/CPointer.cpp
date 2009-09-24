@@ -71,7 +71,7 @@ void CPointer::Hide()
 	oamSet(&oamMain, 121, m_x, m_y, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfx, 0, false, true, false, false, false);
 }
 
-void CPointer::Draw()
+void CPointer::Update()
 {
 	oamSet(&oamMain, 121, m_x, m_y, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfx, 0, false, false, false, false,	 false);
 }

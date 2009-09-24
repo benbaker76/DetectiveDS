@@ -18,9 +18,9 @@ public:
 	
 	void Move(int keys_held);
 	void Hide();
-	void Draw();
+	void Update();
 	
-	void SetRect(int x, int y, int width, int height) { m_x = x; m_y = y + 4; m_rect.X = x; m_rect.Y = y; m_rect.Width = width; m_rect.Height = height; }
+	void SetRect(int x, int y, int width, int height) { m_x = x; m_y = y + 4; m_rect.X = x; m_rect.Y = y; m_rect.Width = width; m_rect.Height = height; SetPoint(m_x, m_y); }
 	PRECT pRect() { return (PRECT) &m_rect; }
 	
 	void SetPoint(int x, int y) { m_point.X = x; m_point.Y = y; }

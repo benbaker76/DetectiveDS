@@ -1,5 +1,7 @@
 #include <nds.h>
 #include <stdio.h>
+#include <ctype.h>
+#include <string.h>
 #include "sprite_misc.h"
 #include "Text.h"
 #include "CConsole.h"
@@ -7,20 +9,12 @@
 CConsole::CConsole(CCursor* pCursor)
 {
 	m_pCursor = pCursor;
-	m_charPos = NULL;
-	m_textPos = 0;
-	m_menuPos = 0;
-	m_menuOffset = 0;
-	m_menuCount = 0;
 	
 	m_gfxArrowUp = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
 	m_gfxArrowDown = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
 	
 	dmaCopy(sprite_miscTiles + 256 * 6, m_gfxArrowUp, 32 * 32);
 	dmaCopy(sprite_miscTiles + 256 * 7, m_gfxArrowDown, 32 * 32);
-	
-	for(int i=0; i<CONSOLE_MAX_TEXT; i++)
-		m_textArray[i] = NULL;
 		
 	for(int i=0; i<CONSOLE_MENU_MAX_TEXT; i++)
 		m_menuArray[i] = NULL;
@@ -34,10 +28,12 @@ CConsole::~CConsole()
 
 void CConsole::ClearText()
 {
-	m_x = CONSOLE_MAP_X;
-	m_y = CONSOLE_MAP_Y;
+	m_pCursor->SetPosition(CONSOLE_MAP_X, CONSOLE_MAP_Y);
+	//HideArrows();
 	
-	m_pCursor->SetPosition(m_x, m_y);
+	m_lineCount = 0;
+	m_linePos = 0;
+	m_lineOffset = 0;
 	
 	for(int i=0; i<CONSOLE_MAX_TEXT; i++)
 	{
@@ -47,7 +43,49 @@ void CConsole::ClearText()
 	}
 }
 
+void CConsole::AddText(const char* text)
+{
+	ClearText();
+	
+	m_lineCount = WordWrap(text);
+	
+	//if(m_lineCount > CONSOLE_MAX_VISIBLE_TEXT)
+	//	ShowArrows();
+}
+
+void CConsole::Update()
+{
+	m_frameCount++;
+	
+	if(m_frameCount > 4)
+	{
+		m_frameCount = 0;
+		
+		if(m_linePos < m_lineCount && m_linePos < CONSOLE_MAX_VISIBLE_TEXT)
+		{
+			DrawChar(' ', CONSOLE_MAP_X, CONSOLE_MAP_Y + m_linePos, false);
+			DrawText(m_textArray[m_linePos], CONSOLE_MAP_X, CONSOLE_MAP_Y + m_linePos, false);
+			m_linePos++;
+			
+			m_pCursor->SetPosition(CONSOLE_MAP_X, CONSOLE_MAP_Y + m_linePos);
+		}
+	}
+}
+
 void CConsole::ClearMenu()
+{
+	m_menuCount = 0;
+	m_menuPos = 0;
+	m_menuOffset = 0;
+	
+	for(int i=0; i<CONSOLE_MENU_MAX_TEXT; i++)
+		m_menuArray[i] = NULL;
+	
+	ClearMenuText();
+	HideArrows();
+}
+
+void CConsole::ClearMenuText()
 {
 	for(int i=0; i<CONSOLE_MENU_VISIBLE_TEXT; i++)
 	{
@@ -57,24 +95,25 @@ void CConsole::ClearMenu()
 	}
 }
 
-void CConsole::CreateMenu(const char* menuArray[], int menuCount)
+bool CConsole::AddMenuItem(const char* text, void* object)
 {
-	m_menuCount = menuCount;
-	m_menuPos = 0;
-	m_menuOffset = 0;
-	
 	for(int i=0; i<CONSOLE_MENU_MAX_TEXT; i++)
-		m_menuArray[i] = NULL;
+	{
+		if(m_menuArray[i] == NULL)
+		{
+			m_menuArray[i] = text;
+			m_objectArray[i] = object;
+			
+			m_menuCount++;
+			
+			return true;
+		}
+	}
 	
-	ClearMenu();
-	
-	for(int i=0; i<menuCount; i++)
-		m_menuArray[i] = menuArray[i];
-		
-	DrawMenu();
+	return false;
 }
 
-void CConsole::DrawMenu()
+void CConsole::ShowMenu()
 {
 	for(int i=0; i<CONSOLE_MENU_VISIBLE_TEXT; i++)
 		DrawText(m_menuArray[m_menuOffset + i], CONSOLE_MENU_MAP_X, CONSOLE_MENU_MAP_Y + i, CONSOLE_MENU_MAP_WIDTH, false);
@@ -87,108 +126,6 @@ void CConsole::HideMenu()
 {
 	HideSelectorBar();
 	HideArrows();
-}
-
-bool CConsole::AddText(const char* text)
-{
-	for(int i=m_textPos; i<CONSOLE_MAX_TEXT; i++)
-	{
-		if(m_textArray[i] == NULL)
-		{
-			m_textArray[i] = text;
-			
-			Update();
-			return true;
-		}
-	}
-	
-	for(int i=0; i<CONSOLE_MAX_TEXT; i++)
-	{
-		if(m_textArray[i] == NULL)
-		{
-			m_textArray[i] = text;
-			
-			Update();
-			return true;
-		}
-	}
-	
-	return false;
-}
-
-void CConsole::Update()
-{
-	if(m_charPos == NULL)
-	{
-		for(int i=m_textPos; i<CONSOLE_MAX_TEXT; i++)
-		{
-			if(m_textArray[i] != NULL)
-			{
-				ClearText();
-				m_charPos = m_textArray[i];
-				
-				if(*m_charPos == '\0')
-				{
-					m_textArray[i] = NULL;
-					m_charPos = NULL;
-					
-					if(++m_textPos == CONSOLE_MAX_TEXT)
-						m_textPos = 0;
-				}
-				
-				break;
-			}
-		}
-	}
-
-	if(m_charPos != NULL)
-	{
-		DrawChar(123 + CURSOR_FRAMES, m_x, m_y, false);
-		
-		switch(*m_charPos)
-		{
-		case '\e':		// Clear Console
-			m_charPos++;
-			ClearText();
-			break;
-		case '\n':		// New line
-			m_charPos++;
-			m_x = CONSOLE_MAP_X;
-			m_y++;
-			m_pCursor->SetPosition(m_x, m_y);
-			
-			if(m_y == CONSOLE_MAP_Y + CONSOLE_MAP_HEIGHT)
-				ClearText();
-			break;
-		case '\0':		// NULL Character (end of text)
-			m_x = CONSOLE_MAP_X;
-			m_y++;
-			m_pCursor->SetPosition(m_x, m_y);
-			m_charPos = NULL;
-			m_textArray[m_textPos] = NULL;
-
-			if(++m_textPos == CONSOLE_MAX_TEXT)
-				m_textPos = 0;
-			break;
-		default:
-			DrawChar(*m_charPos, m_x, m_y, false);
-		
-			m_x++;
-			m_charPos++;
-			m_pCursor->SetPosition(m_x, m_y);
-			
-			if(m_x >= CONSOLE_MAP_X + CONSOLE_MAP_WIDTH)
-			{
-				m_x = CONSOLE_MAP_X;
-				m_y++;
-				m_pCursor->SetPosition(m_x, m_y);
-				
-				if(m_y == CONSOLE_MAP_Y + CONSOLE_MAP_HEIGHT)
-					ClearText();
-			}
-			break;
-		}
-	}
 }
 
 void CConsole::MoveSelectorBar(DirectionType directionType)
@@ -212,8 +149,8 @@ void CConsole::MoveSelectorBar(DirectionType directionType)
 			break;
 	}
 	
-	ClearMenu();
-	DrawMenu();
+	ClearMenuText();
+	ShowMenu();
 }
 
 void CConsole::DrawSelectorBar()
@@ -237,6 +174,57 @@ void CConsole::ShowArrows()
 {
 	oamSet(&oamMain, 119, 140, 144, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxArrowUp, 0, false, false, false, false, false);
 	oamSet(&oamMain, 120, 140, 176, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxArrowDown, 0,	false, false, false, false, false);
+}
+
+int CConsole::WordWrap(const char* text)
+{
+	char c = '\0', line[CONSOLE_MAP_WIDTH+2], word[CONSOLE_MAX_WORD+2];
+	int newline = 0, line_pos = 0, word_pos = 0, line_count = 0;
+
+	while(1)
+	{
+        c = *text++;
+
+        if (c == '\0')
+		{
+            if (line_pos > 0)
+			{
+                line[line_pos] = '\0';
+				strcpy(m_textArray[line_count++], line);
+            }
+
+            return line_count;
+        }
+		
+        if (c == '\n')
+			newline = 1;
+
+        line[line_pos++] = word[word_pos++] = c;
+
+        if (isspace(c))
+            word_pos = 0;
+
+        if (word_pos > CONSOLE_MAX_WORD)
+		{
+            word[word_pos] = '\0';
+            return line_count;
+        }
+
+        if (newline || line_pos > CONSOLE_MAP_WIDTH)
+		{
+            newline = 0;
+            line_pos -= word_pos;
+
+            while(isspace(line[--line_pos]));
+
+            line[line_pos+1] = '\0';
+            strcpy(m_textArray[line_count++], line);
+            strncpy(line, word, word_pos);
+            line_pos = word_pos;
+        }
+    }
+
+	return line_count;
 }
 
 

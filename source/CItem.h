@@ -1,6 +1,8 @@
 #ifndef __CITEM_H__
 #define __CITEM_H__
 
+#include "CItemCache.h"
+
 #define MAX_ITEMS			62
 
 enum ItemType
@@ -72,37 +74,51 @@ enum ItemType
 enum ItemAttributes
 {
 	ITEMATTRIB_NONE = 0,
-	ITEMATTRIB_EVIDENCE = BIT(0),
-	ITEMATTRIB_BOOK = BIT(1),
-	ITEMATTRIB_KEY = BIT(2),
-	ITEMATTRIB_SAFE = BIT(3),
+	ITEMATTRIB_ITEMCACHE = BIT(0),
+	ITEMATTRIB_EVIDENCE = BIT(1),
+	ITEMATTRIB_SHOOT = BIT(2),
+	ITEMATTRIB_USE_KEY = BIT(3),
+	ITEMATTRIB_READ = BIT(4),
+	ITEMATTRIB_CONSUME = BIT(5)
 };
 
-enum ItemActions
+enum UseType
 {
-	ITEMACTION_NONE = 0,
-	ITEMACTION_OPEN = BIT(0),
-	ITEMACTION_BREAK = BIT(1),
-	ITEMACTION_CUT = BIT(2),
-	ITEMACTION_EXAMINE = BIT(3),
+	USETYPE_OPEN,
+	USETYPE_BREAK,
+	USETYPE_CUT,
+	USETYPE_EXAMINE
 };
 
-class CItemCache;
+typedef struct
+{
+	UseType ItemUse;
+	CItem* ItemSrc;
+	CItem* ItemDst;
+} USEITEM, *PUSEITEM;
 
 class CItem
 {
 public:
-	CItem(ItemType itemType, ItemAttributes itemAttribs, ItemActions itemActions);
+	CItem(ItemType itemType, int itemAttribs);
 	~CItem();
 	
-	void AddItemCache(CItemCache* itemCache) { m_itemCache = itemCache; }
+	void AddItemCache() { m_itemCache = new CItemCache(ITEMLOCATION_ITEM, this); }
+	void AddItemCache(int itemCount) { m_itemCache = new CItemCache(ITEMLOCATION_ITEM, itemCount, this); }
+	void AddItemCache(CItem* itemArray[]) { m_itemCache = new CItemCache(ITEMLOCATION_ITEM, itemArray, this); }
+	CItemCache* GetItemCache() const { return m_itemCache; }
+	
 	ItemType GetItemType() const { return m_itemType; }
+	int GetItemAttribs() const { return m_itemAttribs; }
+	
+	void SetParent(CItemCache* pItemCache) { m_parent = pItemCache; }
+	CItemCache* GetParent() const { return m_parent; }
 	
 private:
 	ItemType m_itemType;
-	ItemAttributes m_itemAttribs;
-	ItemActions m_itemActions;
+	int m_itemAttribs;
 	
+	CItemCache* m_parent;
 	CItemCache* m_itemCache;
 };
 

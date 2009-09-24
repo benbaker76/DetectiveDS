@@ -1,19 +1,12 @@
-extern const char* g_snideText;
-extern const char* g_reverandText;
-extern const char* g_bentleyText;
-extern const char* g_cookText;
-extern const char* g_gabrielText;
-extern const char* g_cynthiaText;
-extern const char* g_professorText;
-extern const char* g_doctorText;
-extern const char* g_majorText;
-extern const char* g_dingleText;
+extern const char* g_characterText[];
 
 extern const int g_largeTextMap[];
 
-extern const char* g_accuseName[];
+extern const char* g_characterName[];
 
 extern const char* g_itemName[];
+extern const char* g_itemDescription[];
+extern const char* g_itemText[];
 extern const char* g_colName[];
 extern const char* g_iconName[];
 extern const char* g_roomName[];

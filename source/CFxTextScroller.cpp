@@ -25,22 +25,19 @@ void CFxTextScroller::Shutdown()
 
 void CFxTextScroller::UpdateVBlank()
 {
-	if(m_charPos == NULL)
-	{
-		for(int i=m_textPos; i<MAX_TEXT_SCROLLER; i++)
-		{
-			if(m_textArray[i] != NULL)
-			{
-				m_charPos = m_textArray[i];
-				break;
-			}
-		}
-	}
-	
 	if((m_scrollPos++ & 0x7) == 0)
 	{
 		if(m_charPos == NULL)
 		{
+			for(int i=m_textPos; i<MAX_TEXT_SCROLLER; i++)
+			{
+				if(m_textArray[i] != NULL)
+				{
+					m_charPos = m_textArray[i];
+					break;
+				}
+			}
+		
 			//DrawCharLarge(' ', (((m_scrollPos - 8) >> 3) & 0x1F), (((((m_scrollPos - 8) >> 3) >> 5) & 1) << 5) + 11, false);
 			DrawCharLarge(' ', m_scrollPos >> 3, 11, false);
 		}

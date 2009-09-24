@@ -77,7 +77,7 @@ char CKeyboard::CheckKeyTouch(int x, int y)
 		break;
 	}
 	
-	m_pCursor->Draw();
+	m_pCursor->Show();
 	
 	return c;
 }
