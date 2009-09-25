@@ -94,7 +94,6 @@ void CGame::Initialize()
 		m_itemArray[ITEM_A_BOMB] = new CItem(ITEM_A_BOMB, ITEMATTRIB_EVIDENCE);								// Clue #7
 		m_itemArray[ITEM_A_SMALL_KEY] = new CItem(ITEM_A_SMALL_KEY, ITEMATTRIB_USE_KEY);
 		m_itemArray[ITEM_BULLETS] = new CItem(ITEM_BULLETS, ITEMATTRIB_NONE);
-		m_itemArray[ITEM_ANTLERS_HORN] = new CItem(ITEM_ANTLERS_HORN, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_SWORD] = new CItem(ITEM_SWORD, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_BALL_ON_CHAIN] = new CItem(ITEM_BALL_ON_CHAIN, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_HOURGLASS] = new CItem(ITEM_HOURGLASS, ITEMATTRIB_NONE);
@@ -395,10 +394,8 @@ void CGame::Initialize()
 		m_roomArray[ROOM_COURTYARD]->AddItemCache(3, COL_GARGOYLE3);
 		
 		m_roomArray[ROOM_ANGUS_LANDING]->AddItemCache(0, COL_GOAT_LIKE_PAINTING);
-		MAKEITEMARRAY(m_itemArray[ITEM_RED_KEY], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_ANGUS_LANDING]->AddItemCache(1, COL_DESK_WITH_A_STATUE, itemArray);
-		MAKEITEMARRAY(m_itemArray[ITEM_ANTLERS_HORN], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_ANGUS_LANDING]->AddItemCache(2, COL_A_TROPHY, itemArray);
+		m_roomArray[ROOM_ANGUS_LANDING]->AddItemCache(1, COL_DESK_WITH_A_STATUE);
+		m_roomArray[ROOM_ANGUS_LANDING]->AddItemCache(2, COL_A_TROPHY);
 		
 		m_roomArray[ROOM_ANGUS_ROOM]->AddItemCache(0, COL_ANGUS_BOOKCASE);
 		MAKEITEMARRAY(m_itemArray[ITEM_SWORD], m_itemArray[ITEM_BALL_ON_CHAIN], NULL, NULL, NULL);

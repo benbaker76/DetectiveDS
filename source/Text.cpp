@@ -89,7 +89,6 @@ const char* g_itemName[] =
 	"A BOMB!",							// (Not marked)
 	"A SMALL KEY",
 	"BULLETS",
-	"ANTLERS HORN",
 	"SWORD",
 	"BALL ON CHAIN",
 	"HOURGLASS",
@@ -155,7 +154,6 @@ const char* g_itemDescription[] =
 	"JUST YOUR AVERAGE BOMB..", // A BOMB!
 	NULL, // A SMALL KEY
 	"SHOULD FIT A REVOLVER", // BULLETS
-	NULL, // ANTLERS HORN
 	NULL, // SWORD
 	NULL, // BALL ON CHAIN
 	NULL, // HOURGLASS
@@ -221,7 +219,6 @@ const char* g_itemText[] =
 	NULL, // A BOMB!
 	NULL, // A SMALL KEY
 	NULL, // BULLETS
-	NULL, // ANTLERS HORN
 	NULL, // SWORD
 	NULL, // BALL ON CHAIN
 	NULL, // HOURGLASS

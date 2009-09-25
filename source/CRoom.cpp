@@ -31,6 +31,7 @@ CRoom::CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const unsigned char* p
 	GetColMapRect(COL_SRC_FIREPLACE3, &m_rectSrc[SRCRECT_FIREPLACE3]);
 	GetColMapRect(COL_SRC_FIREPLACE4, &m_rectSrc[SRCRECT_FIREPLACE4]);
 	GetColMapRect(COL_SRC_FIREPLACE5, &m_rectSrc[SRCRECT_FIREPLACE5]);
+	GetColMapRect(COL_SRC_FIREPLACE6, &m_rectSrc[SRCRECT_FIREPLACE6]);
 	GetColMapRect(COL_SRC_LIGHT1, &m_rectSrc[SRCRECT_LIGHT1]);
 	GetColMapRect(COL_SRC_LIGHT2, &m_rectSrc[SRCRECT_LIGHT2]);
 	GetColMapRect(COL_SRC_LIGHT3, &m_rectSrc[SRCRECT_LIGHT3]);

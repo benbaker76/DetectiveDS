@@ -48,7 +48,7 @@ void CFxParticles::UpdateVBlank()
 			{
 				if(m_particleArray[i].Lifetime == 0)
 				{
-					int num = rand() % 4;
+					int num = rand() % 10;
 					
 					if(num == 0)
 					{
