@@ -42,7 +42,7 @@ void CGame::Initialize()
 	{
 	case GAMETYPE_NORMAL:
 		m_itemArray[ITEM_NOTHING_HERE] = new CItem(ITEM_NOTHING_HERE, ITEMATTRIB_NONE);
-		m_itemArray[ITEM_A_HOT_WATER_BOTTLE] = new CItem(ITEM_A_HOT_WATER_BOTTLE, ITEMATTRIB_NONE | ITEMATTRIB_ITEMCACHE);
+		m_itemArray[ITEM_A_HOT_WATER_BOTTLE] = new CItem(ITEM_A_HOT_WATER_BOTTLE, ITEMATTRIB_OPEN);
 		m_itemArray[ITEM_BLANK_BULLETS] = new CItem(ITEM_BLANK_BULLETS, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_A_CANDLESTICK] = new CItem(ITEM_A_CANDLESTICK, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_THE_WILL] = new CItem(ITEM_THE_WILL, ITEMATTRIB_EVIDENCE | ITEMATTRIB_READ);			// Clue #1
@@ -51,7 +51,7 @@ void CGame::Initialize()
 		m_itemArray[ITEM_A_NOTE] = new CItem(ITEM_A_NOTE, ITEMATTRIB_EVIDENCE | ITEMATTRIB_READ);				// Clue #4
 		m_itemArray[ITEM_A_SMALL_BOTTLE] = new CItem(ITEM_A_SMALL_BOTTLE, ITEMATTRIB_EVIDENCE | ITEMATTRIB_CONSUME);		// Clue #6
 		m_itemArray[ITEM_A_CRAVATE] = new CItem(ITEM_A_CRAVATE, ITEMATTRIB_EVIDENCE);							// Clue #3
-		m_itemArray[ITEM_A_SOGGY_ENVELOPE] = new CItem(ITEM_A_SOGGY_ENVELOPE, ITEMATTRIB_ITEMCACHE);
+		m_itemArray[ITEM_A_SOGGY_ENVELOPE] = new CItem(ITEM_A_SOGGY_ENVELOPE, ITEMATTRIB_OPEN);
 		m_itemArray[ITEM_A_LETTER] = new CItem(ITEM_A_LETTER, ITEMATTRIB_READ);
 		m_itemArray[ITEM_SCALPELS] = new CItem(ITEM_SCALPELS, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_A_SYRINGE] = new CItem(ITEM_A_SYRINGE, ITEMATTRIB_EVIDENCE);							// Clue #9
@@ -62,11 +62,11 @@ void CGame::Initialize()
 		m_itemArray[ITEM_A_SILVER_TRAY] = new CItem(ITEM_A_SILVER_TRAY, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_A_BOTTLE_OF_WINE] = new CItem(ITEM_A_BOTTLE_OF_WINE, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_A_COMB] = new CItem(ITEM_A_COMB, ITEMATTRIB_NONE);
-		m_itemArray[ITEM_A_HARDBACK_BOOK] = new CItem(ITEM_A_HARDBACK_BOOK, ITEMATTRIB_READ | ITEMATTRIB_ITEMCACHE);
+		m_itemArray[ITEM_A_HARDBACK_BOOK] = new CItem(ITEM_A_HARDBACK_BOOK, ITEMATTRIB_OPEN | ITEMATTRIB_READ);
 		m_itemArray[ITEM_A_FOLDED_DOCUMENT] = new CItem(ITEM_A_FOLDED_DOCUMENT, ITEMATTRIB_EVIDENCE | ITEMATTRIB_READ);	// Clue #2
 		m_itemArray[ITEM_AN_ELEPHANT_GUN] = new CItem(ITEM_AN_ELEPHANT_GUN, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_A_DIARY] = new CItem(ITEM_A_DIARY, ITEMATTRIB_NONE | ITEMATTRIB_READ);
-		m_itemArray[ITEM_A_BLACK_BAG] = new CItem(ITEM_A_BLACK_BAG, ITEMATTRIB_NONE);
+		m_itemArray[ITEM_A_BLACK_BAG] = new CItem(ITEM_A_BLACK_BAG, ITEMATTRIB_OPEN);
 		m_itemArray[ITEM_COLOGNE] = new CItem(ITEM_COLOGNE, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_A_SMALL_BOOK] = new CItem(ITEM_A_SMALL_BOOK, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_DIRTY_PLATES] = new CItem(ITEM_DIRTY_PLATES, ITEMATTRIB_NONE);
@@ -81,16 +81,16 @@ void CGame::Initialize()
 		m_itemArray[ITEM_BOOKS1] = new CItem(ITEM_BOOKS1, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_BOOKS2] = new CItem(ITEM_BOOKS2, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_A_LETTER_OPENER] = new CItem(ITEM_A_LETTER_OPENER, ITEMATTRIB_NONE);
-		m_itemArray[ITEM_A_JACKET] = new CItem(ITEM_A_JACKET, ITEMATTRIB_ITEMCACHE);
-		m_itemArray[ITEM_NOTEBOOKS] = new CItem(ITEM_NOTEBOOKS, ITEMATTRIB_NONE);
+		m_itemArray[ITEM_A_JACKET] = new CItem(ITEM_A_JACKET, ITEMATTRIB_OPEN);
+		m_itemArray[ITEM_NOTEBOOKS] = new CItem(ITEM_NOTEBOOKS, ITEMATTRIB_OPEN);
 		m_itemArray[ITEM_PLANS] = new CItem(ITEM_PLANS, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_A_MIRROR] = new CItem(ITEM_A_MIRROR, ITEMATTRIB_NONE);
 		m_itemArray[ITEM_CUTLERY] = new CItem(ITEM_CUTLERY, ITEMATTRIB_NONE);
-		m_itemArray[ITEM_A_PIECE_OF_CARD] = new CItem(ITEM_A_PIECE_OF_CARD, ITEMATTRIB_NONE);
-		m_itemArray[ITEM_A_BRIEFCASE] = new CItem(ITEM_A_BRIEFCASE, ITEMATTRIB_ITEMCACHE);
-		m_itemArray[ITEM_A_FOLDER] = new CItem(ITEM_A_FOLDER, ITEMATTRIB_NONE);
+		m_itemArray[ITEM_A_PIECE_OF_CARD] = new CItem(ITEM_A_PIECE_OF_CARD, ITEMATTRIB_READ);
+		m_itemArray[ITEM_A_BRIEFCASE] = new CItem(ITEM_A_BRIEFCASE, ITEMATTRIB_OPEN);
+		m_itemArray[ITEM_A_FOLDER] = new CItem(ITEM_A_FOLDER, ITEMATTRIB_OPEN);
 		m_itemArray[ITEM_A_PAPERWEIGHT] = new CItem(ITEM_A_PAPERWEIGHT, ITEMATTRIB_NONE);
-		m_itemArray[ITEM_PADDED_ENVELOPES] = new CItem(ITEM_PADDED_ENVELOPES, ITEMATTRIB_NONE | ITEMATTRIB_ITEMCACHE);
+		m_itemArray[ITEM_PADDED_ENVELOPES] = new CItem(ITEM_PADDED_ENVELOPES, ITEMATTRIB_OPEN | ITEMATTRIB_NONE);
 		m_itemArray[ITEM_A_BOMB] = new CItem(ITEM_A_BOMB, ITEMATTRIB_EVIDENCE);								// Clue #7
 		m_itemArray[ITEM_A_SMALL_KEY] = new CItem(ITEM_A_SMALL_KEY, ITEMATTRIB_USE_KEY);
 		m_itemArray[ITEM_BULLETS] = new CItem(ITEM_BULLETS, ITEMATTRIB_NONE);
@@ -123,6 +123,8 @@ void CGame::Initialize()
 		
 		MAKEITEMARRAY(m_itemArray[ITEM_A_SMALL_KEY], NULL, NULL, NULL, NULL);
 		m_itemArray[ITEM_A_BRIEFCASE]->AddItemCache(itemArray);
+		
+		m_itemArray[ITEM_A_FOLDER]->AddItemCache();
 		
 		m_itemArray[ITEM_PADDED_ENVELOPES]->AddItemCache(10);
 		
@@ -233,7 +235,7 @@ void CGame::Initialize()
 		m_roomArray[ROOM_OUTSIDE2]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE2], m_roomArray[ROOM_PASSAGE1]));
 		m_roomArray[ROOM_OUTSIDE2]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE2], m_roomArray[ROOM_MAJOR]));
 		m_roomArray[ROOM_OUTSIDE3]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_OUTSIDE3], m_roomArray[ROOM_CLOCK]));
-		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_CELLAR]));
+		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_HIDDEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_CELLAR]));
 		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_DRAWING]));
 		m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_GARDEN]));
 		m_roomArray[ROOM_PASSAGE1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE1], m_roomArray[ROOM_REVEREND]));
@@ -276,7 +278,7 @@ void CGame::Initialize()
 		m_roomArray[ROOM_CLOCK]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_CLOCK], m_roomArray[ROOM_OUTSIDE3]));
 		m_roomArray[ROOM_CLOCK]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_CLOSED, m_roomArray[ROOM_CLOCK], m_roomArray[ROOM_DRAWING]));
 		m_roomArray[ROOM_CELLAR]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_CELLAR], m_roomArray[ROOM_PASSAGE3]));
-		m_roomArray[ROOM_CELLAR]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_CELLAR], m_roomArray[ROOM_OUTSIDE4]));
+		m_roomArray[ROOM_CELLAR]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_HIDDEN, m_roomArray[ROOM_CELLAR], m_roomArray[ROOM_OUTSIDE4]));
 		m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_CLOCK]));
 		m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_CLOSED, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_HALL3]));
 		m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_HIDDEN, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_OUTSIDE4]));
@@ -516,7 +518,8 @@ void CGame::InitializeGame()
 	m_timer = new CTimer(9, 10, 0, 0);
 	m_timer->Start();
 
-	//m_console->AddText("THIS IS A TEST OF THE AUTO WORD WRAP SYSTEM AND SHOULD EVENTUALLY BE ABLE TO HANDLE MULTIPLE PAGES OF TEXT. CURRENTLY THIS IS NOT IMPLEMENTED BUT SHOULD BE SHORTLY IN THE FUTURE.");
+	//m_displayMode = DISPLAYMODE_CONSOLE;
+	//m_console->AddText(g_itemText[ITEM_THE_WILL]);
 }
 
 void CGame::Update()
@@ -559,7 +562,7 @@ void CGame::Update()
 		if(keys_released & KEY_A)
 		{
 			m_gameMode = GAMEMODE_RUNNING;
-			m_console->ClearText();
+			m_console->Clear();
 			m_timer->Start();
 		}
 		return;
@@ -603,6 +606,8 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 	{
 	case DISPLAYMODE_GAME:
 		{
+			m_openMode = OPENMODE_ROOM;
+
 			if((keys_released & KEY_UP) ||
 				(keys_released & KEY_DOWN) ||
 				(keys_released & KEY_LEFT) ||
@@ -646,7 +651,7 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 					{					
 						if(charNear == m_questionCharacter->GetCharacterType() || charFar == m_questionCharacter->GetCharacterType())
 						{
-							m_displayMode = DISPLAYMODE_CONSOLE;
+							m_displayMode = DISPLAYMODE_CONSOLE_MENU;
 							m_questionMode = QUESTIONMODE_ASKABOUT;
 							m_lastIconType = ICON_QUESTION;
 							
@@ -712,11 +717,30 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 		break;
 	case DISPLAYMODE_CONSOLE:
 		{
+			if(keys_released & KEY_A || keys_released & KEY_B || keys_released & KEY_LEFT || keys_released & KEY_RIGHT)
+			{
+				m_displayMode = DISPLAYMODE_GAME;
+				m_pointer->Hide();
+				m_menu->Hide();
+				m_console->HideMenu();
+			}
+			else if(keys_released & KEY_UP)
+			{
+				m_console->Move(DIRECTION_UP);
+			}
+			else if(keys_released & KEY_DOWN)
+			{
+				m_console->Move(DIRECTION_DOWN);
+			}
+		}
+		break;
+	case DISPLAYMODE_CONSOLE_MENU:
+		{
 			if(keys_released & KEY_A)
 			{
 				PostProcessMenu();
 			}
-			else if(keys_released & KEY_LEFT || keys_released & KEY_RIGHT || keys_released & KEY_B)
+			else if(keys_released & KEY_B || keys_released & KEY_LEFT || keys_released & KEY_RIGHT)
 			{
 				m_displayMode = DISPLAYMODE_GAME;
 				m_pointer->Hide();
@@ -744,22 +768,66 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 				switch(c)
 				{
 					case '\e':	// Exit
-						m_displayMode = DISPLAYMODE_GAME;
-						
-						m_keyboard->Hide();
-						m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
-						m_console->ClearText();
-						m_menu->Hide();
+						{
+							m_displayMode = DISPLAYMODE_GAME;
+							
+							m_keyboard->Hide();
+							m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
+							m_console->Clear();
+							m_menu->Hide();
+						}
 						break;
 					case '\n':
-						m_displayMode = DISPLAYMODE_GAME;
-						
-						//fprintf(stderr, m_keyboard->GetText());
-						
-						m_keyboard->Hide();
-						m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
-						m_console->ClearText();
-						m_menu->Hide();
+						{
+							const char* text = m_keyboard->GetText();
+							
+							switch(m_keyboardMode)
+							{
+								case KEYBOARDMODE_BOOK1:
+									{
+										if(strcmp(text, "101 DETECTIVE STORIES") == 0)
+										{
+											if(m_itemArray[ITEM_A_HARDBACK_BOOK]->GetParent() == NULL)
+											{
+												m_console->AddText("YOU FIND THE BOOK.");
+												CItemCache* itemCache = m_snide->GetItemCache();
+												
+												itemCache->AddItem(m_itemArray[ITEM_A_HARDBACK_BOOK]);
+											}
+											else
+											{
+												m_console->AddText("YOU DO NOT FIND THE BOOK.");
+											}
+										}
+										else
+										{
+											m_console->AddText("YOU DO NOT FIND THE BOOK.");
+										}
+									}
+									break;
+								case KEYBOARDMODE_BOOK2:
+									m_console->AddText("YOU DO NOT FIND THE BOOK.");
+									break;
+								case KEYBOARDMODE_SAFE:
+									{
+										if(strncmp(text, "210319", 6) == 0)
+										{
+											m_console->AddText("THE SAFE IS OPEN!");
+										}
+										else
+										{
+											m_console->AddText("THE SAFE DOESN'T OPEN");
+										}
+									}
+									break;
+							}
+							
+							m_displayMode = DISPLAYMODE_GAME;
+							
+							m_keyboard->Hide();
+							m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
+							m_menu->Hide();
+						}
 						break;
 				}
 			}
@@ -1006,13 +1074,19 @@ void CGame::SetMenuIcons(MenuMode menuMode, CItem* pItem)
 		
 		m_menu->AddIconSet(ICONSET_ITEM);
 		
+		if(pItem->GetItemAttribs() & ITEMATTRIB_OPEN)
+			m_menu->AddIcon(ICON_OPEN);
+		
 		if(pItem->GetItemAttribs() & ITEMATTRIB_SHOOT)
 			m_menu->AddIcon(ICON_SHOOT);
-		else if(pItem->GetItemAttribs() & ITEMATTRIB_USE_KEY)
+		
+		if(pItem->GetItemAttribs() & ITEMATTRIB_USE_KEY)
 			m_menu->AddIcon(ICON_USE_KEY);
-		else if(pItem->GetItemAttribs() & ITEMATTRIB_READ)
+		
+		if(pItem->GetItemAttribs() & ITEMATTRIB_READ)
 			m_menu->AddIcon(ICON_READ);
-		else if(pItem->GetItemAttribs() & ITEMATTRIB_CONSUME)
+		
+		if(pItem->GetItemAttribs() & ITEMATTRIB_CONSUME)
 			m_menu->AddIcon(ICON_CONSUME);
 		break;
 	}
@@ -1067,7 +1141,7 @@ int CGame::ShowItemMenu(const char* text, CItemCache* pItemCache, CItem* pItemEx
 {
 	int itemCount = 0;
 	
-	m_displayMode = DISPLAYMODE_CONSOLE;
+	m_displayMode = DISPLAYMODE_CONSOLE_MENU;
 
 	m_console->ClearMenu();
 	
@@ -1101,7 +1175,7 @@ int CGame::ShowItemMenu(const char* text, CItemCache* pItemCache, CItem* pItemEx
 
 void CGame::ShowVisibleCharactersMenu()
 {
-	m_displayMode = DISPLAYMODE_CONSOLE;
+	m_displayMode = DISPLAYMODE_CONSOLE_MENU;
 	
 	if(m_someoneInRoom)
 	{
@@ -1123,7 +1197,7 @@ void CGame::ShowVisibleCharactersMenu()
 
 void CGame::ShowCharacterMenu(const char* text)
 {
-	m_displayMode = DISPLAYMODE_CONSOLE;
+	m_displayMode = DISPLAYMODE_CONSOLE_MENU;
 	
 	m_console->AddText(text);
 	m_console->ClearMenu();
@@ -1217,7 +1291,7 @@ void CGame::ProcessMenu(int x, int y)
 		break;
 	case ICON_INVENTORY:
 		{
-			m_displayMode = DISPLAYMODE_CONSOLE;
+			m_displayMode = DISPLAYMODE_CONSOLE_MENU;
 			m_openMode = OPENMODE_ITEM;
 			
 			ShowItemMenu("YOU ARE CARRYING:", m_snide->GetItemCache(), NULL);
@@ -1334,7 +1408,7 @@ void CGame::ProcessMenu(int x, int y)
 	case ICON_USE:
 		{
 			m_useMode = USEMODE_USE;
-			m_displayMode = DISPLAYMODE_CONSOLE;
+			m_displayMode = DISPLAYMODE_CONSOLE_MENU;
 			
 			ShowItemMenu("USE:", m_snide->GetItemCache(), NULL);
 		}
@@ -1349,7 +1423,7 @@ void CGame::ProcessMenu(int x, int y)
 		break;
 	case ICON_PLACE:
 		{
-			m_displayMode = DISPLAYMODE_CONSOLE;
+			m_displayMode = DISPLAYMODE_CONSOLE_MENU;
 			
 			m_placeItem = (CItem*) m_console->SelectedObject();
 			
@@ -1359,8 +1433,6 @@ void CGame::ProcessMenu(int x, int y)
 	case ICON_BAG:
 		break;
 	}
-	
-	m_openMode = OPENMODE_ROOM;
 }
 
 void CGame::PostProcessMenu()
@@ -1383,16 +1455,34 @@ void CGame::PostProcessMenu()
 			{
 				case ITEM_BOOKS1:
 				case ITEM_BOOKS2:
-					m_displayMode = DISPLAYMODE_KEYBOARD;
-					m_console->ClearText();
-					m_menu->Hide();
-					m_console->HideMenu();
-					m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, false);
-					m_keyboard->Show("WHAT BOOK DO YOU WANT?");
+					{
+						CItemCache* pItemCache = m_snide->GetItemCache();
+						
+						if(pItemCache->IsSpaceAvailable())
+						{
+							m_displayMode = DISPLAYMODE_KEYBOARD;
+							m_keyboardMode = (pItem->GetItemType() == ITEM_BOOKS1 ? KEYBOARDMODE_BOOK1 : KEYBOARDMODE_BOOK2);
+							m_console->Clear();
+							m_menu->Hide();
+							m_console->HideMenu();
+							m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, false);
+							m_keyboard->Show("WHAT BOOK DO YOU WANT?");
+						}
+						else
+						{
+							m_console->AddText("YOU CAN'T CARRY ANY MORE!");
+														
+							m_displayMode = DISPLAYMODE_GAME;
+							m_pointer->Hide();
+							m_menu->Hide();
+							m_console->HideMenu();
+						}
+					}
 					break;
 				case ITEM_A_PICTURE:
 					m_displayMode = DISPLAYMODE_KEYBOARD;
-					m_console->ClearText();
+					m_keyboardMode = KEYBOARDMODE_SAFE;
+					m_console->Clear();
 					m_menu->Hide();
 					m_console->HideMenu();
 					m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, false);
@@ -1517,12 +1607,12 @@ void CGame::PostProcessMenu()
 							m_console->HideMenu();
 							break;
 						case QUESTIONTYPE_ANOBJECT:
-							m_displayMode = DISPLAYMODE_CONSOLE;
+							m_displayMode = DISPLAYMODE_CONSOLE_MENU;
 							m_questionMode = QUESTIONMODE_REPLY;
 							ShowItemMenu("ASK ABOUT:", m_snide->GetItemCache(), NULL);
 							break;
 						case QUESTIONTYPE_ANOTHERGUEST:
-							m_displayMode = DISPLAYMODE_CONSOLE;
+							m_displayMode = DISPLAYMODE_CONSOLE_MENU;
 							m_questionMode = QUESTIONMODE_REPLY;
 							ShowCharacterMenu("ASK ABOUT:");
 							break;
@@ -1653,33 +1743,35 @@ void CGame::PostProcessMenu()
 	case ICON_TIME:
 		{
 			m_displayMode = DISPLAYMODE_GAME;
-			m_console->ClearText();
+			m_console->Clear();
 		}
 		break;
 	case ICON_PLACE:
 		{
 			m_inItem = (CItem*) m_console->SelectedObject();
 			
-			if(m_inItem->GetItemAttribs() & ITEMATTRIB_ITEMCACHE)
+			if(m_inItem->GetItemAttribs() & ITEMATTRIB_OPEN)
 			{
 				CItemCache* itemCache = m_inItem->GetItemCache();
 				
-				itemCache->AddItem(m_placeItem);
-				
-				m_displayMode = DISPLAYMODE_GAME;
-				m_pointer->Hide();
-				m_menu->Hide();
-				m_console->HideMenu();
-				m_console->AddText("OKAY.");
+				if(itemCache->AddItem(m_placeItem))
+				{
+					m_console->AddText("OKAY.");
+				}
+				else
+				{
+					m_console->AddText("IT WON'T FIT!");
+				}
 			}
 			else
 			{
-				m_displayMode = DISPLAYMODE_GAME;
-				m_pointer->Hide();
-				m_menu->Hide();
-				m_console->HideMenu();
 				m_console->AddText("SORRY, YOU CAN'T DO THAT.");
 			}
+			
+			m_displayMode = DISPLAYMODE_GAME;
+			m_pointer->Hide();
+			m_menu->Hide();
+			m_console->HideMenu();
 			
 			//sprintf(m_buffer, "Place %s in %s",g_itemName[m_placeItem->GetItemType()], g_itemName[m_inItem->GetItemType()]);
 			//fprintf(stderr, m_buffer);

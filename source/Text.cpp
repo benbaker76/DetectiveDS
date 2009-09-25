@@ -116,14 +116,14 @@ const char* g_itemDescription[] =
 	"IT'S A LOVE NOTE..I CAN'T READ THIS.. IT'S FAR TOO SLOPPY!", // A LETTER
 	"SURGICAL SCALPELS", // SCALPELS
 	"THE NEEDLE DRIPS A THICK SWEET SMELLING LIQUID", // A SYRINGE;
-	"THE LABEL READS:  WARNING! MEDICATED USE ONLY", // A BOTTLE OF PILLS
+	"THE LABEL READS:\n\nWARNING! MEDICATED USE ONLY", // A BOTTLE OF PILLS
 	NULL, // A HAMMER
 	"ALL DIFFERENT SIZES", // A BUNCH OF KEYS
 	"IT'S RUSTY", // A BIG IRON KEY
-	"IT'S INSCRIBED:  TO ANGUS MCFUNGUS, BORN 21 MARCH 1919", // A SILVER TRAY
+	"IT'S INSCRIBED:\n\nTO ANGUS MCFUNGUS, BORN 21 MARCH 1919", // A SILVER TRAY
 	"NO WINE LEFT..", // A BOTTLE OF WINE
 	"YUK! ..IT'S ALL GREASY", // A COMB
-	"THE FADED TITLE READS:  101 DETECTIVE STORIES", // A HARDBACK BOOK
+	"THE FADED TITLE READS:\n\n101 DETECTIVE STORIES", // A HARDBACK BOOK
 	"IT'S A COPY OF MR. MCFUNGUS' WILL!", // A FOLDED DOCUMENT;
 	"IT'S LOADED!", // AN ELEPHANT GUN
 	"IT'S ANGUS' DIARY", // A DIARY
@@ -175,7 +175,7 @@ const char* g_itemText[] =
 	"BRIEFLY, THE WILL LEAVES DONATIONS TO VARIOUS CHARITIES AND RELATIVES, $10000 TO COOK, THE PROFESSOR, THE MAJOR AND THE CHURCH. THE REST, WHICH COMES TO $1000000 IS LEFT TO GABRIEL GASBAG.", // THE WILL;
 	NULL, // A KNIFE;
 	"ITS THE MARRIAGES COLUMN OF 'THE TIMES'", // NEWSPAPER CUTTING
-	"A TYPED MESSAGE READS:  10000 IS A SMALL FRACTION OF A MILLION... YOU'LL NEVER HEAR FROM ME AGAIN.", // A NOTE;
+	"A TYPED MESSAGE READS:\n\n10000 IS A SMALL FRACTION OF A MILLION... YOU'LL NEVER HEAR FROM ME AGAIN.", // A NOTE;
 	NULL, // A SMALL BOTTLE
 	NULL, // A CRAVATE;
 	NULL, // A SOGGY ENVELOPE
@@ -235,15 +235,15 @@ const char* g_itemText[] =
 const char* g_colName[] =
 {
 	"NOTHING HERE",
-	"DOOR1",
-	"DOOR2",
-	"DOOR3",
-	"DOOR4",
-	"DOOR5",
-	"DOOR6",
-	"DOOR7",
-	"DOOR8",
-	"WALL",
+	"NOTHING HERE",				// DOOR1
+	"NOTHING HERE",				// DOOR2
+	"NOTHING HERE",				// DOOR3
+	"NOTHING HERE",				// DOOR4
+	"NOTHING HERE",				// DOOR5
+	"NOTHING HERE",				// DOOR6
+	"NOTHING HERE",				// DOOR7
+	"NOTHING HERE",				// DOOR8
+	"NOTHING HERE",				// WALL
 	"DUMMY",
 	"FOUR POSTER BED",
 	"CHEST OF DRAWERS",
@@ -437,7 +437,7 @@ void DrawChar(char c, int x, int y, bool sub)
 	*pMap = c - 0x20;
 }
 
-void DrawText(const char* string, int x, int y, bool sub)
+void DrawString(const char* string, int x, int y, bool sub)
 {
 	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)) + (x + y * 32);
 	
@@ -445,7 +445,7 @@ void DrawText(const char* string, int x, int y, bool sub)
 		*pMap++ = string[i] - 0x20;
 }
 
-void DrawText(const char* string, int x, int y, int count, bool sub)
+void DrawString(const char* string, int x, int y, int count, bool sub)
 {
 	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)) + (x + y * 32);
 	
@@ -453,7 +453,7 @@ void DrawText(const char* string, int x, int y, int count, bool sub)
 		*pMap++ = string[i] - 0x20;
 }
 
-void DrawTextLarge(const char* string, int x, int y, bool sub)
+void DrawStringLarge(const char* string, int x, int y, bool sub)
 {
 	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)) + (x + y * 32);
 	

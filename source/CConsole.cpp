@@ -9,6 +9,7 @@
 CConsole::CConsole(CCursor* pCursor)
 {
 	m_pCursor = pCursor;
+	m_consoleMode = CONSOLEMODE_NORMAL;
 	
 	m_gfxArrowUp = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
 	m_gfxArrowDown = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
@@ -19,57 +20,91 @@ CConsole::CConsole(CCursor* pCursor)
 	for(int i=0; i<CONSOLE_MENU_MAX_TEXT; i++)
 		m_menuArray[i] = NULL;
 	
-	ClearText();
+	Clear();
 }
 
 CConsole::~CConsole()
 {
 }
 
-void CConsole::ClearText()
+void CConsole::Clear()
 {
 	m_pCursor->SetPosition(CONSOLE_MAP_X, CONSOLE_MAP_Y);
-	//HideArrows();
+	HideArrows();
 	
 	m_lineCount = 0;
 	m_linePos = 0;
 	m_lineOffset = 0;
 	
+	ClearText();
+}
+
+void CConsole::ClearText()
+{
 	for(int i=0; i<CONSOLE_MAX_TEXT; i++)
 	{
 		char buf[256];
 		sprintf(buf, "%*s", CONSOLE_MAP_WIDTH, "");
-		DrawText(buf, CONSOLE_MAP_X, CONSOLE_MAP_Y + i, false);
+		DrawString(buf, CONSOLE_MAP_X, CONSOLE_MAP_Y + i, false);
 	}
 }
 
 void CConsole::AddText(const char* text)
 {
-	ClearText();
+	m_consoleMode = CONSOLEMODE_NORMAL;
+	
+	Clear();
 	
 	m_lineCount = WordWrap(text);
 	
-	//if(m_lineCount > CONSOLE_MAX_VISIBLE_TEXT)
-	//	ShowArrows();
+	if(m_lineCount > CONSOLE_MAX_VISIBLE_TEXT)
+		ShowArrows();
+}
+
+void CConsole::DrawText()
+{
+	for(int i=0; i<CONSOLE_MAX_VISIBLE_TEXT; i++)
+		DrawString(m_textArray[m_lineOffset + i], CONSOLE_MAP_X, CONSOLE_MAP_Y + i, false);
 }
 
 void CConsole::Update()
 {
 	m_frameCount++;
 	
-	if(m_frameCount > 4)
+	if(m_frameCount > 3)
 	{
 		m_frameCount = 0;
 		
 		if(m_linePos < m_lineCount && m_linePos < CONSOLE_MAX_VISIBLE_TEXT)
 		{
 			DrawChar(' ', CONSOLE_MAP_X, CONSOLE_MAP_Y + m_linePos, false);
-			DrawText(m_textArray[m_linePos], CONSOLE_MAP_X, CONSOLE_MAP_Y + m_linePos, false);
+			DrawString(m_textArray[m_linePos], CONSOLE_MAP_X, CONSOLE_MAP_Y + m_linePos, false);
 			m_linePos++;
 			
 			m_pCursor->SetPosition(CONSOLE_MAP_X, CONSOLE_MAP_Y + m_linePos);
 		}
 	}
+}
+
+void CConsole::Move(DirectionType directionType)
+{
+	switch(directionType)
+	{
+		case DIRECTION_UP:
+			if(m_lineOffset > 0)
+				m_lineOffset--;
+			break;
+		case DIRECTION_DOWN:
+			if(m_lineOffset + CONSOLE_MAX_VISIBLE_TEXT < m_lineCount)
+				m_lineOffset++;
+			break;
+		case DIRECTION_LEFT:
+		case DIRECTION_RIGHT:
+			break;
+	}
+	
+	ClearText();
+	DrawText();
 }
 
 void CConsole::ClearMenu()
@@ -91,7 +126,7 @@ void CConsole::ClearMenuText()
 	{
 		char buf[256];
 		sprintf(buf, "%*s", CONSOLE_MENU_MAP_WIDTH, "");
-		DrawText(buf, CONSOLE_MENU_MAP_X, CONSOLE_MENU_MAP_Y + i, false);
+		DrawString(buf, CONSOLE_MENU_MAP_X, CONSOLE_MENU_MAP_Y + i, false);
 	}
 }
 
@@ -115,8 +150,10 @@ bool CConsole::AddMenuItem(const char* text, void* object)
 
 void CConsole::ShowMenu()
 {
+	m_consoleMode = CONSOLEMODE_MENU;
+	
 	for(int i=0; i<CONSOLE_MENU_VISIBLE_TEXT; i++)
-		DrawText(m_menuArray[m_menuOffset + i], CONSOLE_MENU_MAP_X, CONSOLE_MENU_MAP_Y + i, CONSOLE_MENU_MAP_WIDTH, false);
+		DrawString(m_menuArray[m_menuOffset + i], CONSOLE_MENU_MAP_X, CONSOLE_MENU_MAP_Y + i, CONSOLE_MENU_MAP_WIDTH, false);
 	
 	if(m_menuCount > CONSOLE_MENU_VISIBLE_TEXT)
 		ShowArrows();
@@ -166,13 +203,13 @@ void CConsole::HideSelectorBar()
 
 void CConsole::HideArrows()
 {
-	oamSet(&oamMain, 119, 140, 144, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxArrowUp, 0, false, true, false, false, false);
+	oamSet(&oamMain, 119, 140, (m_consoleMode == CONSOLEMODE_NORMAL ? 120 : 144), 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxArrowUp, 0, false, true, false, false, false);
 	oamSet(&oamMain, 120, 140, 176, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxArrowDown, 0, false, true, false, false, false);
 }
 
 void CConsole::ShowArrows()
 {
-	oamSet(&oamMain, 119, 140, 144, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxArrowUp, 0, false, false, false, false, false);
+	oamSet(&oamMain, 119, 140, (m_consoleMode == CONSOLEMODE_NORMAL ? 120 : 144), 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxArrowUp, 0, false, false, false, false, false);
 	oamSet(&oamMain, 120, 140, 176, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxArrowDown, 0,	false, false, false, false, false);
 }
 

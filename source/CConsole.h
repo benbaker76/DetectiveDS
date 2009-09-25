@@ -33,15 +33,24 @@
 #define CONSOLE_MAX_TEXT			16
 #define CONSOLE_MAX_WORD			CONSOLE_MAP_WIDTH
 
+enum ConsoleMode
+{
+	CONSOLEMODE_NORMAL,
+	CONSOLEMODE_MENU
+};
+
 class CConsole
 {
 public:
 	CConsole(CCursor* pCursor);
 	~CConsole();
 	
+	void Clear();
 	void ClearText();
 	void AddText(const char* text);
+	void DrawText();
 	void Update();
+	void Move(DirectionType directionType);
 	void ClearMenu();
 	bool AddMenuItem(const char* text, void* object);
 	void ShowMenu();
@@ -60,6 +69,8 @@ public:
 private:
 	CCursor* m_pCursor;
 	CSelector m_selector;
+	
+	ConsoleMode m_consoleMode;
 	
 	int m_linePos;
 	int m_lineOffset;

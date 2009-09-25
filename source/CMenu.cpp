@@ -43,7 +43,6 @@ void CMenu::AddIconSet(IconSet iconSet)
 	case ICONSET_ITEM:
 		AddIcon(ICON_EXAMINE);
 		AddIcon(ICON_PLACE);
-		AddIcon(ICON_OPEN);
 		break;
 	}
 }

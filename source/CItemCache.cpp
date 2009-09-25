@@ -74,20 +74,33 @@ void CItemCache::ClearItems()
 		m_itemArray[i] = NULL;
 }
 
+bool CItemCache::IsSpaceAvailable()
+{
+	for(int i=0; i<m_itemCount; i++)
+		if(m_itemArray[i] == NULL)
+			return true;
+	
+	return false;
+}
+
 bool CItemCache::AddItem(CItem* pItem)
 {
 	bool retVal = false;
 	
-	for(int i=0; i<m_itemCount; i++)
+	if(IsSpaceAvailable())
 	{
-		if(m_itemArray[i] == NULL)
+		pItem->GetParent()->RemoveItem(pItem);
+		pItem->SetParent(this);
+	
+		for(int i=0; i<m_itemCount; i++)
 		{
-			m_itemArray[i] = pItem;
-			
-			pItem->GetParent()->RemoveItem(pItem);
-			pItem->SetParent(this);
-			retVal = true;
-			break;
+			if(m_itemArray[i] == NULL)
+			{
+				m_itemArray[i] = pItem;
+				
+				retVal = true;
+				break;
+			}
 		}
 	}
 	
@@ -101,11 +114,9 @@ bool CItemCache::RemoveItem(CItem* pItem)
 	for(int i=0; i<m_itemCount; i++)
 	{
 		if(m_itemArray[i] == pItem)
-		{
-			m_itemArray[i] = NULL;
-			
-			for(int j = i + 1; j<m_itemCount-1; j++)
-				m_itemArray[i] = m_itemArray[j];
+		{	
+			for(int j = i; j<m_itemCount-1; j++)
+				m_itemArray[j] = m_itemArray[j + 1];
 			
 			m_itemArray[m_itemCount-1] = NULL;
 			

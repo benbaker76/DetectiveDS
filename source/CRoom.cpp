@@ -72,7 +72,7 @@ CRoom::CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const unsigned char* p
 		m_animArray[DSTRECT_TORCH3] = new CAnimation(ANIMTYPE_RANDOM, 0, 5, 2);
 	
 	if(GetColMapRect(COL_DST_FIREPLACE, &m_rectDst[DSTRECT_FIREPLACE]))
-		m_animArray[DSTRECT_FIREPLACE] = new CAnimation(ANIMTYPE_FORWARD, 0, 5, 5);
+		m_animArray[DSTRECT_FIREPLACE] = new CAnimation(ANIMTYPE_FORWARD, 0, 5, 6);
 	
 	if(GetColMapRect(COL_DST_CLOCK, &m_rectDst[DSTRECT_CLOCK]))
 		m_animArray[DSTRECT_CLOCK] = new CAnimation(ANIMTYPE_FORWARD, 0, 5, 1);

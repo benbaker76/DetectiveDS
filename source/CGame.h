@@ -21,6 +21,7 @@ enum DisplayMode
 	DISPLAYMODE_GAME,
 	DISPLAYMODE_MENU,
 	DISPLAYMODE_CONSOLE,
+	DISPLAYMODE_CONSOLE_MENU,
 	DISPLAYMODE_KEYBOARD
 };
 
@@ -55,6 +56,13 @@ enum OpenMode
 {
 	OPENMODE_ROOM,
 	OPENMODE_ITEM
+};
+
+enum KeyboardMode
+{
+	KEYBOARDMODE_BOOK1,
+	KEYBOARDMODE_BOOK2,
+	KEYBOARDMODE_SAFE
 };
 
 class CGame
@@ -100,6 +108,8 @@ private:
 	UseType m_useType;
 	
 	OpenMode m_openMode;
+	
+	KeyboardMode m_keyboardMode;
 	
 	CItem* m_useItem;
 	CItem* m_withItem;

@@ -29,6 +29,7 @@ public:
 	~CItemCache();
 	
 	void ClearItems();
+	bool IsSpaceAvailable();
 	bool AddItem(CItem* pItem);
 	bool RemoveItem(CItem* pItem);
 	bool ReplaceItem(CItem* pOldItem, CItem* pNewItem);

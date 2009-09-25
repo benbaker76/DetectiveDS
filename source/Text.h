@@ -15,7 +15,7 @@ extern const char* g_KeyboardText[];
 extern const char* g_KeyboardHit[];
 
 void DrawChar(char c, int x, int y, bool sub);
-void DrawText(const char* string, int x, int y, bool sub);
-void DrawText(const char* string, int x, int y, int count, bool sub);
-void DrawTextLarge(const char* string, int x, int y, bool sub);
+void DrawString(const char* string, int x, int y, bool sub);
+void DrawString(const char* string, int x, int y, int count, bool sub);
+void DrawStringLarge(const char* string, int x, int y, bool sub);
 void DrawCharLarge(char c, int x, int y, bool sub);

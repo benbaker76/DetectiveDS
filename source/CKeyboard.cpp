@@ -22,10 +22,10 @@ void CKeyboard::Show(const char* string)
 	dmaCopy(keyboardTiles, BG_TILE_RAM(BG3_TILE_BASE), keyboardTilesLen);
 	dmaCopy(keyboardMap, BG_MAP_RAM(BG3_MAP_BASE), keyboardMapLen);
 	
-	DrawText(string, 1, 11, false);
+	DrawString(string, 1, 11, false);
 	
 	for(int i=0; i<7; i++)
-		DrawText(g_KeyboardText[i], 0, 16 + i, false);
+		DrawString(g_KeyboardText[i], 0, 16 + i, false);
 		
 	m_pCursor->SetPosition(m_charPos + 1, 12);
 }
@@ -54,10 +54,10 @@ char CKeyboard::CheckKeyTouch(int x, int y)
 	case '\b':
 		if(m_charPos > 0)
 		{
-			DrawText("  ", m_charPos, 12, false);
+			DrawString("  ", m_charPos, 12, false);
 			m_textEntry[--m_charPos] = '\0';
 			
-			DrawText(m_textEntry, 1, 12, false);
+			DrawString(m_textEntry, 1, 12, false);
 			m_pCursor->SetPosition(m_charPos + 1, 12);
 		}
 		break;
@@ -71,7 +71,7 @@ char CKeyboard::CheckKeyTouch(int x, int y)
 			m_textEntry[m_charPos++] = c;
 			m_textEntry[m_charPos] = '\0';
 			
-			DrawText(m_textEntry, 1, 12, false);
+			DrawString(m_textEntry, 1, 12, false);
 			m_pCursor->SetPosition(m_charPos + 1, 12);
 		}
 		break;

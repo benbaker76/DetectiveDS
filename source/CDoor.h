@@ -4,7 +4,7 @@
 #include "TDG.h"
 
 #define MAX_DOORS		9
-#define MAX_DOOR_RECT	5
+#define MAX_DOOR_RECT	6
 
 enum DoorType
 {
@@ -31,6 +31,7 @@ enum DoorRect
 {
 	DOORRECT_CLOSED,
 	DOORRECT_OPEN,
+	DOORRECT_HIDDEN,
 	DOORRECT_SMALL_CLOSED,
 	DOORRECT_SMALL_OPEN,
 	DOORRECT_SMALL_HIDDEN
