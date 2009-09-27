@@ -21,17 +21,18 @@ class CRoom;
 class CItemCache
 {
 public:
-	CItemCache(ItemLocation itemLocation, int itemCount, void* pParent);
 	CItemCache(ItemLocation itemLocation, void* pParent);
-	CItemCache(ItemLocation itemLocation, CItem* itemArray[], void* pParent);
+	CItemCache(ItemLocation itemLocation, int itemCount, void* pParent);
 	CItemCache(ItemLocation itemLocation, CollisionType colType, void* pParent);
-	CItemCache(ItemLocation itemLocation, CollisionType colType, CItem* itemArray[], void* pParent);
 	~CItemCache();
 	
 	void ClearItems();
 	bool IsSpaceAvailable();
+	void AddItems(CItem* item1, CItem* item2, CItem* item3, CItem* item4, CItem* item5);
+	void AddItems(CItem* itemArray[]);
 	bool AddItem(CItem* pItem);
 	bool RemoveItem(CItem* pItem);
+	bool ContainsItem(CItem* pItem);
 	bool ReplaceItem(CItem* pOldItem, CItem* pNewItem);
 	
 	ItemLocation GetItemLocation() const { return m_itemLocation; }

@@ -5,7 +5,7 @@
 #include "CItemCache.h"
 
 #define MAX_CHARACTERS			11
-#define MAX_ROOMS				37
+#define MAX_ROOMS				38
 
 #define CHARACTER_WIDTH			24
 #define CHARACTER_HEIGHT		53
@@ -57,6 +57,7 @@ public:
 	void Show();
 	void Hide();
 	void Disable();
+	void SetHFlip(bool hflip);
 	void Draw();
 	void Face(DirectionType directionType);
 	void Move(DirectionType directionType);
@@ -98,8 +99,7 @@ public:
 	
 	void RestoreLastCharacterMode() { m_characterMode = m_lastCharacterMode; }
 	
-	void AddItemCache() { m_itemCache = new CItemCache(ITEMLOCATION_CHARACTER, this); }
-	void AddItemCache(CItem* itemArray[]) { m_itemCache = new CItemCache(ITEMLOCATION_CHARACTER, itemArray, this); }
+	void AddItems(CItem* item1, CItem* item2, CItem* item3, CItem* item4, CItem* item5) { m_itemCache->AddItems(item1, item2, item3, item4, item5); }
 	CItemCache* GetItemCache() const { return m_itemCache; }
 
 private:

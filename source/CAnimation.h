@@ -6,7 +6,8 @@ enum AnimationType
 	ANIMTYPE_FORWARD,
 	ANIMTYPE_BACKWARD,
 	ANIMTYPE_PINGPONG,
-	ANIMTYPE_RANDOM
+	ANIMTYPE_RANDOM,
+	ANIMTYPE_MANUAL
 };
 
 enum AnimationState
@@ -32,6 +33,8 @@ public:
 	
 	void SetType(AnimationType type) { m_animType = type; }
 	void SetState(AnimationState state) { m_animState = state; }
+	AnimationState GetState() const { return m_animState; }
+	void SetFrame(int frameNum) { m_frameNum = frameNum; }
 	int FrameNum() const { return m_frameNum; }
 
 private:

@@ -2,16 +2,6 @@
 #include "CItem.h"
 #include "CItemCache.h"
 
-CItemCache::CItemCache(ItemLocation itemLocation, int itemCount, void* pParent)
-{
-	m_itemLocation = itemLocation;
-	m_itemCount = itemCount;
-	m_pParent = pParent;
-	m_colType = COL_NOTHING_HERE;
-	
-	ClearItems();
-}
-
 CItemCache::CItemCache(ItemLocation itemLocation, void* pParent)
 {
 	m_itemLocation = itemLocation;
@@ -22,20 +12,14 @@ CItemCache::CItemCache(ItemLocation itemLocation, void* pParent)
 	ClearItems();
 }
 
-CItemCache::CItemCache(ItemLocation itemLocation, CItem* itemArray[], void* pParent)
+CItemCache::CItemCache(ItemLocation itemLocation, int itemCount, void* pParent)
 {
 	m_itemLocation = itemLocation;
+	m_itemCount = itemCount;
 	m_pParent = pParent;
 	m_colType = COL_NOTHING_HERE;
-	m_itemCount = 5;
 	
-	for(int i=0; i<m_itemCount; i++)
-	{
-		m_itemArray[i] = itemArray[i];
-		
-		if(m_itemArray[i] != NULL)
-			m_itemArray[i]->SetParent(this);
-	}
+	ClearItems();
 }
 
 CItemCache::CItemCache(ItemLocation itemLocation, CollisionType colType, void* pParent)
@@ -46,22 +30,6 @@ CItemCache::CItemCache(ItemLocation itemLocation, CollisionType colType, void* p
 	m_itemCount = 5;
 	
 	ClearItems();
-}
-
-CItemCache::CItemCache(ItemLocation itemLocation, CollisionType colType, CItem* itemArray[], void* pParent)
-{
-	m_itemLocation = itemLocation;
-	m_colType = colType;
-	m_pParent = pParent;
-	m_itemCount = 5;
-	
-	for(int i=0; i<m_itemCount; i++)
-	{
-		m_itemArray[i] = itemArray[i];
-		
-		if(m_itemArray[i] != NULL)
-			m_itemArray[i]->SetParent(this);
-	}
 }
 
 CItemCache::~CItemCache()
@@ -83,13 +51,39 @@ bool CItemCache::IsSpaceAvailable()
 	return false;
 }
 
+void CItemCache::AddItems(CItem* itemArray[])
+{
+	for(int i=0; i<m_itemCount; i++)
+	{
+		m_itemArray[i] = itemArray[i];
+		
+		if(m_itemArray[i] != NULL)
+			m_itemArray[i]->SetParent(this);
+	}
+}
+
+void CItemCache::AddItems(CItem* item1, CItem* item2, CItem* item3, CItem* item4, CItem* item5)
+{
+	m_itemArray[0] = item1;
+	m_itemArray[1] = item2;
+	m_itemArray[2] = item3;
+	m_itemArray[3] = item4;
+	m_itemArray[4] = item5;
+	
+	for(int i=0; i<m_itemCount; i++)
+		if(m_itemArray[i] != NULL)
+			m_itemArray[i]->SetParent(this);
+}
+
 bool CItemCache::AddItem(CItem* pItem)
 {
 	bool retVal = false;
 	
 	if(IsSpaceAvailable())
 	{
-		pItem->GetParent()->RemoveItem(pItem);
+		if(pItem->GetParent() != NULL)
+			pItem->GetParent()->RemoveItem(pItem);
+		
 		pItem->SetParent(this);
 	
 		for(int i=0; i<m_itemCount; i++)
@@ -126,6 +120,15 @@ bool CItemCache::RemoveItem(CItem* pItem)
 	}
 	
 	return retVal;
+}
+
+bool CItemCache::ContainsItem(CItem* pItem)
+{
+	for(int i=0; i<m_itemCount; i++)
+		if(m_itemArray[i] == pItem)
+			return true;
+	
+	return false;
 }
 
 bool CItemCache::ReplaceItem(CItem* pOldItem, CItem* pNewItem)

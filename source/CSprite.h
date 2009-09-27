@@ -22,7 +22,7 @@ enum FrameType
 	FRAME_GREEN_UP = BIT(11),
 	FRAME_GREEN_DOWN = BIT(12),
 	FRAME_ATTACK = BIT(13),
-	FRAME_SURRENDER = BIT(14),
+	FRAME_SURRENDER = BIT(14)
 };
 
 enum SpriteType
@@ -71,6 +71,7 @@ public:
 	int OamIndex() const { return m_oamIndex; }
 	
 	void SetAlpha(int alpha) { m_alpha = alpha; }
+	void SetHFlip(bool hflip) { m_hFlip = hflip; }
 	
 	void SetPriority(int priority) { m_priority = priority; }
 	int Priority() const { return m_priority; }
@@ -105,6 +106,8 @@ private:
 	int m_y;
 	
 	int m_alpha;
+	
+	bool m_hFlip;
 };
 
 #endif

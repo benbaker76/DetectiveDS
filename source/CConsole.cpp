@@ -16,7 +16,7 @@ CConsole::CConsole(CCursor* pCursor)
 	
 	dmaCopy(sprite_miscTiles + 256 * 6, m_gfxArrowUp, 32 * 32);
 	dmaCopy(sprite_miscTiles + 256 * 7, m_gfxArrowDown, 32 * 32);
-		
+
 	for(int i=0; i<CONSOLE_MENU_MAX_TEXT; i++)
 		m_menuArray[i] = NULL;
 	
@@ -49,7 +49,7 @@ void CConsole::ClearText()
 	}
 }
 
-void CConsole::AddText(const char* text)
+bool CConsole::AddText(const char* text)
 {
 	m_consoleMode = CONSOLEMODE_NORMAL;
 	
@@ -58,12 +58,18 @@ void CConsole::AddText(const char* text)
 	m_lineCount = WordWrap(text);
 	
 	if(m_lineCount > CONSOLE_MAX_VISIBLE_TEXT)
+	{
 		ShowArrows();
+		
+		return true;
+	}
+	
+	return false;
 }
 
 void CConsole::DrawText()
 {
-	for(int i=0; i<CONSOLE_MAX_VISIBLE_TEXT; i++)
+	for(int i=0; i<CONSOLE_MAX_VISIBLE_TEXT && m_lineOffset + i < m_lineCount; i++)
 		DrawString(m_textArray[m_lineOffset + i], CONSOLE_MAP_X, CONSOLE_MAP_Y + i, false);
 }
 
@@ -152,7 +158,7 @@ void CConsole::ShowMenu()
 {
 	m_consoleMode = CONSOLEMODE_MENU;
 	
-	for(int i=0; i<CONSOLE_MENU_VISIBLE_TEXT; i++)
+	for(int i=0; i<CONSOLE_MENU_VISIBLE_TEXT && m_menuOffset + i < m_menuCount; i++)
 		DrawString(m_menuArray[m_menuOffset + i], CONSOLE_MENU_MAP_X, CONSOLE_MENU_MAP_Y + i, CONSOLE_MENU_MAP_WIDTH, false);
 	
 	if(m_menuCount > CONSOLE_MENU_VISIBLE_TEXT)

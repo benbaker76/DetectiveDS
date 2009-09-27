@@ -96,11 +96,11 @@ void DrawTime(CTime* pTime, int x, int y)
 	float radians;
 	int x2, y2;
 	
-	int secondHandRotation = (pTime->Seconds * 6) - 90;
-	radians = secondHandRotation * (PI / 180);
-	x2 = x + cos(radians) * 5;
-	y2 = y + sin(radians) * 5;
-	DrawLine(x, y, x2, y2, 3);
+	//int secondHandRotation = (pTime->Seconds * 6) - 90;
+	//radians = secondHandRotation * (PI / 180);
+	//x2 = x + cos(radians) * 5;
+	//y2 = y + sin(radians) * 5;
+	//DrawLine(x, y, x2, y2, 3);
 	
 	int minuteHandRotation = (pTime->Minutes * 6) - 90;
 	radians = minuteHandRotation * (PI / 180);

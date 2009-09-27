@@ -10,7 +10,7 @@
 #include "Text.h"
 
 CVideo m_video;
-CGame m_game(GAMETYPE_NORMAL);
+CGame m_game;
 
 void InterruptHandlerVBlank()
 {
@@ -55,17 +55,25 @@ int main(void)
 	mmLoadEffect(SFX_FOOTSTEPS);
 	mmLoadEffect(SFX_OPENDOOR);
 	mmLoadEffect(SFX_CLOSEDOOR);
+	mmLoadEffect(SFX_SECRETDOOR);
+	mmLoadEffect(SFX_DRAIN);
+	mmLoadEffect(SFX_GATE);
+	mmLoadEffect(SFX_UNLOCK);
+	mmLoadEffect(SFX_KEYDROP);
+	mmLoadEffect(SFX_CLICK);
+	mmLoadEffect(SFX_BEEP);
 	//mmStart(MOD_WEATHER, MM_PLAY_LOOP);
 	mmJingle(MOD_WEATHER);
 	mmSetJingleVolume(0);
 	mmStart(MOD_DETECTIVE, MM_PLAY_ONCE);
 	//mmStart(MOD_DETECTIVE, MM_PLAY_LOOP);
-	mmPosition(2);
+	mmPosition(3);
 	
 	consoleDebugInit(DebugDevice_NOCASH);
 	
 	m_video.Initialize();
 	m_game.Initialize();
+	m_game.InitializeGame(GAMETYPE_NORMAL);
 
 	while(1)
 	{

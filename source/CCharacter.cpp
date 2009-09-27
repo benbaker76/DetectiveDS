@@ -21,6 +21,8 @@ CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprit
 	
 	m_pathPosition = 0;
 	
+	m_itemCache = new CItemCache(ITEMLOCATION_CHARACTER, this);
+	
 	//m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_colTiles + 256 * 0, sprite_colTilesLen, sprite_colPal, sprite_colPalLen, NULL, 0);
 	//m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_colTiles + 256 * 1, sprite_colTilesLen, sprite_colPal, sprite_colPalLen, NULL, 0);
 	
@@ -89,7 +91,7 @@ void CCharacter::Update()
 				int yEnd = pDoor->pPoint()->Y * 8;
 				int xDist = xEnd - xPos;
 				int yDist = yEnd - yPos;
-					
+
 				if(abs(xDist) > 8 || abs(yDist) > 8)
 				{						
 					if(abs(xDist) < 32)	 		// Near the door
@@ -97,33 +99,53 @@ void CCharacter::Update()
 						if(xDist < 0)			// Move directly towards it
 							m_x -= 0.6f;		// left
 						else
-							m_x += 0.6f;		// right						
+							m_x += 0.6f;		// right
 							
 						if(yDist < 0)			// Move directly towards it
+						{
+							SetFrameType(FRAME_RIGHT);
+							SetHFlip(false);
+							
 							m_y -= 0.3f;		// up
+						}
 						else
-							m_y += 0.3f;		// down						
+						{
+							SetFrameType(FRAME_LEFT);
+							SetHFlip(false);
+							
+							m_y += 0.3f;		// down
+						}
 					}
 					else
-					{
+					{			
 						if(yPos > m_pRoom->CentreY())			// Below centre of room so move up diagonally
 						{
 							SetFrameType(FRAME_RIGHT);
+							SetHFlip(false);
+							
 							m_x += 0.6f;
 							m_y -= 0.3f;
 						}
 						else if(yPos < m_pRoom->CentreY()) 	// Above centre of room so move down diagonally
 						{
 							SetFrameType(FRAME_LEFT);
+							SetHFlip(false);
+							
 							m_x -= 0.6f;
 							m_y += 0.3f;
 						}
 						else
-						{
+						{						
 							if(xDist < 0)
+							{
 								SetFrameType(FRAME_LEFT);
+								SetHFlip(false);
+							}
 							else
-								SetFrameType(FRAME_RIGHT);
+							{
+								SetFrameType(FRAME_LEFT);
+								SetHFlip(true);
+							}
 						
 							float direction = atan2(yDist, xDist);
 							// Move directly towards door
@@ -186,6 +208,12 @@ void CCharacter::Disable()
 {
 	m_pHeadSprite->Hide();
 	m_pBodySprite->Hide();
+}
+
+void CCharacter::SetHFlip(bool hflip)
+{
+	m_pHeadSprite->SetHFlip(hflip);
+	m_pBodySprite->SetHFlip(hflip);
 }
 
 void CCharacter::Draw()

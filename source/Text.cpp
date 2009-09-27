@@ -293,7 +293,8 @@ const char* g_colName[] =
 	"WASHING MACHINE",
 	"WASHING BASKET",
 	"CUPBOARD",
-	"CABINET"
+	"WOODEN CABINET",
+	"GLASS CABINET"
 };
 
 const char* g_iconName[] =
@@ -351,7 +352,13 @@ const char* g_roomName[] =
 	"DRAWING",
 	"LIBRARY",
 	"GARDEN",
-	"GRAVEYARD"
+	"GRAVEYARD",
+	"COURTYARD",
+	"ANGUS' LANDING",
+	"ANGUS' ROOM",
+	"ANGUS' SECRET ROOM",
+	"ANGUS' STAIRS",
+	"DINING"
 };
 
 const char* g_enterRoomText[] =
@@ -392,7 +399,8 @@ const char* g_enterRoomText[] =
 	"YOU ARE ON MR MCFUNGUS' LANDING",
 	"YOU ARE IN MR MCFUNGUS' ROOM",
 	"YOU ARE IN MR MCFUNGUS' SECRET ROOM",
-	"YOU ARE IN MR MCFUNGUS' STAIRCASE"
+	"YOU ARE IN MR MCFUNGUS' STAIRCASE",
+	"YOU ARE IN THE DINING ROOM"
 };
 
 const char* g_KeyboardText[] =

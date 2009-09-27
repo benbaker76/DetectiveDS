@@ -47,7 +47,7 @@ public:
 	
 	void Clear();
 	void ClearText();
-	void AddText(const char* text);
+	bool AddText(const char* text);
 	void DrawText();
 	void Update();
 	void Move(DirectionType directionType);

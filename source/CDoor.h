@@ -45,7 +45,7 @@ public:
 	CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoomOut);
 	~CDoor();
 	
-	bool  Initialize();
+	bool Initialize();
 	void SetDoorState(DoorState doorState);
 	void Draw();
 	
@@ -58,10 +58,13 @@ public:
 	CRoom* pRoomOut() const { return m_pRoomOut; }
 	CDoor* pDoorOut() const { return m_pDoorOut; }
 	bool Hidden() const { return m_hidden; }
+	
+	void ResetDoorState() { m_doorState = m_defaultDoorState; };
 
 private:
 	DoorType m_doorType;
 	DoorState m_doorState;
+	DoorState m_defaultDoorState;
 	CRoom* m_pRoomIn;
 	CRoom* m_pRoomOut;
 	CDoor* m_pDoorOut;

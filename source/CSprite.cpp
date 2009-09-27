@@ -26,6 +26,8 @@ CSprite::CSprite(SpriteType spriteType, const u32* pBmp, const u32* frameArray, 
 	
 	m_alpha = 0xF;
 	
+	m_hFlip = false;
+	
 	//m_gfxMain = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_Bmp);
 	m_gfxSub = oamAllocateGfx(&oamSub, SpriteSize_32x32, SpriteColorFormat_Bmp);
 }
@@ -115,13 +117,13 @@ void CSprite::Hide()
 {
 	if(m_bitmapSprite)
 	{
-		//oamSet(&oamMain, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxMain, -1, false, true, false, false, false);
-		oamSet(&oamSub, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxSub, -1, false, true, false, false, false);
+		//oamSet(&oamMain, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxMain, -1, false, true, m_hFlip, false, false);
+		oamSet(&oamSub, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxSub, -1, false, true, m_hFlip, false, false);
 	}
 	else
 	{
-		//oamSet(&oamMain, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxMain, -1, false, true, false, false, false);
-		oamSet(&oamSub, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxSub, -1, false, true, false, false, false);
+		//oamSet(&oamMain, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxMain, -1, false, true, m_hFlip, false, false);
+		oamSet(&oamSub, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxSub, -1, false, true, m_hFlip, false, false);
 	}
 }
 
@@ -132,16 +134,16 @@ void CSprite::Draw()
 		//dmaCopy(m_pBmp + (m_frameNum * 512), m_gfxMain, 32 * 32 * 2);
 		dmaCopy(m_pBmp + (m_frameNum * 512), m_gfxSub, 32 * 32 * 2);
 		
-		//oamSet(&oamMain, m_oamIndex, m_x, m_y, m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxMain, -1, false, false, false, false, false);	
-		oamSet(&oamSub, m_oamIndex, m_x, m_y, m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxSub, -1, false, false, false, false, false);	
+		//oamSet(&oamMain, m_oamIndex, m_x - (m_hFlip ? 8 : 0), m_y, m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxMain, -1, false, false, m_hFlip, false, false);	
+		oamSet(&oamSub, m_oamIndex, m_x - (m_hFlip ? 8 : 0), m_y, m_priority, m_alpha, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxSub, -1, false, false, m_hFlip, false, false);	
 	}
 	else
 	{
 		//dmaCopy(m_pTiles + (m_frameNum * 256), m_gfxMain, 32 * 32);
 		dmaCopy(m_pTiles + (m_frameNum * 256), m_gfxSub, 32 * 32);
 	
-		//oamSet(&oamMain, m_oamIndex, m_x, m_y, m_priority, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxMain, -1, false, false, false, false, false);	
-		oamSet(&oamSub, m_oamIndex, m_x, m_y, m_priority, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxSub, -1, false, false, false, false, false);	
+		//oamSet(&oamMain, m_oamIndex,m_x - (m_hFlip ? 8 : 0), m_y, m_priority, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxMain, -1, false, false, m_hFlip, false, false);	
+		oamSet(&oamSub, m_oamIndex, m_x - (m_hFlip ? 8 : 0), m_y, m_priority, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxSub, -1, false, false, m_hFlip, false, false);	
 	}
 }
 

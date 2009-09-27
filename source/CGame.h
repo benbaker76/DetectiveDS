@@ -68,10 +68,11 @@ enum KeyboardMode
 class CGame
 {
 public:
-	CGame(GameType gameType);
+	CGame();
 	~CGame();
 	
 	void Initialize();
+	void InitializeGame(GameType gameType);
 	void Update();
 	
 	mm_word MusicEventHandler(mm_word msg, mm_word param);
@@ -118,6 +119,8 @@ private:
 	CCharacter* m_questionCharacter;
 	
 	char m_buffer[2048];
+	
+	bool m_gargoyleActive[3];
 
 	CRoom* m_currentRoom;
 	CCharacter* m_snide;
@@ -130,8 +133,8 @@ private:
 	
 	int m_bg2MainVScroll;
 	
-	void InitializeGame();
 	void InitializeDoors();
+	void ResetDoors();
 	void SortSprites();
 	void UpdateCharacters();
 	bool CheckCharacterCollision(DirectionType directionType, CharacterType* charNear, CharacterType* charFar);

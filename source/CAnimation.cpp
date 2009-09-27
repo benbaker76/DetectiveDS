@@ -19,6 +19,7 @@ CAnimation::~CAnimation()
 void CAnimation::Reset()
 {
 	m_animMode = ANIMMODE_START;
+	m_animState = (m_animType == ANIMTYPE_MANUAL ? ANIMSTATE_STOP : ANIMSTATE_PLAY);
 	m_frameNum = 0;
 	m_frameCount = 0;
 	m_ping = true;
@@ -79,6 +80,8 @@ bool CAnimation::Update()
 					break;
 				case ANIMTYPE_RANDOM:
 					m_frameNum = rand() % m_frameTotal;
+					break;
+				case ANIMTYPE_MANUAL:
 					break;
 			}
 			

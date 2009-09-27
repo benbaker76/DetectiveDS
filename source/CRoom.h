@@ -8,10 +8,10 @@
 #include "CAnimation.h"
 #include "CItemCache.h"
 
-#define MAX_ROOMS			37
+#define MAX_ROOMS			38
 #define MAX_DOORS			9
-#define MAX_ROOM_SRC_RECT	39
-#define MAX_ROOM_DST_RECT	13
+#define MAX_ROOM_SRC_RECT	48
+#define MAX_ROOM_DST_RECT	19
 
 enum RoomType
 {
@@ -51,7 +51,8 @@ enum RoomType
 	ROOM_ANGUS_LANDING,
 	ROOM_ANGUS_ROOM,
 	ROOM_ANGUS_SECRET,
-	ROOM_ANGUS_STAIRS
+	ROOM_ANGUS_STAIRS,
+	ROOM_DINING
 };
 
 enum SrcRect
@@ -65,6 +66,9 @@ enum SrcRect
 	SRCRECT_FIREPLACE4,
 	SRCRECT_FIREPLACE5,
 	SRCRECT_FIREPLACE6,
+	SRCRECT_SAFE1,
+	SRCRECT_SAFE2,
+	SRCRECT_SAFE3,
 	SRCRECT_LIGHT1,
 	SRCRECT_LIGHT2,
 	SRCRECT_LIGHT3,
@@ -75,12 +79,18 @@ enum SrcRect
 	SRCRECT_EYES4,
 	SRCRECT_EYES5,
 	SRCRECT_EYES6,
+	SRCRECT_STATUE,
+	SRCRECT_TROPHY,
+	SRCRECT_SWORD,
+	SRCRECT_BALL_ON_CHAIN,
 	SRCRECT_PENDULUM1,
 	SRCRECT_PENDULUM2,
 	SRCRECT_PENDULUM3,
-	SRCRECT_WATERFALL1,
-	SRCRECT_WATERFALL2,
-	SRCRECT_WATERFALL3,
+	SRCRECT_FOUNTAIN1,
+	SRCRECT_FOUNTAIN2,
+	SRCRECT_FOUNTAIN3,
+	SRCRECT_CABINET1,
+	SRCRECT_CABINET2,
 	SRCRECT_FAUCET1,
 	SRCRECT_FAUCET2,
 	SRCRECT_FAUCET3,
@@ -103,12 +113,18 @@ enum DstRect
 	DSTRECT_TORCH2,
 	DSTRECT_TORCH3,
 	DSTRECT_FIREPLACE,
+	DSTRECT_SAFE,
 	DSTRECT_CLOCK,
 	DSTRECT_LIGHT1,
 	DSTRECT_LIGHT2,
 	DSTRECT_EYES,
+	DSTRECT_STATUE,
+	DSTRECT_TROPHY,
+	DSTRECT_SWORD,
+	DSTRECT_BALL_ON_CHAIN,
 	DSTRECT_PENDULUM,
-	DSTRECT_WATERFALL,
+	DSTRECT_FOUNTAIN,
+	DSTRECT_CABINET,
 	DSTRECT_FAUCET,
 	DSTRECT_LEAK,
 	DSTRECT_BULB
@@ -130,6 +146,7 @@ public:
 	
 	void Initialize(int x);
 	void InitializeDoors();
+	void ResetDoors();
 	void InitializeOverlay();
 	void Draw();
 	void Update(CTime* pTime);
@@ -144,14 +161,20 @@ public:
 	void SetX(int x) { m_x = x; }
 	
 	void SetOverlay(PMAP pOverlay, int overlayY) { m_pOverlay = pOverlay; m_overlayY = overlayY; }
+	void SetMap(PMAP pMap) { m_pMap = pMap; }
 	void SetColMap(const u8* pColMap) { m_pColMap = pColMap; }
 	
 	void SetPalette(u16* pPalette) { dmaCopy(pPalette, BG_PALETTE_SUB, 512); }
 	void RestorePalette() { dmaCopy(m_pMap->pPalette, BG_PALETTE_SUB, m_pMap->PaletteLen); }
 	
 	void AddItemCache(int index, CollisionType colType) { m_itemCache[index] = new CItemCache(ITEMLOCATION_ROOM, colType, this); }
-	void AddItemCache(int index, CollisionType colType, CItem* itemArray[]) { m_itemCache[index] = new CItemCache(ITEMLOCATION_ROOM, colType, itemArray, this); }
+	void AddItems(int index, CItem* item1, CItem* item2, CItem* item3, CItem* item4, CItem* item5) { m_itemCache[index]->AddItems(item1, item2, item3, item4, item5); }
 	CItemCache* GetItemCache(int index) const { return m_itemCache[index]; }
+	
+	void SetAnimFrame(DstRect dstRect, int frameNum) { m_animArray[dstRect]->SetFrame(frameNum); }
+	void SetAnimState(DstRect dstRect, AnimationState animState) { m_animArray[dstRect]->SetState(animState); }
+	AnimationState GetAnimState(DstRect dstRect) const { return m_animArray[dstRect]->GetState(); }
+	int GetAnimFrameNum(DstRect dstRect) const { return m_animArray[dstRect]->FrameNum(); }
 	
 	RoomType GetRoomType() { return m_roomType; }
 	

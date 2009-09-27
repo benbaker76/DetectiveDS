@@ -20,7 +20,7 @@ enum CollisionType
 	COL_CHEST_OF_DRAWERS = 12,
 	COL_FIREPLACE = 13,
 	COL_COAL_BUCKET = 14,
-	COL_PAINTING = 15,
+	COL_PICTURE = 15,
 	COL_WOODEN_BOX = 16,
 	COL_MICROWAVE = 17,
 	COL_SIDEBOARD = 18,
@@ -41,22 +41,20 @@ enum CollisionType
 	COL_WINDOW = 33,
 	COL_DESK = 34,
 	COL_SHELVES = 35,
-	COL_LOCKED_WALL_SAFE = 36,
-	COL_OPEN_WALL_SAFE = 37,
+	COL_SAFE = 36,
 	COL_DINGLES_BODY = 38,
 	COL_PIANO_AND_A_SQUASHED_CYNTHIA_SLUDGEBUCKET = 39,
 	COL_GABRIELS_BODY = 40,
 	COL_STABBED_DOCTOR = 41,
 	COL_HEADSTONE1 = 42,
 	COL_HEADSTONE2 = 43,
-	COL_FOUNTAIN_WITH_RUNNING_WATER = 44,
-	COL_FOUNTAIN_DRAINED_OF_WATER = 45,
+	COL_FOUNTAIN = 44,
 	COL_GARGOYLE1 = 46,
 	COL_GARGOYLE2 = 47,
 	COL_GARGOYLE3 = 48,
 	COL_GOAT_LIKE_PAINTING = 49,
 	COL_DESK_WITH_A_STATUE = 50,
-	COL_A_TROPHY = 51,
+	COL_TROPHY = 51,
 	COL_ANGUS_BOOKCASE = 52,
 	COL_KNIGHT = 53,
 	COL_COUCH = 54,
@@ -67,7 +65,8 @@ enum CollisionType
 	COL_WASHING_MACHINE = 59,
 	COL_WASHING_BASKET = 60,
 	COL_CUPBOARD = 61,
-	COL_CABINET = 62,
+	COL_WOODEN_CABINET = 62,
+	COL_GLASS_CABINET = 63,
 	
 	// ------- Source Animation Objects
 	
@@ -107,9 +106,9 @@ enum CollisionType
 	COL_SRC_PENDULUM1 = 161,
 	COL_SRC_PENDULUM2 = 162,
 	COL_SRC_PENDULUM3 = 163,
-	COL_SRC_WATERFALL1 = 164,
-	COL_SRC_WATERFALL2 = 165,
-	COL_SRC_WATERFALL3 = 166,
+	COL_SRC_FOUNTAIN1 = 164,
+	COL_SRC_FOUNTAIN2 = 165,
+	COL_SRC_FOUNTAIN3 = 166,
 	COL_SRC_CABINET1 = 167,
 	COL_SRC_CABINET2 = 168,
 	COL_SRC_FAUCET1 = 169,
@@ -145,7 +144,7 @@ enum CollisionType
 	COL_DST_BOOKCASE1 = 205,
 	COL_DST_BOOKCASE2 = 206,
 	COL_DST_PENDULUM = 207,
-	COL_DST_WATERFALL = 208,
+	COL_DST_FOUNTAIN = 208,
 	COL_DST_CABINET = 209,
 	COL_DST_FAUCET = 210,
 	COL_DST_LEAK = 211,
@@ -161,6 +160,7 @@ extern const unsigned char col_angus_secret[];
 extern const unsigned char col_angus_stairs[];
 extern const unsigned char col_cellar[];
 extern const unsigned char col_clock[];
+extern const unsigned char col_dining[];
 extern const unsigned char col_courtyard[];
 extern const unsigned char col_drawing[];
 extern const unsigned char col_garden[];

@@ -4,7 +4,7 @@
 #include "CRoom.h"
 
 #define MAX_STEPS				54
-#define MAX_ROOMS				37
+#define MAX_ROOMS				38
 
 class CRoomNode
 {
@@ -12,6 +12,9 @@ public:
 	CRoomNode(CRoom* pRoom)
 	{
 		Room = pRoom;
+		
+		for(int i=0; i<MAX_DOORS; i++)
+			RoomConnections[i] = NULL;
 	}
 	
 	CRoom* Room;
