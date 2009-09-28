@@ -16,6 +16,11 @@ void CCursor::Update()
 	m_anim->Update();
 }
 
+void CCursor::Clear()
+{
+	DrawChar(' ', m_x, m_y, false);
+}
+
 void CCursor::Show()
 {
 	DrawChar(123 + m_anim->FrameNum(), m_x, m_y, false);

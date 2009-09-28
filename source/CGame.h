@@ -127,6 +127,8 @@ private:
 	CWatch* m_watch;
 	CTimer* m_timer;
 	
+	mm_sfxhand m_footsteps;
+	
 	IconType m_lastIconType;
 	
 	DisplayMode m_displayMode;

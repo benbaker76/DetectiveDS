@@ -12,6 +12,7 @@ CGame::CGame()
 	m_displayMode = DISPLAYMODE_GAME;
 	m_questionMode = QUESTIONMODE_NONE;
 	m_openMode = OPENMODE_ROOM;
+	m_footsteps = 0;
 }
 
 CGame::~CGame()
@@ -537,14 +538,6 @@ void CGame::Update()
 	//sprintf(buf, "%02d:%02d:%02d:%02d Elapsed: %08d", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes, m_timer->pCurrentTime()->Seconds, m_timer->pCurrentTime()->MilliSeconds, elapsedTime);
 	//fprintf(stderr, buf);
 	
-	//DrawTime(m_timer->pCurrentTime());
-	m_watch->Draw(m_timer->pCurrentTime());
-	m_console->Update();
-	m_cursor->Update();
-	m_cursor->Show();
-	
-	BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
-	
 	if(keys_released & KEY_L || keys_released & KEY_R)
 	{
 		lcdSwap();
@@ -553,11 +546,17 @@ void CGame::Update()
 	switch(m_gameMode)
 	{
 	case GAMEMODE_PAUSED:
-		if(keys_released & KEY_A)
+		if(keys_released & KEY_A || keys_pressed & KEY_TOUCH)
 		{
 			m_gameMode = GAMEMODE_RUNNING;
 			m_console->Clear();
 			m_timer->Start();
+		}
+		else
+		{
+			m_console->Update();
+			m_cursor->Update();
+			m_cursor->Show();
 		}
 		return;
 	case GAMEMODE_RUNNING:
@@ -582,6 +581,14 @@ void CGame::Update()
 		
 		UpdateFx();
 		
+		//DrawTime(m_timer->pCurrentTime());
+		m_watch->Draw(m_timer->pCurrentTime());
+		m_console->Update();
+		m_cursor->Update();
+		m_cursor->Show();
+		
+		BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
+		
 		oamUpdate(&oamMain);
 		oamUpdate(&oamSub);
 		break;
@@ -594,7 +601,7 @@ void CGame::Update()
 
 void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_pressed, int keys_released)
 {
-	static mm_sfxhand footsteps = 0;
+	//static mm_sfxhand footsteps = 0;
 	
 	switch(m_displayMode)
 	{
@@ -602,29 +609,6 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 		{
 			m_openMode = OPENMODE_ROOM;
 
-			if((keys_released & KEY_UP) ||
-				(keys_released & KEY_DOWN) ||
-				(keys_released & KEY_LEFT) ||
-				(keys_released & KEY_RIGHT))
-			{		
-				mmEffectCancel(footsteps);
-				footsteps = 0;
-			}
-			
-			if(((keys_held & KEY_UP) ||
-				(keys_held & KEY_DOWN) ||
-				(keys_held & KEY_LEFT) ||
-				(keys_held & KEY_RIGHT)) &&
-				(footsteps == 0))
-			{
-				footsteps = mmEffectEx(&g_sfx_footsteps);
-			}
-		
-			if(keys_pressed & KEY_TOUCH)
-			{
-				ProcessMenu(touch.px, touch.py);
-			}
-		
 			UpdateSnideMovement(keys_held);
 			
 			if(m_questionMode == QUESTIONMODE_WAITING)
@@ -637,7 +621,7 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 					m_menu->Hide();
 					m_console->HideMenu();
 				}
-				else if(keys_released & KEY_A)
+				else if(keys_released & KEY_A || keys_pressed & KEY_TOUCH)
 				{
 					CharacterType charNear, charFar;
 					
@@ -678,7 +662,7 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 			}
 			else
 			{
-				if(keys_released & KEY_A)
+				if(keys_released & KEY_A || keys_pressed & KEY_TOUCH)
 				{
 					m_displayMode = DISPLAYMODE_MENU;
 					SetMenuIcons(MENUMODE_GENERAL, NULL);
@@ -691,7 +675,14 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 		break;
 	case DISPLAYMODE_MENU:
 		{
-			if(keys_released & KEY_A)
+			if(keys_pressed & KEY_TOUCH)
+			{
+				m_displayMode = DISPLAYMODE_GAME;
+				ProcessMenu(touch.px, touch.py);
+				m_pointer->Hide();
+				m_menu->Hide();
+			}
+			else if(keys_released & KEY_A)
 			{
 				m_displayMode = DISPLAYMODE_GAME;
 
@@ -726,6 +717,10 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 			{
 				m_console->Move(DIRECTION_DOWN);
 			}
+			else if(keys_pressed & KEY_TOUCH)
+			{
+				m_console->CheckTouch(touch.px, touch.py);
+			}
 		}
 		break;
 	case DISPLAYMODE_CONSOLE_MENU:
@@ -751,6 +746,13 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 				m_console->MoveSelectorBar(DIRECTION_DOWN);
 				m_console->DrawSelectorBar();
 			}
+			else if(keys_pressed & KEY_TOUCH)
+			{
+				if(m_console->CheckMenuTouch(touch.px, touch.py))
+				{
+					PostProcessMenu();
+				}
+			}
 		}
 		break;
 	case DISPLAYMODE_KEYBOARD:
@@ -761,6 +763,8 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 				
 				switch(c)
 				{
+				case 0:
+					break;
 				case '\e':	// Exit
 					{
 						m_displayMode = DISPLAYMODE_GAME;
@@ -862,6 +866,9 @@ void CGame::UpdateSnideMovement(int keys_held)
 	
 	if(keys_held & KEY_UP)
 	{
+		if(!m_footsteps)
+			m_footsteps = mmEffectEx(&g_sfx_footsteps);
+		
 		if(m_snide->SpriteX() < 256 - m_snide->Width() - 8)
 		{
 			m_snide->CheckCollision(DIRECTION_UP, &colNear, &colFar);
@@ -936,6 +943,9 @@ void CGame::UpdateSnideMovement(int keys_held)
 	}
 	else if(keys_held & KEY_DOWN)
 	{
+		if(!m_footsteps)
+			m_footsteps = mmEffectEx(&g_sfx_footsteps);
+		
 		if(m_snide->SpriteX() > 8)
 		{
 			m_snide->CheckCollision(DIRECTION_DOWN, &colNear, &colFar);
@@ -988,6 +998,9 @@ void CGame::UpdateSnideMovement(int keys_held)
 	}
 	else if(keys_held & KEY_LEFT)
 	{
+		if(!m_footsteps)
+			m_footsteps = mmEffectEx(&g_sfx_footsteps);
+		
 		m_snide->CheckCollision(DIRECTION_LEFT, &colNear, &colFar);
 		
 		//if(CheckCharacterCollision(DIRECTION_LEFT, &charNear, &charFar))
@@ -1026,6 +1039,9 @@ void CGame::UpdateSnideMovement(int keys_held)
 	}
 	else if(keys_held & KEY_RIGHT)
 	{
+		if(!m_footsteps)
+			m_footsteps = mmEffectEx(&g_sfx_footsteps);
+		
 		m_snide->CheckCollision(DIRECTION_RIGHT, &colNear, &colFar);
 		
 		//if(CheckCharacterCollision(DIRECTION_RIGHT, &charNear, &charFar))
@@ -1063,7 +1079,12 @@ void CGame::UpdateSnideMovement(int keys_held)
 		}
 	}
 	else
+	{
+		mmEffectCancel(m_footsteps);
+		m_footsteps = 0;
+		
 		m_snide->SetCharacterMode(CHARMODE_NONE);
+	}
 }
 
 void CGame::SetMenuIcons(MenuMode menuMode, CItem* pItem)
@@ -1130,6 +1151,9 @@ void CGame::SetMenuIcons(MenuMode menuMode, CItem* pItem)
 			m_menu->AddIcon(ICON_CONSUME);
 		break;
 	}
+	
+	mmEffectCancel(m_footsteps);
+	m_footsteps = 0;
 	
 	m_menu->Show(menuMode);
 	
@@ -1264,6 +1288,12 @@ void CGame::ProcessMenu(int x, int y)
 	switch(iconType)
 	{
 	case ICON_NONE:
+		{
+			//m_displayMode = DISPLAYMODE_GAME;
+
+			//m_pointer->Hide();
+			//m_menu->Hide();
+		}
 		break;
 	case ICON_OPEN:
 		{
@@ -1684,6 +1714,12 @@ void CGame::PostProcessMenu()
 	switch(m_lastIconType)
 	{
 	case ICON_NONE:
+		{
+			//m_displayMode = DISPLAYMODE_GAME;
+
+			//m_pointer->Hide();
+			//m_menu->Hide();
+		}
 		break;
 	case ICON_OPEN:
 		{

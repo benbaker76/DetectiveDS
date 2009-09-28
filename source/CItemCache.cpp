@@ -77,8 +77,6 @@ void CItemCache::AddItems(CItem* item1, CItem* item2, CItem* item3, CItem* item4
 
 bool CItemCache::AddItem(CItem* pItem)
 {
-	bool retVal = false;
-	
 	if(IsSpaceAvailable())
 	{
 		if(pItem->GetParent() != NULL)
@@ -92,19 +90,16 @@ bool CItemCache::AddItem(CItem* pItem)
 			{
 				m_itemArray[i] = pItem;
 				
-				retVal = true;
-				break;
+				return true;
 			}
 		}
 	}
 	
-	return retVal;
+	return false;
 }
 	
 bool CItemCache::RemoveItem(CItem* pItem)
 {
-	bool retVal = false;
-	
 	for(int i=0; i<m_itemCount; i++)
 	{
 		if(m_itemArray[i] == pItem)
@@ -114,12 +109,11 @@ bool CItemCache::RemoveItem(CItem* pItem)
 			
 			m_itemArray[m_itemCount-1] = NULL;
 			
-			retVal = true;
-			break;
+			return true;
 		}
 	}
 	
-	return retVal;
+	return false;
 }
 
 bool CItemCache::ContainsItem(CItem* pItem)
@@ -133,18 +127,15 @@ bool CItemCache::ContainsItem(CItem* pItem)
 
 bool CItemCache::ReplaceItem(CItem* pOldItem, CItem* pNewItem)
 {
-	bool retVal = false;
-	
 	for(int i=0; i<m_itemCount; i++)
 	{
 		if(m_itemArray[i] == pOldItem)
 		{
 			m_itemArray[i] = pNewItem;
 			
-			retVal = true;
-			break;
+			return true;
 		}
 	}
 	
-	return retVal;
+	return false;
 }

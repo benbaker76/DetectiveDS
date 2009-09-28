@@ -18,6 +18,7 @@ public:
 	float X() const { return m_x; }
 	float Y() const { return m_y; }
 	
+	void Clear();
 	void Show();
 	void Update();
 	

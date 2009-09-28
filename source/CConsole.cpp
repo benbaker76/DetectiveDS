@@ -16,6 +16,9 @@ CConsole::CConsole(CCursor* pCursor)
 	
 	dmaCopy(sprite_miscTiles + 256 * 6, m_gfxArrowUp, 32 * 32);
 	dmaCopy(sprite_miscTiles + 256 * 7, m_gfxArrowDown, 32 * 32);
+	
+	for(int i=0; i<CONSOLE_MAX_TEXT; i++)
+		strcpy(m_textArray[i], "");
 
 	for(int i=0; i<CONSOLE_MENU_MAX_TEXT; i++)
 		m_menuArray[i] = NULL;
@@ -29,19 +32,24 @@ CConsole::~CConsole()
 
 void CConsole::Clear()
 {
-	m_pCursor->SetPosition(CONSOLE_MAP_X, CONSOLE_MAP_Y);
-	HideArrows();
-	
 	m_lineCount = 0;
 	m_linePos = 0;
 	m_lineOffset = 0;
 	
+	for(int i=0; i<CONSOLE_MAX_TEXT; i++)
+		strcpy(m_textArray[i], "");
+		
 	ClearText();
+	
+	m_pCursor->Clear();
+	m_pCursor->SetPosition(CONSOLE_MAP_X, CONSOLE_MAP_Y);
+	
+	HideArrows();
 }
 
 void CConsole::ClearText()
 {
-	for(int i=0; i<CONSOLE_MAX_TEXT; i++)
+	for(int i=0; i<CONSOLE_MAX_VISIBLE_TEXT; i++)
 	{
 		char buf[256];
 		sprintf(buf, "%*s", CONSOLE_MAP_WIDTH, "");
@@ -83,7 +91,8 @@ void CConsole::Update()
 		
 		if(m_linePos < m_lineCount && m_linePos < CONSOLE_MAX_VISIBLE_TEXT)
 		{
-			DrawChar(' ', CONSOLE_MAP_X, CONSOLE_MAP_Y + m_linePos, false);
+			m_pCursor->Clear();
+			
 			DrawString(m_textArray[m_linePos], CONSOLE_MAP_X, CONSOLE_MAP_Y + m_linePos, false);
 			m_linePos++;
 			
@@ -111,6 +120,23 @@ void CConsole::Move(DirectionType directionType)
 	
 	ClearText();
 	DrawText();
+}
+
+bool CConsole::CheckTouch(int x, int y)
+{
+	if(x > 140 && x < 140 + 20 && y > 120 && y < 120 + 12)
+	{
+		Move(DIRECTION_UP);
+		return true;
+	}
+	
+	if(x > 140 && x < 140 + 20 && y > 176 && y < 176 + 12)
+	{
+		Move(DIRECTION_DOWN);
+		return true;
+	}
+	
+	return false;
 }
 
 void CConsole::ClearMenu()
@@ -217,6 +243,45 @@ void CConsole::ShowArrows()
 {
 	oamSet(&oamMain, 119, 140, (m_consoleMode == CONSOLEMODE_NORMAL ? 120 : 144), 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxArrowUp, 0, false, false, false, false, false);
 	oamSet(&oamMain, 120, 140, 176, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxArrowDown, 0,	false, false, false, false, false);
+}
+
+bool CConsole::CheckMenuTouch(int x, int y)
+{
+	int mapX = x / 8;
+	int mapY = y / 8;
+	
+	if(mapX < 1 || mapX > 19 || mapY < 18 || mapY > 23)
+		return false;
+		
+	if(x > 140 && x < 140 + 20 && y > 144 && y < 144 + 12)
+	{
+		//MoveSelectorBar(DIRECTION_UP);
+		
+		if(m_menuOffset > 0)
+			m_menuOffset--;
+			
+		ClearMenuText();
+		ShowMenu();
+		
+		return false;
+	}
+	
+	if(x > 140 && x < 140 + 20 && y > 176 && y < 176 + 12)
+	{
+		//MoveSelectorBar(DIRECTION_DOWN);
+		
+		if(m_menuPos + m_menuOffset < m_menuCount-1 && m_menuOffset < CONSOLE_MENU_VISIBLE_TEXT-1)
+			m_menuOffset++;
+			
+		ClearMenuText();
+		ShowMenu();
+		
+		return false;
+	}
+
+	m_menuPos = mapY - 18;
+	
+	return true;
 }
 
 int CConsole::WordWrap(const char* text)

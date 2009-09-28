@@ -51,10 +51,12 @@ public:
 	void DrawText();
 	void Update();
 	void Move(DirectionType directionType);
+	bool CheckTouch(int x, int y);
 	void ClearMenu();
 	bool AddMenuItem(const char* text, void* object);
 	void ShowMenu();
 	void HideMenu();
+	bool CheckMenuTouch(int x, int y);
 
 	void MoveSelectorBar(DirectionType directionType);
 	void DrawSelectorBar();
