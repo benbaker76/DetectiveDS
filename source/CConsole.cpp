@@ -42,7 +42,6 @@ void CConsole::Clear()
 		
 	ClearText();
 	
-	m_pCursor->Clear();
 	m_pCursor->SetPosition(CONSOLE_MAP_X, CONSOLE_MAP_Y);
 	
 	HideArrows();
@@ -91,9 +90,7 @@ void CConsole::Update()
 		m_frameCount = 0;
 		
 		if(m_linePos < m_lineCount && m_linePos < CONSOLE_MAX_VISIBLE_TEXT)
-		{
-			m_pCursor->Clear();
-			
+		{	
 			DrawString(m_textArray[m_linePos], CONSOLE_MAP_X, CONSOLE_MAP_Y + m_linePos, false);
 			m_linePos++;
 			

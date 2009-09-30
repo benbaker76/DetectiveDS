@@ -12,7 +12,7 @@ void CFxParticles::Initialize()
 	{
 	case FXMODE_RAIN:
 		for(int i=0; i<MAX_PARTICLES; i++)
-			dmaCopy(sprite_fx_rainTiles, m_particleArray[i].Gfx,  8 * 8 * 2);
+			dmaCopy(sprite_fx_rainTiles, m_particleArray[i].Gfx,  8 * 8);
 		break;
 	default:
 		break;
@@ -53,7 +53,7 @@ void CFxParticles::UpdateVBlank()
 					if(num == 0)
 					{
 						m_particleArray[i].Lifetime++;
-						dmaCopy(sprite_fx_rainTiles + (m_particleArray[i].Lifetime * 16), m_particleArray[i].Gfx, 8 * 8 * 2);
+						dmaCopy(sprite_fx_rainTiles + (m_particleArray[i].Lifetime * 16), m_particleArray[i].Gfx, 8 * 8);
 					}
 					else
 					{
@@ -78,11 +78,11 @@ void CFxParticles::UpdateVBlank()
 							m_particleArray[i].Speed = (rand() % 4) + 2;
 							m_particleArray[i].Lifetime = 0;
 							
-							dmaCopy(sprite_fx_rainTiles, m_particleArray[i].Gfx, 8 * 8 * 2);
+							dmaCopy(sprite_fx_rainTiles, m_particleArray[i].Gfx, 8 * 8);
 						}
 						else
 						{
-							dmaCopy(sprite_fx_rainTiles + (m_particleArray[i].Lifetime * 16), m_particleArray[i].Gfx, 8 * 8 * 2);
+							dmaCopy(sprite_fx_rainTiles + (m_particleArray[i].Lifetime * 16), m_particleArray[i].Gfx, 8 * 8);
 						}
 					}
 				}

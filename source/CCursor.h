@@ -18,11 +18,13 @@ public:
 	float X() const { return m_x; }
 	float Y() const { return m_y; }
 	
-	void Clear();
 	void Show();
+	void Hide();
 	void Update();
 	
 private:
+	u16* m_gfx;
+	
 	int m_x;
 	int m_y;
 	
