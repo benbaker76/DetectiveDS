@@ -28,6 +28,7 @@ public:
 	~CTimer();
 	
 	void Start();
+	void Start(int hours, int minutes, int seconds, int milliSeconds);
 	void Stop();
 	void Update();
 

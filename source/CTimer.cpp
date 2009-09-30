@@ -22,6 +22,17 @@ void CTimer::Start()
 	TIMER2_CR = (TIMER_ENABLE | TIMER_IRQ_REQ | TIMER_DIV_1);
 }
 
+void CTimer::Start(int hours, int minutes, int seconds, int milliSeconds)
+{
+	m_pCurrentTime->Hours = hours;
+	m_pCurrentTime->Minutes = minutes;
+	m_pCurrentTime->Seconds = seconds;
+	m_pCurrentTime->MilliSeconds = milliSeconds;
+	
+	TIMER2_DATA = (u16) TIMER_FREQ(1000);	
+	TIMER2_CR = (TIMER_ENABLE | TIMER_IRQ_REQ | TIMER_DIV_1);
+}
+
 void CTimer::Stop()
 {
 	TIMER2_CR &= ~TIMER_ENABLE;

@@ -69,6 +69,7 @@ extern const u32 g_dingleHeadFrames[];
 extern const u32 g_dingleBodyFrames[];
 extern const u32 g_angusHeadFrames[];
 extern const u32 g_angusBodyFrames[];
+extern const u32 g_questionFrames[];
 
 extern MAP g_angus_landingMap;
 extern MAP g_angus_room1Map;

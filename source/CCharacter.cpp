@@ -177,6 +177,7 @@ void CCharacter::Update()
 	case CHARMODE_BOMB:
 	case CHARMODE_ATTACK:
 	case CHARMODE_SURRENDER:
+	case CHARMODE_QUESTION:
 		break;
 	}
 	
@@ -224,6 +225,13 @@ void CCharacter::Draw()
 	m_pHeadSprite->Draw();
 	m_pBodySprite->Draw();
 }
+
+void CCharacter::SetSub(bool sub)
+{
+	m_pHeadSprite->SetSub(sub);
+	m_pBodySprite->SetSub(sub);
+}
+
 
 void CCharacter::Face(DirectionType directionType)
 {
@@ -437,6 +445,9 @@ void CCharacter::SetCharacterMode(CharacterMode characterMode)
 		SetFrameType(FRAME_SURRENDER);
 		m_pHeadSprite->GetNextFrame();
 		m_pBodySprite->GetNextFrame();
+		break;
+	case CHARMODE_QUESTION:
+		SetFrameType(FRAME_QUESTION);
 		break;
 	}
 }

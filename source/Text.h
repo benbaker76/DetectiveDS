@@ -5,8 +5,8 @@ extern const int g_largeTextMap[];
 extern const char* g_characterName[];
 
 extern const char* g_itemName[];
-extern const char* g_itemDescription[];
-extern const char* g_itemText[];
+extern const char* g_itemExamine[];
+extern const char* g_itemRead[];
 extern const char* g_colName[];
 extern const char* g_iconName[];
 extern const char* g_roomName[];

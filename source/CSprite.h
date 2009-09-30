@@ -4,6 +4,7 @@
 #include <nds.h>
 
 #define MAX_SPRITES		24
+#define FRAME_RATE		9
 
 enum FrameType
 {
@@ -22,7 +23,8 @@ enum FrameType
 	FRAME_GREEN_UP = BIT(11),
 	FRAME_GREEN_DOWN = BIT(12),
 	FRAME_ATTACK = BIT(13),
-	FRAME_SURRENDER = BIT(14)
+	FRAME_SURRENDER = BIT(14),
+	FRAME_QUESTION = BIT(15)
 };
 
 enum SpriteType
@@ -49,8 +51,8 @@ enum SpriteType
 	SPRITE_DINGLE_BODY,
 	SPRITE_ANGUS_HEAD,
 	SPRITE_ANGUS_BODY,
-	SPRITE_COL1,
-	SPRITE_COL2
+	SPRITE_QUESTION_HEAD,
+	SPRITE_QUESTION_BODY
 };
 
 class CSprite
@@ -65,6 +67,7 @@ public:
 	void GetNextFrame();
 	void Hide();
 	void Draw();
+	void SetSub(bool sub) { m_sub = sub; }
 	void SetFrameType(FrameType frameType);
 	
 	void SetOamIndex(int oamIndex) { m_oamIndex = oamIndex; }
@@ -72,6 +75,10 @@ public:
 	
 	void SetAlpha(int alpha) { m_alpha = alpha; }
 	void SetHFlip(bool hflip) { m_hFlip = hflip; }
+	
+	void SetLoop(int loop) { m_loop = loop; }
+	
+	void Reset() { m_frameNum = 0; m_frameCount = 0; }
 	
 	void SetPriority(int priority) { m_priority = priority; }
 	int Priority() const { return m_priority; }
@@ -108,6 +115,9 @@ private:
 	int m_alpha;
 	
 	bool m_hFlip;
+	bool m_sub;
+	
+	bool m_loop;
 };
 
 #endif

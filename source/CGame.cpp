@@ -8,11 +8,6 @@
 
 CGame::CGame()
 {
-	m_gameMode = GAMEMODE_RUNNING;
-	m_displayMode = DISPLAYMODE_GAME;
-	m_questionMode = QUESTIONMODE_NONE;
-	m_openMode = OPENMODE_ROOM;
-	m_footsteps = 0;
 }
 
 CGame::~CGame()
@@ -21,6 +16,13 @@ CGame::~CGame()
 
 void CGame::Initialize()
 {
+	m_fxManager.Initialize();
+	m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
+	m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
+	m_fxManager.SetFx(FXTYPE_COLOUR, FXMODE_NORMAL, true);
+	
+	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("LOADING...                                  ");
+	
 	for(int i=0; i<MAX_CHARACTERS; i++)
 		m_characterArray[i] = NULL;
 		
@@ -120,7 +122,9 @@ void CGame::Initialize()
 	m_spriteArray[SPRITE_DINGLE_BODY] = new CSprite(SPRITE_DINGLE_BODY, sprite_dingle_bodyTiles, sprite_dingle_bodyTilesLen, sprite_dingle_bodyPal, sprite_dingle_bodyPalLen, g_dingleBodyFrames, 9);
 	m_spriteArray[SPRITE_ANGUS_HEAD] = new CSprite(SPRITE_ANGUS_HEAD, sprite_angus_headBitmap, g_angusHeadFrames, 5);
 	m_spriteArray[SPRITE_ANGUS_BODY] = new CSprite(SPRITE_ANGUS_BODY, sprite_angus_bodyBitmap, g_angusBodyFrames, 7);
-	
+	m_spriteArray[SPRITE_QUESTION_HEAD] = new CSprite(SPRITE_QUESTION_HEAD, sprite_question_headTiles, sprite_question_headTilesLen, sprite_question_headPal, sprite_question_headPalLen, g_questionFrames, 8);
+	m_spriteArray[SPRITE_QUESTION_BODY] = new CSprite(SPRITE_QUESTION_BODY, sprite_question_bodyTiles, sprite_question_bodyTilesLen, sprite_question_bodyPal, sprite_question_bodyPalLen, g_questionFrames, 8);
+
 	m_characterArray[CHARTYPE_SNIDE] = new CCharacter(CHARTYPE_SNIDE, m_spriteArray[SPRITE_SNIDE_HEAD], m_spriteArray[SPRITE_SNIDE_BODY], 24, 53);
 	m_characterArray[CHARTYPE_REVEREND] = new CCharacter(CHARTYPE_REVEREND, m_spriteArray[SPRITE_REVEREND_HEAD], m_spriteArray[SPRITE_REVEREND_BODY], 24, 53);
 	m_characterArray[CHARTYPE_BENTLEY] = new CCharacter(CHARTYPE_BENTLEY, m_spriteArray[SPRITE_BENTLEY_HEAD], m_spriteArray[SPRITE_BENTLEY_BODY], 24, 53);
@@ -132,6 +136,8 @@ void CGame::Initialize()
 	m_characterArray[CHARTYPE_MAJOR] = new CCharacter(CHARTYPE_MAJOR, m_spriteArray[SPRITE_MAJOR_HEAD], m_spriteArray[SPRITE_MAJOR_BODY], 24, 46);
 	m_characterArray[CHARTYPE_DINGLE] = new CCharacter(CHARTYPE_DINGLE, m_spriteArray[SPRITE_DINGLE_HEAD], m_spriteArray[SPRITE_DINGLE_BODY], 24, 48);
 	m_characterArray[CHARTYPE_ANGUS] = new CCharacter(CHARTYPE_ANGUS, m_spriteArray[SPRITE_ANGUS_HEAD], m_spriteArray[SPRITE_ANGUS_BODY], 24, 48);
+	
+	m_question = new CCharacter(CHARTYPE_QUESTION, m_spriteArray[SPRITE_QUESTION_HEAD], m_spriteArray[SPRITE_QUESTION_BODY], 24, 48);
 	
 	m_characterArray[CHARTYPE_SNIDE]->SetDeadSide(true);
 	m_characterArray[CHARTYPE_DOCTOR]->SetDeadSide(true);
@@ -347,174 +353,18 @@ void CGame::Initialize()
 	m_eventArray[EVENT_SHOW_ROOM] = new CEvent(EVENT_SHOW_ROOM, new CTime(9, 10, 0, 0));
 	m_eventArray[EVENT_GET_SHOT] = new CEvent(EVENT_SHOW_ROOM, new CTime(11, 30, 0, 0));	// 2:20
 	
-	InitializeDoors();
-}
-
-void CGame::InitializeGame(GameType gameType)
-{
-	m_gameType = gameType;
-
-	ResetDoors();
-
-	switch(m_gameType)
-	{
-	case GAMETYPE_NORMAL:
-		m_gargoyleActive[0] = false;
-		m_gargoyleActive[1] = false;
-		m_gargoyleActive[2] = false;
-		
-		m_itemArray[ITEM_A_SOGGY_ENVELOPE]->AddItems(m_itemArray[ITEM_A_LETTER], NULL, NULL, NULL, NULL);
-		m_itemArray[ITEM_A_HARDBACK_BOOK]->AddItems(m_itemArray[ITEM_A_FOLDED_DOCUMENT], NULL, NULL, NULL, NULL);
-		m_itemArray[ITEM_A_BLACK_BAG]->AddItems(m_itemArray[ITEM_A_WAD_OF_NOTES], m_itemArray[ITEM_SCALPELS], m_itemArray[ITEM_A_SMALL_BOTTLE], NULL, NULL);
-		m_itemArray[ITEM_A_JACKET]->AddItems(m_itemArray[ITEM_A_BUNCH_OF_KEYS], m_itemArray[ITEM_A_SOGGY_ENVELOPE], NULL, NULL, NULL);
-		m_itemArray[ITEM_NOTEBOOKS]->AddItems(m_itemArray[ITEM_PLANS], NULL, NULL, NULL, NULL);
-		m_itemArray[ITEM_A_BRIEFCASE]->AddItems(m_itemArray[ITEM_A_SMALL_KEY], NULL, NULL, NULL, NULL);
-		m_itemArray[ITEM_A_FOLDER]->ClearItems();
-		m_itemArray[ITEM_PADDED_ENVELOPES]->ClearItems();
-		
-		// ------------------------------------
-
-		m_characterArray[CHARTYPE_GABRIEL]->AddItems(m_itemArray[ITEM_A_LOCKET], m_itemArray[ITEM_A_SYRINGE], NULL, NULL, NULL);
-		m_characterArray[CHARTYPE_DINGLE]->AddItems(m_itemArray[ITEM_A_SMALL_KEY], m_itemArray[ITEM_A_CRAVATE], NULL, NULL, NULL);
-		
-		// ------------------------------------
-
-		//m_roomArray[ROOM_STAIRS]->SetOverlay(&g_stairs_frontMap, 168);
-		m_roomArray[ROOM_GRAVEYARD]->SetOverlay(&g_graveyard_frontMap, 176);
-		m_roomArray[ROOM_ANGUS_SECRET]->SetOverlay(&g_angus_secret_frontMap, 168);
-		m_roomArray[ROOM_ANGUS_ROOM]->SetOverlay(&g_angus_room_frontMap, 176);
-		m_roomArray[ROOM_DINING]->SetOverlay(&g_dining_frontMap, 168);
-	
-		m_roomArray[ROOM_ANGUS_ROOM]->SetColMap(col_angus_room1);
-		
-		// -------------------------------------
-		
-		m_roomArray[ROOM_SNIDE]->AddItems(1, m_itemArray[ITEM_PADDED_ENVELOPES], m_itemArray[ITEM_A_HOT_WATER_BOTTLE], NULL, NULL, NULL);
-		m_roomArray[ROOM_REVEREND]->AddItems(1, m_itemArray[ITEM_A_BOTTLE_OF_PILLS], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_BENTLEY]->AddItems(0, m_itemArray[ITEM_A_COMB], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_BENTLEY]->AddItems(1, m_itemArray[ITEM_A_JACKET], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_CYNTHIA]->AddItems(1,m_itemArray[ITEM_A_MIRROR], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_PROFESSOR]->AddItems(1, m_itemArray[ITEM_NOTEBOOKS], m_itemArray[ITEM_A_SMALL_BOOK], NULL, NULL, NULL);		m_roomArray[ROOM_DOCTOR]->AddItems(1, m_itemArray[ITEM_COLOGNE], m_itemArray[ITEM_A_BLACK_BAG], NULL, NULL, NULL);
-		m_roomArray[ROOM_MAJOR]->AddItems(0, m_itemArray[ITEM_AN_ELEPHANT_GUN], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_MAJOR]->AddItems(1, m_itemArray[ITEM_BLANK_BULLETS], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_DINGLE]->AddItems(1, m_itemArray[ITEM_A_BRIEFCASE], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_KITCHEN]->AddItems(0, m_itemArray[ITEM_A_HAMMER], m_itemArray[ITEM_A_CANDLESTICK], NULL, NULL, NULL);
-		m_roomArray[ROOM_KITCHEN]->AddItems(1, m_itemArray[ITEM_A_BOTTLE_OF_WINE], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_KITCHEN]->AddItems(2, m_itemArray[ITEM_A_SILVER_TRAY], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_KITCHEN]->AddItems(4, m_itemArray[ITEM_CUTLERY], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_KITCHEN]->AddItems(5, m_itemArray[ITEM_DIRTY_PLATES], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_STUDY]->AddItems(0, m_itemArray[ITEM_BULLETS], m_itemArray[ITEM_A_PAPERWEIGHT], m_itemArray[ITEM_A_LETTER_OPENER], m_itemArray[ITEM_A_DIARY], NULL);
-		m_roomArray[ROOM_STUDY]->AddItems(1, m_itemArray[ITEM_A_FOLDER], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_CELLAR]->AddItems(0, m_itemArray[ITEM_A_SCREWDRIVER], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_CELLAR]->AddItems(1, m_itemArray[ITEM_A_PIECE_OF_CARD], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_DRAWING]->AddItems(2, m_itemArray[ITEM_A_PICTURE], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_DRAWING]->AddItems(3, m_itemArray[ITEM_THE_WILL], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_LIBRARY]->AddItems(0, m_itemArray[ITEM_BOOKS1], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_LIBRARY]->AddItems(1, m_itemArray[ITEM_BOOKS2], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_UTILITY]->AddItems(0, m_itemArray[ITEM_DIRTY_SHIRT], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_UTILITY]->AddItems(2, m_itemArray[ITEM_WASHING_POWDER], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_UTILITY]->AddItems(3, m_itemArray[ITEM_FIREPLACE_BELLOW], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_ANGUS_ROOM]->AddItems(1, m_itemArray[ITEM_SWORD], m_itemArray[ITEM_BALL_ON_CHAIN], NULL, NULL, NULL);
-		break;
-	}
-	
-	m_currentRoom = m_roomArray[ROOM_STAIRS];
-	m_currentRoom->Initialize(69);
-	
-	m_snide = m_characterArray[CHARTYPE_SNIDE];
-	m_snide->SetRoom(m_currentRoom);
-	m_snide->SetPosition(208, 104);
-	
-	m_characterArray[CHARTYPE_REVEREND]->SetPosition(168, 168 - m_characterArray[CHARTYPE_REVEREND]->Height());
-	m_characterArray[CHARTYPE_REVEREND]->SetRoom(m_roomArray[ROOM_DRAWING]);
-	m_characterArray[CHARTYPE_REVEREND]->SetCharacterMode(CHARMODE_TALKING);
-	
-	m_characterArray[CHARTYPE_BENTLEY]->SetPosition(176, 168 - m_characterArray[CHARTYPE_BENTLEY]->Height());
-	m_characterArray[CHARTYPE_BENTLEY]->SetRoom(m_roomArray[ROOM_STAIRS]);
-	//m_characterArray[CHARTYPE_BENTLEY]->SetCharacterMode(CHARMODE_TALKING);
-	m_characterArray[CHARTYPE_BENTLEY]->SetCharacterMode(CHARMODE_WALKING);
-	
-	m_characterArray[CHARTYPE_COOK]->SetPosition(104, 168 - m_characterArray[CHARTYPE_COOK]->Height());
-	m_characterArray[CHARTYPE_COOK]->SetRoom(m_roomArray[ROOM_KITCHEN]);
-	m_characterArray[CHARTYPE_COOK]->SetCharacterMode(CHARMODE_TALKING);
-	
-	m_characterArray[CHARTYPE_GABRIEL]->SetPosition(208, 168 - m_characterArray[CHARTYPE_GABRIEL]->Height());
-	m_characterArray[CHARTYPE_GABRIEL]->SetRoom(m_roomArray[ROOM_KITCHEN]);
-	m_characterArray[CHARTYPE_GABRIEL]->SetCharacterMode(CHARMODE_TALKING);
-
-	m_characterArray[CHARTYPE_CYNTHIA]->SetPosition(232, 168 - m_characterArray[CHARTYPE_CYNTHIA]->Height());
-	m_characterArray[CHARTYPE_CYNTHIA]->SetRoom(m_roomArray[ROOM_CYNTHIA]);
-	m_characterArray[CHARTYPE_CYNTHIA]->SetCharacterMode(CHARMODE_TALKING);
-	
-	m_characterArray[CHARTYPE_PROFESSOR]->SetPosition(136, 168 - m_characterArray[CHARTYPE_PROFESSOR]->Height());
-	m_characterArray[CHARTYPE_PROFESSOR]->SetRoom(m_roomArray[ROOM_LIBRARY]);
-	m_characterArray[CHARTYPE_PROFESSOR]->SetCharacterMode(CHARMODE_TALKING);
-	
-	m_characterArray[CHARTYPE_DOCTOR]->SetPosition(176, 168 - m_characterArray[CHARTYPE_DOCTOR]->Height());
-	m_characterArray[CHARTYPE_DOCTOR]->SetRoom(m_roomArray[ROOM_OUTSIDE3]);
-	m_characterArray[CHARTYPE_DOCTOR]->SetCharacterMode(CHARMODE_TALKING);
-	
-	m_characterArray[CHARTYPE_MAJOR]->SetPosition(232, 168 - m_characterArray[CHARTYPE_MAJOR]->Height());
-	m_characterArray[CHARTYPE_MAJOR]->SetRoom(m_roomArray[ROOM_MAJOR]);
-	m_characterArray[CHARTYPE_MAJOR]->SetCharacterMode(CHARMODE_TALKING);
-	
-	m_characterArray[CHARTYPE_DINGLE]->SetPosition(240, 168 - m_characterArray[CHARTYPE_DINGLE]->Height());
-	m_characterArray[CHARTYPE_DINGLE]->SetRoom(m_roomArray[ROOM_DRAWING]);
-	m_characterArray[CHARTYPE_DINGLE]->SetCharacterMode(CHARMODE_TALKING);
-	
-	m_characterArray[CHARTYPE_ANGUS]->SetPosition(232, 168 - m_characterArray[CHARTYPE_ANGUS]->Height());
-	m_characterArray[CHARTYPE_ANGUS]->SetRoom(m_roomArray[ROOM_ANGUS_ROOM]);
-	m_characterArray[CHARTYPE_ANGUS]->SetAlpha(0x7);
-	m_characterArray[CHARTYPE_ANGUS]->SetCharacterMode(CHARMODE_TALKING);
-	
 	m_cursor = new CCursor();
 	m_pointer = new CPointer();
 	
 	m_console = new CConsole(m_cursor);
-	m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
-	
 	m_keyboard = new CKeyboard(m_cursor);
-		
-	/* for(int i=1; i<MAX_CHARACTERS; i++)
-	{
-		m_characterArray[i]->SetPosition(i * m_characterArray[i]->Width(), 168 - m_characterArray[i]->Height());
-		m_characterArray[i]->SetCharacterMode(CHARMODE_TALKING);
-		m_characterArray[i]->SetRoom(m_roomArray[ROOM_STAIRS]);
-		m_characterArray[i]->Show();
-	} */
-	
-	ClearBG(1, true);
-	
-	dmaCopy(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), watchTilesLen);
-	dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
-		
-	m_fxManager.Initialize();
-	m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
-	m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
-	m_fxManager.SetFx(FXTYPE_COLOUR, FXMODE_NORMAL, true);
-	
-	CPath* path = new CPath(m_roomArray);
-	path->FindRoute(m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_SNIDE]);
-	
-	for(int i=1; i<MAX_ROOMS; i++)
-	{
-		if(path->GetRoom(i) != NULL)
-		{
-			//fprintf(stderr, g_roomName[path->GetRoom(i)->GetRoomType()]);
-			m_characterArray[CHARTYPE_BENTLEY]->SetPath(i - 1, path->GetRoom(i));
-		}
-	}
-	
-	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("BENTLY ADVANCES:\"THIS WAY TO YOUR ROOM SIR\"");
-
 	m_menu = new CMenu();
 
 	m_watch = new CWatch(113, 21);
-	m_timer = new CTimer(9, 10, 0, 0);
-	m_timer->Start();
-
-	//m_displayMode = DISPLAYMODE_CONSOLE;
-	//m_console->AddText(g_itemText[ITEM_THE_WILL]);
+	m_timer = new CTimer();
+	
+	InitializeDoors();
+	InitTitleScreen();
 }
 
 void CGame::Update()
@@ -545,6 +395,12 @@ void CGame::Update()
 	
 	switch(m_gameMode)
 	{
+	case GAMEMODE_TITLESCREEN:
+		if(keys_released & KEY_START)
+			InitGame(GAMETYPE_NORMAL);
+		else
+			UpdateTitleScreen();
+		break;
 	case GAMEMODE_PAUSED:
 		if(keys_released & KEY_A || keys_pressed & KEY_TOUCH)
 		{
@@ -560,43 +416,19 @@ void CGame::Update()
 		}
 		return;
 	case GAMEMODE_RUNNING:
-		for(int i=0; i<MAX_EVENTS; i++)
-		{
-			if(m_eventArray[i] != NULL)
-			{
-				if(m_eventArray[i]->Update(m_timer->pCurrentTime()))
-				{
-					m_eventArray[i] = NULL;
-					//fprintf(stderr,"Event!");
-				}
-			}
-		}
-		
-		UpdateDisplayMode(touch, keys_held, keys_pressed, keys_released);
-		
-		m_currentRoom->Update(m_timer->pCurrentTime());
-		
-		SortSprites();
-		UpdateCharacters();
-		
-		UpdateFx();
-		
-		//DrawTime(m_timer->pCurrentTime());
-		m_watch->Draw(m_timer->pCurrentTime());
-		m_console->Update();
-		m_cursor->Update();
-		m_cursor->Show();
-		
-		BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
-		
-		oamUpdate(&oamMain);
-		oamUpdate(&oamSub);
+		UpdateGame(touch, keys_held, keys_pressed, keys_released);
 		break;
 	case GAMEMODE_GAMEOVER:
+		if(keys_released & KEY_A || keys_pressed & KEY_TOUCH)
+			InitTitleScreen();
+		else UpdateGameOver();
 		break;
 	default:
 		break;
 	}
+	
+	oamUpdate(&oamMain);
+	oamUpdate(&oamSub);
 }
 
 void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_pressed, int keys_released)
@@ -1408,12 +1240,12 @@ void CGame::ProcessMenu(int x, int y)
 			else
 			{
 				CItem* pItem = (CItem*) m_console->SelectedObject();
-				const char* pText = g_itemDescription[pItem->GetItemType()];
+				const char* pText = g_itemExamine[pItem->GetItemType()];
 
 				if(pText == NULL)
-					m_console->AddText(g_itemDescription[0]);
+					m_console->AddText(g_itemExamine[0]);
 				else
-					m_console->AddText(g_itemDescription[pItem->GetItemType()]);
+					m_console->AddText(g_itemExamine[pItem->GetItemType()]);
 			}
 		}
 		break;
@@ -1647,7 +1479,7 @@ void CGame::ProcessMenu(int x, int y)
 			m_displayMode = DISPLAYMODE_GAME;
 			m_pointer->Hide();
 			m_menu->Hide();
-			if(m_console->AddText(g_itemText[pItem->GetItemType()]))
+			if(m_console->AddText(g_itemRead[pItem->GetItemType()]))
 				m_displayMode = DISPLAYMODE_CONSOLE;
 		}
 		break;
@@ -2301,16 +2133,234 @@ void CGame::UpdateTimer2()
 	m_timer->Update();
 }
 
+void CGame::InitGame(GameType gameType)
+{
+	m_gameType = gameType;
+
+	m_gameMode = GAMEMODE_RUNNING;
+	m_displayMode = DISPLAYMODE_GAME;
+	m_questionMode = QUESTIONMODE_NONE;
+	m_openMode = OPENMODE_ROOM;
+	m_footsteps = 0;
+	
+	videoBgDisableSub(0);
+	
+	ClearBG(0, false);
+	ClearBG(1, false);
+	
+	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->SetLoop(false);
+	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->ClearText();
+	
+	dmaCopy(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), watchTilesLen);
+	dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
+	
+	dmaCopy(iconsTiles, BG_TILE_RAM(BG1_TILE_BASE), iconsTilesLen);
+	
+	dmaCopy(menu_questionsTiles, BG_TILE_RAM(BG2_TILE_BASE), menu_questionsTilesLen);
+	dmaCopy(menu_questionsMap, BG_MAP_RAM(BG2_MAP_BASE), menu_questionsMapLen);
+	
+	dmaCopy(menu_bottomTiles, BG_TILE_RAM(BG3_TILE_BASE), menu_bottomTilesLen);
+	dmaCopy(menu_bottomMap, BG_MAP_RAM(BG3_MAP_BASE), menu_bottomMapLen);
+	dmaCopy(menu_bottomPal, BG_PALETTE, menu_bottomPalLen);
+	
+	BG_PALETTE[0] = 0;
+	BG_PALETTE_SUB[0] = 0;
+	
+	ResetDoors();
+
+	switch(m_gameType)
+	{
+	case GAMETYPE_NORMAL:
+		m_gargoyleActive[0] = false;
+		m_gargoyleActive[1] = false;
+		m_gargoyleActive[2] = false;
+		
+		m_itemArray[ITEM_A_SOGGY_ENVELOPE]->AddItems(m_itemArray[ITEM_A_LETTER], NULL, NULL, NULL, NULL);
+		m_itemArray[ITEM_A_HARDBACK_BOOK]->AddItems(m_itemArray[ITEM_A_FOLDED_DOCUMENT], NULL, NULL, NULL, NULL);
+		m_itemArray[ITEM_A_BLACK_BAG]->AddItems(m_itemArray[ITEM_A_WAD_OF_NOTES], m_itemArray[ITEM_SCALPELS], m_itemArray[ITEM_A_SMALL_BOTTLE], NULL, NULL);
+		m_itemArray[ITEM_A_JACKET]->AddItems(m_itemArray[ITEM_A_BUNCH_OF_KEYS], m_itemArray[ITEM_A_SOGGY_ENVELOPE], NULL, NULL, NULL);
+		m_itemArray[ITEM_NOTEBOOKS]->AddItems(m_itemArray[ITEM_PLANS], NULL, NULL, NULL, NULL);
+		m_itemArray[ITEM_A_BRIEFCASE]->AddItems(m_itemArray[ITEM_A_SMALL_KEY], NULL, NULL, NULL, NULL);
+		m_itemArray[ITEM_A_FOLDER]->ClearItems();
+		m_itemArray[ITEM_PADDED_ENVELOPES]->ClearItems();
+		
+		// ------------------------------------
+
+		m_characterArray[CHARTYPE_GABRIEL]->AddItems(m_itemArray[ITEM_A_LOCKET], m_itemArray[ITEM_A_SYRINGE], NULL, NULL, NULL);
+		m_characterArray[CHARTYPE_DINGLE]->AddItems(m_itemArray[ITEM_A_SMALL_KEY], m_itemArray[ITEM_A_CRAVATE], NULL, NULL, NULL);
+		
+		// ------------------------------------
+
+		//m_roomArray[ROOM_STAIRS]->SetOverlay(&g_stairs_frontMap, 168);
+		m_roomArray[ROOM_GRAVEYARD]->SetOverlay(&g_graveyard_frontMap, 176);
+		m_roomArray[ROOM_ANGUS_SECRET]->SetOverlay(&g_angus_secret_frontMap, 168);
+		m_roomArray[ROOM_ANGUS_ROOM]->SetOverlay(&g_angus_room_frontMap, 176);
+		m_roomArray[ROOM_DINING]->SetOverlay(&g_dining_frontMap, 168);
+	
+		m_roomArray[ROOM_ANGUS_ROOM]->SetColMap(col_angus_room1);
+		
+		// -------------------------------------
+		
+		m_roomArray[ROOM_SNIDE]->AddItems(1, m_itemArray[ITEM_PADDED_ENVELOPES], m_itemArray[ITEM_A_HOT_WATER_BOTTLE], NULL, NULL, NULL);
+		m_roomArray[ROOM_REVEREND]->AddItems(1, m_itemArray[ITEM_A_BOTTLE_OF_PILLS], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_BENTLEY]->AddItems(0, m_itemArray[ITEM_A_COMB], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_BENTLEY]->AddItems(1, m_itemArray[ITEM_A_JACKET], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_CYNTHIA]->AddItems(1,m_itemArray[ITEM_A_MIRROR], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_PROFESSOR]->AddItems(1, m_itemArray[ITEM_NOTEBOOKS], m_itemArray[ITEM_A_SMALL_BOOK], NULL, NULL, NULL);		m_roomArray[ROOM_DOCTOR]->AddItems(1, m_itemArray[ITEM_COLOGNE], m_itemArray[ITEM_A_BLACK_BAG], NULL, NULL, NULL);
+		m_roomArray[ROOM_MAJOR]->AddItems(0, m_itemArray[ITEM_AN_ELEPHANT_GUN], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_MAJOR]->AddItems(1, m_itemArray[ITEM_BLANK_BULLETS], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_DINGLE]->AddItems(1, m_itemArray[ITEM_A_BRIEFCASE], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_KITCHEN]->AddItems(0, m_itemArray[ITEM_A_HAMMER], m_itemArray[ITEM_A_CANDLESTICK], NULL, NULL, NULL);
+		m_roomArray[ROOM_KITCHEN]->AddItems(1, m_itemArray[ITEM_A_BOTTLE_OF_WINE], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_KITCHEN]->AddItems(2, m_itemArray[ITEM_A_SILVER_TRAY], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_KITCHEN]->AddItems(4, m_itemArray[ITEM_CUTLERY], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_KITCHEN]->AddItems(5, m_itemArray[ITEM_DIRTY_PLATES], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_STUDY]->AddItems(0, m_itemArray[ITEM_BULLETS], m_itemArray[ITEM_A_PAPERWEIGHT], m_itemArray[ITEM_A_LETTER_OPENER], m_itemArray[ITEM_A_DIARY], NULL);
+		m_roomArray[ROOM_STUDY]->AddItems(1, m_itemArray[ITEM_A_FOLDER], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_CELLAR]->AddItems(0, m_itemArray[ITEM_A_SCREWDRIVER], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_CELLAR]->AddItems(1, m_itemArray[ITEM_A_PIECE_OF_CARD], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_DRAWING]->AddItems(2, m_itemArray[ITEM_A_PICTURE], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_DRAWING]->AddItems(3, m_itemArray[ITEM_THE_WILL], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_LIBRARY]->AddItems(0, m_itemArray[ITEM_BOOKS1], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_LIBRARY]->AddItems(1, m_itemArray[ITEM_BOOKS2], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_UTILITY]->AddItems(0, m_itemArray[ITEM_DIRTY_SHIRT], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_UTILITY]->AddItems(2, m_itemArray[ITEM_WASHING_POWDER], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_UTILITY]->AddItems(3, m_itemArray[ITEM_FIREPLACE_BELLOW], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_ANGUS_ROOM]->AddItems(1, m_itemArray[ITEM_SWORD], m_itemArray[ITEM_BALL_ON_CHAIN], NULL, NULL, NULL);
+		break;
+	}
+	
+	m_currentRoom = m_roomArray[ROOM_STAIRS];
+	m_currentRoom->Initialize(69);
+	
+	m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+	
+	m_snide = m_characterArray[CHARTYPE_SNIDE];
+	m_snide->SetRoom(m_currentRoom);
+	m_snide->SetPosition(208, 104);
+	
+	m_characterArray[CHARTYPE_REVEREND]->SetPosition(168, 168 - m_characterArray[CHARTYPE_REVEREND]->Height());
+	m_characterArray[CHARTYPE_REVEREND]->SetRoom(m_roomArray[ROOM_DRAWING]);
+	m_characterArray[CHARTYPE_REVEREND]->SetCharacterMode(CHARMODE_TALKING);
+	
+	m_characterArray[CHARTYPE_BENTLEY]->SetPosition(176, 168 - m_characterArray[CHARTYPE_BENTLEY]->Height());
+	m_characterArray[CHARTYPE_BENTLEY]->SetRoom(m_roomArray[ROOM_STAIRS]);
+	//m_characterArray[CHARTYPE_BENTLEY]->SetCharacterMode(CHARMODE_TALKING);
+	m_characterArray[CHARTYPE_BENTLEY]->SetCharacterMode(CHARMODE_WALKING);
+	
+	m_characterArray[CHARTYPE_COOK]->SetPosition(104, 168 - m_characterArray[CHARTYPE_COOK]->Height());
+	m_characterArray[CHARTYPE_COOK]->SetRoom(m_roomArray[ROOM_KITCHEN]);
+	m_characterArray[CHARTYPE_COOK]->SetCharacterMode(CHARMODE_TALKING);
+	
+	m_characterArray[CHARTYPE_GABRIEL]->SetPosition(208, 168 - m_characterArray[CHARTYPE_GABRIEL]->Height());
+	m_characterArray[CHARTYPE_GABRIEL]->SetRoom(m_roomArray[ROOM_KITCHEN]);
+	m_characterArray[CHARTYPE_GABRIEL]->SetCharacterMode(CHARMODE_TALKING);
+
+	m_characterArray[CHARTYPE_CYNTHIA]->SetPosition(232, 168 - m_characterArray[CHARTYPE_CYNTHIA]->Height());
+	m_characterArray[CHARTYPE_CYNTHIA]->SetRoom(m_roomArray[ROOM_CYNTHIA]);
+	m_characterArray[CHARTYPE_CYNTHIA]->SetCharacterMode(CHARMODE_TALKING);
+	
+	m_characterArray[CHARTYPE_PROFESSOR]->SetPosition(136, 168 - m_characterArray[CHARTYPE_PROFESSOR]->Height());
+	m_characterArray[CHARTYPE_PROFESSOR]->SetRoom(m_roomArray[ROOM_LIBRARY]);
+	m_characterArray[CHARTYPE_PROFESSOR]->SetCharacterMode(CHARMODE_TALKING);
+	
+	m_characterArray[CHARTYPE_DOCTOR]->SetPosition(176, 168 - m_characterArray[CHARTYPE_DOCTOR]->Height());
+	m_characterArray[CHARTYPE_DOCTOR]->SetRoom(m_roomArray[ROOM_OUTSIDE3]);
+	m_characterArray[CHARTYPE_DOCTOR]->SetCharacterMode(CHARMODE_TALKING);
+	
+	m_characterArray[CHARTYPE_MAJOR]->SetPosition(232, 168 - m_characterArray[CHARTYPE_MAJOR]->Height());
+	m_characterArray[CHARTYPE_MAJOR]->SetRoom(m_roomArray[ROOM_MAJOR]);
+	m_characterArray[CHARTYPE_MAJOR]->SetCharacterMode(CHARMODE_TALKING);
+	
+	m_characterArray[CHARTYPE_DINGLE]->SetPosition(240, 168 - m_characterArray[CHARTYPE_DINGLE]->Height());
+	m_characterArray[CHARTYPE_DINGLE]->SetRoom(m_roomArray[ROOM_DRAWING]);
+	m_characterArray[CHARTYPE_DINGLE]->SetCharacterMode(CHARMODE_TALKING);
+	
+	m_characterArray[CHARTYPE_ANGUS]->SetPosition(232, 168 - m_characterArray[CHARTYPE_ANGUS]->Height());
+	m_characterArray[CHARTYPE_ANGUS]->SetRoom(m_roomArray[ROOM_ANGUS_ROOM]);
+	m_characterArray[CHARTYPE_ANGUS]->SetAlpha(0x7);
+	m_characterArray[CHARTYPE_ANGUS]->SetCharacterMode(CHARMODE_TALKING);
+		
+	for(int i=0; i<MAX_CHARACTERS; i++)
+	{
+		m_characterArray[i]->Disable();
+		m_characterArray[i]->SetSub(true);
+		//m_characterArray[i]->SetPosition(i * m_characterArray[i]->Width(), 168 - m_characterArray[i]->Height());
+		//m_characterArray[i]->SetCharacterMode(CHARMODE_TALKING);
+		//m_characterArray[i]->SetRoom(m_roomArray[ROOM_STAIRS]);
+		//m_characterArray[i]->Show();
+	}
+	
+	//m_displayMode = DISPLAYMODE_CONSOLE;
+	//m_console->AddText(g_itemRead[ITEM_THE_WILL]);
+	
+	//InitTitleScreen();
+	
+	m_console->Clear();
+	
+	m_timer->Start(9, 10, 0, 0);
+	
+	CPath* path = new CPath(m_roomArray);
+	path->FindRoute(m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_SNIDE]);
+	
+	for(int i=1; i<MAX_ROOMS; i++)
+	{
+		if(path->GetRoom(i) != NULL)
+		{
+			//fprintf(stderr, g_roomName[path->GetRoom(i)->GetRoomType()]);
+			m_characterArray[CHARTYPE_BENTLEY]->SetPath(i - 1, path->GetRoom(i));
+		}
+	}
+	
+	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("BENTLY ADVANCES:\"THIS WAY TO YOUR ROOM SIR\"");
+	
+	
+	mmStart(MOD_DETECTIVE, MM_PLAY_ONCE);
+	mmPosition(3);
+}
+
+void CGame::UpdateGame(touchPosition touch, int keys_held, int keys_pressed, int keys_released)
+{
+	for(int i=0; i<MAX_EVENTS; i++)
+	{
+		if(m_eventArray[i] != NULL)
+		{
+			if(m_eventArray[i]->Update(m_timer->pCurrentTime()))
+			{
+				m_eventArray[i] = NULL;
+				//fprintf(stderr,"Event!");
+			}
+		}
+	}
+	
+	UpdateDisplayMode(touch, keys_held, keys_pressed, keys_released);
+	
+	m_currentRoom->Update(m_timer->pCurrentTime());
+	
+	SortSprites();
+	UpdateCharacters();
+	
+	UpdateFx();
+	
+	//DrawTime(m_timer->pCurrentTime());
+	m_watch->Draw(m_timer->pCurrentTime());
+	m_console->Update();
+	m_cursor->Update();
+	m_cursor->Show();
+	
+	BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
+}
+
 void CGame::InitGameOver(bool win)
 {
 	m_gameMode = GAMEMODE_GAMEOVER;
 	
-	//ClearBG(0, false);
-	//ClearBG(1, false);
+	ClearBG(0, false);
+	ClearBG(1, false);
 	
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE GAME IS OVER.");
 	
-	/* if(win)
+	if(win)
 	{
 		dmaCopy(end_top_winTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), end_top_winTilesLen);
 		dmaCopy(end_top_winMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), end_top_winMapLen);
@@ -2325,5 +2375,114 @@ void CGame::InitGameOver(bool win)
 	
 	dmaCopy(end_bottomTiles, BG_TILE_RAM(BG3_TILE_BASE), end_bottomTilesLen);
 	dmaCopy(end_bottomMap, BG_MAP_RAM(BG3_MAP_BASE), end_bottomMapLen);
-	dmaCopy(end_bottomPal, BG_PALETTE, end_bottomPalLen); */
+	dmaCopy(end_bottomPal, BG_PALETTE, end_bottomPalLen);
+}
+
+void CGame::UpdateGameOver()
+{
+	BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
+	
+	UpdateFx();
+	
+	//DrawTime(m_timer->pCurrentTime());
+	m_watch->Draw(m_timer->pCurrentTime());
+	m_console->Update();
+	m_cursor->Update();
+	m_cursor->Show();
+}
+
+void CGame::InitTitleScreen()
+{
+	m_gameMode = GAMEMODE_TITLESCREEN;
+	
+	videoBgDisableSub(0);
+	
+	ClearBG(0, false);
+	ClearBG(1, false);
+	
+	DrawString("@2009 HEADSOFT", 9, 1, false);
+	
+	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->ClearText();
+	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->SetLoop(true);
+	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE DETECTIVE GAME  -  WRITTEN BY SAM....CHARACTERS BY PAUL JAY....PLOT CUNNINGLY DEVISED BY THE MAGNIFICENT SEVEN....   PRESS FIRE TO START INVESTIGATION             ");
+	
+	m_console->AddText("\n\n    INTRODUCING\n     THE CAST..");
+
+	dmaCopy(menu_topTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), menu_topTilesLen);
+	dmaCopy(menu_topMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), menu_topMapLen);
+	dmaCopy(menu_topPal, BG_PALETTE_SUB, menu_topPalLen);
+	
+	dmaCopy(menu_questionsTiles, BG_TILE_RAM(BG2_TILE_BASE), menu_questionsTilesLen);
+	dmaCopy(menu_questionsMap, BG_MAP_RAM(BG2_MAP_BASE), menu_questionsMapLen);
+	
+	dmaCopy(menu_bottomTiles, BG_TILE_RAM(BG3_TILE_BASE), menu_bottomTilesLen);
+	dmaCopy(menu_bottomMap, BG_MAP_RAM(BG3_MAP_BASE), menu_bottomMapLen);
+	dmaCopy(menu_bottomPal, BG_PALETTE, menu_bottomPalLen);
+	
+	for(int i=0; i<MAX_CHARACTERS; i++)
+	{
+		m_characterArray[i]->Disable();
+		m_characterArray[i]->SetSub(false);
+		m_characterArray[i]->SetPriority(0);
+		m_characterArray[i]->SetPosition(192, 128);
+		m_characterArray[i]->SetCharacterMode(CHARMODE_TALKING);
+	}
+
+	m_question->Show();
+	m_question->Draw();
+	m_question->SetSub(false);
+	m_question->SetPriority(0);
+	m_question->SetPosition(192, 128);
+	m_question->SetCharacterMode(CHARMODE_QUESTION);
+	m_question->SetLoop(false);
+	m_question->Reset();
+	
+	m_console->AddText(g_characterText[CHARTYPE_SNIDE]);
+	
+	mmStart(MOD_DETECTIVE, MM_PLAY_LOOP);
+	mmPosition(0);
+}
+
+void CGame::UpdateTitleScreen()
+{
+	m_characterFrameCount++;
+	
+	BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
+	
+	UpdateFx();
+	
+	if(m_characterFrameCount == 80)
+	{
+		m_question->Disable();
+		m_question->Hide();
+		
+		m_characterArray[m_characterPos]->Show();
+	}
+	
+	if(m_characterFrameCount > 500)
+	{
+		m_characterFrameCount = 0;
+		
+		m_characterArray[m_characterPos]->Disable();
+		m_characterArray[m_characterPos]->Hide();
+		
+		if(++m_characterPos == MAX_CHARACTERS-1)
+			m_characterPos = 0;
+		
+		m_question->Reset();
+		m_question->Show();
+		
+		m_console->AddText(g_characterText[m_characterPos]);
+	}
+	
+	m_characterArray[m_characterPos]->Update();
+	m_characterArray[m_characterPos]->Draw();
+	
+	m_question->Update();
+	m_question->Draw();
+	
+	//DrawTime(m_timer->pCurrentTime());
+	m_console->Update();
+	m_cursor->Update();
+	m_cursor->Show();
 }

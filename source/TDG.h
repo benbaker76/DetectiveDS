@@ -93,6 +93,8 @@
 #include "sprite_dingle_body.h"
 #include "sprite_angus_head.h"
 #include "sprite_angus_body.h"
+#include "sprite_question_head.h"
+#include "sprite_question_body.h"
 
 #include "sprite_misc.h"
 

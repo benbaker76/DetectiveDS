@@ -19,6 +19,7 @@ public:
 	
 	void ClearText();
 	bool AddText(const char* text);
+	void SetLoop(bool loop) { m_loop = loop; }
 
 private:
 
@@ -27,6 +28,8 @@ private:
 	const char* m_charPos;
 	u32 m_textPos;
 	const char* m_textArray[MAX_TEXT_SCROLLER];
+	
+	u32 m_loop;
 };
 
 #endif

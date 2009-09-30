@@ -40,6 +40,7 @@ const u32 g_dingleHeadFrames[] = { FRAME_WAITING | FRAME_LEFT | FRAME_DOWN | FRA
 const u32 g_dingleBodyFrames[] = { FRAME_WAITING | FRAME_SPEAK | FRAME_LEFT | FRAME_DOWN, FRAME_LEFT | FRAME_DOWN, FRAME_LEFT | FRAME_DOWN, FRAME_UP | FRAME_RIGHT, FRAME_UP | FRAME_RIGHT, FRAME_UP | FRAME_RIGHT, FRAME_DEAD, FRAME_ATTACK, FRAME_SURRENDER };
 const u32 g_angusHeadFrames[] = { FRAME_WAITING | FRAME_LEFT | FRAME_DOWN | FRAME_SPEAK | FRAME_ATTACK | FRAME_SURRENDER, FRAME_SPEAK, FRAME_SPEAK, FRAME_UP | FRAME_RIGHT, FRAME_DEAD };
 const u32 g_angusBodyFrames[] = { FRAME_WAITING | FRAME_SPEAK | FRAME_LEFT | FRAME_DOWN, FRAME_LEFT | FRAME_DOWN, FRAME_LEFT | FRAME_DOWN, FRAME_UP | FRAME_RIGHT, FRAME_UP | FRAME_RIGHT, FRAME_UP | FRAME_RIGHT, FRAME_DEAD };
+const u32 g_questionFrames[] = { FRAME_QUESTION, FRAME_QUESTION, FRAME_QUESTION, FRAME_QUESTION, FRAME_QUESTION, FRAME_QUESTION, FRAME_QUESTION, FRAME_QUESTION };
 
 MAP g_angus_landingMap = { 320, 256, map_angus_landingTiles, map_angus_landingTilesLen, map_angus_landingMap, map_angus_landingMapLen, map_angus_landingPal, map_angus_landingPalLen };
 MAP g_angus_room1Map = { 320, 256, map_angus_room1Tiles, map_angus_room1TilesLen, map_angus_room1Map, map_angus_room1MapLen, map_angus_room1Pal, map_angus_room1PalLen };

@@ -11,8 +11,9 @@
 
 enum GameMode
 {
-	GAMEMODE_RUNNING,
+	GAMEMODE_TITLESCREEN,
 	GAMEMODE_PAUSED,
+	GAMEMODE_RUNNING,
 	GAMEMODE_GAMEOVER
 };
 
@@ -72,7 +73,6 @@ public:
 	~CGame();
 	
 	void Initialize();
-	void InitializeGame(GameType gameType);
 	void Update();
 	
 	mm_word MusicEventHandler(mm_word msg, mm_word param);
@@ -98,6 +98,8 @@ private:
 	CRoom* m_roomArray[MAX_ROOMS];
 	CItem* m_itemArray[MAX_ITEMS];
 	CEvent* m_eventArray[MAX_EVENTS];
+	
+	CCharacter* m_question;
 	
 	bool m_charactersInRoom[MAX_CHARACTERS];
 	bool m_someoneInRoom;
@@ -135,6 +137,9 @@ private:
 	
 	int m_bg2MainVScroll;
 	
+	int m_characterPos;
+	int m_characterFrameCount;
+	
 	void InitializeDoors();
 	void ResetDoors();
 	void SortSprites();
@@ -154,7 +159,12 @@ private:
 	void InitRoom();
 	void UpdateFx();
 	
+	void InitGame(GameType gameType);
+	void UpdateGame(touchPosition touch, int keys_held, int keys_pressed, int keys_released);
 	void InitGameOver(bool win);
+	void UpdateGameOver();
+	void InitTitleScreen();
+	void UpdateTitleScreen();
 };
 
 #endif

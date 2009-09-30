@@ -65,15 +65,11 @@ int main(void)
 	//mmStart(MOD_WEATHER, MM_PLAY_LOOP);
 	mmJingle(MOD_WEATHER);
 	mmSetJingleVolume(0);
-	mmStart(MOD_DETECTIVE, MM_PLAY_ONCE);
-	//mmStart(MOD_DETECTIVE, MM_PLAY_LOOP);
-	mmPosition(3);
 	
 	consoleDebugInit(DebugDevice_NOCASH);
 	
 	m_video.Initialize();
 	m_game.Initialize();
-	m_game.InitializeGame(GAMETYPE_NORMAL);
 
 	while(1)
 	{

@@ -21,7 +21,8 @@ enum CharacterMode
 	CHARMODE_DEAD,
 	CHARMODE_BOMB,
 	CHARMODE_ATTACK,
-	CHARMODE_SURRENDER
+	CHARMODE_SURRENDER,
+	CHARMODE_QUESTION
 };
 
 enum CharacterType
@@ -37,7 +38,8 @@ enum CharacterType
 	CHARTYPE_DOCTOR,
 	CHARTYPE_MAJOR,
 	CHARTYPE_DINGLE,
-	CHARTYPE_ANGUS
+	CHARTYPE_ANGUS,
+	CHARTYPE_QUESTION
 };
 
 class CRoom;
@@ -59,6 +61,7 @@ public:
 	void Disable();
 	void SetHFlip(bool hflip);
 	void Draw();
+	void SetSub(bool sub);
 	void Face(DirectionType directionType);
 	void Move(DirectionType directionType);
 	bool CheckCollision(DirectionType directionType, CollisionType* colNear, CollisionType* colFar);
@@ -71,6 +74,8 @@ public:
 	
 	void SetX(float x) { SetPosition(x, m_y); }
 	void SetY(float y) { SetPosition(y, m_y); }
+	
+	void SetLoop(bool loop) { m_pHeadSprite->SetLoop(loop); m_pBodySprite->SetLoop(loop); }
 	
 	void SetPoint(int x, int y) { m_point.X = x; m_point.Y = y; }
 	PPOINT pPoint() { SetPoint(m_x + (m_width / 2), m_y + (m_height - 8) + 4); return (PPOINT) &m_point; }
@@ -91,6 +96,8 @@ public:
 	DirectionType Facing() const { return m_facing; }
 	bool Visible() const { return m_visible; }
 	bool Dead() const { return m_dead; }
+	
+	void Reset() { m_pHeadSprite->Reset(); m_pBodySprite->Reset(); }
 	
 	int OamIndex() const { return m_pHeadSprite->OamIndex(); }
 	int Priority() const { return m_pHeadSprite->Priority(); }
