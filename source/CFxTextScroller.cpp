@@ -20,7 +20,7 @@ void CFxTextScroller::Initialize()
 void CFxTextScroller::Shutdown()
 {
 	BACKGROUND.scroll[0].x = 0;
-	char buf[34];
+	static char buf[34];
 	sprintf(buf, "%*s", 32, "");
 	DrawStringLarge(buf, 0, 11, false);
 }

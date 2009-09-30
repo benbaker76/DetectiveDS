@@ -96,10 +96,7 @@ void CSprite::GetNextFrame()
 	
 	bool frameFound = false;
 	
-	if(m_frameNum < m_frameTotal-1)
-		m_frameNum++;
-	
-	for(; m_frameNum < m_frameTotal; m_frameNum++)
+	for(++m_frameNum; m_frameNum < m_frameTotal; m_frameNum++)
 	{
 		if(m_frameArray[m_frameNum] & m_frameType)
 		{
@@ -108,20 +105,28 @@ void CSprite::GetNextFrame()
 		}
 	}
 	
-	if (!frameFound && m_loop)
+	if(m_loop)
 	{
-		for(m_frameNum = 0; m_frameNum < m_frameTotal; m_frameNum++)
+		if (!frameFound)
 		{
-			if(m_frameArray[m_frameNum] & m_frameType)
+			for(m_frameNum = 0; m_frameNum < m_frameTotal; m_frameNum++)
 			{
-				frameFound = true;
-				break;
+				if(m_frameArray[m_frameNum] & m_frameType)
+				{
+					frameFound = true;
+					break;
+				}
 			}
 		}
+		
+		if (!frameFound)
+			m_frameNum = 0;
 	}
-	
-	if (!frameFound && m_loop)
-		m_frameNum = 0;
+	else
+	{
+		if (!frameFound)
+			m_frameNum = m_frameTotal-1;
+	}
 }
 
 void CSprite::Hide()

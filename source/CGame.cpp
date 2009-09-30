@@ -2291,6 +2291,9 @@ void CGame::InitGame(GameType gameType)
 		//m_characterArray[i]->Show();
 	}
 	
+	m_question->Disable();
+	m_question->Hide();
+	
 	//m_displayMode = DISPLAYMODE_CONSOLE;
 	//m_console->AddText(g_itemRead[ITEM_THE_WILL]);
 	
@@ -2459,12 +2462,20 @@ void CGame::UpdateTitleScreen()
 		m_characterArray[m_characterPos]->Show();
 	}
 	
-	if(m_characterFrameCount > 500)
+	if(m_characterFrameCount == 500)
 	{
-		m_characterFrameCount = 0;
-		
 		m_characterArray[m_characterPos]->Disable();
 		m_characterArray[m_characterPos]->Hide();
+		
+		m_question->Disable();
+		m_question->Hide();
+		
+		m_console->Clear();
+	}
+	
+	if(m_characterFrameCount > 600)
+	{
+		m_characterFrameCount = 0;
 		
 		if(++m_characterPos == MAX_CHARACTERS-1)
 			m_characterPos = 0;

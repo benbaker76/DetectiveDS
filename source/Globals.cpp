@@ -13,7 +13,7 @@ bool IntersectRect(PRECT pRectA, PRECT pRectB)
 
 void PrintRect(PRECT pRect)
 {
-	char buf[256];
+	static char buf[256];
 	sprintf(buf, "X:%d, Y:%d, Width:%d, Height:%d", pRect->X, pRect->Y, pRect->Width, pRect->Height);
 	fprintf(stderr, buf);
 }

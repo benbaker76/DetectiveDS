@@ -32,6 +32,7 @@ CConsole::~CConsole()
 
 void CConsole::Clear()
 {
+	m_frameCount = 0;
 	m_lineCount = 0;
 	m_linePos = 0;
 	m_lineOffset = 0;
@@ -51,7 +52,7 @@ void CConsole::ClearText()
 {
 	for(int i=0; i<CONSOLE_MAX_VISIBLE_TEXT; i++)
 	{
-		char buf[256];
+		static char buf[CONSOLE_MAP_WIDTH+2];
 		sprintf(buf, "%*s", CONSOLE_MAP_WIDTH, "");
 		DrawString(buf, CONSOLE_MAP_X, CONSOLE_MAP_Y + i, false);
 	}
@@ -156,7 +157,7 @@ void CConsole::ClearMenuText()
 {
 	for(int i=0; i<CONSOLE_MENU_VISIBLE_TEXT; i++)
 	{
-		char buf[256];
+		static char buf[CONSOLE_MENU_MAP_WIDTH+2];
 		sprintf(buf, "%*s", CONSOLE_MENU_MAP_WIDTH, "");
 		DrawString(buf, CONSOLE_MENU_MAP_X, CONSOLE_MENU_MAP_Y + i, false);
 	}
@@ -334,5 +335,3 @@ int CConsole::WordWrap(const char* text)
 
 	return line_count;
 }
-
-
