@@ -152,7 +152,7 @@ private:
 	bool TryGetRoomCache(CRoom* pRoom, CollisionType colType, CItemCache** pItemCache);
 	int ShowItemMenu(const char* text, CItemCache* pItemCache, CItem* pItemExclude);
 	void ShowVisibleCharactersMenu();
-	void ShowCharacterMenu(const char* text);
+	void ShowCharacterMenu(const char* text, CCharacter* pCharacterExclude);
 	void ProcessMenu(int x, int y);
 	void PostProcessMenu();
 	

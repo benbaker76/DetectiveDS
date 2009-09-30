@@ -8,6 +8,7 @@ extern const char* g_itemName[];
 extern const char* g_itemExamine[];
 extern const char* g_itemRead[];
 extern const char* g_colName[];
+extern const char* g_askAboutCharacter[];
 extern const char* g_iconName[];
 extern const char* g_roomName[];
 extern const char* g_enterRoomText[];

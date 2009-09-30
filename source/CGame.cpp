@@ -1093,7 +1093,7 @@ void CGame::ShowVisibleCharactersMenu()
 	}
 }
 
-void CGame::ShowCharacterMenu(const char* text)
+void CGame::ShowCharacterMenu(const char* text, CCharacter* pCharacterExclude)
 {
 	m_displayMode = DISPLAYMODE_CONSOLE_MENU;
 	
@@ -1101,7 +1101,8 @@ void CGame::ShowCharacterMenu(const char* text)
 	m_console->ClearMenu();
 	
 	for(int i=1; i<MAX_CHARACTERS-1; i++)
-		m_console->AddMenuItem(g_characterName[i], m_characterArray[i]);
+		if(m_characterArray[i] != pCharacterExclude)
+			m_console->AddMenuItem(g_characterName[i], m_characterArray[i]);
 		
 	m_console->ShowMenu();
 	m_console->DrawSelectorBar();
@@ -1375,7 +1376,7 @@ void CGame::ProcessMenu(int x, int y)
 		break;
 	case ICON_ACCUSE:
 		{
-			ShowCharacterMenu("WHO IS THE MURDERER?");
+			ShowCharacterMenu("WHO IS THE MURDERER?", NULL);
 		}
 		break;
 	case ICON_DOOR_OPEN:
@@ -1766,7 +1767,7 @@ void CGame::PostProcessMenu()
 							
 							m_questionCharacter->RestoreLastCharacterMode();
 							
-							((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("I FEEL IT WOULD BE IMPROPER, SIR, TO DISCUSS MY LATE EMPLOYER WITH A STRANGER.");
+							((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(g_askAboutCharacter[m_questionCharacter->GetCharacterType() * MAX_CHARACTERS + MAX_CHARACTERS - 1]);
 							m_pointer->Hide();
 							m_menu->Hide();
 							m_console->HideMenu();
@@ -1779,7 +1780,7 @@ void CGame::PostProcessMenu()
 						case QUESTIONTYPE_ANOTHERGUEST:
 							m_displayMode = DISPLAYMODE_CONSOLE_MENU;
 							m_questionMode = QUESTIONMODE_REPLY;
-							ShowCharacterMenu("ASK ABOUT:");
+							ShowCharacterMenu("ASK ABOUT:", m_questionCharacter);
 							break;
 					}
 				}
@@ -1815,7 +1816,7 @@ void CGame::PostProcessMenu()
 							
 							m_questionCharacter->RestoreLastCharacterMode();
 							
-							((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("DON'T REALLY KNOW MUCH.");
+							((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(g_askAboutCharacter[m_questionCharacter->GetCharacterType() * MAX_CHARACTERS + pCharacter->GetCharacterType()]);
 							m_pointer->Hide();
 							m_menu->Hide();
 							m_console->HideMenu();
@@ -2180,7 +2181,7 @@ void CGame::InitGame(GameType gameType)
 		m_itemArray[ITEM_A_BLACK_BAG]->AddItems(m_itemArray[ITEM_A_WAD_OF_NOTES], m_itemArray[ITEM_SCALPELS], m_itemArray[ITEM_A_SMALL_BOTTLE], NULL, NULL);
 		m_itemArray[ITEM_A_JACKET]->AddItems(m_itemArray[ITEM_A_BUNCH_OF_KEYS], m_itemArray[ITEM_A_SOGGY_ENVELOPE], NULL, NULL, NULL);
 		m_itemArray[ITEM_NOTEBOOKS]->AddItems(m_itemArray[ITEM_PLANS], NULL, NULL, NULL, NULL);
-		m_itemArray[ITEM_A_BRIEFCASE]->AddItems(m_itemArray[ITEM_A_SMALL_KEY], NULL, NULL, NULL, NULL);
+		m_itemArray[ITEM_A_BRIEFCASE]->AddItems(m_itemArray[ITEM_A_NOTE], m_itemArray[ITEM_NEWSPAPER_CUTTING], NULL, NULL, NULL);
 		m_itemArray[ITEM_A_FOLDER]->ClearItems();
 		m_itemArray[ITEM_PADDED_ENVELOPES]->ClearItems();
 		
