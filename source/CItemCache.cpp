@@ -132,6 +132,7 @@ bool CItemCache::ReplaceItem(CItem* pOldItem, CItem* pNewItem)
 		if(m_itemArray[i] == pOldItem)
 		{
 			m_itemArray[i] = pNewItem;
+			m_itemArray[i]->SetParent(this);
 			
 			return true;
 		}
