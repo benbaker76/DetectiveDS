@@ -510,6 +510,7 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 			if(keys_pressed & KEY_TOUCH)
 			{
 				m_displayMode = DISPLAYMODE_GAME;
+				
 				ProcessMenu(touch.px, touch.py);
 				m_pointer->Hide();
 				m_menu->Hide();
@@ -1368,9 +1369,6 @@ void CGame::ProcessMenu(int x, int y)
 	case ICON_LOAD:
 	case ICON_SHOOT:
 		{
-			m_displayMode = DISPLAYMODE_GAME;
-			m_pointer->Hide();
-			m_menu->Hide();
 			m_console->AddText("YOU CAN'T USE THAT HERE, YOU MIGHT HURT SOMEONE!");
 		}
 		break;
@@ -1440,26 +1438,16 @@ void CGame::ProcessMenu(int x, int y)
 					{
 						m_console->AddText("SORRY, YOU CAN'T DO THAT.");
 					}
-					
-					m_displayMode = DISPLAYMODE_GAME;
-					m_pointer->Hide();
-					m_menu->Hide();
 				}
 				break;
 			default:
 				{
 					if(TryGetDoor(colNear, colFar, &pDoor))
 					{
-						m_displayMode = DISPLAYMODE_GAME;
-						m_pointer->Hide();
-						m_menu->Hide();
 						m_console->AddText("THE KEY WILL NOT FIT.");
 					}
 					else
 					{
-						m_displayMode = DISPLAYMODE_GAME;
-						m_pointer->Hide();
-						m_menu->Hide();
 						m_console->AddText("YOU SEE NO DOOR.");
 					}
 					break;
@@ -1477,9 +1465,6 @@ void CGame::ProcessMenu(int x, int y)
 		{
 			CItem* pItem = (CItem*) m_console->SelectedObject();
 			
-			m_displayMode = DISPLAYMODE_GAME;
-			m_pointer->Hide();
-			m_menu->Hide();
 			if(m_console->AddText(g_itemRead[pItem->GetItemType()]))
 				m_displayMode = DISPLAYMODE_CONSOLE;
 		}
@@ -1487,10 +1472,6 @@ void CGame::ProcessMenu(int x, int y)
 	case ICON_CONSUME:
 		{
 			CItem* pItem = (CItem*) m_console->SelectedObject();
-			
-			m_displayMode = DISPLAYMODE_GAME;
-			m_pointer->Hide();
-			m_menu->Hide();
 			
 			switch(pItem->GetItemType())
 			{

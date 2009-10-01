@@ -23,12 +23,12 @@ void CCursor::Update()
 
 void CCursor::Hide()
 {
-	oamSet(&oamMain, 120, m_x, m_y, 0, 0, SpriteSize_8x8, SpriteColorFormat_256Color, m_gfx, 0, false, true, false, false, false);
+	oamSet(&oamMain, 118, m_x, m_y, 0, 0, SpriteSize_8x8, SpriteColorFormat_256Color, m_gfx, 0, false, true, false, false, false);
 }
 
 void CCursor::Show()
 {
 	dmaCopy(sprite_cursorTiles + 16 * m_anim->FrameNum(), m_gfx, 8 * 8);
 	
-	oamSet(&oamMain, 120, m_x * 8, m_y * 8, 0, 0, SpriteSize_8x8, SpriteColorFormat_256Color, m_gfx, 0, false, false, false, false, false);
+	oamSet(&oamMain, 118, m_x * 8, m_y * 8, 0, 0, SpriteSize_8x8, SpriteColorFormat_256Color, m_gfx, 0, false, false, false, false, false);
 }

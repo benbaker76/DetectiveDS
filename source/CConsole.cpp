@@ -284,7 +284,8 @@ bool CConsole::CheckMenuTouch(int x, int y)
 
 int CConsole::WordWrap(const char* text)
 {
-	char c = '\0', line[CONSOLE_MAP_WIDTH+2], word[CONSOLE_MAX_WORD+2];
+	char c = '\0';
+	static char line[CONSOLE_MAP_WIDTH+2], word[CONSOLE_MAX_WORD+2];
 	int newline = 0, line_pos = 0, word_pos = 0, line_count = 0;
 
 	while(1)
