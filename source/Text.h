@@ -9,6 +9,7 @@ extern const char* g_itemExamine[];
 extern const char* g_itemRead[];
 extern const char* g_colName[];
 extern const char* g_askAboutCharacter[];
+extern const char* g_askAboutItem[];
 extern const char* g_askAboutProfessorRandom[];
 extern const char* g_askAboutMajorRandom[];
 extern const char* g_iconName[];

@@ -1779,10 +1779,26 @@ void CGame::PostProcessMenu()
 							m_questionMode = QUESTIONMODE_WAITING;
 							
 							CItem* pItem = (CItem*) m_console->SelectedObject();
+							const char* pReplyText = g_askAboutItem[m_questionCharacter->GetCharacterType() * MAX_ITEMS + pItem->GetItemType()];
 							
 							m_questionCharacter->RestoreLastCharacterMode();
-						
-							((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("I DON'T KNOW ANYTHING ABOUT IT.");
+							
+							switch(m_questionCharacter->GetCharacterType())
+							{
+							case CHARTYPE_BENTLEY:
+								if(pReplyText == NULL)
+								{
+									sprintf(m_buffer, "\"IT IS QUITE OBVIOUSLY %s\"", g_itemName[pItem->GetItemType()]);
+									((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(m_buffer);
+								}
+								else
+									((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(pReplyText);
+								break;
+							default:
+								((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText((pReplyText == NULL ? "\"I DON'T KNOW ANYTHING ABOUT IT.\"" : pReplyText));
+								break;
+							}
+							
 							m_pointer->Hide();
 							m_menu->Hide();
 							m_console->HideMenu();
@@ -1794,23 +1810,45 @@ void CGame::PostProcessMenu()
 							m_questionMode = QUESTIONMODE_WAITING;
 							
 							CCharacter* pCharacter = (CCharacter*) m_console->SelectedObject();
+							const char* pReplyText = g_askAboutCharacter[m_questionCharacter->GetCharacterType() * MAX_CHARACTERS + pCharacter->GetCharacterType()];
 							
 							m_questionCharacter->RestoreLastCharacterMode();
 							
 							switch(m_questionCharacter->GetCharacterType())
 							{
-								case CHARTYPE_PROFESSOR:
-									((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(g_askAboutProfessorRandom[rand() % 5]);
-									break;
-								case CHARTYPE_MAJOR:
-									((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(g_askAboutMajorRandom[rand() % 4]);
-									break;
-								case CHARTYPE_ANGUS:
-									mmEffectEx(&g_sfx_ghostly);
-									((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("WOOOOOO!");
-								default:
-									((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(g_askAboutCharacter[m_questionCharacter->GetCharacterType() * MAX_CHARACTERS + pCharacter->GetCharacterType()]);
-									break;
+							case CHARTYPE_SNIDE:
+								break;
+							case CHARTYPE_REVEREND:
+								((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText((pReplyText == NULL ? "\"IT'S NONE OF MY BUSINESS\"" : pReplyText));
+								break;
+							case CHARTYPE_BENTLEY:
+								((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText((pReplyText == NULL ? "\"I'M VERY BUSY AT THE MOMENT SIR\"" : pReplyText));
+								break;
+							case CHARTYPE_COOK:
+								((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText((pReplyText == NULL ? "\"DON'T REALLY KNOW MUCH.\"" : pReplyText));
+								break;
+							case CHARTYPE_GABRIEL:
+								((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText((pReplyText == NULL ? "\"WELL, I MUSTN'T GOSSIP.\"" : pReplyText));
+								break;
+							case CHARTYPE_CYNTHIA:
+								((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText((pReplyText == NULL ? "\"YES I TOTALLY AGREE, DARLING..\"" : pReplyText));
+								break;
+							case CHARTYPE_PROFESSOR:
+								((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(g_askAboutProfessorRandom[rand() % 5]);
+								break;
+							case CHARTYPE_DOCTOR:
+								((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText((pReplyText == NULL ? "\"CAN'T TELL YOU MUCH I'M AFRAID.\"" : pReplyText));
+								break;
+							case CHARTYPE_MAJOR:
+								((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(g_askAboutMajorRandom[rand() % 4]);
+								break;
+							case CHARTYPE_DINGLE:
+								((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText((pReplyText == NULL ? "\"SORRY, NO COMMENT\"" : pReplyText));
+								break;
+							case CHARTYPE_ANGUS:
+								mmEffectEx(&g_sfx_ghostly);
+								((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("WOOOOOO!");
+								break;
 							}
 							
 							m_pointer->Hide();
