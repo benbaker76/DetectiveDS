@@ -103,6 +103,8 @@ mm_sound_effect g_sfx_unlock = { { SFX_UNLOCK } , (int)(1.0f * (1<<10)), 0, 255,
 mm_sound_effect g_sfx_keydrop = { { SFX_KEYDROP } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_click = { { SFX_CLICK } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_beep = { { SFX_BEEP } , (int)(1.0f * (1<<10)), 0, 255, 127 };
+mm_sound_effect g_sfx_ghostly = { { SFX_GHOSTLY } , (int)(1.0f * (1<<10)), 0, 255, 127 };
+mm_sound_effect g_sfx_howling = { { SFX_HOWLING } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 
 u16 g_lightningBgPal[] =
 {

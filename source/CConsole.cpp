@@ -268,7 +268,7 @@ bool CConsole::CheckMenuTouch(int x, int y)
 	{
 		//MoveSelectorBar(DIRECTION_DOWN);
 		
-		if(m_menuPos + m_menuOffset < m_menuCount-1 && m_menuOffset < CONSOLE_MENU_VISIBLE_TEXT-1)
+		if(m_menuOffset + CONSOLE_MENU_VISIBLE_TEXT < m_menuCount)
 			m_menuOffset++;
 			
 		ClearMenuText();

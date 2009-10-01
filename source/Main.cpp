@@ -62,6 +62,8 @@ int main(void)
 	mmLoadEffect(SFX_KEYDROP);
 	mmLoadEffect(SFX_CLICK);
 	mmLoadEffect(SFX_BEEP);
+	mmLoadEffect(SFX_GHOSTLY);
+	mmLoadEffect(SFX_HOWLING);
 	//mmStart(MOD_WEATHER, MM_PLAY_LOOP);
 	mmJingle(MOD_WEATHER);
 	mmSetJingleVolume(0);

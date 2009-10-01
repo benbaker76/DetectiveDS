@@ -42,13 +42,20 @@ enum CharacterType
 	CHARTYPE_QUESTION
 };
 
+enum CharacterSex
+{
+	CHARSEX_NONE,
+	CHARSEX_MALE,
+	CHARSEX_FEMALE
+};
+
 class CRoom;
 class CCharacter;
 
 class CCharacter
 {
 public:
-	CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite, int width, int height);
+	CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite, CharacterSex characterSex, int width, int height);
 	~CCharacter();
 	
 	void SetPosition(float x, float y);
@@ -103,6 +110,7 @@ public:
 	int Priority() const { return m_pHeadSprite->Priority(); }
 	CharacterType GetCharacterType() const { return m_characterType; }
 	CharacterMode GetCharacterMode() const { return m_characterMode; }
+	CharacterSex GetCharacterSex() const { return m_characterSex; }
 	
 	void RestoreLastCharacterMode() { m_characterMode = m_lastCharacterMode; }
 	
@@ -113,6 +121,8 @@ private:
 	CharacterType m_characterType;
 	CharacterMode m_characterMode;
 	CharacterMode m_lastCharacterMode;
+	CharacterSex m_characterSex;
+	
 	CSprite* m_pHeadSprite;
 	CSprite* m_pBodySprite;
 	

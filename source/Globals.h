@@ -130,6 +130,8 @@ extern mm_sound_effect g_sfx_unlock;
 extern mm_sound_effect g_sfx_keydrop;
 extern mm_sound_effect g_sfx_click;
 extern mm_sound_effect g_sfx_beep;
+extern mm_sound_effect g_sfx_ghostly;
+extern mm_sound_effect g_sfx_howling;
 
 extern u16 g_lightningBgPal[];
 extern u16 g_lightningSpritePal[];

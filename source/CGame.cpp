@@ -125,19 +125,19 @@ void CGame::Initialize()
 	m_spriteArray[SPRITE_QUESTION_HEAD] = new CSprite(SPRITE_QUESTION_HEAD, sprite_question_headTiles, sprite_question_headTilesLen, sprite_question_headPal, sprite_question_headPalLen, g_questionFrames, 8);
 	m_spriteArray[SPRITE_QUESTION_BODY] = new CSprite(SPRITE_QUESTION_BODY, sprite_question_bodyTiles, sprite_question_bodyTilesLen, sprite_question_bodyPal, sprite_question_bodyPalLen, g_questionFrames, 8);
 
-	m_characterArray[CHARTYPE_SNIDE] = new CCharacter(CHARTYPE_SNIDE, m_spriteArray[SPRITE_SNIDE_HEAD], m_spriteArray[SPRITE_SNIDE_BODY], 24, 53);
-	m_characterArray[CHARTYPE_REVEREND] = new CCharacter(CHARTYPE_REVEREND, m_spriteArray[SPRITE_REVEREND_HEAD], m_spriteArray[SPRITE_REVEREND_BODY], 24, 53);
-	m_characterArray[CHARTYPE_BENTLEY] = new CCharacter(CHARTYPE_BENTLEY, m_spriteArray[SPRITE_BENTLEY_HEAD], m_spriteArray[SPRITE_BENTLEY_BODY], 24, 53);
-	m_characterArray[CHARTYPE_COOK] = new CCharacter(CHARTYPE_COOK, m_spriteArray[SPRITE_COOK_HEAD], m_spriteArray[SPRITE_COOK_BODY], 24, 44);
-	m_characterArray[CHARTYPE_GABRIEL] = new CCharacter(CHARTYPE_GABRIEL, m_spriteArray[SPRITE_GABRIEL_HEAD], m_spriteArray[SPRITE_GABRIEL_BODY], 24, 48);
-	m_characterArray[CHARTYPE_CYNTHIA] = new CCharacter(CHARTYPE_CYNTHIA, m_spriteArray[SPRITE_CYNTHIA_HEAD], m_spriteArray[SPRITE_CYNTHIA_BODY], 24, 49);
-	m_characterArray[CHARTYPE_PROFESSOR] = new CCharacter(CHARTYPE_PROFESSOR, m_spriteArray[SPRITE_PROFESSOR_HEAD], m_spriteArray[SPRITE_PROFESSOR_BODY], 24, 48);
-	m_characterArray[CHARTYPE_DOCTOR] = new CCharacter(CHARTYPE_DOCTOR, m_spriteArray[SPRITE_DOCTOR_HEAD], m_spriteArray[SPRITE_DOCTOR_BODY], 24, 49);
-	m_characterArray[CHARTYPE_MAJOR] = new CCharacter(CHARTYPE_MAJOR, m_spriteArray[SPRITE_MAJOR_HEAD], m_spriteArray[SPRITE_MAJOR_BODY], 24, 46);
-	m_characterArray[CHARTYPE_DINGLE] = new CCharacter(CHARTYPE_DINGLE, m_spriteArray[SPRITE_DINGLE_HEAD], m_spriteArray[SPRITE_DINGLE_BODY], 24, 48);
-	m_characterArray[CHARTYPE_ANGUS] = new CCharacter(CHARTYPE_ANGUS, m_spriteArray[SPRITE_ANGUS_HEAD], m_spriteArray[SPRITE_ANGUS_BODY], 24, 48);
+	m_characterArray[CHARTYPE_SNIDE] = new CCharacter(CHARTYPE_SNIDE, m_spriteArray[SPRITE_SNIDE_HEAD], m_spriteArray[SPRITE_SNIDE_BODY], CHARSEX_MALE, 24, 53);
+	m_characterArray[CHARTYPE_REVEREND] = new CCharacter(CHARTYPE_REVEREND, m_spriteArray[SPRITE_REVEREND_HEAD], m_spriteArray[SPRITE_REVEREND_BODY], CHARSEX_MALE, 24, 53);
+	m_characterArray[CHARTYPE_BENTLEY] = new CCharacter(CHARTYPE_BENTLEY, m_spriteArray[SPRITE_BENTLEY_HEAD], m_spriteArray[SPRITE_BENTLEY_BODY], CHARSEX_MALE, 24, 53);
+	m_characterArray[CHARTYPE_COOK] = new CCharacter(CHARTYPE_COOK, m_spriteArray[SPRITE_COOK_HEAD], m_spriteArray[SPRITE_COOK_BODY], CHARSEX_FEMALE, 24, 44);
+	m_characterArray[CHARTYPE_GABRIEL] = new CCharacter(CHARTYPE_GABRIEL, m_spriteArray[SPRITE_GABRIEL_HEAD], m_spriteArray[SPRITE_GABRIEL_BODY], CHARSEX_FEMALE, 24, 48);
+	m_characterArray[CHARTYPE_CYNTHIA] = new CCharacter(CHARTYPE_CYNTHIA, m_spriteArray[SPRITE_CYNTHIA_HEAD], m_spriteArray[SPRITE_CYNTHIA_BODY], CHARSEX_FEMALE, 24, 49);
+	m_characterArray[CHARTYPE_PROFESSOR] = new CCharacter(CHARTYPE_PROFESSOR, m_spriteArray[SPRITE_PROFESSOR_HEAD], m_spriteArray[SPRITE_PROFESSOR_BODY], CHARSEX_MALE, 24, 48);
+	m_characterArray[CHARTYPE_DOCTOR] = new CCharacter(CHARTYPE_DOCTOR, m_spriteArray[SPRITE_DOCTOR_HEAD], m_spriteArray[SPRITE_DOCTOR_BODY], CHARSEX_MALE, 24, 49);
+	m_characterArray[CHARTYPE_MAJOR] = new CCharacter(CHARTYPE_MAJOR, m_spriteArray[SPRITE_MAJOR_HEAD], m_spriteArray[SPRITE_MAJOR_BODY], CHARSEX_MALE, 24, 46);
+	m_characterArray[CHARTYPE_DINGLE] = new CCharacter(CHARTYPE_DINGLE, m_spriteArray[SPRITE_DINGLE_HEAD], m_spriteArray[SPRITE_DINGLE_BODY], CHARSEX_MALE, 24, 48);
+	m_characterArray[CHARTYPE_ANGUS] = new CCharacter(CHARTYPE_ANGUS, m_spriteArray[SPRITE_ANGUS_HEAD], m_spriteArray[SPRITE_ANGUS_BODY], CHARSEX_MALE, 24, 48);
 	
-	m_question = new CCharacter(CHARTYPE_QUESTION, m_spriteArray[SPRITE_QUESTION_HEAD], m_spriteArray[SPRITE_QUESTION_BODY], 24, 48);
+	m_question = new CCharacter(CHARTYPE_QUESTION, m_spriteArray[SPRITE_QUESTION_HEAD], m_spriteArray[SPRITE_QUESTION_BODY], CHARSEX_NONE, 24, 48);
 	
 	m_characterArray[CHARTYPE_SNIDE]->SetDeadSide(true);
 	m_characterArray[CHARTYPE_DOCTOR]->SetDeadSide(true);
@@ -1081,7 +1081,7 @@ void CGame::ShowVisibleCharactersMenu()
 		m_console->AddText("IN THE ROOM YOU SEE:");
 		m_console->ClearMenu();
 		
-		for(int i=1; i<MAX_CHARACTERS-1; i++)
+		for(int i=1; i<MAX_CHARACTERS; i++)
 			if(m_charactersInRoom[i])
 				m_console->AddMenuItem(g_characterName[i], m_characterArray[i]);
 			
@@ -1722,14 +1722,14 @@ void CGame::PostProcessMenu()
 						m_pointer->Hide();
 						m_menu->Hide();
 						m_console->HideMenu();
-						m_console->AddText("HE IS WAITING.");
+						m_console->AddText((m_questionCharacter->GetCharacterSex() == CHARSEX_MALE ? "HE IS WAITING." : "SHE IS WAITING."));
 						m_questionCharacter->SetCharacterMode(CHARMODE_WAITING);
 					}
 					else
 					{
 						m_displayMode = DISPLAYMODE_GAME;
 						m_questionMode = QUESTIONMODE_NONE;
-						m_console->AddText("HE LEFT");
+						m_console->AddText((m_questionCharacter->GetCharacterSex() == CHARSEX_MALE ? "HE LEFT" : "SHE LEFT"));
 						m_pointer->Hide();
 						m_menu->Hide();
 						m_console->HideMenu();
@@ -1797,7 +1797,22 @@ void CGame::PostProcessMenu()
 							
 							m_questionCharacter->RestoreLastCharacterMode();
 							
-							((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(g_askAboutCharacter[m_questionCharacter->GetCharacterType() * MAX_CHARACTERS + pCharacter->GetCharacterType()]);
+							switch(m_questionCharacter->GetCharacterType())
+							{
+								case CHARTYPE_PROFESSOR:
+									((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(g_askAboutProfessorRandom[rand() % 5]);
+									break;
+								case CHARTYPE_MAJOR:
+									((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(g_askAboutMajorRandom[rand() % 4]);
+									break;
+								case CHARTYPE_ANGUS:
+									mmEffectEx(&g_sfx_ghostly);
+									((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("WOOOOOO!");
+								default:
+									((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(g_askAboutCharacter[m_questionCharacter->GetCharacterType() * MAX_CHARACTERS + pCharacter->GetCharacterType()]);
+									break;
+							}
+							
 							m_pointer->Hide();
 							m_menu->Hide();
 							m_console->HideMenu();

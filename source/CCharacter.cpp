@@ -3,7 +3,7 @@
 #include "CCharacter.h"
 #include "Text.h"
 
-CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite, int width, int height)
+CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite, CharacterSex characterSex, int width, int height)
 {
 	m_characterType = characterType;
 	m_characterMode = CHARMODE_NONE;
@@ -13,6 +13,7 @@ CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprit
 	m_y = 0;
 	m_width = width;
 	m_height = height;
+	m_characterSex = characterSex;
 	
 	m_visible = false;
 	m_green = false;
