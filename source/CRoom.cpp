@@ -5,7 +5,7 @@
 #include "lz77.h"
 #include "Gfx.h"
 
-CRoom::CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const unsigned char* pColMap, int centreY)
+CRoom::CRoom(RoomType roomType, Map* pMap, Map* pOverlay, const unsigned char* pColMap, int centreY)
 {
 	m_roomType = roomType;
 	m_pMap = pMap;
@@ -16,6 +16,12 @@ CRoom::CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const unsigned char* p
 	
 	for(int i=0; i<MAX_DOORS; i++)
 		m_doorArray[i] = NULL;
+	
+	for(int i=0; i<MAX_ROOM_SRC_RECT; i++)
+		m_rectSrc[i] = NULL;
+		
+	for(int i=0; i<MAX_ROOM_DST_RECT; i++)
+		m_rectDst[i] = NULL;
 		
 	for(int i=0; i<MAX_ROOM_DST_RECT; i++)
 		m_animArray[i] = NULL;
@@ -155,7 +161,7 @@ void CRoom::Initialize(int x)
 	
 	Draw();
 	
-	SaveTiles(&m_rectDst[DSTRECT_CLOCK], m_clockTiles);	
+	SaveTiles(m_rectDst[DSTRECT_CLOCK], m_clockTiles);	
 }
 
 void CRoom::InitializeDoors()
@@ -209,26 +215,26 @@ void CRoom::Update(CTime* pTime)
 {
 	if(m_animArray[DSTRECT_TORCH1] != NULL)
 		if(m_animArray[DSTRECT_TORCH1]->Update())
-			if(!DoorIntersect(&m_rectDst[DSTRECT_TORCH1]))
-				MoveMap(&m_rectSrc[SRCRECT_TORCH1] + m_animArray[DSTRECT_TORCH1]->FrameNum(), &m_rectDst[DSTRECT_TORCH1]);
+			if(!DoorIntersect(m_rectDst[DSTRECT_TORCH1]))
+				MoveMap(m_rectSrc[SRCRECT_TORCH1 + m_animArray[DSTRECT_TORCH1]->FrameNum()], m_rectDst[DSTRECT_TORCH1]);
 	
 	if(m_animArray[DSTRECT_TORCH2] != NULL)	
 		if(m_animArray[DSTRECT_TORCH2]->Update())
-			if(!DoorIntersect(&m_rectDst[DSTRECT_TORCH2]))
-				MoveMap(&m_rectSrc[SRCRECT_TORCH1] + m_animArray[DSTRECT_TORCH2]->FrameNum(), &m_rectDst[DSTRECT_TORCH2]);
+			if(!DoorIntersect(m_rectDst[DSTRECT_TORCH2]))
+				MoveMap(m_rectSrc[SRCRECT_TORCH1 + m_animArray[DSTRECT_TORCH2]->FrameNum()], m_rectDst[DSTRECT_TORCH2]);
 
 	if(m_animArray[DSTRECT_TORCH3] != NULL)
 		if(m_animArray[DSTRECT_TORCH3]->Update())
-			if(!DoorIntersect(&m_rectDst[DSTRECT_TORCH3]))
-				MoveMap(&m_rectSrc[SRCRECT_TORCH1] + m_animArray[DSTRECT_TORCH3]->FrameNum(), &m_rectDst[DSTRECT_TORCH3]);
+			if(!DoorIntersect(m_rectDst[DSTRECT_TORCH3]))
+				MoveMap(m_rectSrc[SRCRECT_TORCH1 + m_animArray[DSTRECT_TORCH3]->FrameNum()], m_rectDst[DSTRECT_TORCH3]);
 	
 	if(m_animArray[DSTRECT_CLOCK] != NULL)
 	{
 		if(m_animArray[DSTRECT_CLOCK]->Update())
 		{
-			if(!IsRectEmpty(&m_rectDst[DSTRECT_CLOCK]))
+			if(!IsRectEmpty(m_rectDst[DSTRECT_CLOCK]))
 			{
-				RestoreTiles(&m_rectDst[DSTRECT_CLOCK], m_clockTiles);
+				RestoreTiles(m_rectDst[DSTRECT_CLOCK], m_clockTiles);
 				
 				if(pTime != NULL)
 					DrawTime(pTime, 124, 89);
@@ -238,67 +244,67 @@ void CRoom::Update(CTime* pTime)
 	
 	if(m_animArray[DSTRECT_FIREPLACE] != NULL)
 		if(m_animArray[DSTRECT_FIREPLACE]->Update())
-			MoveMap(&m_rectSrc[SRCRECT_FIREPLACE1 + m_animArray[DSTRECT_FIREPLACE]->FrameNum()], &m_rectDst[DSTRECT_FIREPLACE]);
+			MoveMap(m_rectSrc[SRCRECT_FIREPLACE1 + m_animArray[DSTRECT_FIREPLACE]->FrameNum()], m_rectDst[DSTRECT_FIREPLACE]);
 
 	if(m_animArray[DSTRECT_SAFE] != NULL)
 		if(m_animArray[DSTRECT_SAFE]->Update())
-			MoveMap(&m_rectSrc[SRCRECT_SAFE1 + m_animArray[DSTRECT_SAFE]->FrameNum()], &m_rectDst[DSTRECT_SAFE]);
+			MoveMap(m_rectSrc[SRCRECT_SAFE1 + m_animArray[DSTRECT_SAFE]->FrameNum()], m_rectDst[DSTRECT_SAFE]);
 
 	if(m_animArray[DSTRECT_LIGHT1] != NULL)
 		if(m_animArray[DSTRECT_LIGHT1]->Update())
-			if(!DoorIntersect(&m_rectDst[DSTRECT_LIGHT1]))
-				MoveMap(&m_rectSrc[SRCRECT_LIGHT1 + m_animArray[DSTRECT_LIGHT1]->FrameNum()], &m_rectDst[DSTRECT_LIGHT1]);
+			if(!DoorIntersect(m_rectDst[DSTRECT_LIGHT1]))
+				MoveMap(m_rectSrc[SRCRECT_LIGHT1 + m_animArray[DSTRECT_LIGHT1]->FrameNum()], m_rectDst[DSTRECT_LIGHT1]);
 	
 	if(m_animArray[DSTRECT_LIGHT2] != NULL)
 		if(m_animArray[DSTRECT_LIGHT2]->Update())
-			MoveMap(&m_rectSrc[SRCRECT_LIGHT1 + m_animArray[DSTRECT_LIGHT2]->FrameNum()], &m_rectDst[DSTRECT_LIGHT2]);
+			MoveMap(m_rectSrc[SRCRECT_LIGHT1 + m_animArray[DSTRECT_LIGHT2]->FrameNum()], m_rectDst[DSTRECT_LIGHT2]);
 	
 	if(m_animArray[DSTRECT_EYES] != NULL)
 		if(m_animArray[DSTRECT_EYES]->Update())
-			MoveMap(&m_rectSrc[SRCRECT_EYES1 + m_animArray[DSTRECT_EYES]->FrameNum()], &m_rectDst[DSTRECT_EYES]);
+			MoveMap(m_rectSrc[SRCRECT_EYES1 + m_animArray[DSTRECT_EYES]->FrameNum()], m_rectDst[DSTRECT_EYES]);
 
 	if(m_animArray[DSTRECT_STATUE] != NULL)
 		if(m_animArray[DSTRECT_STATUE]->Update())
-			MoveMap(&m_rectSrc[SRCRECT_STATUE], &m_rectDst[DSTRECT_STATUE]);
+			MoveMap(m_rectSrc[SRCRECT_STATUE], m_rectDst[DSTRECT_STATUE]);
 
 	if(m_animArray[DSTRECT_TROPHY] != NULL)
 		if(m_animArray[DSTRECT_TROPHY]->Update())
-			MoveMap(&m_rectSrc[SRCRECT_TROPHY], &m_rectDst[DSTRECT_TROPHY]);
+			MoveMap(m_rectSrc[SRCRECT_TROPHY], m_rectDst[DSTRECT_TROPHY]);
 
 	if(m_animArray[DSTRECT_SWORD] != NULL)
 		if(m_animArray[DSTRECT_SWORD]->Update())
-			MoveMap(&m_rectSrc[SRCRECT_SWORD], &m_rectDst[DSTRECT_SWORD]);
+			MoveMap(m_rectSrc[SRCRECT_SWORD], m_rectDst[DSTRECT_SWORD]);
 
 	if(m_animArray[DSTRECT_BALL_ON_CHAIN] != NULL)
 		if(m_animArray[DSTRECT_BALL_ON_CHAIN]->Update())
-			MoveMap(&m_rectSrc[SRCRECT_BALL_ON_CHAIN], &m_rectDst[DSTRECT_BALL_ON_CHAIN]);
+			MoveMap(m_rectSrc[SRCRECT_BALL_ON_CHAIN], m_rectDst[DSTRECT_BALL_ON_CHAIN]);
 
 	if(m_animArray[DSTRECT_PENDULUM] != NULL)
 		if(m_animArray[DSTRECT_PENDULUM]->Update())
-			MoveMap(&m_rectSrc[SRCRECT_PENDULUM1 + m_animArray[DSTRECT_PENDULUM]->FrameNum()], &m_rectDst[DSTRECT_PENDULUM]);
+			MoveMap(m_rectSrc[SRCRECT_PENDULUM1 + m_animArray[DSTRECT_PENDULUM]->FrameNum()], m_rectDst[DSTRECT_PENDULUM]);
 	
 	if(m_animArray[DSTRECT_FOUNTAIN] != NULL)
 		if(m_animArray[DSTRECT_FOUNTAIN]->Update())
-			MoveMap(&m_rectSrc[SRCRECT_FOUNTAIN1 + m_animArray[DSTRECT_FOUNTAIN]->FrameNum()], &m_rectDst[DSTRECT_FOUNTAIN]);
+			MoveMap(m_rectSrc[SRCRECT_FOUNTAIN1 + m_animArray[DSTRECT_FOUNTAIN]->FrameNum()], m_rectDst[DSTRECT_FOUNTAIN]);
 	
 	if(m_animArray[DSTRECT_CABINET] != NULL)
 		if(m_animArray[DSTRECT_CABINET]->Update())
-			MoveMap(&m_rectSrc[SRCRECT_CABINET1 + m_animArray[DSTRECT_CABINET]->FrameNum()], &m_rectDst[DSTRECT_CABINET]);
+			MoveMap(m_rectSrc[SRCRECT_CABINET1 + m_animArray[DSTRECT_CABINET]->FrameNum()], m_rectDst[DSTRECT_CABINET]);
 
 	if(m_animArray[DSTRECT_FAUCET] != NULL)
 		if(m_animArray[DSTRECT_FAUCET]->Update())
-			MoveMap(&m_rectSrc[SRCRECT_FAUCET1 + m_animArray[DSTRECT_FAUCET]->FrameNum()], &m_rectDst[DSTRECT_FAUCET]);
+			MoveMap(m_rectSrc[SRCRECT_FAUCET1 + m_animArray[DSTRECT_FAUCET]->FrameNum()], m_rectDst[DSTRECT_FAUCET]);
 
 	if(m_animArray[DSTRECT_LEAK] != NULL)
 		if(m_animArray[DSTRECT_LEAK]->Update())
-			MoveMap(&m_rectSrc[SRCRECT_LEAK1 + m_animArray[DSTRECT_LEAK]->FrameNum()], &m_rectDst[DSTRECT_LEAK]);
+			MoveMap(m_rectSrc[SRCRECT_LEAK1 + m_animArray[DSTRECT_LEAK]->FrameNum()], m_rectDst[DSTRECT_LEAK]);
 
 	if(m_animArray[DSTRECT_BULB] != NULL)
 		if(m_animArray[DSTRECT_BULB]->Update())
-			MoveMap(&m_rectSrc[SRCRECT_BULB1 + m_animArray[DSTRECT_BULB]->FrameNum()], &m_rectDst[DSTRECT_BULB]);
+			MoveMap(m_rectSrc[SRCRECT_BULB1 + m_animArray[DSTRECT_BULB]->FrameNum()], m_rectDst[DSTRECT_BULB]);
 }
 
-bool CRoom::DoorIntersect(PRECT pRect)
+bool CRoom::DoorIntersect(Rect* pRect)
 {
 	for(int i=0; i < MAX_DOORS; i++)
 	{
@@ -312,12 +318,12 @@ bool CRoom::DoorIntersect(PRECT pRect)
 	return false;
 }
 
-void CRoom::MoveMap(PRECT rectSrc, PRECT rectDst)
+void CRoom::MoveMap(Rect* rectSrc, Rect* rectDst)
 {
 	if(IsRectEmpty(rectSrc) || IsRectEmpty(rectDst))
 		return;
 		
-	if(rectSrc->Width != rectDst->Width || rectSrc->Height != rectSrc->Height)
+	if(rectSrc->Width != rectDst->Width || rectSrc->Height != rectDst->Height)
 		return;
 
 	int scrollX = m_x / 256;
@@ -382,9 +388,11 @@ bool CRoom::Scroll(DirectionType directionType)
 	return false;
 }
 
-bool CRoom::GetColMapRect(CollisionType colType, PRECT rect)
+bool CRoom::GetColMapRect(CollisionType colType, Rect** rect)
 {
 	bool mapFound = false;
+	
+	*rect = NULL;
 	
 	for(int y=0; y < m_pMap->Height / 8; y++)
 	{
@@ -394,13 +402,14 @@ bool CRoom::GetColMapRect(CollisionType colType, PRECT rect)
 			{
 				if(!mapFound)
 				{
-					mapFound = true;			
-					rect->X = x;
-					rect->Y = y;
+					mapFound = true;
+					*rect = new Rect(0, 0, 0, 0);
+					(*rect)->X = x;
+					(*rect)->Y = y;
 				}
 				
-				rect->Width = (x - rect->X) + 1;
-				rect->Height = (y - rect->Y) + 1;
+				(*rect)->Width = (x - (*rect)->X) + 1;
+				(*rect)->Height = (y - (*rect)->Y) + 1;
 			}
 		}
 	}

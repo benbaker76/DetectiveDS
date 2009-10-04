@@ -36,9 +36,6 @@ void CConsole::Clear()
 	m_lineCount = 0;
 	m_linePos = 0;
 	m_lineOffset = 0;
-	
-	for(int i=0; i<CONSOLE_MAX_TEXT; i++)
-		strcpy(m_textArray[i], "");
 		
 	ClearText();
 	
@@ -62,6 +59,9 @@ bool CConsole::AddText(const char* text)
 	m_consoleMode = CONSOLEMODE_NORMAL;
 	
 	Clear();
+	
+	if(text == NULL)
+		return false;
 	
 	m_lineCount = WordWrap(text);
 	

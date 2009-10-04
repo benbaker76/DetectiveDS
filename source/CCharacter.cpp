@@ -20,9 +20,12 @@ CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprit
 	m_dead = false;
 	m_deadSide = false;
 	
-	m_pathPosition = 0;
+	m_pRoom = NULL;
+	
+	m_point = new Point(0, 0);
 	
 	m_itemCache = new CItemCache(ITEMLOCATION_CHARACTER, this);
+	m_goalManager = new CGoalManager();
 	
 	//m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_colTiles + 256 * 0, sprite_colTilesLen, sprite_colPal, sprite_colPalLen, NULL, 0);
 	//m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_colTiles + 256 * 1, sprite_colTilesLen, sprite_colPal, sprite_colPalLen, NULL, 0);
@@ -45,13 +48,13 @@ void CCharacter::SetPosition(float x, float y)
 	
 	if(m_dead && m_deadSide)
 	{
-		m_pHeadSprite->SetPosition(AbsX() - 16 + 32 , m_y + 32);
-		m_pBodySprite->SetPosition(AbsX() - 16, m_y + 32);
+		m_pHeadSprite->SetPosition(ScreenX() - 16 + 32 , m_y + 32);
+		m_pBodySprite->SetPosition(ScreenX() - 16, m_y + 32);
 	}
 	else
 	{
-		m_pHeadSprite->SetPosition(AbsX(), m_y);
-		m_pBodySprite->SetPosition(AbsX(), m_y + HEAD_HEIGHT);
+		m_pHeadSprite->SetPosition(ScreenX(), m_y);
+		m_pBodySprite->SetPosition(ScreenX(), m_y + HEAD_HEIGHT);
 	}
 }
 
@@ -67,7 +70,7 @@ void CCharacter::SetPriority(int priority)
 	m_pBodySprite->SetPriority(priority);
 }
 
-void CCharacter::Update()
+void CCharacter::Update(CRoom* pCurrentRoom)
 {
 	switch(m_characterMode)
 	{
@@ -81,91 +84,54 @@ void CCharacter::Update()
 		break;
 	case CHARMODE_WALKING:
 		{
-			CRoom* pRoom = m_path[m_pathPosition];
+			CGoal* pGoal = m_goalManager->CurrentGoal();
 			
-			if(pRoom != NULL)
+			if(pGoal != NULL)
 			{
-				CDoor* pDoor = m_pRoom->GetRoomDoor(pRoom);
-				int xPos = pPoint()->X;
-				int yPos = pPoint()->Y;
-				int xEnd = pDoor->pPoint()->X * 8;
-				int yEnd = pDoor->pPoint()->Y * 8;
-				int xDist = xEnd - xPos;
-				int yDist = yEnd - yPos;
-
-				if(abs(xDist) > 8 || abs(yDist) > 8)
-				{						
-					if(abs(xDist) < 32)	 		// Near the door
-					{			
-						if(xDist < 0)			// Move directly towards it
-							m_x -= 0.6f;		// left
-						else
-							m_x += 0.6f;		// right
-							
-						if(yDist < 0)			// Move directly towards it
-						{
-							SetFrameType(FRAME_RIGHT);
-							SetHFlip(false);
-							
-							m_y -= 0.3f;		// up
-						}
-						else
-						{
-							SetFrameType(FRAME_LEFT);
-							SetHFlip(false);
-							
-							m_y += 0.3f;		// down
-						}
-					}
-					else
-					{			
-						if(yPos > m_pRoom->CentreY())			// Below centre of room so move up diagonally
-						{
-							SetFrameType(FRAME_RIGHT);
-							SetHFlip(false);
-							
-							m_x += 0.6f;
-							m_y -= 0.3f;
-						}
-						else if(yPos < m_pRoom->CentreY()) 	// Above centre of room so move down diagonally
-						{
-							SetFrameType(FRAME_LEFT);
-							SetHFlip(false);
-							
-							m_x -= 0.6f;
-							m_y += 0.3f;
-						}
-						else
-						{						
-							if(xDist < 0)
-							{
-								SetFrameType(FRAME_LEFT);
-								SetHFlip(false);
-							}
-							else
-							{
-								SetFrameType(FRAME_LEFT);
-								SetHFlip(true);
-							}
-						
-							float direction = atan2(yDist, xDist);
-							// Move directly towards door
-							m_x += cos(direction) * 0.6f;
-							//m_y += sin(direction) * 0.3f;
-						}
-					}
-				}
-				else
+				switch(pGoal->GetGoalType())
 				{
-					m_pathPosition++;
-					m_pRoom = pRoom;
-					
-					pDoor->SetDoorState(DOORSTATE_OPEN);
-					
-					int xDoor = pDoor->pDoorOut()->pPoint()->X;
-					int yDoor = pDoor->pDoorOut()->pPoint()->Y;
-					m_x = xDoor * 8;
-					m_y = yDoor * 8 - m_height;
+				case GOAL_GOTOROOM:
+					{
+						CRoom* pRoom = pGoal->pRoom();
+						
+						if(pRoom != NULL)
+						{
+							CDoor* pDoor = m_pRoom->GetRoomDoor(pRoom);
+							Point point(pDoor->pPoint()->X, pDoor->pPoint()->Y);
+							point.X *= 8;
+							point.Y *= 8;
+							
+							if(MoveTo(&point))
+							{
+								if(!pGoal->NextRoom())
+									m_goalManager->NextGoal();
+								
+								pDoor->SetDoorState(DOORSTATE_OPEN);
+								
+								if(m_pRoom == pCurrentRoom || pRoom == pCurrentRoom)
+									pCurrentRoom->Draw();
+								
+								m_pRoom = pRoom;
+								
+								int xDoor = pDoor->pDoorOut()->pPoint()->X;
+								int yDoor = pDoor->pDoorOut()->pPoint()->Y;
+								m_x = xDoor * 8;
+								m_y = yDoor * 8 - m_height;
+							}
+						}
+					}
+					break;
+				case GOAL_GOTOPOINT:
+					{
+						Point* pPoint = pGoal->pPoint();
+						
+						if(MoveTo(pPoint))
+						{
+							if(!pGoal->NextPoint())
+								m_goalManager->NextGoal();
+						}
+					}
+					break;
 				}
 			}
 			else
@@ -188,12 +154,90 @@ void CCharacter::Update()
 	m_pBodySprite->Update();
 }
 
-void CCharacter::SetVisible(CRoom* pRoom)
+bool CCharacter::MoveTo(Point* pDest)
 {
-	if(m_pRoom == pRoom && AbsX() + m_width > 0 && AbsX() < 256)
-		Show();
-	else
-		Hide();
+	int xPos = pPoint()->X;
+	int yPos = pPoint()->Y;
+	int xEnd = pDest->X;
+	int yEnd = pDest->Y;
+	int xDist = xEnd - xPos;
+	int yDist = yEnd - yPos;
+
+	if(abs(xDist) > 8 || abs(yDist) > 8)
+	{						
+		if(abs(xDist) < 32)	 		// Near the door
+		{			
+			if(xDist < 0)			// Move directly towards it
+				m_x -= 0.6f;		// left
+			else
+				m_x += 0.6f;		// right
+				
+			if(yDist < 0)			// Move directly towards it
+			{
+				SetFrameType(FRAME_RIGHT);
+				SetHFlip(false);
+				
+				m_y -= 0.3f;		// up
+			}
+			else
+			{
+				//SetFrameType(FRAME_LEFT);
+				//SetHFlip(false);
+				
+				m_y += 0.3f;		// down
+			}
+		}
+		else
+		{			
+			if(yPos > m_pRoom->CentreY())			// Below centre of room so move up diagonally
+			{
+				SetFrameType(FRAME_RIGHT);
+				SetHFlip(false);
+				
+				m_x += 0.6f;
+				m_y -= 0.3f;
+			}
+			else if(yPos < m_pRoom->CentreY()) 	// Above centre of room so move down diagonally
+			{
+				SetFrameType(FRAME_LEFT);
+				SetHFlip(false);
+				
+				m_x -= 0.6f;
+				m_y += 0.3f;
+			}
+			else
+			{						
+				if(xDist < 0)
+				{
+					SetFrameType(FRAME_LEFT);
+					SetHFlip(false);
+				}
+				else
+				{
+					SetFrameType(FRAME_LEFT);
+					SetHFlip(true);
+				}
+			
+				float direction = atan2(yDist, xDist);
+				
+				// Move directly towards door
+				m_x += cos(direction) * 0.6f;
+				//m_y += sin(direction) * 0.3f;
+			}
+		}
+		
+		return false;
+	}
+
+	return true;
+}
+
+bool CCharacter::IsVisible(CRoom* pRoom)
+{
+	if(m_pRoom == pRoom && ScreenX() + m_width > 0 && ScreenX() < 256)
+		return true;
+
+	return false;
 }
 
 void CCharacter::Show()
@@ -335,20 +379,11 @@ bool CCharacter::CheckCollision(DirectionType directionType, CollisionType* colN
 
 bool CCharacter::CheckCollision(DirectionType directionType, CCharacter* character, CharacterType* charNear, CharacterType* charFar)
 {
-	RECT rectMe, rectYou;
+	Rect rectMe(m_x, m_y + m_height - 8, m_width, 8);
+	Rect rectYou(character->X(), character->Y() + character->Height() - 8, character->Width(), 8);
 	
 	*charNear = CHARTYPE_NONE;
 	*charFar = CHARTYPE_NONE;
-	
-	rectMe.X = m_x;
-	rectMe.Y = m_y + m_height - 8;
-	rectMe.Width = m_width;
-	rectMe.Height = 8;
-	
-	rectYou.X = character->X();
-	rectYou.Y = character->Y() + character->Height() - 8;
-	rectYou.Width = character->Width();
-	rectYou.Height = 8;
 	
 	switch(directionType)
 	{
@@ -453,7 +488,7 @@ void CCharacter::SetCharacterMode(CharacterMode characterMode)
 	}
 }
 
-int CCharacter::AbsX()
+int CCharacter::ScreenX()
 {
-	return m_x - m_pRoom->X();
+	return m_x - (m_pRoom == NULL ? 0 : m_pRoom->X());
 }

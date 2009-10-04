@@ -141,7 +141,7 @@ class CDoor;
 class CRoom
 {
 public:
-	CRoom(RoomType roomType, PMAP pMap, PMAP pOverlay, const u8* colMap, int centreY);
+	CRoom(RoomType roomType, Map* pMap, Map* pOverlay, const u8* colMap, int centreY);
 	~CRoom();
 	
 	void Initialize(int x);
@@ -150,8 +150,8 @@ public:
 	void InitializeOverlay();
 	void Draw();
 	void Update(CTime* pTime);
-	bool DoorIntersect(PRECT pRect);
-	void MoveMap(PRECT rectSrc, PRECT rectDest);
+	bool DoorIntersect(Rect* pRect);
+	void MoveMap(Rect* rectSrc, Rect* rectDest);
 	bool Scroll(DirectionType directionType);
 	
 	void SetDoor(int doorType, CDoor* pDoor) { m_doorArray[doorType] = pDoor; }
@@ -160,8 +160,8 @@ public:
 	
 	void SetX(int x) { m_x = x; }
 	
-	void SetOverlay(PMAP pOverlay, int overlayY) { m_pOverlay = pOverlay; m_overlayY = overlayY; }
-	void SetMap(PMAP pMap) { m_pMap = pMap; }
+	void SetOverlay(Map* pOverlay, int overlayY) { m_pOverlay = pOverlay; m_overlayY = overlayY; }
+	void SetMap(Map* pMap) { m_pMap = pMap; }
 	void SetColMap(const u8* pColMap) { m_pColMap = pColMap; }
 	
 	void SetPalette(u16* pPalette) { dmaCopy(pPalette, BG_PALETTE_SUB, 512); }
@@ -184,12 +184,12 @@ public:
 	int OverlayY() const { return m_overlayY; }
 	int CentreY() const { return m_centreY; }
 	u8 ColMap(int x, int y);
-	bool GetColMapRect(CollisionType, PRECT rect);
+	bool GetColMapRect(CollisionType, Rect** rect);
 
 private:
 	RoomType m_roomType;
-	PMAP m_pMap;
-	PMAP m_pOverlay;
+	Map* m_pMap;
+	Map* m_pOverlay;
 	const u8* m_pColMap;
 	
 	int m_x;
@@ -197,8 +197,8 @@ private:
 
 	int m_overlayY;
 	
-	RECT m_rectSrc[MAX_ROOM_SRC_RECT];
-	RECT m_rectDst[MAX_ROOM_DST_RECT];
+	Rect* m_rectSrc[MAX_ROOM_SRC_RECT];
+	Rect* m_rectDst[MAX_ROOM_DST_RECT];
 	
 	CAnimation* m_animArray[MAX_ROOM_DST_RECT];
 	

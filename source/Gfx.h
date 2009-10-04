@@ -1,8 +1,8 @@
 #include "Globals.h"
 #include "CTimer.h"
 
-void SaveTiles(PRECT pRect, u16* pDest);
-void RestoreTiles(PRECT pRect, u16* pSrc);
+void SaveTiles(Rect* pRect, u16* pDest);
+void RestoreTiles(Rect* pRect, u16* pSrc);
 void DrawPixel(int x, int y, int colorIndex);
 void DrawLine(int x0, int y0, int x1, int y1, int colorIndex);
 void DrawTime(CTime* pTime, int x, int y);

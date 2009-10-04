@@ -5,7 +5,7 @@
 #include "TDG.h"
 #include "lz77.h"
 
-void SaveTiles(PRECT pRect, u16* pDest)
+void SaveTiles(Rect* pRect, u16* pDest)
 {
 	for(int y=pRect->Y; y < pRect->Y + pRect->Height; y++)
 	{
@@ -20,7 +20,7 @@ void SaveTiles(PRECT pRect, u16* pDest)
 	}
 }
 
-void RestoreTiles(PRECT pRect, u16* pSrc)
+void RestoreTiles(Rect* pRect, u16* pSrc)
 {
 	for(int y=pRect->Y; y < pRect->Y + pRect->Height; y++)
 	{

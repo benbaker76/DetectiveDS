@@ -349,7 +349,7 @@ const char* g_askAboutCharacter[] =
 	NULL,										// The Doctor
 	NULL,										// The Major
 	NULL,										// Dingle
-	"COOK SPEAKS \"NOT MUCH TO SAY REALLY..OF COURSE HE WILL BE MISSED.\"",	// Angus
+	"\"NOT MUCH TO SAY REALLY..OF COURSE HE WILL BE MISSED.\"",	// Angus
 
 	// Gabriel
 	NULL, 										// Snide
@@ -362,7 +362,7 @@ const char* g_askAboutCharacter[] =
 	"\"I DON'T TRUST HIM!\"",					// The Doctor
 	"\"..COMPLETELY MAD.\"",					// The Major
 	NULL,										// Dingle
-	"GABRIEL SPEAKS \"A GOOD MAN SIR, VERY GENEROUS..MADE A BIG DONATION TO THE CHURCH ROOF FUND, SO MAVIS BAGWORTHY SAYS.\"",	// Angus
+	"\"A GOOD MAN SIR, VERY GENEROUS..MADE A BIG DONATION TO THE CHURCH ROOF FUND, SO MAVIS BAGWORTHY SAYS.\"",	// Angus
 
 	// Cynthia
 	NULL,  										// Snide
@@ -375,7 +375,7 @@ const char* g_askAboutCharacter[] =
 	NULL,										// The Doctor
 	NULL,										// The Major
 	NULL,										// Dingle
-	"CYNTHIA SPEAKS \"SIMPLY AWFUL BUSINESS. I DIDN'T KNOW HIM, BUT PATER WAS TERRIBLY UPSET.\"",	// Angus
+	"\"SIMPLY AWFUL BUSINESS. I DIDN'T KNOW HIM, BUT PATER WAS TERRIBLY UPSET.\"",	// Angus
 
 	// The Professor
 	NULL, 										// Snide
@@ -388,7 +388,7 @@ const char* g_askAboutCharacter[] =
 	NULL, 										// The Doctor
 	NULL, 										// The Major
 	NULL, 										// Dingle
-	"THE PROFESSOR SPEAKS \"ER WHAT..OH YES..GREAT SHAME.. I HAD KNOWN HIM SINCE OXFORD.. POOR FELLOW HAD A TERRIBLE MEMORY FOR NUMBERS..\"",	// Angus
+	"\"ER WHAT..OH YES..GREAT SHAME.. I HAD KNOWN HIM SINCE OXFORD.. POOR FELLOW HAD A TERRIBLE MEMORY FOR NUMBERS..\"",	// Angus
 
 	// The Doctor
 	NULL,  										// Snide
@@ -414,7 +414,7 @@ const char* g_askAboutCharacter[] =
 	NULL, 										// The Doctor
 	NULL, 										// The Major
 	NULL, 										// Dingle
-	"THE MAJOR SPEAKS \"YES, DAMN SHAME.. POOR FELLOW ..\"",	// Angus
+	"\"YES, DAMN SHAME.. POOR FELLOW ..\"",	// Angus
 
 	// Dingle
 	NULL, 										// Snide
@@ -427,7 +427,7 @@ const char* g_askAboutCharacter[] =
 	NULL,										// The Doctor
 	NULL, 										// The Major
 	NULL, 										// Dingle
-	"DINGLE SPEAKS \"MOST TRAGIC. OF COURSE I AM NOT AT LIBERTY TO DISCUSS HIS BUSINESS AFFAIRS.\"",	// Angus
+	"\"MOST TRAGIC. OF COURSE I AM NOT AT LIBERTY TO DISCUSS HIS BUSINESS AFFAIRS.\"",	// Angus
 	
 	// Angus
 	NULL, 										// Snide
@@ -593,13 +593,13 @@ const char* g_askAboutItem[] =
 	NULL, // A HAMMER
 	NULL, // A BUNCH OF KEYS
 	NULL, // A BIG IRON KEY
-	"BENTLEY SPEAKS \"IT WAS PRESENTED TO THE LATE MR MC. FUNGUS, SIR.\"", // A SILVER TRAY
+	"\"IT WAS PRESENTED TO THE LATE MR MC. FUNGUS, SIR.\"", // A SILVER TRAY
 	NULL, // A BOTTLE OF WINE
 	NULL, // A COMB
 	NULL, // A HARDBACK BOOK
 	NULL, // A FOLDED DOCUMENT;
 	NULL, // AN ELEPHANT GUN
-	"BENTLEY SPEAKS \"IT WAS MR MC. FUNGUS' DIARY..\"", // A DIARY
+	"\"IT WAS MR MC. FUNGUS' DIARY..\"", // A DIARY
 	NULL, // A BLACK BAG
 	NULL, // COLOGNE
 	NULL, // A SMALL BOOK
@@ -1045,7 +1045,7 @@ const char* g_askAboutItem[] =
 	NULL, // A BOTTLE OF WINE
 	NULL, // A COMB
 	NULL, // A HARDBACK BOOK
-	"DINGLE SPEAKS \"OBVIOUSLY A FAKED WILL..WHERE DID YOU FIND IT?\"", // A FOLDED DOCUMENT;
+	"\"OBVIOUSLY A FAKED WILL..WHERE DID YOU FIND IT?\"", // A FOLDED DOCUMENT;
 	NULL, // AN ELEPHANT GUN
 	NULL, // A DIARY
 	NULL, // A BLACK BAG
@@ -1243,22 +1243,22 @@ const char* g_enterRoomText[] =
 	"YOU ARE IN THE DOCTOR'S ROOM.",
 	"YOU ARE IN THE MAJOR'S ROOM.",
 	"YOU ARE IN DINGLE'S ROOM.",
-	"",										// Outside 1
-	"",										// Outside 2
-	"",										// Outside 3
-	"",										// Outside 4
+	NULL,									// Outside 1
+	NULL,									// Outside 2
+	NULL,									// Outside 3
+	NULL,									// Outside 4
 	"YOU ARE OUTSIDE",						// Passage 1
-	"",										// Passage 2
-	"",										// Passage 3
-	"",										// Hall 1
-	"",										// Hall 2
-	"",										// Hall 3
-	"",										// Hall 4
+	NULL,									// Passage 2
+	NULL,									// Passage 3
+	NULL,									// Hall 1
+	NULL,									// Hall 2
+	NULL,									// Hall 3
+	NULL,									// Hall 4
 	"YOU ARE ON THE LANDING.",
 	"YOU ARE IN THE KITCHEN",
 	"YOU ARE IN THE HALL",
 	"YOU ARE IN THE STUDY",
-	"",										// Clock
+	NULL,									// Clock
 	"YOU ARE IN THE CELLAR",
 	"YOU ARE IN THE DRAWING ROOM",
 	"YOU ARE IN THE LIBRARY",

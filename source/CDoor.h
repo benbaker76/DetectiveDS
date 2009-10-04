@@ -49,9 +49,9 @@ public:
 	void SetDoorState(DoorState doorState);
 	void Draw();
 	
-	PPOINT pPoint() const { return (PPOINT) &m_point; }
-	PRECT pRect() const { return (PRECT) &m_rect; }
-	PRECT pRectOpen() const { return (PRECT) &m_rectOpen; }
+	Point* pPoint() const { return m_point; }
+	Rect* pRect() const { return m_rect; }
+	Rect* pRectOpen() const { return m_rectOpen; }
 	DoorType GetDoorType() const { return  m_doorType; };
 	DoorState GetDoorState() const { return  m_doorState; };
 	CRoom* pRoomIn() const { return m_pRoomIn; }
@@ -72,10 +72,10 @@ private:
 	bool m_hidden;
 	bool m_topDoor;
 	
-	POINT m_point;
-	RECT m_rect;
-	RECT m_rectOpen;
-	RECT m_rectArray[MAX_DOOR_RECT];
+	Point* m_point;
+	Rect* m_rect;
+	Rect* m_rectOpen;
+	Rect* m_rectArray[MAX_DOOR_RECT];
 	
 	void GetPosition();
 };

@@ -1,31 +1,37 @@
 #include <nds.h>
 #include <stdio.h>
-#include "CPath.h"
+#include "CPathFinder.h"
 #include "CDoor.h"
 #include "Text.h"
 
-CPath::CPath(CRoom* pRoomArray[MAX_ROOMS])
+CRoomNode* CPathFinder::g_pRoomNodeArray[MAX_ROOMS];
+
+CPathFinder::CPathFinder()
+{
+}
+
+CPathFinder::~CPathFinder()
+{
+}
+
+void CPathFinder::Initialize(CRoom* pRoomArray[MAX_ROOMS])
 {
 	for(int i=0; i<MAX_ROOMS; i++)
-		m_pRoomNodeArray[i] = new CRoomNode(pRoomArray[i]);
+		g_pRoomNodeArray[i] = new CRoomNode(pRoomArray[i]);	
 }
 
-CPath::~CPath()
-{
-}
-
-CRoomNode* CPath::RoomToRoomNode(CRoom* pRoom)
+CRoomNode* CPathFinder::RoomToRoomNode(CRoom* pRoom)
 {
 	for(int i=0; i<MAX_ROOMS; i++)
 	{
-		if(m_pRoomNodeArray[i]->Room == pRoom)
-			return m_pRoomNodeArray[i];
+		if(g_pRoomNodeArray[i]->Room == pRoom)
+			return g_pRoomNodeArray[i];
 	}
 	
 	return NULL;
 }
 
-void CPath::FindRoute(CRoom* pRoomStart, CRoom* pRoomEnd)
+void CPathFinder::FindRoute(CRoom* pRoomStart, CRoom* pRoomEnd)
 {
 	CRoomNode* pRoomNodeStart = RoomToRoomNode(pRoomStart);
 	
@@ -33,10 +39,10 @@ void CPath::FindRoute(CRoom* pRoomStart, CRoom* pRoomEnd)
 	{
 		for(int j=0; j<MAX_DOORS; j++)
 		{
-			CDoor* pDoor = m_pRoomNodeArray[i]->Room->GetDoor(j);
+			CDoor* pDoor = g_pRoomNodeArray[i]->Room->GetDoor(j);
 			
 			if(!pDoor->Hidden())
-				m_pRoomNodeArray[i]->RoomConnections[j] = RoomToRoomNode(pDoor->pRoomOut());
+				g_pRoomNodeArray[i]->RoomConnections[j] = RoomToRoomNode(pDoor->pRoomOut());
 		}
 		
 		m_returnArray[i] = NULL;
@@ -46,7 +52,7 @@ void CPath::FindRoute(CRoom* pRoomStart, CRoom* pRoomEnd)
 	FindNextRoom(1, pRoomEnd, pRoomNodeStart);
 }
 
-bool CPath::FindNextRoom(int count, CRoom* destination, CRoomNode* currNode)
+bool CPathFinder::FindNextRoom(int count, CRoom* destination, CRoomNode* currNode)
 {
 	if(currNode == NULL)
 		return false;
@@ -75,7 +81,7 @@ bool CPath::FindNextRoom(int count, CRoom* destination, CRoomNode* currNode)
 	return false;
 }
 
-bool CPath::CanContinueSearch(CRoomNode* room)
+bool CPathFinder::CanContinueSearch(CRoomNode* room)
 {
 	for(int i=0; i<MAX_DOORS; i++)
 	{

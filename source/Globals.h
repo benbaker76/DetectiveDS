@@ -5,8 +5,11 @@
 
 #ifndef __GLOBALS_H__
 #define __GLOBALS_H__
-typedef struct
+
+struct Map
 {
+	Map(int width, int height, const u32* ptiles, u32 tilesLen, const u16* pmap, u32 mapLen, const u16* ppalette, u32 paletteLen) : Width(width), Height(height), pTiles(ptiles), TilesLen(tilesLen), pMap(pmap), MapLen(mapLen), pPalette(ppalette), PaletteLen(paletteLen) {}
+	Map(int width, int height, const u32* ptiles, u32 tilesLen, const u16* pmap, u32 mapLen) : Width(width), Height(height), pTiles(ptiles), TilesLen(tilesLen), pMap(pmap), MapLen(mapLen) {}
 	int Width;
 	int Height;
 	const u32* pTiles;
@@ -15,23 +18,23 @@ typedef struct
 	u32 MapLen;
 	const u16* pPalette;
 	u32 PaletteLen;	
-} MAP, *PMAP;
+};
 
-typedef struct
+struct Rect
 {
-	//RECT(int x, int y, int width, int height) : X(x), Y(y), Width(width), Height(height) {}
+	Rect(int x, int y, int width, int height) : X(x), Y(y), Width(width), Height(height) {}
 	int X;
 	int Y;
 	int Width;
 	int Height;
-} RECT, *PRECT;
+};
 
-typedef struct
+struct Point
 {
-	//POINT(int x, int y) : X(x), Y(y) {}
+	Point(int x, int y) : X(x), Y(y) {}
 	int X;
 	int Y;
-} POINT, *PPOINT;
+};
 
 enum DirectionType
 {
@@ -43,9 +46,9 @@ enum DirectionType
 
 #endif
 
-bool IsRectEmpty(PRECT pRect);
-bool IntersectRect(PRECT pRectA, PRECT pRectB);
-void PrintRect(PRECT pRect);
+bool IsRectEmpty(Rect* pRect);
+bool IntersectRect(Rect* pRectA, Rect* pRectB);
+void PrintRect(Rect* pRect);
 
 extern const u32 g_snideHeadFrames[];
 extern const u32 g_snideBodyFrames[];
@@ -71,54 +74,54 @@ extern const u32 g_angusHeadFrames[];
 extern const u32 g_angusBodyFrames[];
 extern const u32 g_questionFrames[];
 
-extern MAP g_angus_landingMap;
-extern MAP g_angus_room1Map;
-extern MAP g_angus_room2Map;
-extern MAP g_angus_secretMap;
-extern MAP g_angus_stairsMap;
-extern MAP g_cellarMap;
-extern MAP g_clockMap;
-extern MAP g_courtyardMap;
-extern MAP g_diningMap;
-extern MAP g_drawingMap;
-extern MAP g_gardenMap;
-extern MAP g_graveyardMap;
-extern MAP g_hall1Map;
-extern MAP g_hall2Map;
-extern MAP g_hall3Map;
-extern MAP g_hall4Map;
-extern MAP g_kitchenMap;
-extern MAP g_landingMap;
-extern MAP g_libraryMap;
-extern MAP g_outside1Map;
-extern MAP g_outside2Map;
-extern MAP g_passage1Map;
-extern MAP g_passage2Map;
-extern MAP g_bentleyMap;
-extern MAP g_cookMap;
-extern MAP g_cynthiaMap;
-extern MAP g_dingleMap;
-extern MAP g_doctorMap;
-extern MAP g_gabrielMap;
-extern MAP g_majorMap;
-extern MAP g_professorMap;
-extern MAP g_reverendMap;
-extern MAP g_snideMap;
-extern MAP g_stairsMap;
-extern MAP g_studyMap;
-extern MAP g_utilityMap;
+extern Map* g_angus_landingMap;
+extern Map* g_angus_room1Map;
+extern Map* g_angus_room2Map;
+extern Map* g_angus_secretMap;
+extern Map* g_angus_stairsMap;
+extern Map* g_cellarMap;
+extern Map* g_clockMap;
+extern Map* g_courtyardMap;
+extern Map* g_diningMap;
+extern Map* g_drawingMap;
+extern Map* g_gardenMap;
+extern Map* g_graveyardMap;
+extern Map* g_hall1Map;
+extern Map* g_hall2Map;
+extern Map* g_hall3Map;
+extern Map* g_hall4Map;
+extern Map* g_kitchenMap;
+extern Map* g_landingMap;
+extern Map* g_libraryMap;
+extern Map* g_outside1Map;
+extern Map* g_outside2Map;
+extern Map* g_passage1Map;
+extern Map* g_passage2Map;
+extern Map* g_bentleyMap;
+extern Map* g_cookMap;
+extern Map* g_cynthiaMap;
+extern Map* g_dingleMap;
+extern Map* g_doctorMap;
+extern Map* g_gabrielMap;
+extern Map* g_majorMap;
+extern Map* g_professorMap;
+extern Map* g_reverendMap;
+extern Map* g_snideMap;
+extern Map* g_stairsMap;
+extern Map* g_studyMap;
+extern Map* g_utilityMap;
 
-extern MAP g_angus_landing_frontMap;
-extern MAP g_angus_room_frontMap;
-extern MAP g_angus_secret_frontMap;
-extern MAP g_courtyard_frontMap;
-extern MAP g_dining_frontMap;
-extern MAP g_garden_frontMap;
-extern MAP g_graveyard_frontMap;
-extern MAP g_landing_front1Map;
-extern MAP g_landing_front2Map;
-extern MAP g_outside2_frontMap;
-extern MAP g_stairs_frontMap;
+extern Map* g_angus_landing_frontMap;
+extern Map* g_angus_room_frontMap;
+extern Map* g_angus_secret_frontMap;
+extern Map* g_courtyard_frontMap;
+extern Map* g_dining_frontMap;
+extern Map* g_garden_frontMap;
+extern Map* g_graveyard_frontMap;
+extern Map* g_landing_front1Map;
+extern Map* g_landing_front2Map;
+extern Map* g_outside2_frontMap;
+extern Map* g_stairs_frontMap;
 
 extern mm_sound_effect g_sfx_footsteps;
 extern mm_sound_effect g_sfx_opendoor;

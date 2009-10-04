@@ -91,14 +91,14 @@ void CGame::Initialize()
 	m_itemArray[ITEM_A_BOMB] = new CItem(ITEM_A_BOMB, ITEMATTRIB_EVIDENCE);								// Clue #7
 	m_itemArray[ITEM_A_SMALL_KEY] = new CItem(ITEM_A_SMALL_KEY, ITEMATTRIB_USE_KEY);
 	m_itemArray[ITEM_BULLETS] = new CItem(ITEM_BULLETS, ITEMATTRIB_NONE);
-	m_itemArray[ITEM_SWORD] = new CItem(ITEM_SWORD, ITEMATTRIB_NONE);
-	m_itemArray[ITEM_BALL_ON_CHAIN] = new CItem(ITEM_BALL_ON_CHAIN, ITEMATTRIB_NONE);
-	m_itemArray[ITEM_HOURGLASS] = new CItem(ITEM_HOURGLASS, ITEMATTRIB_NONE);
-	m_itemArray[ITEM_GOLDEN_SKULL] = new CItem(ITEM_GOLDEN_SKULL, ITEMATTRIB_NONE);
-	m_itemArray[ITEM_RED_KEY] = new CItem(ITEM_RED_KEY, ITEMATTRIB_USE_KEY);
-	m_itemArray[ITEM_FIREPLACE_BELLOW] = new CItem(ITEM_FIREPLACE_BELLOW, ITEMATTRIB_NONE);
+	m_itemArray[ITEM_A_SWORD] = new CItem(ITEM_A_SWORD, ITEMATTRIB_NONE);
+	m_itemArray[ITEM_A_BALL_ON_CHAIN] = new CItem(ITEM_A_BALL_ON_CHAIN, ITEMATTRIB_NONE);
+	m_itemArray[ITEM_AN_HOURGLASS] = new CItem(ITEM_AN_HOURGLASS, ITEMATTRIB_NONE);
+	m_itemArray[ITEM_A_GOLDEN_SKULL] = new CItem(ITEM_A_GOLDEN_SKULL, ITEMATTRIB_NONE);
+	m_itemArray[ITEM_A_RED_KEY] = new CItem(ITEM_A_RED_KEY, ITEMATTRIB_USE_KEY);
+	m_itemArray[ITEM_A_FIREPLACE_BELLOW] = new CItem(ITEM_A_FIREPLACE_BELLOW, ITEMATTRIB_NONE);
 	m_itemArray[ITEM_WASHING_POWDER] = new CItem(ITEM_WASHING_POWDER, ITEMATTRIB_NONE);
-	m_itemArray[ITEM_DIRTY_SHIRT] = new CItem(ITEM_DIRTY_SHIRT, ITEMATTRIB_NONE);
+	m_itemArray[ITEM_A_DIRTY_SHIRT] = new CItem(ITEM_A_DIRTY_SHIRT, ITEMATTRIB_NONE);
 	
 	m_spriteArray[SPRITE_SNIDE_HEAD] = new CSprite(SPRITE_SNIDE_HEAD, sprite_snide_headTiles, sprite_snide_headTilesLen, sprite_snide_headPal, sprite_snide_headPalLen, g_snideHeadFrames, 16);
 	m_spriteArray[SPRITE_SNIDE_BODY] = new CSprite(SPRITE_SNIDE_BODY, sprite_snide_bodyTiles, sprite_snide_bodyTilesLen, sprite_snide_bodyPal, sprite_snide_bodyPalLen, g_snideBodyFrames, 17);
@@ -142,45 +142,45 @@ void CGame::Initialize()
 	m_characterArray[CHARTYPE_SNIDE]->SetDeadSide(true);
 	m_characterArray[CHARTYPE_DOCTOR]->SetDeadSide(true);
 	
-	m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, &g_snideMap, NULL, col_room1, 144);
-	m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, &g_reverendMap, NULL, col_room1, 144);
-	m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, &g_bentleyMap, NULL, col_room2, 168);
-	m_roomArray[ROOM_COOK] = new CRoom(ROOM_COOK, &g_cookMap, NULL, col_room2, 168);
-	m_roomArray[ROOM_GABRIEL] = new CRoom(ROOM_GABRIEL, &g_gabrielMap, NULL, col_room2, 168);
-	m_roomArray[ROOM_CYNTHIA] = new CRoom(ROOM_CYNTHIA, &g_cynthiaMap, NULL, col_room1, 144);
-	m_roomArray[ROOM_PROFESSOR] = new CRoom(ROOM_PROFESSOR, &g_professorMap, NULL, col_room1, 144);
-	m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, &g_doctorMap, NULL, col_room1, 144);		
-	m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, &g_majorMap, NULL, col_room1, 144);
-	m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, &g_dingleMap, NULL, col_room1, 144);
-	m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, &g_outside1Map, NULL, col_outside1, 160);
-	m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, &g_outside2Map, &g_outside2_frontMap, col_outside2, 152);
-	m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, &g_outside1Map, NULL, col_outside1, 160);
-	m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, &g_outside2Map, &g_outside2_frontMap, col_outside2, 152);
-	m_roomArray[ROOM_PASSAGE1] = new CRoom(ROOM_PASSAGE1, &g_passage1Map, NULL, col_passage1, 152);
-	m_roomArray[ROOM_PASSAGE2] = new CRoom(ROOM_PASSAGE2, &g_passage2Map, NULL, col_passage2, 152);
-	m_roomArray[ROOM_PASSAGE3] = new CRoom(ROOM_PASSAGE3, &g_passage1Map, NULL, col_passage1, 152);
-	m_roomArray[ROOM_HALL1] = new CRoom(ROOM_HALL1, &g_hall1Map, NULL, col_hall1, 160);
-	m_roomArray[ROOM_HALL2] = new CRoom(ROOM_HALL2, &g_hall2Map, NULL, col_hall2, 160);
-	m_roomArray[ROOM_HALL3] = new CRoom(ROOM_HALL3, &g_hall3Map, NULL, col_hall3, 160);
-	m_roomArray[ROOM_HALL4] = new CRoom(ROOM_HALL4, &g_hall4Map, NULL, col_hall4, 160);
-	m_roomArray[ROOM_LANDING] = new CRoom(ROOM_LANDING, &g_landingMap, &g_landing_front1Map, col_landing, 144);
-	m_roomArray[ROOM_KITCHEN] = new CRoom(ROOM_KITCHEN, &g_kitchenMap, NULL, col_kitchen, 160);
-	m_roomArray[ROOM_STAIRS] = new CRoom(ROOM_STAIRS, &g_stairsMap, NULL, col_stairs, 168);
-	m_roomArray[ROOM_STUDY] = new CRoom(ROOM_STUDY, &g_studyMap, NULL, col_study, 160);
+	m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, g_snideMap, NULL, col_room1, 144);
+	m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, g_reverendMap, NULL, col_room1, 144);
+	m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, g_bentleyMap, NULL, col_room2, 168);
+	m_roomArray[ROOM_COOK] = new CRoom(ROOM_COOK, g_cookMap, NULL, col_room2, 168);
+	m_roomArray[ROOM_GABRIEL] = new CRoom(ROOM_GABRIEL, g_gabrielMap, NULL, col_room2, 168);
+	m_roomArray[ROOM_CYNTHIA] = new CRoom(ROOM_CYNTHIA, g_cynthiaMap, NULL, col_room1, 144);
+	m_roomArray[ROOM_PROFESSOR] = new CRoom(ROOM_PROFESSOR, g_professorMap, NULL, col_room1, 144);
+	m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, g_doctorMap, NULL, col_room1, 144);		
+	m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, g_majorMap, NULL, col_room1, 144);
+	m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, g_dingleMap, NULL, col_room1, 144);
+	m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, g_outside1Map, NULL, col_outside1, 160);
+	m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, g_outside2Map, g_outside2_frontMap, col_outside2, 152);
+	m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, g_outside1Map, NULL, col_outside1, 160);
+	m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, g_outside2Map, g_outside2_frontMap, col_outside2, 152);
+	m_roomArray[ROOM_PASSAGE1] = new CRoom(ROOM_PASSAGE1, g_passage1Map, NULL, col_passage1, 152);
+	m_roomArray[ROOM_PASSAGE2] = new CRoom(ROOM_PASSAGE2, g_passage2Map, NULL, col_passage2, 152);
+	m_roomArray[ROOM_PASSAGE3] = new CRoom(ROOM_PASSAGE3, g_passage1Map, NULL, col_passage1, 152);
+	m_roomArray[ROOM_HALL1] = new CRoom(ROOM_HALL1, g_hall1Map, NULL, col_hall1, 160);
+	m_roomArray[ROOM_HALL2] = new CRoom(ROOM_HALL2, g_hall2Map, NULL, col_hall2, 160);
+	m_roomArray[ROOM_HALL3] = new CRoom(ROOM_HALL3, g_hall3Map, NULL, col_hall3, 160);
+	m_roomArray[ROOM_HALL4] = new CRoom(ROOM_HALL4, g_hall4Map, NULL, col_hall4, 160);
+	m_roomArray[ROOM_LANDING] = new CRoom(ROOM_LANDING, g_landingMap, g_landing_front1Map, col_landing, 144);
+	m_roomArray[ROOM_KITCHEN] = new CRoom(ROOM_KITCHEN, g_kitchenMap, NULL, col_kitchen, 160);
+	m_roomArray[ROOM_STAIRS] = new CRoom(ROOM_STAIRS, g_stairsMap, NULL, col_stairs, 168);
+	m_roomArray[ROOM_STUDY] = new CRoom(ROOM_STUDY, g_studyMap, NULL, col_study, 160);
 	
-	m_roomArray[ROOM_CLOCK] = new CRoom(ROOM_CLOCK, &g_clockMap, NULL, col_clock, 160);
-	m_roomArray[ROOM_CELLAR] = new CRoom(ROOM_CELLAR, &g_cellarMap, NULL, col_cellar, 160);
-	m_roomArray[ROOM_DRAWING] = new CRoom(ROOM_DRAWING, &g_drawingMap, NULL, col_drawing, 160);
-	m_roomArray[ROOM_LIBRARY] = new CRoom(ROOM_LIBRARY, &g_libraryMap, NULL, col_library, 160);	
-	m_roomArray[ROOM_UTILITY] = new CRoom(ROOM_UTILITY, &g_utilityMap, NULL, col_utility, 160);
-	m_roomArray[ROOM_GARDEN] = new CRoom(ROOM_GARDEN, &g_gardenMap, &g_garden_frontMap, col_garden, 152);
-	m_roomArray[ROOM_GRAVEYARD] = new CRoom(ROOM_GRAVEYARD, &g_graveyardMap, &g_graveyard_frontMap, col_graveyard, 160);
-	m_roomArray[ROOM_COURTYARD] = new CRoom(ROOM_COURTYARD, &g_courtyardMap, &g_courtyard_frontMap, col_courtyard, 160);
-	m_roomArray[ROOM_ANGUS_LANDING] = new CRoom(ROOM_ANGUS_LANDING, &g_angus_landingMap, &g_angus_landing_frontMap, col_angus_landing, 144);
-	m_roomArray[ROOM_ANGUS_ROOM] = new CRoom(ROOM_ANGUS_ROOM, &g_angus_room1Map, &g_angus_room_frontMap, col_angus_room2, 160);
-	m_roomArray[ROOM_ANGUS_SECRET] = new CRoom(ROOM_ANGUS_SECRET, &g_angus_secretMap, &g_angus_secret_frontMap, col_angus_secret, 160);
-	m_roomArray[ROOM_ANGUS_STAIRS] = new CRoom(ROOM_ANGUS_STAIRS, &g_angus_stairsMap, NULL, col_angus_stairs, 168);
-	m_roomArray[ROOM_DINING] = new CRoom(ROOM_DINING, &g_diningMap, &g_dining_frontMap, col_dining, 160);
+	m_roomArray[ROOM_CLOCK] = new CRoom(ROOM_CLOCK, g_clockMap, NULL, col_clock, 160);
+	m_roomArray[ROOM_CELLAR] = new CRoom(ROOM_CELLAR, g_cellarMap, NULL, col_cellar, 160);
+	m_roomArray[ROOM_DRAWING] = new CRoom(ROOM_DRAWING, g_drawingMap, NULL, col_drawing, 160);
+	m_roomArray[ROOM_LIBRARY] = new CRoom(ROOM_LIBRARY, g_libraryMap, NULL, col_library, 160);	
+	m_roomArray[ROOM_UTILITY] = new CRoom(ROOM_UTILITY, g_utilityMap, NULL, col_utility, 160);
+	m_roomArray[ROOM_GARDEN] = new CRoom(ROOM_GARDEN, g_gardenMap, g_garden_frontMap, col_garden, 152);
+	m_roomArray[ROOM_GRAVEYARD] = new CRoom(ROOM_GRAVEYARD, g_graveyardMap, g_graveyard_frontMap, col_graveyard, 160);
+	m_roomArray[ROOM_COURTYARD] = new CRoom(ROOM_COURTYARD, g_courtyardMap, g_courtyard_frontMap, col_courtyard, 160);
+	m_roomArray[ROOM_ANGUS_LANDING] = new CRoom(ROOM_ANGUS_LANDING, g_angus_landingMap, g_angus_landing_frontMap, col_angus_landing, 144);
+	m_roomArray[ROOM_ANGUS_ROOM] = new CRoom(ROOM_ANGUS_ROOM, g_angus_room1Map, g_angus_room_frontMap, col_angus_room2, 160);
+	m_roomArray[ROOM_ANGUS_SECRET] = new CRoom(ROOM_ANGUS_SECRET, g_angus_secretMap, g_angus_secret_frontMap, col_angus_secret, 160);
+	m_roomArray[ROOM_ANGUS_STAIRS] = new CRoom(ROOM_ANGUS_STAIRS, g_angus_stairsMap, NULL, col_angus_stairs, 168);
+	m_roomArray[ROOM_DINING] = new CRoom(ROOM_DINING, g_diningMap, g_dining_frontMap, col_dining, 160);
 	
 	m_roomArray[ROOM_SNIDE]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_SNIDE], m_roomArray[ROOM_HALL2]));		
 	m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_HALL1]));
@@ -519,14 +519,14 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 			{
 				m_displayMode = DISPLAYMODE_GAME;
 
-				PPOINT pPoint = m_pointer->pPoint();
+				Point* pPoint = m_pointer->pPoint();
 				ProcessMenu(pPoint->X, pPoint->Y);
 				m_pointer->Hide();
 				m_menu->Hide();
 			}
 			else
 			{
-				PPOINT pPoint = m_pointer->pPoint();
+				Point* pPoint = m_pointer->pPoint();
 				m_pointer->Move(keys_held);
 				m_pointer->Update();
 				m_menu->DrawBox(pPoint->X, pPoint->Y);
@@ -743,7 +743,7 @@ void CGame::UpdateSnideMovement(int keys_held)
 				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
 				{		
 					m_currentRoom = pDoor->pRoomOut();
-					PPOINT pDoorPoint = pDoor->pDoorOut()->pPoint();
+					Point* pDoorPoint = pDoor->pDoorOut()->pPoint();
 					
 					int xDoor = pDoorPoint->X * 8;
 					int yDoor = pDoorPoint->Y * 8;
@@ -751,7 +751,7 @@ void CGame::UpdateSnideMovement(int keys_held)
 					int xRoom = xDoor - 128;
 					
 					int xChar = xDoor;
-					int yChar = yDoor - m_snide->Height();
+					int yChar = yDoor - m_snide->Height() - 8;
 						
 					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 					
@@ -798,7 +798,7 @@ void CGame::UpdateSnideMovement(int keys_held)
 				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
 				{
 					m_currentRoom = pDoor->pRoomOut();
-					PPOINT pDoorPoint = pDoor->pDoorOut()->pPoint();
+					Point* pDoorPoint = pDoor->pDoorOut()->pPoint();
 						
 					int xDoor = pDoorPoint->X * 8;
 					int yDoor = pDoorPoint->Y * 8;
@@ -806,7 +806,7 @@ void CGame::UpdateSnideMovement(int keys_held)
 					int xRoom = xDoor - 128;
 					
 					int xChar = xDoor;
-					int yChar = yDoor - m_snide->Height() + 16;
+					int yChar = yDoor - m_snide->Height() + 8;
 					
 					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 					
@@ -1208,7 +1208,10 @@ void CGame::ProcessMenu(int x, int y)
 					CItem* pItem = (CItem*) m_console->SelectedObject();
 					CItemCache* pItemCache = pItem->GetItemCache();
 					
-					ShowItemMenu("YOU FIND:", pItemCache, NULL);
+					if(pItem->GetItemType() == ITEM_PADDED_ENVELOPES)
+						ShowItemMenu("EVIDENCE COLLECTED:", pItemCache, NULL);
+					else
+						ShowItemMenu("YOU FIND:", pItemCache, NULL);
 				
 					m_openMode = OPENMODE_ROOM;
 				}
@@ -1314,12 +1317,12 @@ void CGame::ProcessMenu(int x, int y)
 						case COL_KNIGHT:
 							switch(pItem->GetItemType())
 							{
-							case ITEM_SWORD:
+							case ITEM_A_SWORD:
 								m_currentRoom->SetAnimFrame(DSTRECT_SWORD, 0);
 								m_currentRoom->SetAnimState(DSTRECT_SWORD, ANIMSTATE_STOP);
 								m_currentRoom->Draw();
 								break;
-							case ITEM_BALL_ON_CHAIN:
+							case ITEM_A_BALL_ON_CHAIN:
 								m_currentRoom->SetAnimFrame(DSTRECT_BALL_ON_CHAIN, 0);
 								m_currentRoom->SetAnimState(DSTRECT_BALL_ON_CHAIN, ANIMSTATE_STOP);
 								m_currentRoom->Draw();
@@ -1329,7 +1332,7 @@ void CGame::ProcessMenu(int x, int y)
 							}
 							break;
 						case COL_TROPHY:
-							if(pItem->GetItemType() == ITEM_BALL_ON_CHAIN)
+							if(pItem->GetItemType() == ITEM_A_BALL_ON_CHAIN)
 							{
 								m_currentRoom->SetAnimFrame(DSTRECT_TROPHY, 0);
 								m_currentRoom->SetAnimState(DSTRECT_TROPHY, ANIMSTATE_PLAY);
@@ -1340,13 +1343,13 @@ void CGame::ProcessMenu(int x, int y)
 								m_currentRoom->Draw();
 								
 								CItemCache* itemCache = m_roomArray[ROOM_ANGUS_LANDING]->GetItemCache(1);
-								itemCache->AddItem(m_itemArray[ITEM_RED_KEY]);
+								itemCache->AddItem(m_itemArray[ITEM_A_RED_KEY]);
 								
 								mmEffectEx(&g_sfx_keydrop);
 							}
 							break;
 						case COL_DESK_WITH_A_STATUE:
-							if(pItem->GetItemType() == ITEM_RED_KEY)
+							if(pItem->GetItemType() == ITEM_A_RED_KEY)
 							{
 								m_currentRoom->SetAnimFrame(DSTRECT_STATUE, 0);
 								m_currentRoom->SetAnimState(DSTRECT_STATUE, ANIMSTATE_PLAY);
@@ -1404,7 +1407,7 @@ void CGame::ProcessMenu(int x, int y)
 				}
 				else if(pDoor->GetDoorState() == DOORSTATE_OPEN)
 				{
-					pDoor->SetDoorState(DOORSTATE_CLOSED);
+					pDoor->SetDoorState(pDoor->Hidden() ? DOORSTATE_HIDDEN : DOORSTATE_CLOSED);
 					m_currentRoom->Draw();
 					
 					if(m_currentRoom->GetRoomType() == ROOM_GARDEN || m_currentRoom->GetRoomType() == ROOM_GRAVEYARD)
@@ -1425,9 +1428,9 @@ void CGame::ProcessMenu(int x, int y)
 			{
 			case COL_FOUNTAIN:
 				{
-					if(pItem->GetItemType() == ITEM_RED_KEY && m_currentRoom->GetAnimState(DSTRECT_FOUNTAIN) == ANIMSTATE_STOP)
+					if(pItem->GetItemType() == ITEM_A_RED_KEY && m_currentRoom->GetAnimState(DSTRECT_FOUNTAIN) == ANIMSTATE_STOP)
 					{
-						m_roomArray[ROOM_ANGUS_ROOM]->SetMap(&g_angus_room2Map);
+						m_roomArray[ROOM_ANGUS_ROOM]->SetMap(g_angus_room2Map);
 						m_roomArray[ROOM_ANGUS_ROOM]->SetColMap(col_angus_room2);
 						
 						mmEffectEx(&g_sfx_secretdoor);
@@ -1610,12 +1613,12 @@ void CGame::PostProcessMenu()
 							case COL_KNIGHT:
 								switch(pItem->GetItemType())
 								{
-								case ITEM_SWORD:
+								case ITEM_A_SWORD:
 									m_currentRoom->SetAnimFrame(DSTRECT_SWORD, 0);
 									m_currentRoom->SetAnimState(DSTRECT_SWORD, ANIMSTATE_PLAY);
 									m_currentRoom->Draw();
 									break;
-								case ITEM_BALL_ON_CHAIN:
+								case ITEM_A_BALL_ON_CHAIN:
 									m_currentRoom->SetAnimFrame(DSTRECT_BALL_ON_CHAIN, 0);
 									m_currentRoom->SetAnimState(DSTRECT_BALL_ON_CHAIN, ANIMSTATE_PLAY);
 									m_currentRoom->Draw();
@@ -1625,7 +1628,7 @@ void CGame::PostProcessMenu()
 								}
 								break;
 							case COL_TROPHY:
-								if(pItem->GetItemType() == ITEM_BALL_ON_CHAIN)
+								if(pItem->GetItemType() == ITEM_A_BALL_ON_CHAIN)
 								{
 									m_currentRoom->SetAnimFrame(DSTRECT_TROPHY, 0);
 									m_currentRoom->SetAnimState(DSTRECT_TROPHY, ANIMSTATE_STOP);
@@ -1633,7 +1636,7 @@ void CGame::PostProcessMenu()
 								}
 								break;
 							case COL_DESK_WITH_A_STATUE:
-								if(pItem->GetItemType() == ITEM_RED_KEY)
+								if(pItem->GetItemType() == ITEM_A_RED_KEY)
 								{
 									m_currentRoom->SetAnimFrame(DSTRECT_STATUE, 0);
 									m_currentRoom->SetAnimState(DSTRECT_STATUE, ANIMSTATE_STOP);
@@ -1795,7 +1798,7 @@ void CGame::PostProcessMenu()
 									((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(pReplyText);
 								break;
 							default:
-								((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText((pReplyText == NULL ? "\"I DON'T KNOW ANYTHING ABOUT IT.\"" : pReplyText));
+								((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText((pReplyText == NULL ? "\"DON'T KNOW ANYTHING ABOUT IT.\"" : pReplyText));
 								break;
 							}
 							
@@ -1848,6 +1851,8 @@ void CGame::PostProcessMenu()
 							case CHARTYPE_ANGUS:
 								mmEffectEx(&g_sfx_ghostly);
 								((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("WOOOOOO!");
+								break;
+							default:
 								break;
 							}
 							
@@ -2092,8 +2097,13 @@ void CGame::UpdateCharacters()
 
 	for (int i=0; i < MAX_CHARACTERS; i++)
 	{
-		m_characterArray[i]->Update();
-		m_characterArray[i]->SetVisible(m_currentRoom);		
+		m_characterArray[i]->Update(m_currentRoom);
+		
+		if(m_characterArray[i]->IsVisible(m_currentRoom))
+			m_characterArray[i]->Show();
+		else
+			m_characterArray[i]->Hide();
+		
 		m_characterArray[i]->Draw();
 		
 		if(i > CHARTYPE_SNIDE)
@@ -2226,11 +2236,11 @@ void CGame::InitGame(GameType gameType)
 		
 		// ------------------------------------
 
-		//m_roomArray[ROOM_STAIRS]->SetOverlay(&g_stairs_frontMap, 168);
-		m_roomArray[ROOM_GRAVEYARD]->SetOverlay(&g_graveyard_frontMap, 176);
-		m_roomArray[ROOM_ANGUS_SECRET]->SetOverlay(&g_angus_secret_frontMap, 168);
-		m_roomArray[ROOM_ANGUS_ROOM]->SetOverlay(&g_angus_room_frontMap, 176);
-		m_roomArray[ROOM_DINING]->SetOverlay(&g_dining_frontMap, 168);
+		//m_roomArray[ROOM_STAIRS]->SetOverlay(g_stairs_frontMap, 168);
+		m_roomArray[ROOM_GRAVEYARD]->SetOverlay(g_graveyard_frontMap, 176);
+		m_roomArray[ROOM_ANGUS_SECRET]->SetOverlay(g_angus_secret_frontMap, 168);
+		m_roomArray[ROOM_ANGUS_ROOM]->SetOverlay(g_angus_room_frontMap, 176);
+		m_roomArray[ROOM_DINING]->SetOverlay(g_dining_frontMap, 168);
 	
 		m_roomArray[ROOM_ANGUS_ROOM]->SetColMap(col_angus_room1);
 		
@@ -2258,10 +2268,10 @@ void CGame::InitGame(GameType gameType)
 		m_roomArray[ROOM_DRAWING]->AddItems(3, m_itemArray[ITEM_THE_WILL], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_LIBRARY]->AddItems(0, m_itemArray[ITEM_BOOKS1], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_LIBRARY]->AddItems(1, m_itemArray[ITEM_BOOKS2], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_UTILITY]->AddItems(0, m_itemArray[ITEM_DIRTY_SHIRT], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_UTILITY]->AddItems(0, m_itemArray[ITEM_A_DIRTY_SHIRT], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_UTILITY]->AddItems(2, m_itemArray[ITEM_WASHING_POWDER], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_UTILITY]->AddItems(3, m_itemArray[ITEM_FIREPLACE_BELLOW], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_ANGUS_ROOM]->AddItems(1, m_itemArray[ITEM_SWORD], m_itemArray[ITEM_BALL_ON_CHAIN], NULL, NULL, NULL);
+		m_roomArray[ROOM_UTILITY]->AddItems(3, m_itemArray[ITEM_A_FIREPLACE_BELLOW], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_ANGUS_ROOM]->AddItems(1, m_itemArray[ITEM_A_SWORD], m_itemArray[ITEM_A_BALL_ON_CHAIN], NULL, NULL, NULL);
 		break;
 	}
 	
@@ -2332,26 +2342,23 @@ void CGame::InitGame(GameType gameType)
 	//m_displayMode = DISPLAYMODE_CONSOLE;
 	//m_console->AddText(g_itemRead[ITEM_THE_WILL]);
 	
-	//InitTitleScreen();
-	
 	m_console->Clear();
 	
 	m_timer->Start(9, 10, 0, 0);
 	
-	CPath* path = new CPath(m_roomArray);
-	path->FindRoute(m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_SNIDE]);
+	CPathFinder::Initialize(m_roomArray);
 	
-	for(int i=1; i<MAX_ROOMS; i++)
-	{
-		if(path->GetRoom(i) != NULL)
-		{
-			//fprintf(stderr, g_roomName[path->GetRoom(i)->GetRoomType()]);
-			m_characterArray[CHARTYPE_BENTLEY]->SetPath(i - 1, path->GetRoom(i));
-		}
-	}
+	Point* PointArray[MAX_POINTS];
 	
+	for(int i=0; i<MAX_POINTS; i++)
+		PointArray[i] = NULL;
+	
+	PointArray[0] = new Point(640, 160);
+	
+	m_characterArray[CHARTYPE_BENTLEY]->AddGoal(new CGoal(GOAL_GOTOROOM, m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_HALL2]));
+	m_characterArray[CHARTYPE_BENTLEY]->AddGoal(new CGoal(GOAL_GOTOPOINT, PointArray));
+
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("BENTLY ADVANCES:\"THIS WAY TO YOUR ROOM SIR\"");
-	
 	
 	mmStart(MOD_DETECTIVE, MM_PLAY_ONCE);
 	mmPosition(3);
@@ -2459,15 +2466,13 @@ void CGame::InitTitleScreen()
 	
 	for(int i=0; i<MAX_CHARACTERS; i++)
 	{
-		m_characterArray[i]->Disable();
 		m_characterArray[i]->SetSub(false);
+		m_characterArray[i]->Disable();
 		m_characterArray[i]->SetPriority(0);
 		m_characterArray[i]->SetPosition(192, 128);
 		m_characterArray[i]->SetCharacterMode(CHARMODE_TALKING);
 	}
-
-	m_question->Show();
-	m_question->Draw();
+	
 	m_question->SetSub(false);
 	m_question->SetPriority(0);
 	m_question->SetPosition(192, 128);
@@ -2475,7 +2480,7 @@ void CGame::InitTitleScreen()
 	m_question->SetLoop(false);
 	m_question->Reset();
 	
-	m_console->AddText(g_characterText[CHARTYPE_SNIDE]);
+	m_characterPos = -1;
 	
 	mmStart(MOD_DETECTIVE, MM_PLAY_LOOP);
 	mmPosition(0);
@@ -2489,26 +2494,29 @@ void CGame::UpdateTitleScreen()
 	
 	UpdateFx();
 	
-	if(m_characterFrameCount == 80)
+	if(m_characterPos != -1)
 	{
-		m_question->Disable();
-		m_question->Hide();
+		if(m_characterFrameCount == 160)
+		{
+			m_question->Disable();
+			m_question->Hide();
+			
+			m_characterArray[m_characterPos]->Show();
+		}
 		
-		m_characterArray[m_characterPos]->Show();
+		if(m_characterFrameCount == 600)
+		{
+			m_characterArray[m_characterPos]->Disable();
+			m_characterArray[m_characterPos]->Hide();
+
+			m_question->Disable();
+			m_question->Hide();
+			
+			m_console->Clear();
+		}
 	}
 	
-	if(m_characterFrameCount == 500)
-	{
-		m_characterArray[m_characterPos]->Disable();
-		m_characterArray[m_characterPos]->Hide();
-		
-		m_question->Disable();
-		m_question->Hide();
-		
-		m_console->Clear();
-	}
-	
-	if(m_characterFrameCount > 600)
+	if(m_characterFrameCount > 700)
 	{
 		m_characterFrameCount = 0;
 		
@@ -2521,10 +2529,15 @@ void CGame::UpdateTitleScreen()
 		m_console->AddText(g_characterText[m_characterPos]);
 	}
 	
-	m_characterArray[m_characterPos]->Update();
-	m_characterArray[m_characterPos]->Draw();
+	if(m_characterPos != -1)
+	{
+		m_characterArray[m_characterPos]->Update(NULL);
+		m_characterArray[m_characterPos]->Draw();
+	}
 	
-	m_question->Update();
+	if(m_characterFrameCount > 80)
+		m_question->Update(NULL);
+	
 	m_question->Draw();
 	
 	//DrawTime(m_timer->pCurrentTime());

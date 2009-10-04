@@ -19,7 +19,7 @@
 #include "CWatch.h"
 #include "CConsole.h"
 #include "CKeyboard.h"
-#include "CPath.h"
+#include "CPathFinder.h"
 #include "CPointer.h"
 
 #include "map_angus_landing.h"

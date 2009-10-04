@@ -3,7 +3,8 @@
 
 CPointer::CPointer()
 {
-	SetRect(0, 0, 256, 192);
+	m_point = new Point(0, 0);
+	m_rect = new Rect(0, 0, 256, 192);
 
 	m_gfx = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
 	
@@ -56,14 +57,14 @@ void CPointer::Move(int keys_held)
 		m_speed[DIRECTION_RIGHT] = 0;
 	}
 	
-	if(m_x < m_rect.X - POINTER_X)
-		m_x = m_rect.X - POINTER_X;
-	if(m_x > m_rect.X + m_rect.Width - POINTER_X)
-		m_x = m_rect.X + m_rect.Width - POINTER_X;
-	if(m_y < m_rect.Y)
-		m_y = m_rect.Y;
-	if(m_y > m_rect.Y + m_rect.Height)
-		m_y = m_rect.Y + m_rect.Height;
+	if(m_x < m_rect->X - POINTER_X)
+		m_x = m_rect->X - POINTER_X;
+	if(m_x > m_rect->X + m_rect->Width - POINTER_X)
+		m_x = m_rect->X + m_rect->Width - POINTER_X;
+	if(m_y < m_rect->Y)
+		m_y = m_rect->Y;
+	if(m_y > m_rect->Y + m_rect->Height)
+		m_y = m_rect->Y + m_rect->Height;
 }
 
 void CPointer::Hide()

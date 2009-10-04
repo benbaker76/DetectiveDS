@@ -1,18 +1,27 @@
 #include <stdio.h>
 #include "TDG.h"
 
-bool IsRectEmpty(PRECT pRect)
+bool IsRectEmpty(Rect* pRect)
 {
+	if(pRect == NULL)
+		return true;
+	
 	return ((pRect->X == 0) && (pRect->Y == 0) && (pRect->Width == 0) && (pRect->Height == 0));
 }
 
-bool IntersectRect(PRECT pRectA, PRECT pRectB)
+bool IntersectRect(Rect* pRectA, Rect* pRectB)
 {
+	if(pRectA == NULL || pRectB == NULL)
+		return false;
+
 	return ((pRectA->X < pRectB->X + pRectB->Width) && (pRectA->X + pRectA->Width > pRectB->X) && (pRectA->Y < pRectB->Y + pRectB->Height) && (pRectA->Y + pRectA->Height > pRectB->Y));
 }
 
-void PrintRect(PRECT pRect)
+void PrintRect(Rect* pRect)
 {
+	if(pRect == NULL)
+		return;
+	
 	static char buf[256];
 	sprintf(buf, "X:%d, Y:%d, Width:%d, Height:%d", pRect->X, pRect->Y, pRect->Width, pRect->Height);
 	fprintf(stderr, buf);
@@ -42,56 +51,56 @@ const u32 g_angusHeadFrames[] = { FRAME_WAITING | FRAME_LEFT | FRAME_DOWN | FRAM
 const u32 g_angusBodyFrames[] = { FRAME_WAITING | FRAME_SPEAK | FRAME_LEFT | FRAME_DOWN, FRAME_LEFT | FRAME_DOWN, FRAME_LEFT | FRAME_DOWN, FRAME_UP | FRAME_RIGHT, FRAME_UP | FRAME_RIGHT, FRAME_UP | FRAME_RIGHT, FRAME_DEAD };
 const u32 g_questionFrames[] = { FRAME_QUESTION, FRAME_QUESTION, FRAME_QUESTION, FRAME_QUESTION, FRAME_QUESTION, FRAME_QUESTION, FRAME_QUESTION, FRAME_QUESTION };
 
-MAP g_angus_landingMap = { 320, 256, map_angus_landingTiles, map_angus_landingTilesLen, map_angus_landingMap, map_angus_landingMapLen, map_angus_landingPal, map_angus_landingPalLen };
-MAP g_angus_room1Map = { 320, 256, map_angus_room1Tiles, map_angus_room1TilesLen, map_angus_room1Map, map_angus_room1MapLen, map_angus_room1Pal, map_angus_room1PalLen };
-MAP g_angus_room2Map = { 320, 256, map_angus_room2Tiles, map_angus_room2TilesLen, map_angus_room2Map, map_angus_room2MapLen, map_angus_room2Pal, map_angus_room2PalLen };
-MAP g_angus_secretMap = { 256, 256, map_angus_secretTiles, map_angus_secretTilesLen, map_angus_secretMap, map_angus_secretMapLen, map_angus_secretPal, map_angus_secretPalLen };
-MAP g_angus_stairsMap = { 256, 256, map_angus_stairsTiles, map_angus_stairsTilesLen, map_angus_stairsMap, map_angus_stairsMapLen, map_angus_stairsPal, map_angus_stairsPalLen };
-MAP g_cellarMap = { 400, 256, map_cellarTiles, map_cellarTilesLen, map_cellarMap, map_cellarMapLen, map_cellarPal, map_cellarPalLen };
-MAP g_clockMap = { 304, 256, map_clockTiles, map_clockTilesLen, map_clockMap, map_clockMapLen, map_clockPal, map_clockPalLen };
-MAP g_courtyardMap = { 552, 256, map_courtyardTiles, map_courtyardTilesLen, map_courtyardMap, map_courtyardMapLen, map_courtyardPal, map_courtyardPalLen };
-MAP g_diningMap = { 352, 192, map_diningTiles, map_diningTilesLen, map_diningMap, map_diningMapLen, map_diningPal, map_diningPalLen };
-MAP g_drawingMap = { 640, 256, map_drawingTiles, map_drawingTilesLen, map_drawingMap, map_drawingMapLen, map_drawingPal, map_drawingPalLen };
-MAP g_gardenMap = { 304, 256, map_gardenTiles, map_gardenTilesLen, map_gardenMap, map_gardenMapLen, map_gardenPal, map_gardenPalLen };
-MAP g_graveyardMap = { 304, 256, map_graveyardTiles, map_graveyardTilesLen, map_graveyardMap, map_graveyardMapLen, map_graveyardPal, map_graveyardPalLen };
-MAP g_hall1Map = { 832, 256, map_hall1Tiles, map_hall1TilesLen, map_hall1Map, map_hall1MapLen, map_hall1Pal, map_hall1PalLen };
-MAP g_hall2Map = { 832, 256, map_hall2Tiles, map_hall2TilesLen, map_hall2Map, map_hall2MapLen, map_hall2Pal, map_hall2PalLen };
-MAP g_hall3Map = { 832, 256, map_hall3Tiles, map_hall3TilesLen, map_hall3Map, map_hall3MapLen, map_hall3Pal, map_hall3PalLen };
-MAP g_hall4Map = { 544, 256, map_hall4Tiles, map_hall4TilesLen, map_hall4Map, map_hall4MapLen, map_hall4Pal, map_hall4PalLen };
-MAP g_kitchenMap = { 536, 256, map_kitchenTiles, map_kitchenTilesLen, map_kitchenMap, map_kitchenMapLen, map_kitchenPal, map_kitchenPalLen };
-MAP g_landingMap = { 400, 256, map_landingTiles, map_landingTilesLen, map_landingMap, map_landingMapLen, map_landingPal, map_landingPalLen };
-MAP g_libraryMap = { 416, 256, map_libraryTiles, map_libraryTilesLen, map_libraryMap, map_libraryMapLen, map_libraryPal, map_libraryPalLen };
-MAP g_outside1Map = { 400, 256, map_outside1Tiles, map_outside1TilesLen, map_outside1Map, map_outside1MapLen, map_outside1Pal, map_outside1PalLen };
-MAP g_outside2Map = { 544, 256, map_outside2Tiles, map_outside2TilesLen, map_outside2Map, map_outside2MapLen, map_outside2Pal, map_outside2PalLen };
-MAP g_passage1Map = { 256, 256, map_passage1Tiles, map_passage1TilesLen, map_passage1Map, map_passage1MapLen, map_passage1Pal, map_passage1PalLen };
-MAP g_passage2Map = { 256, 256, map_passage2Tiles, map_passage2TilesLen, map_passage2Map, map_passage2MapLen, map_passage2Pal, map_passage2PalLen };
+Map* g_angus_landingMap = new Map(320, 256, map_angus_landingTiles, map_angus_landingTilesLen, map_angus_landingMap, map_angus_landingMapLen, map_angus_landingPal, map_angus_landingPalLen);
+Map* g_angus_room1Map = new Map(320, 256, map_angus_room1Tiles, map_angus_room1TilesLen, map_angus_room1Map, map_angus_room1MapLen, map_angus_room1Pal, map_angus_room1PalLen);
+Map* g_angus_room2Map = new Map(320, 256, map_angus_room2Tiles, map_angus_room2TilesLen, map_angus_room2Map, map_angus_room2MapLen, map_angus_room2Pal, map_angus_room2PalLen);
+Map* g_angus_secretMap = new Map(256, 256, map_angus_secretTiles, map_angus_secretTilesLen, map_angus_secretMap, map_angus_secretMapLen, map_angus_secretPal, map_angus_secretPalLen);
+Map* g_angus_stairsMap = new Map(256, 256, map_angus_stairsTiles, map_angus_stairsTilesLen, map_angus_stairsMap, map_angus_stairsMapLen, map_angus_stairsPal, map_angus_stairsPalLen);
+Map* g_cellarMap = new Map(400, 256, map_cellarTiles, map_cellarTilesLen, map_cellarMap, map_cellarMapLen, map_cellarPal, map_cellarPalLen);
+Map* g_clockMap = new Map(304, 256, map_clockTiles, map_clockTilesLen, map_clockMap, map_clockMapLen, map_clockPal, map_clockPalLen);
+Map* g_courtyardMap = new Map(552, 256, map_courtyardTiles, map_courtyardTilesLen, map_courtyardMap, map_courtyardMapLen, map_courtyardPal, map_courtyardPalLen);
+Map* g_diningMap = new Map(352, 192, map_diningTiles, map_diningTilesLen, map_diningMap, map_diningMapLen, map_diningPal, map_diningPalLen);
+Map* g_drawingMap = new Map(640, 256, map_drawingTiles, map_drawingTilesLen, map_drawingMap, map_drawingMapLen, map_drawingPal, map_drawingPalLen);
+Map* g_gardenMap = new Map(304, 256, map_gardenTiles, map_gardenTilesLen, map_gardenMap, map_gardenMapLen, map_gardenPal, map_gardenPalLen);
+Map* g_graveyardMap = new Map(304, 256, map_graveyardTiles, map_graveyardTilesLen, map_graveyardMap, map_graveyardMapLen, map_graveyardPal, map_graveyardPalLen);
+Map* g_hall1Map = new Map(832, 256, map_hall1Tiles, map_hall1TilesLen, map_hall1Map, map_hall1MapLen, map_hall1Pal, map_hall1PalLen);
+Map* g_hall2Map = new Map(832, 256, map_hall2Tiles, map_hall2TilesLen, map_hall2Map, map_hall2MapLen, map_hall2Pal, map_hall2PalLen);
+Map* g_hall3Map = new Map(832, 256, map_hall3Tiles, map_hall3TilesLen, map_hall3Map, map_hall3MapLen, map_hall3Pal, map_hall3PalLen);
+Map* g_hall4Map = new Map(544, 256, map_hall4Tiles, map_hall4TilesLen, map_hall4Map, map_hall4MapLen, map_hall4Pal, map_hall4PalLen);
+Map* g_kitchenMap = new Map(536, 256, map_kitchenTiles, map_kitchenTilesLen, map_kitchenMap, map_kitchenMapLen, map_kitchenPal, map_kitchenPalLen);
+Map* g_landingMap = new Map(400, 256, map_landingTiles, map_landingTilesLen, map_landingMap, map_landingMapLen, map_landingPal, map_landingPalLen);
+Map* g_libraryMap = new Map(416, 256, map_libraryTiles, map_libraryTilesLen, map_libraryMap, map_libraryMapLen, map_libraryPal, map_libraryPalLen);
+Map* g_outside1Map = new Map(400, 256, map_outside1Tiles, map_outside1TilesLen, map_outside1Map, map_outside1MapLen, map_outside1Pal, map_outside1PalLen);
+Map* g_outside2Map = new Map(544, 256, map_outside2Tiles, map_outside2TilesLen, map_outside2Map, map_outside2MapLen, map_outside2Pal, map_outside2PalLen);
+Map* g_passage1Map = new Map(256, 256, map_passage1Tiles, map_passage1TilesLen, map_passage1Map, map_passage1MapLen, map_passage1Pal, map_passage1PalLen);
+Map* g_passage2Map = new Map(256, 256, map_passage2Tiles, map_passage2TilesLen, map_passage2Map, map_passage2MapLen, map_passage2Pal, map_passage2PalLen);
 
-MAP g_cynthiaMap = { 400, 256, map_cynthiaTiles, map_cynthiaTilesLen, map_cynthiaMap, map_cynthiaMapLen, map_cynthiaPal, map_cynthiaPalLen };
-MAP g_dingleMap = { 400, 256, map_dingleTiles, map_dingleTilesLen, map_dingleMap, map_dingleMapLen, map_dinglePal, map_dinglePalLen };
-MAP g_doctorMap = { 400, 256, map_doctorTiles, map_doctorTilesLen, map_doctorMap, map_doctorMapLen, map_doctorPal, map_doctorPalLen };
-MAP g_majorMap = { 400, 256, map_majorTiles, map_majorTilesLen, map_majorMap, map_majorMapLen, map_majorPal, map_majorPalLen };
-MAP g_professorMap = { 400, 256, map_professorTiles, map_professorTilesLen, map_professorMap, map_professorMapLen, map_professorPal, map_professorPalLen };
-MAP g_reverendMap = { 400, 256, map_reverendTiles, map_reverendTilesLen, map_reverendMap, map_reverendMapLen, map_reverendPal, map_reverendPalLen };
-MAP g_snideMap = { 400, 256, map_snideTiles, map_snideTilesLen, map_snideMap, map_snideMapLen, map_snidePal, map_snidePalLen };
-MAP g_bentleyMap = { 344, 256, map_bentleyTiles, map_bentleyTilesLen, map_bentleyMap, map_bentleyMapLen, map_bentleyPal, map_bentleyPalLen };
-MAP g_cookMap = { 344, 256, map_cookTiles, map_cookTilesLen, map_cookMap, map_cookMapLen, map_cookPal, map_cookPalLen };
-MAP g_gabrielMap = { 344, 256, map_gabrielTiles, map_gabrielTilesLen, map_gabrielMap, map_gabrielMapLen, map_gabrielPal, map_gabrielPalLen };
+Map* g_cynthiaMap = new Map(400, 256, map_cynthiaTiles, map_cynthiaTilesLen, map_cynthiaMap, map_cynthiaMapLen, map_cynthiaPal, map_cynthiaPalLen);
+Map* g_dingleMap = new Map(400, 256, map_dingleTiles, map_dingleTilesLen, map_dingleMap, map_dingleMapLen, map_dinglePal, map_dinglePalLen);
+Map* g_doctorMap = new Map(400, 256, map_doctorTiles, map_doctorTilesLen, map_doctorMap, map_doctorMapLen, map_doctorPal, map_doctorPalLen);
+Map* g_majorMap = new Map(400, 256, map_majorTiles, map_majorTilesLen, map_majorMap, map_majorMapLen, map_majorPal, map_majorPalLen);
+Map* g_professorMap = new Map(400, 256, map_professorTiles, map_professorTilesLen, map_professorMap, map_professorMapLen, map_professorPal, map_professorPalLen);
+Map* g_reverendMap = new Map(400, 256, map_reverendTiles, map_reverendTilesLen, map_reverendMap, map_reverendMapLen, map_reverendPal, map_reverendPalLen);
+Map* g_snideMap = new Map(400, 256, map_snideTiles, map_snideTilesLen, map_snideMap, map_snideMapLen, map_snidePal, map_snidePalLen);
+Map* g_bentleyMap = new Map(344, 256, map_bentleyTiles, map_bentleyTilesLen, map_bentleyMap, map_bentleyMapLen, map_bentleyPal, map_bentleyPalLen);
+Map* g_cookMap = new Map(344, 256, map_cookTiles, map_cookTilesLen, map_cookMap, map_cookMapLen, map_cookPal, map_cookPalLen);
+Map* g_gabrielMap = new Map(344, 256, map_gabrielTiles, map_gabrielTilesLen, map_gabrielMap, map_gabrielMapLen, map_gabrielPal, map_gabrielPalLen);
 
-MAP g_stairsMap = { 416, 256, map_stairsTiles, map_stairsTilesLen, map_stairsMap, map_stairsMapLen, map_stairsPal, map_stairsPalLen };
-MAP g_studyMap = { 320, 256, map_studyTiles, map_studyTilesLen, map_studyMap, map_studyMapLen, map_studyPal, map_studyPalLen };
-MAP g_utilityMap = { 296, 256, map_utilityTiles, map_utilityTilesLen, map_utilityMap, map_utilityMapLen, map_utilityPal, map_utilityPalLen };
+Map* g_stairsMap = new Map(416, 256, map_stairsTiles, map_stairsTilesLen, map_stairsMap, map_stairsMapLen, map_stairsPal, map_stairsPalLen);
+Map* g_studyMap = new Map(320, 256, map_studyTiles, map_studyTilesLen, map_studyMap, map_studyMapLen, map_studyPal, map_studyPalLen);
+Map* g_utilityMap = new Map(296, 256, map_utilityTiles, map_utilityTilesLen, map_utilityMap, map_utilityMapLen, map_utilityPal, map_utilityPalLen);
 
-MAP g_angus_landing_frontMap = { 320, 192, map_angus_landing_frontTiles, map_angus_landing_frontTilesLen, map_angus_landing_frontMap, map_angus_landing_frontMapLen };
-MAP g_angus_room_frontMap = { 320, 192, map_angus_room_frontTiles, map_angus_room_frontTilesLen, map_angus_room_frontMap, map_angus_room_frontMapLen };
-MAP g_angus_secret_frontMap = { 256, 192, map_angus_secret_frontTiles, map_angus_secret_frontTilesLen, map_angus_secret_frontMap, map_angus_secret_frontMapLen };
-MAP g_courtyard_frontMap = { 552, 192, map_courtyard_frontTiles, map_courtyard_frontTilesLen, map_courtyard_frontMap, map_courtyard_frontMapLen };
-MAP g_dining_frontMap = { 352, 192, map_dining_frontTiles, map_dining_frontTilesLen, map_dining_frontMap, map_dining_frontMapLen };
-MAP g_garden_frontMap = { 304, 192, map_garden_frontTiles, map_garden_frontTilesLen, map_garden_frontMap, map_garden_frontMapLen };
-MAP g_graveyard_frontMap = { 304, 192, map_graveyard_frontTiles, map_graveyard_frontTilesLen, map_graveyard_frontMap, map_graveyard_frontMapLen };
-MAP g_landing_front1Map = { 400, 192, map_landing_front1Tiles, map_landing_front1TilesLen, map_landing_front1Map, map_landing_front1MapLen };
-MAP g_landing_front2Map = { 400, 192, map_landing_front2Tiles, map_landing_front2TilesLen, map_landing_front2Map, map_landing_front2MapLen };
-MAP g_outside2_frontMap = { 544, 192, map_outside2_frontTiles, map_outside2_frontTilesLen, map_outside2_frontMap, map_outside2_frontMapLen };
-MAP g_stairs_frontMap = { 416, 192, map_stairs_frontTiles, map_stairs_frontTilesLen, map_stairs_frontMap, map_stairs_frontMapLen };
+Map* g_angus_landing_frontMap = new Map(320, 192, map_angus_landing_frontTiles, map_angus_landing_frontTilesLen, map_angus_landing_frontMap, map_angus_landing_frontMapLen);
+Map* g_angus_room_frontMap = new Map(320, 192, map_angus_room_frontTiles, map_angus_room_frontTilesLen, map_angus_room_frontMap, map_angus_room_frontMapLen);
+Map* g_angus_secret_frontMap = new Map(256, 192, map_angus_secret_frontTiles, map_angus_secret_frontTilesLen, map_angus_secret_frontMap, map_angus_secret_frontMapLen);
+Map* g_courtyard_frontMap = new Map(552, 192, map_courtyard_frontTiles, map_courtyard_frontTilesLen, map_courtyard_frontMap, map_courtyard_frontMapLen);
+Map* g_dining_frontMap = new Map(352, 192, map_dining_frontTiles, map_dining_frontTilesLen, map_dining_frontMap, map_dining_frontMapLen);
+Map* g_garden_frontMap = new Map(304, 192, map_garden_frontTiles, map_garden_frontTilesLen, map_garden_frontMap, map_garden_frontMapLen);
+Map* g_graveyard_frontMap = new Map(304, 192, map_graveyard_frontTiles, map_graveyard_frontTilesLen, map_graveyard_frontMap, map_graveyard_frontMapLen);
+Map* g_landing_front1Map = new Map(400, 192, map_landing_front1Tiles, map_landing_front1TilesLen, map_landing_front1Map, map_landing_front1MapLen);
+Map* g_landing_front2Map = new Map(400, 192, map_landing_front2Tiles, map_landing_front2TilesLen, map_landing_front2Map, map_landing_front2MapLen);
+Map* g_outside2_frontMap = new Map(544, 192, map_outside2_frontTiles, map_outside2_frontTilesLen, map_outside2_frontMap, map_outside2_frontMapLen);
+Map* g_stairs_frontMap = new Map(416, 192, map_stairs_frontTiles, map_stairs_frontTilesLen, map_stairs_frontMap, map_stairs_frontMapLen);
 
 mm_sound_effect g_sfx_footsteps = { { SFX_FOOTSTEPS } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_opendoor = { { SFX_OPENDOOR } , (int)(1.0f * (1<<10)), 0, 255, 127 };

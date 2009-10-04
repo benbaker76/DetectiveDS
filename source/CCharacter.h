@@ -3,6 +3,7 @@
 
 #include "TDG.h"
 #include "CItemCache.h"
+#include "CGoalManager.h"
 
 #define MAX_CHARACTERS			11
 #define MAX_ROOMS				38
@@ -61,8 +62,9 @@ public:
 	void SetPosition(float x, float y);
 	void SetOamIndex(int index);
 	void SetPriority(int priority);
-	void Update();
-	void SetVisible(CRoom* pRoom);
+	void Update(CRoom* pCurrentRoom);
+	bool MoveTo(Point* pDest);
+	bool IsVisible(CRoom* pRoom);
 	void Show();
 	void Hide();
 	void Disable();
@@ -84,10 +86,8 @@ public:
 	
 	void SetLoop(bool loop) { m_pHeadSprite->SetLoop(loop); m_pBodySprite->SetLoop(loop); }
 	
-	void SetPoint(int x, int y) { m_point.X = x; m_point.Y = y; }
-	PPOINT pPoint() { SetPoint(m_x + (m_width / 2), m_y + (m_height - 8) + 4); return (PPOINT) &m_point; }
-	
-	void SetPath(int index, CRoom* pRoom) { m_path[index] = pRoom; }
+	void SetPoint(int x, int y) { m_point->X = x; m_point->Y = y; }
+	Point* pPoint() { SetPoint(m_x + (m_width / 2), m_y + (m_height - 8) + 4); return m_point; }
 	
 	void SetAlpha(int alpha) { m_pHeadSprite->SetAlpha(alpha); m_pBodySprite->SetAlpha(alpha); }
 	void SetGreen(bool value) { m_green = value; Face(m_facing); }
@@ -95,7 +95,7 @@ public:
 	
 	float X() const { return m_x; }
 	float Y() const { return m_y; }
-	int AbsX();
+	int ScreenX();
 	int SpriteX() const { return m_pHeadSprite->X(); }
 	int SpriteY() const { return m_pHeadSprite->Y(); }
 	int Width() const { return m_width; }
@@ -116,6 +116,8 @@ public:
 	
 	void AddItems(CItem* item1, CItem* item2, CItem* item3, CItem* item4, CItem* item5) { m_itemCache->AddItems(item1, item2, item3, item4, item5); }
 	CItemCache* GetItemCache() const { return m_itemCache; }
+	
+	void AddGoal(CGoal* pGoal) { m_goalManager->AddGoal(pGoal); }
 
 private:
 	CharacterType m_characterType;
@@ -133,9 +135,6 @@ private:
 	
 	DirectionType m_facing;
 	
-	CRoom* m_path[MAX_ROOMS];
-	int m_pathPosition;
-	
 	bool m_visible;
 	bool m_green;
 	bool m_dead;
@@ -148,9 +147,10 @@ private:
 	
 	int m_waitingTime;
 	
-	POINT m_point;
+	Point* m_point;
 	
 	CItemCache* m_itemCache;
+	CGoalManager* m_goalManager;
 	
 	void SetFrameType(FrameType frameType);
 };

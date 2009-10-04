@@ -1,5 +1,5 @@
-#ifndef __CPATH_H__
-#define __CPATH_H__
+#ifndef __CPATHFINDER_H__
+#define __CPATHFINDER_H__
 
 #include "CRoom.h"
 
@@ -23,17 +23,18 @@ public:
 private:
 };
 
-class CPath
+class CPathFinder
 {
 public:
-	CPath(CRoom* pRoomArray[MAX_ROOMS]);
-	~CPath();
+	CPathFinder();
+	~CPathFinder();
 	
+	static void Initialize(CRoom* pRoomArray[MAX_ROOMS]);
 	void FindRoute(CRoom* pRoomStart, CRoom* pRoomEnd);
 	CRoom* GetRoom(int index) const { return (m_returnArray[index] != NULL ? m_returnArray[index]->Room : NULL); }
 
 private:
-	CRoomNode* m_pRoomNodeArray[MAX_ROOMS];
+	static CRoomNode* g_pRoomNodeArray[MAX_ROOMS];
 	CRoomNode* m_returnArray[MAX_ROOMS];
 
 	CRoomNode* RoomToRoomNode(CRoom* pRoom);

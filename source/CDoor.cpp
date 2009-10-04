@@ -10,36 +10,30 @@ CDoor::CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoo
 	m_pDoorOut = NULL;
 	m_hidden = (doorState == DOORSTATE_HIDDEN);
 	
-	memset(&m_rect, 0, sizeof(RECT));
-	memset(&m_rectOpen, 0, sizeof(RECT));
-	memset(&m_point, 0, sizeof(POINT));
+	m_rect = NULL;
+	m_rectOpen = NULL;
+	m_point = NULL;
 	
 	for(int i=0; i<MAX_DOOR_RECT; i++)
-		memset(&m_rectArray[i], 0, sizeof(RECT));
+		m_rectArray[i] = NULL;
 	
 	m_pRoomIn->GetColMapRect((CollisionType) m_doorType, &m_rect);
 	
-	m_topDoor = (m_rect.Width > 1 && m_rect.Height > 1);
-	
-	m_pRoomIn->GetColMapRect(COL_SRC_DOOR_CLOSED, &m_rectArray[DOORRECT_CLOSED]);
-	m_pRoomIn->GetColMapRect(COL_SRC_DOOR_OPEN, &m_rectArray[DOORRECT_OPEN]);
-	m_pRoomIn->GetColMapRect(COL_SRC_DOOR_HIDDEN, &m_rectArray[DOORRECT_HIDDEN]);
-	m_pRoomIn->GetColMapRect(COL_SRC_DOOR_SMALL_CLOSED, &m_rectArray[DOORRECT_SMALL_CLOSED]);
-	m_pRoomIn->GetColMapRect(COL_SRC_DOOR_SMALL_OPEN, &m_rectArray[DOORRECT_SMALL_OPEN]);
-	m_pRoomIn->GetColMapRect(COL_SRC_DOOR_SMALL_HIDDEN, &m_rectArray[DOORRECT_SMALL_HIDDEN]);
-	
-	if(!IsRectEmpty(&m_rect))
+	if(m_rect != NULL)
 	{
-		m_point.X = ((m_rect.X + (m_rect.Width / 2)) - 1);
-		m_point.Y = (m_rect.Y + m_rect.Height - 1);
+		m_pRoomIn->GetColMapRect(COL_SRC_DOOR_CLOSED, &m_rectArray[DOORRECT_CLOSED]);
+		m_pRoomIn->GetColMapRect(COL_SRC_DOOR_OPEN, &m_rectArray[DOORRECT_OPEN]);
+		m_pRoomIn->GetColMapRect(COL_SRC_DOOR_HIDDEN, &m_rectArray[DOORRECT_HIDDEN]);
+		m_pRoomIn->GetColMapRect(COL_SRC_DOOR_SMALL_CLOSED, &m_rectArray[DOORRECT_SMALL_CLOSED]);
+		m_pRoomIn->GetColMapRect(COL_SRC_DOOR_SMALL_OPEN, &m_rectArray[DOORRECT_SMALL_OPEN]);
+		m_pRoomIn->GetColMapRect(COL_SRC_DOOR_SMALL_HIDDEN, &m_rectArray[DOORRECT_SMALL_HIDDEN]);
+	
+		m_topDoor = (m_rect->Width > 1 && m_rect->Height > 1);
+	
+		m_point = new Point(m_rect->X + (m_rect->Width / 2) - 1, m_rect->Y + m_rect->Height);
 		
-		if(m_topDoor && !IsRectEmpty(&m_rectArray[DOORRECT_OPEN]))
-		{
-			m_rectOpen.X = m_rect.X - m_rect.Width;
-			m_rectOpen.Y = m_rect.Y;
-			m_rectOpen.Width = m_rect.Width;
-			m_rectOpen.Height = m_rect.Height;
-		}
+		if(m_topDoor && m_rectArray[DOORRECT_OPEN] != NULL)
+			m_rectOpen = new Rect(m_rect->X - m_rect->Width, m_rect->Y, m_rect->Width, m_rect->Height);
 	}
 }
 
@@ -85,21 +79,21 @@ void CDoor::Draw()
 	case DOORSTATE_LOCKED:
 	case DOORSTATE_CLOSED:
 		if(m_topDoor)
-			m_pRoomIn->MoveMap(&m_rectArray[DOORRECT_CLOSED], &m_rect);
+			m_pRoomIn->MoveMap(m_rectArray[DOORRECT_CLOSED], m_rect);
 		else
-			m_pRoomIn->MoveMap(&m_rectArray[DOORRECT_SMALL_CLOSED], &m_rect);
+			m_pRoomIn->MoveMap(m_rectArray[DOORRECT_SMALL_CLOSED], m_rect);
 		break;
 	case DOORSTATE_OPEN:
 		if(m_topDoor)
-			m_pRoomIn->MoveMap(&m_rectArray[DOORRECT_OPEN], &m_rectOpen);
+			m_pRoomIn->MoveMap(m_rectArray[DOORRECT_OPEN], m_rectOpen);
 		else
-			m_pRoomIn->MoveMap(&m_rectArray[DOORRECT_SMALL_OPEN], &m_rect);
+			m_pRoomIn->MoveMap(m_rectArray[DOORRECT_SMALL_OPEN], m_rect);
 		break;
 	case DOORSTATE_HIDDEN:
 		if(m_topDoor)
-			m_pRoomIn->MoveMap(&m_rectArray[DOORRECT_HIDDEN], &m_rect);
+			m_pRoomIn->MoveMap(m_rectArray[DOORRECT_HIDDEN], m_rect);
 		else
-			m_pRoomIn->MoveMap(&m_rectArray[DOORRECT_SMALL_HIDDEN], &m_rect);
+			m_pRoomIn->MoveMap(m_rectArray[DOORRECT_SMALL_HIDDEN], m_rect);
 		break;
 	}
 }
