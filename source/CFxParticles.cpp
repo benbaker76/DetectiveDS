@@ -8,6 +8,8 @@
 
 void CFxParticles::Initialize()
 {
+	m_frameCount = 0;
+	m_xOffset = 0;
 	m_perspective = 300;
 	m_centreX = (CFx::GetFxMode() == FXMODE_SKULL ? 152 : 88);
 	m_ratio = 0;

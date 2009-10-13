@@ -2505,18 +2505,38 @@ void CGame::InitRoom()
 	{
 	case ROOM_OUTSIDE1:
 	case ROOM_OUTSIDE3:
+		mmEffectCancel(m_clock);
+		mmEffectCancel(m_fireplace);
 		mmSetJingleVolume(1024);
+		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
 		break;
 	case ROOM_OUTSIDE2:
 	case ROOM_OUTSIDE4:
 	case ROOM_GARDEN:
 	case ROOM_GRAVEYARD:
 	case ROOM_COURTYARD:
-		//mmJingle(MOD_WEATHER);
+		mmEffectCancel(m_clock);
+		mmEffectCancel(m_fireplace);
 		mmSetJingleVolume(1024);
 		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, true);
 		break;
+	case ROOM_CLOCK:
+		m_clock = mmEffectEx(&g_sfx_clock);
+		
+		mmEffectCancel(m_fireplace);
+		mmSetJingleVolume(0);
+		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
+		break;
+	case ROOM_DRAWING:
+		m_fireplace = mmEffectEx(&g_sfx_fireplace);
+		
+		mmEffectCancel(m_clock);
+		mmSetJingleVolume(0);
+		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
+		break;
 	default:
+		mmEffectCancel(m_clock);
+		mmEffectCancel(m_fireplace);
 		mmSetJingleVolume(0);
 		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
 		break;
@@ -2527,6 +2547,9 @@ void CGame::InitRoom()
 
 void CGame::UpdateFx()
 {
+	if(m_currentRoom->GetRoomType() == ROOM_GRAVEYARD && rand() % 3000 == 0)
+		mmEffectEx(&g_sfx_howling);
+	
 	switch(m_currentRoom->GetRoomType())
 	{
 	case ROOM_OUTSIDE1:
@@ -2588,7 +2611,7 @@ void CGame::SortSprites()
 		{
 			if(m_characterArray[i] != m_characterArray[j])
 			{
-				if (m_characterArray[i]->pPoint()->Y > m_characterArray[j]->pPoint()->Y &&
+				if (m_characterArray[i]->Y() + m_characterArray[i]->Height() > m_characterArray[j]->Y() + m_characterArray[j]->Height() &&
 					m_characterArray[i]->OamIndex() > m_characterArray[j]->OamIndex())
 				{
 					int temp = m_characterArray[i]->OamIndex();
@@ -2598,7 +2621,7 @@ void CGame::SortSprites()
 			}
 		}
 		
-		if(m_currentRoom->OverlayY() < m_characterArray[i]->pPoint()->Y)
+		if(m_currentRoom->OverlayY() < m_characterArray[i]->Y() + m_characterArray[i]->Height())
 			m_characterArray[i]->SetPriority(0);
 		else
 			m_characterArray[i]->SetPriority(1);
@@ -2838,6 +2861,9 @@ void CGame::InitIntro()
 	dmaCopy(intro_headsoftPal, BG_PALETTE_SUB, intro_headsoftPalLen);
 	dmaCopy(intro_headsoftPal, BG_PALETTE, intro_headsoftPalLen);
 	
+	BG_PALETTE[0] = 0;
+	BG_PALETTE_SUB[0] = 0;
+	
 	dmaCopy(intro_headsoftTiles, BG_TILE_RAM_SUB(INTRO_BG0_TILE_BASE_SUB), intro_headsoftTilesLen);
 	dmaCopy(intro_headsoftMap, BG_MAP_RAM_SUB(INTRO_BG0_MAP_BASE_SUB), intro_headsoftMapLen);
 	
@@ -2897,6 +2923,8 @@ void CGame::InitGame(GameType gameType)
 	m_questionMode = QUESTIONMODE_NONE;
 	m_openMode = OPENMODE_ROOM;
 	m_footsteps = 0;
+	m_clock = 0;
+	m_fireplace = 0;
 	m_gameOverFrameCount = 0;
 	m_dieFrameCount = 0;
 	m_reverseTimeFrameCount = 0;
@@ -3016,6 +3044,7 @@ void CGame::InitGame(GameType gameType)
 	m_currentRoom = m_roomArray[ROOM_STAIRS];
 	m_currentRoom->Initialize(69);
 	
+	m_console->Clear();
 	m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
 	
 	m_snide = m_characterArray[CHARTYPE_SNIDE];
@@ -3027,11 +3056,6 @@ void CGame::InitGame(GameType gameType)
 	m_snide->SetCharacterMode(CHARMODE_WAITING);
 	
 	m_characterArray[CHARTYPE_ANGUS]->SetAlpha(0x7);
-	
-	//m_displayMode = DISPLAYMODE_CONSOLE;
-	//m_console->AddText(g_itemRead[ITEM_THE_WILL]);
-	
-	m_console->Clear();
 	
 	m_timer->Start(9, 10, 0, 0);
 		

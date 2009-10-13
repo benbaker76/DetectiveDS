@@ -139,6 +139,8 @@ extern mm_sound_effect g_sfx_ghostly;
 extern mm_sound_effect g_sfx_howling;
 extern mm_sound_effect g_sfx_timewarp;
 extern mm_sound_effect g_sfx_magic;
+extern mm_sound_effect g_sfx_clock;
+extern mm_sound_effect g_sfx_fireplace;
 
 extern u16 g_lightningBgPal[];
 extern u16 g_lightningSpritePal[];

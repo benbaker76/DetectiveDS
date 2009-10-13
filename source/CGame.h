@@ -151,6 +151,8 @@ private:
 	int m_introFrameCount;
 	
 	mm_sfxhand m_footsteps;
+	mm_sfxhand m_clock;
+	mm_sfxhand m_fireplace;
 	
 	IconType m_lastIconType;
 	

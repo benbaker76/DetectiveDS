@@ -65,6 +65,8 @@ int main(void)
 	mmLoadEffect(SFX_HOWLING);
 	mmLoadEffect(SFX_TIMEWARP);
 	mmLoadEffect(SFX_MAGIC);
+	mmLoadEffect(SFX_CLOCK);
+	mmLoadEffect(SFX_FIREPLACE);
 	//mmStart(MOD_WEATHER, MM_PLAY_LOOP);
 	mmJingle(MOD_WEATHER);
 	mmSetJingleVolume(0);

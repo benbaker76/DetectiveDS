@@ -116,6 +116,8 @@ mm_sound_effect g_sfx_ghostly = { { SFX_GHOSTLY } , (int)(1.0f * (1<<10)), 0, 25
 mm_sound_effect g_sfx_howling = { { SFX_HOWLING } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_timewarp = { { SFX_TIMEWARP } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_magic = { { SFX_MAGIC } , (int)(1.0f * (1<<10)), 0, 255, 127 };
+mm_sound_effect g_sfx_clock = { { SFX_CLOCK } , (int)(1.0f * (1<<10)), 0, 255, 127 };
+mm_sound_effect g_sfx_fireplace = { { SFX_FIREPLACE } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 
 u16 g_lightningBgPal[] =
 {
