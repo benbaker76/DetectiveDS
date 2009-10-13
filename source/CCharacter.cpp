@@ -9,23 +9,18 @@ CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprit
 	m_characterMode = CHARMODE_NONE;
 	m_pHeadSprite = pHeadSprite;
 	m_pBodySprite = pBodySprite;
-	m_x = 0;
-	m_y = 0;
 	m_width = width;
 	m_height = height;
 	m_characterSex = characterSex;
 	
-	m_visible = false;
-	m_green = false;
-	m_dead = false;
 	m_deadSide = false;
 	
-	m_pRoom = NULL;
-	
-	m_point = new Point(0, 0);
+	m_point = new Point();
 	
 	m_itemCache = new CItemCache(ITEMLOCATION_CHARACTER, this);
 	m_goalManager = new CGoalManager();
+	
+	Reset();
 	
 	//m_spriteCol1 = new CSprite(SPRITE_COL1, sprite_colTiles + 256 * 0, sprite_colTilesLen, sprite_colPal, sprite_colPalLen, NULL, 0);
 	//m_spriteCol2 = new CSprite(SPRITE_COL2, sprite_colTiles + 256 * 1, sprite_colTilesLen, sprite_colPal, sprite_colPalLen, NULL, 0);
@@ -58,6 +53,11 @@ void CCharacter::SetPosition(float x, float y)
 	}
 }
 
+void CCharacter::SetPosition(float x)
+{
+	SetPosition(x, CentreY());
+}
+
 void CCharacter::SetOamIndex(int index)
 {
 	m_pHeadSprite->SetOamIndex(index);
@@ -70,6 +70,37 @@ void CCharacter::SetPriority(int priority)
 	m_pBodySprite->SetPriority(priority);
 }
 
+void CCharacter::Reset()
+{
+	m_x = 0;
+	m_y = 0;
+	
+	m_visible = false;
+	m_green = false;
+	m_dead = false;
+	
+	m_pRoom = NULL;
+	
+	m_point->X = 0;
+	m_point->Y = 0;
+	
+	m_string = NULL;
+	
+	m_goalMode = false;
+	
+	m_goalManager->ResetGoals();
+	m_goalManager->SetGoalPosition(0);
+	
+	m_pHeadSprite->Reset();
+	m_pBodySprite->Reset();
+}
+
+void CCharacter::ResetAnimation()
+{
+	m_pHeadSprite->ResetAnimation();
+	m_pBodySprite->ResetAnimation();
+}
+
 void CCharacter::Update(CRoom* pCurrentRoom)
 {
 	switch(m_characterMode)
@@ -77,12 +108,37 @@ void CCharacter::Update(CRoom* pCurrentRoom)
 	case CHARMODE_NONE:
 		break;
 	case CHARMODE_WAITING:
-		m_waitingTime++;
-		
-		if(m_waitingTime > 500)
-			m_characterMode = CHARMODE_WALKING;
+		if(m_goalMode)
+		{
+			m_frameCount++;
+			
+			if(m_frameCount > 500)
+			{
+				m_frameCount = 0;
+				m_characterMode = CHARMODE_GOAL;
+			}
+		}
 		break;
-	case CHARMODE_WALKING:
+	case CHARMODE_TALKING:
+		if(m_goalMode)
+		{
+			m_frameCount++;
+			
+			if(m_frameCount > 500)
+			{
+				m_frameCount = 0;
+				
+				m_characterMode = CHARMODE_GOAL;
+			}
+		}
+		break;
+	case CHARMODE_DEAD:
+	case CHARMODE_BOMB:
+	case CHARMODE_ATTACK:
+	case CHARMODE_SURRENDER:
+	case CHARMODE_QUESTION:
+		break;
+	case CHARMODE_GOAL:
 		{
 			CGoal* pGoal = m_goalManager->CurrentGoal();
 			
@@ -90,6 +146,38 @@ void CCharacter::Update(CRoom* pCurrentRoom)
 			{
 				switch(pGoal->GetGoalType())
 				{
+				case GOAL_JUMPROOM:
+					m_pRoom = pGoal->pRoom();
+					m_goalManager->NextGoal();
+					break;
+				case GOAL_JUMPPOINT:
+					{
+						Point* pPoint = pGoal->pPoint();
+						
+						SetPosition(pPoint->X);
+						
+						m_goalManager->NextGoal();
+					}
+					break;
+				case GOAL_WAIT:
+					{
+						SetFrameType(FRAME_WAITING);
+						
+						if(!pGoal->Waiting())
+							m_goalManager->NextGoal();
+					}
+					break;
+				case GOAL_SPEAK:
+					{
+						if(pGoal->TryGetSpeech(&m_string))
+							SetFrameType(FRAME_SPEAK);
+						else
+						{
+							if(!pGoal->Waiting())
+								m_goalManager->NextGoal();
+						}
+					}
+					break;
 				case GOAL_GOTOROOM:
 					{
 						CRoom* pRoom = pGoal->pRoom();
@@ -103,9 +191,6 @@ void CCharacter::Update(CRoom* pCurrentRoom)
 							
 							if(MoveTo(&point))
 							{
-								if(!pGoal->NextRoom())
-									m_goalManager->NextGoal();
-								
 								pDoor->SetDoorState(DOORSTATE_OPEN);
 								
 								if(m_pRoom == pCurrentRoom || pRoom == pCurrentRoom)
@@ -115,36 +200,40 @@ void CCharacter::Update(CRoom* pCurrentRoom)
 								
 								int xDoor = pDoor->pDoorOut()->pPoint()->X;
 								int yDoor = pDoor->pDoorOut()->pPoint()->Y;
+
 								m_x = xDoor * 8;
-								m_y = yDoor * 8 - m_height;
+								m_y = yDoor * 8 - m_height - (yDoor == 24 ? 8 : 0);
+								
+								pGoal->NextRoom();
 							}
+						}
+						else
+						{
+							if(pGoal->Waiting())
+								SetFrameType(FRAME_NONE);
+							else
+								m_goalManager->NextGoal();
 						}
 					}
 					break;
 				case GOAL_GOTOPOINT:
-					{
-						Point* pPoint = pGoal->pPoint();
-						
-						if(MoveTo(pPoint))
+					{					
+						if(MoveTo(pGoal->pPoint()))
 						{
-							if(!pGoal->NextPoint())
+							if(pGoal->Waiting())
+								SetFrameType(FRAME_NONE);
+							else
 								m_goalManager->NextGoal();
 						}
 					}
+					break;
+				default:
 					break;
 				}
 			}
 			else
 				SetCharacterMode(CHARMODE_WAITING);
 		}
-		break;
-	case CHARMODE_TALKING:
-		break;
-	case CHARMODE_DEAD:
-	case CHARMODE_BOMB:
-	case CHARMODE_ATTACK:
-	case CHARMODE_SURRENDER:
-	case CHARMODE_QUESTION:
 		break;
 	}
 	
@@ -441,7 +530,6 @@ void CCharacter::SetFrameType(FrameType frameType)
 
 void CCharacter::SetCharacterMode(CharacterMode characterMode)
 {
-	m_lastCharacterMode = m_characterMode;
 	m_characterMode = characterMode;
 
 	switch(characterMode)
@@ -453,13 +541,18 @@ void CCharacter::SetCharacterMode(CharacterMode characterMode)
 		SetFrameType(FRAME_WAITING);
 		m_pHeadSprite->GetNextFrame();
 		m_pBodySprite->GetNextFrame();
-		m_waitingTime = 0;
+		m_frameCount = 0;
 		break;
-	case CHARMODE_WALKING:
+	case CHARMODE_GOAL:
 		Face(m_facing);
+		m_pHeadSprite->GetNextFrame();
+		m_pBodySprite->GetNextFrame();
 		break;
 	case CHARMODE_TALKING:
 		(m_green ? SetFrameType(FRAME_GREEN_SPEAK) : SetFrameType(FRAME_SPEAK));
+		m_pHeadSprite->GetNextFrame();
+		m_pBodySprite->GetNextFrame();
+		m_frameCount = 0;
 		break;
 	case CHARMODE_DEAD:
 		m_dead = true;

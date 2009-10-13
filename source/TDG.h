@@ -12,7 +12,6 @@
 #include "CDoor.h"
 #include "CRoom.h"
 #include "CSprite.h"
-#include "CVideo.h"
 #include "CCharacter.h"
 #include "CTimer.h"
 #include "CEvent.h"
@@ -71,6 +70,14 @@
 #include "map_outside2_front.h"
 #include "map_stairs_front.h"
 
+#include "intro_blank.h"
+#include "intro_headsoft.h"
+#include "intro_infectuous.h"
+#include "intro_proteus.h"
+#include "intro_retrobytes.h"
+#include "intro_retrogamer.h"
+#include "intro_spacefractal.h"
+
 #include "sprite_snide_head.h"
 #include "sprite_snide_body.h"
 #include "sprite_reverend_head.h"
@@ -124,6 +131,18 @@
 #include "font_large.h"
 
 #include "icons.h"
+
+#define INTRO_BG0_MAP_BASE			28
+#define INTRO_BG0_MAP_BASE_SUB		28
+
+#define INTRO_BG1_MAP_BASE			30
+#define INTRO_BG1_MAP_BASE_SUB		30
+
+#define INTRO_BG0_TILE_BASE			0
+#define INTRO_BG0_TILE_BASE_SUB		0
+
+#define INTRO_BG1_TILE_BASE			5
+#define INTRO_BG1_TILE_BASE_SUB		5
 
 #define BG0_MAP_BASE				26
 #define BG0_MAP_BASE_SUB			26

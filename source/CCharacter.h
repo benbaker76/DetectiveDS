@@ -13,17 +13,19 @@
 
 #define HEAD_HEIGHT				21
 
+#define CENTRE_Y				-1
+
 enum CharacterMode
 {
 	CHARMODE_NONE,
 	CHARMODE_WAITING,
-	CHARMODE_WALKING,
 	CHARMODE_TALKING,
 	CHARMODE_DEAD,
 	CHARMODE_BOMB,
 	CHARMODE_ATTACK,
 	CHARMODE_SURRENDER,
-	CHARMODE_QUESTION
+	CHARMODE_QUESTION,
+	CHARMODE_GOAL
 };
 
 enum CharacterType
@@ -60,8 +62,11 @@ public:
 	~CCharacter();
 	
 	void SetPosition(float x, float y);
+	void SetPosition(float x);
 	void SetOamIndex(int index);
 	void SetPriority(int priority);
+	void Reset();
+	void ResetAnimation();
 	void Update(CRoom* pCurrentRoom);
 	bool MoveTo(Point* pDest);
 	bool IsVisible(CRoom* pRoom);
@@ -98,13 +103,12 @@ public:
 	int ScreenX();
 	int SpriteX() const { return m_pHeadSprite->X(); }
 	int SpriteY() const { return m_pHeadSprite->Y(); }
+	int CentreY() const { return (m_pRoom == NULL ? m_y : m_pRoom->CentreY() - m_height); }
 	int Width() const { return m_width; }
 	int Height() const { return m_height; }
 	DirectionType Facing() const { return m_facing; }
 	bool Visible() const { return m_visible; }
 	bool Dead() const { return m_dead; }
-	
-	void Reset() { m_pHeadSprite->Reset(); m_pBodySprite->Reset(); }
 	
 	int OamIndex() const { return m_pHeadSprite->OamIndex(); }
 	int Priority() const { return m_pHeadSprite->Priority(); }
@@ -112,17 +116,20 @@ public:
 	CharacterMode GetCharacterMode() const { return m_characterMode; }
 	CharacterSex GetCharacterSex() const { return m_characterSex; }
 	
-	void RestoreLastCharacterMode() { m_characterMode = m_lastCharacterMode; }
-	
 	void AddItems(CItem* item1, CItem* item2, CItem* item3, CItem* item4, CItem* item5) { m_itemCache->AddItems(item1, item2, item3, item4, item5); }
 	CItemCache* GetItemCache() const { return m_itemCache; }
 	
 	void AddGoal(CGoal* pGoal) { m_goalManager->AddGoal(pGoal); }
+	void InsertGoal(CGoal* pGoal) { m_goalManager->InsertGoal(pGoal); }
+	
+	bool TryGetSpeech(const char** string) { if(m_string != NULL) { *string = m_string; m_string = NULL; return true; } else return false; }
+	
+	void SetGoalMode(bool value) { m_goalMode = value; }
+	bool GetGoalMode() const { return m_goalMode; }
 
 private:
 	CharacterType m_characterType;
 	CharacterMode m_characterMode;
-	CharacterMode m_lastCharacterMode;
 	CharacterSex m_characterSex;
 	
 	CSprite* m_pHeadSprite;
@@ -145,12 +152,16 @@ private:
 	int m_width;
 	int m_height;
 	
-	int m_waitingTime;
+	int m_frameCount;
+	
+	bool m_goalMode;
 	
 	Point* m_point;
 	
 	CItemCache* m_itemCache;
 	CGoalManager* m_goalManager;
+	
+	const char* m_string;
 	
 	void SetFrameType(FrameType frameType);
 };

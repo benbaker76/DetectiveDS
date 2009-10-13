@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include "CDoor.h"
 
-CDoor::CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoomOut)
+CDoor::CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoomOut, ItemType keyItemType)
 {
 	m_doorType = doorType;
 	m_defaultDoorState = m_doorState = doorState;
 	m_pRoomIn = pRoomIn;
 	m_pRoomOut = pRoomOut;
 	m_pDoorOut = NULL;
-	m_hidden = (doorState == DOORSTATE_HIDDEN);
+	m_keyItemType = keyItemType;
+	m_hidden = (m_doorState == DOORSTATE_HIDDEN);
 	
 	m_rect = NULL;
 	m_rectOpen = NULL;

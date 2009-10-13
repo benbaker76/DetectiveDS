@@ -20,6 +20,8 @@ public:
 	void ClearText();
 	bool AddText(const char* text);
 	void SetLoop(bool loop) { m_loop = loop; }
+	
+	bool ScrollerEmpty() const { return (m_textArray[m_textPos] == NULL); }
 
 private:
 

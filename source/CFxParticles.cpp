@@ -8,11 +8,26 @@
 
 void CFxParticles::Initialize()
 {
+	m_perspective = 300;
+	m_centreX = (CFx::GetFxMode() == FXMODE_SKULL ? 152 : 88);
+	m_ratio = 0;
+	m_angleSpeed = PI / 24;
+	
+	m_pong = true;
+	
 	switch(CFx::GetFxMode())
 	{
 	case FXMODE_RAIN:
 		for(int i=0; i<MAX_PARTICLES; i++)
-			dmaCopy(sprite_fx_rainTiles, m_particleArray[i].Gfx,  8 * 8);
+			dmaCopy(sprite_fx_rainTiles, m_particleArray[i].Gfx,  16 * 16);
+		break;
+	case FXMODE_SKULL:
+		for(int i=0; i<MAX_PARTICLES; i++)
+			dmaCopy(sprite_fx_skullTiles, m_particleArray[i].Gfx,  16 * 16);
+		break;
+	case FXMODE_HOURGLASS:
+		for(int i=0; i<MAX_PARTICLES; i++)
+			dmaCopy(sprite_fx_hourglassTiles, m_particleArray[i].Gfx,  16 * 16);
 		break;
 	default:
 		break;
@@ -24,16 +39,38 @@ void CFxParticles::Initialize()
 void CFxParticles::Shutdown()
 {
 	for(int i=0; i<MAX_PARTICLES; i++)
-		oamSet(&oamSub, PARTICLE_START + i, 0, 0, 0, 0, SpriteSize_8x8, SpriteColorFormat_256Color, m_particleArray[i].Gfx, 0, false, true, false, false, false);
+		oamSet(&oamSub, PARTICLE_START + i, 0, 0, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, 0, false, true, false, false, false);
 }
 
 void CFxParticles::Reset()
 {
-	for(int i=0; i<MAX_PARTICLES; i++)
+	switch(CFx::GetFxMode())
 	{
-		m_particleArray[i].X = rand() % 256;
-		m_particleArray[i].Y = rand() % 192;
-		m_particleArray[i].Speed = (rand() % 4) + 2;
+	case FXMODE_RAIN:
+		for(int i=0; i<MAX_PARTICLES; i++)
+		{
+			m_particleArray[i].X = rand() % 256;
+			m_particleArray[i].Y = rand() % 192;
+			m_particleArray[i].Speed = (rand() % 4) + 2;
+			m_particleArray[i].Lifetime = 0;
+			
+			oamSet(&oamSub, PARTICLE_START + i, 0, 0, 1, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, 0, false, true, false, false, false);
+		}
+		break;
+	case FXMODE_SKULL:
+	case FXMODE_HOURGLASS:
+		for(int i=0; i<MAX_PARTICLES; i++)
+		{
+			m_particleArray[i].StartY = rand() % 96;
+			m_particleArray[i].Angle = rand() % 360;
+			m_particleArray[i].Radius = (int) (m_particleArray[i].StartY / 2);
+			m_particleArray[i].Lifetime = 0;
+			
+			oamSet(&oamSub, PARTICLE_START + i, 0, 0, 1, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, 0, false, true, false, false, false);
+		}
+		break;
+	default:
+		break;
 	}
 }
 
@@ -53,7 +90,7 @@ void CFxParticles::UpdateVBlank()
 					if(num == 0)
 					{
 						m_particleArray[i].Lifetime++;
-						dmaCopy(sprite_fx_rainTiles + (m_particleArray[i].Lifetime * 16), m_particleArray[i].Gfx, 8 * 8);
+						dmaCopy(sprite_fx_rainTiles + (m_particleArray[i].Lifetime * 64), m_particleArray[i].Gfx, 16 * 16);
 					}
 					else
 					{
@@ -78,11 +115,11 @@ void CFxParticles::UpdateVBlank()
 							m_particleArray[i].Speed = (rand() % 4) + 2;
 							m_particleArray[i].Lifetime = 0;
 							
-							dmaCopy(sprite_fx_rainTiles, m_particleArray[i].Gfx, 8 * 8);
+							dmaCopy(sprite_fx_rainTiles, m_particleArray[i].Gfx, 16 * 16);
 						}
 						else
 						{
-							dmaCopy(sprite_fx_rainTiles + (m_particleArray[i].Lifetime * 16), m_particleArray[i].Gfx, 8 * 8);
+							dmaCopy(sprite_fx_rainTiles + (m_particleArray[i].Lifetime * 64), m_particleArray[i].Gfx, 16 * 16);
 						}
 					}
 				}
@@ -99,7 +136,50 @@ void CFxParticles::UpdateVBlank()
 			if(m_particleArray[i].Y > 192)
 				m_particleArray[i].Y = 0;
 			
-			oamSet(&oamSub, PARTICLE_START + i, (m_xOffset + m_particleArray[i].X) & 0xFF, m_particleArray[i].Y, 1, 0, SpriteSize_8x8, SpriteColorFormat_256Color, m_particleArray[i].Gfx, 0, false, false, false, false, false);
+			oamSet(&oamSub, PARTICLE_START + i, (m_xOffset + m_particleArray[i].X) & 0xFF, m_particleArray[i].Y, 1, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, 0, false, false, false, false, false);
+		}
+		break;
+	case FXMODE_SKULL:
+	case FXMODE_HOURGLASS:
+		for(int i=0; i<32; i++)
+		{
+			m_particleArray[i].Angle += m_angleSpeed;
+
+			if (m_pong)
+			{
+				if (m_ratio < 1)
+					m_ratio += 0.0001F;
+				else
+					m_pong = false;
+			}
+			else
+			{
+				if (m_ratio > 0)
+					m_ratio -= 0.0001F;
+				else
+				{
+					SetEnabled(CFx::GetFxMode(), false);
+					break;
+				}
+				//else
+				//	m_pong = true;
+			}
+
+			float a = (float) sin(m_particleArray[i].Angle) * m_particleArray[i].Radius;
+			float b = (float) cos(m_particleArray[i].Angle) * m_particleArray[i].Radius;
+			float scalar = m_perspective / (b + m_perspective);
+			
+			m_particleArray[i].X = (int) (m_ratio * a * scalar + m_centreX);
+			m_particleArray[i].Y = (int) (152 - (m_ratio * (b * scalar / 4 + m_particleArray[i].StartY)));
+			
+			if(CFx::GetFxMode() == FXMODE_SKULL)
+				m_particleArray[i].Lifetime = (int) (m_pong ? m_ratio * 7 : ((1 - m_ratio) * 7) + 8);
+			else
+				m_particleArray[i].Lifetime = (int) (m_ratio * 7);
+			
+			dmaCopy((CFx::GetFxMode() == FXMODE_SKULL ? sprite_fx_skullTiles : sprite_fx_hourglassTiles) + (m_particleArray[i].Lifetime * 64), m_particleArray[i].Gfx, 16 * 16);
+			
+			oamSet(&oamSub, PARTICLE_START + i, m_particleArray[i].X, m_particleArray[i].Y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, 0, false, false, false, false, false);
 		}
 		break;
 	default:

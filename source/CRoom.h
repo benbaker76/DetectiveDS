@@ -146,7 +146,7 @@ public:
 	
 	void Initialize(int x);
 	void InitializeDoors();
-	void ResetDoors();
+	void Reset();
 	void InitializeOverlay();
 	void Draw();
 	void Update(CTime* pTime);

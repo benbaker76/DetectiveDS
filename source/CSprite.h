@@ -78,13 +78,14 @@ public:
 	
 	void SetLoop(int loop) { m_loop = loop; }
 	
-	void Reset() { m_frameNum = 0; m_frameCount = 0; }
-	
 	void SetPriority(int priority) { m_priority = priority; }
 	int Priority() const { return m_priority; }
 	
 	int X() const { return m_x; }
 	int Y() const { return m_y; }
+	
+	void Reset();
+	void ResetAnimation();
 
 private:
 	SpriteType m_spriteType;

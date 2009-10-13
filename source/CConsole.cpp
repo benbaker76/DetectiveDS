@@ -286,7 +286,7 @@ int CConsole::WordWrap(const char* text)
 {
 	char c = '\0';
 	static char line[CONSOLE_MAP_WIDTH+2], word[CONSOLE_MAX_WORD+2];
-	int newline = 0, line_pos = 0, word_pos = 0, line_count = 0;
+	int newLine = 0, linePos = 0, wordPos = 0, lineCount = 0;
 
 	while(1)
 	{
@@ -294,42 +294,42 @@ int CConsole::WordWrap(const char* text)
 
         if (c == '\0')
 		{
-            if (line_pos > 0)
+            if (linePos > 0)
 			{
-                line[line_pos] = '\0';
-				strcpy(m_textArray[line_count++], line);
+                line[linePos] = '\0';
+				strcpy(m_textArray[lineCount++], line);
             }
 
-            return line_count;
+            return lineCount;
         }
 		
         if (c == '\n')
-			newline = 1;
+			newLine = 1;
 
-        line[line_pos++] = word[word_pos++] = c;
+        line[linePos++] = word[wordPos++] = c;
 
         if (isspace(c))
-            word_pos = 0;
+            wordPos = 0;
 
-        if (word_pos > CONSOLE_MAX_WORD)
+        if (wordPos > CONSOLE_MAX_WORD)
 		{
-            word[word_pos] = '\0';
-            return line_count;
+            word[wordPos] = '\0';
+            return lineCount;
         }
 
-        if (newline || line_pos > CONSOLE_MAP_WIDTH)
+        if (newLine || linePos > CONSOLE_MAP_WIDTH)
 		{
-            newline = 0;
-            line_pos -= word_pos;
+            newLine = 0;
+            linePos -= wordPos;
 
-            while(isspace(line[--line_pos]));
+            while(isspace(line[--linePos]));
 
-            line[line_pos+1] = '\0';
-            strcpy(m_textArray[line_count++], line);
-            strncpy(line, word, word_pos);
-            line_pos = word_pos;
+            line[linePos + 1] = '\0';
+            strcpy(m_textArray[lineCount++], line);
+            strncpy(line, word, wordPos);
+            linePos = wordPos;
         }
     }
 
-	return line_count;
+	return lineCount;
 }

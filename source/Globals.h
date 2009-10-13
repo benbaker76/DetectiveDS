@@ -22,6 +22,7 @@ struct Map
 
 struct Rect
 {
+	Rect() : X(0), Y(0), Width(0), Height(0) {}
 	Rect(int x, int y, int width, int height) : X(x), Y(y), Width(width), Height(height) {}
 	int X;
 	int Y;
@@ -31,6 +32,7 @@ struct Rect
 
 struct Point
 {
+	Point() : X(0), Y(0) {}
 	Point(int x, int y) : X(x), Y(y) {}
 	int X;
 	int Y;
@@ -135,7 +137,9 @@ extern mm_sound_effect g_sfx_click;
 extern mm_sound_effect g_sfx_beep;
 extern mm_sound_effect g_sfx_ghostly;
 extern mm_sound_effect g_sfx_howling;
+extern mm_sound_effect g_sfx_timewarp;
+extern mm_sound_effect g_sfx_magic;
 
 extern u16 g_lightningBgPal[];
 extern u16 g_lightningSpritePal[];
-
+extern u16 g_c64Pal[];

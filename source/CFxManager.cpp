@@ -3,6 +3,7 @@
 #include "CFxFade.h"
 #include "CFxTextScroller.h"
 #include "CFxParticles.h"
+#include "CFxC64.h"
 
 CFxManager::CFxManager()
 {
@@ -21,11 +22,12 @@ void CFxManager::Initialize()
 	m_fxArray[FXTYPE_TEXT_SCROLLER] = new CFxTextScroller(FXTYPE_TEXT_SCROLLER, this);
 	m_fxArray[FXTYPE_COLOUR] = new CFxColourPulse(FXTYPE_COLOUR, this);
 	m_fxArray[FXTYPE_PARTICLES] = new CFxParticles(FXTYPE_PARTICLES, this);
+	m_fxArray[FXTYPE_C64] = new CFxC64(FXTYPE_C64, this);
 }
 
 void CFxManager::FxOff()
 {
-		for(int i=0; i<MAX_FX; i++)
+	for(int i=0; i<MAX_FX; i++)
 		if(m_fxArray[i] != NULL)
 			m_fxArray[i]->SetEnabled( m_fxArray[i]->GetFxMode(), false);
 }

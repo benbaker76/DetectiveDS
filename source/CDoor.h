@@ -42,7 +42,7 @@ class CRoom;
 class CDoor
 {
 public:
-	CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoomOut);
+	CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoomOut, ItemType doorKeyItemType);
 	~CDoor();
 	
 	bool Initialize();
@@ -57,14 +57,18 @@ public:
 	CRoom* pRoomIn() const { return m_pRoomIn; }
 	CRoom* pRoomOut() const { return m_pRoomOut; }
 	CDoor* pDoorOut() const { return m_pDoorOut; }
-	bool Hidden() const { return m_hidden; }
 	
-	void ResetDoorState() { m_doorState = m_defaultDoorState; };
+	ItemType GetKeyItemType() const { return m_keyItemType; }
+	
+	void Reset() { m_doorState = m_defaultDoorState; }
+	
+	bool Hidden() const { return m_hidden; }
 
 private:
 	DoorType m_doorType;
 	DoorState m_doorState;
 	DoorState m_defaultDoorState;
+	
 	CRoom* m_pRoomIn;
 	CRoom* m_pRoomOut;
 	CDoor* m_pDoorOut;
@@ -76,6 +80,8 @@ private:
 	Rect* m_rect;
 	Rect* m_rectOpen;
 	Rect* m_rectArray[MAX_DOOR_RECT];
+	
+	ItemType m_keyItemType;
 	
 	void GetPosition();
 };

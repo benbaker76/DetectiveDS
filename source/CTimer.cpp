@@ -42,17 +42,17 @@ void CTimer::Update()
 {
 	m_pCurrentTime->MilliSeconds++;
 	
-	if(m_pCurrentTime->MilliSeconds == 1000)
+	if(m_pCurrentTime->MilliSeconds >= 1000)
 	{
 		m_pCurrentTime->MilliSeconds = 0;
 		m_pCurrentTime->Seconds++;
 		
-		if(m_pCurrentTime->Seconds == 60)
+		if(m_pCurrentTime->Seconds >= 60)
 		{		
 			m_pCurrentTime->Seconds = 0;
 			m_pCurrentTime->Minutes++;
 			
-			if(m_pCurrentTime->Minutes == 60)
+			if(m_pCurrentTime->Minutes >= 60)
 			{
 				m_pCurrentTime->Minutes = 0;
 				m_pCurrentTime->Hours++;
@@ -60,3 +60,23 @@ void CTimer::Update()
 		}
 	}
 }
+
+void CTimer::Reverse()
+{
+	m_pCurrentTime->MilliSeconds = 0;
+	
+	m_pCurrentTime->Seconds-=5;
+	
+	if(m_pCurrentTime->Seconds < 0)
+	{		
+		m_pCurrentTime->Seconds = 59;
+		m_pCurrentTime->Minutes--;
+		
+		if(m_pCurrentTime->Minutes < 0)
+		{
+			m_pCurrentTime->Minutes = 59;
+			m_pCurrentTime->Hours--;
+		}
+	}
+}
+

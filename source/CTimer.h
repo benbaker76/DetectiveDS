@@ -31,6 +31,7 @@ public:
 	void Start(int hours, int minutes, int seconds, int milliSeconds);
 	void Stop();
 	void Update();
+	void Reverse();
 
 	CTime* pCurrentTime() const { return m_pCurrentTime; }
 	

@@ -7,7 +7,7 @@
 
 enum ItemType
 {
-	ITEM_NOTHING_HERE,
+	ITEM_NONE,
 	ITEM_A_HOT_WATER_BOTTLE,
 	ITEM_BLANK_BULLETS,
 	ITEM_A_CANDLESTICK,
@@ -113,12 +113,21 @@ public:
 	void SetParent(CItemCache* pItemCache) { m_parent = pItemCache; }
 	CItemCache* GetParent() const { return m_parent; }
 	
+	void SetKeyItemType(ItemType keyItemType) { m_keyItemType = keyItemType; }
+	
+	void SetLocked(bool locked) { m_locked = locked; }
+	bool GetLocked() const { return m_locked; }
+	
 private:
 	ItemType m_itemType;
 	int m_itemAttribs;
 	
 	CItemCache* m_parent;
 	CItemCache* m_itemCache;
+	
+	bool m_locked;
+	
+	ItemType m_keyItemType;
 };
 
 #endif

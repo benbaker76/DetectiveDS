@@ -11,10 +11,21 @@
 
 enum GameMode
 {
+	GAMEMODE_INTRO,
 	GAMEMODE_TITLESCREEN,
 	GAMEMODE_PAUSED,
 	GAMEMODE_RUNNING,
+	GAMEMODE_DYING,
+	GAMEMODE_REVERSETIME,
 	GAMEMODE_GAMEOVER
+};
+
+enum GameOverMode
+{
+	GAMEOVERMODE_WIN,
+	GAMEOVERMODE_LOSE,
+	GAMEOVERMODE_END,
+	GAMEOVERMODE_NOTHING
 };
 
 enum DisplayMode
@@ -119,6 +130,7 @@ private:
 	CItem* m_placeItem;
 	CItem* m_inItem;
 	CCharacter* m_questionCharacter;
+	CCharacter* m_speakCharacter;
 	
 	char m_buffer[2048];
 	
@@ -128,6 +140,15 @@ private:
 	CCharacter* m_snide;
 	CWatch* m_watch;
 	CTimer* m_timer;
+	
+	GameOverMode m_gameOverMode;
+	int m_gameOverFrameCount;
+	
+	int m_dieFrameCount;
+	int m_reverseTimeFrameCount;
+	
+	int m_introIndex;
+	int m_introFrameCount;
 	
 	mm_sfxhand m_footsteps;
 	
@@ -140,10 +161,13 @@ private:
 	int m_characterPos;
 	int m_characterFrameCount;
 	
-	void InitializeDoors();
-	void ResetDoors();
+	void InitData();
+	void InitDoors();
+	void ResetRooms();
 	void SortSprites();
 	void UpdateCharacters();
+	void CharacterSpeak(CCharacter* pCharacter, const char* string);
+	void HideCharacters();
 	bool CheckCharacterCollision(DirectionType directionType, CharacterType* charNear, CharacterType* charFar);
 	void UpdateDisplayMode(touchPosition touch, int keys_held, int keys_pressed, int keys_released);
 	void UpdateSnideMovement(int keys_held);
@@ -159,9 +183,13 @@ private:
 	void InitRoom();
 	void UpdateFx();
 	
+	void InitVideoIntro();
+	void InitVideoMain();
+	void InitIntro();
+	void UpdateIntro();
 	void InitGame(GameType gameType);
 	void UpdateGame(touchPosition touch, int keys_held, int keys_pressed, int keys_released);
-	void InitGameOver(bool win);
+	void InitGameOver(GameOverMode gameOverMode);
 	void UpdateGameOver();
 	void InitTitleScreen();
 	void UpdateTitleScreen();

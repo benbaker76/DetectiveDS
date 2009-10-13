@@ -15,22 +15,7 @@ CSprite::CSprite(SpriteType spriteType, const u32* pBmp, const u32* frameArray, 
 	m_frameTotal = frameTotal;
 	m_bitmapSprite = true;
 	
-	m_frameNum = 0;
-	m_frameCount = 0;
-	
-	m_x = 0;
-	m_y = 0;
-	
-	m_oamIndex = spriteType;
-	m_priority = 1;
-	
-	m_alpha = 0xF;
-	
-	m_hFlip = false;
-	
-	m_sub = true;
-	
-	m_loop = true;
+	Reset();
 	
 	m_gfxMain = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_Bmp);
 	m_gfxSub = oamAllocateGfx(&oamSub, SpriteSize_32x32, SpriteColorFormat_Bmp);
@@ -48,20 +33,7 @@ CSprite::CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u
 	m_frameTotal = frameTotal;
 	m_bitmapSprite = false;
 	
-	m_frameNum = 0;
-	m_frameCount = 0;
-	
-	m_x = 0;
-	m_y = 0;
-	
-	m_oamIndex = spriteType;
-	m_priority = 1;
-	
-	m_alpha = 0xF;
-	
-	m_sub = true;
-
-	m_loop = true;
+	Reset();
 	
 	m_gfxMain = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
 	m_gfxSub = oamAllocateGfx(&oamSub, SpriteSize_32x32, SpriteColorFormat_256Color);
@@ -133,16 +105,16 @@ void CSprite::Hide()
 {
 	if(m_bitmapSprite)
 	{
-		if(m_sub)
+		//if(m_sub)
 			oamSet(&oamSub, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxSub, -1, false, true, m_hFlip, false, false);
-		else
+		//else
 			oamSet(&oamMain, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_Bmp, m_gfxMain, -1, false, true, m_hFlip, false, false);
 	}
 	else
 	{
-		if(m_sub)
+		//if(m_sub)
 			oamSet(&oamSub, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxSub, -1, false, true, m_hFlip, false, false);
-		else
+		//else
 			oamSet(&oamMain, m_oamIndex, m_x, m_y,	0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxMain, -1, false, true, m_hFlip, false, false);
 	}
 }
@@ -186,4 +158,30 @@ void CSprite::SetFrameType(FrameType frameType)
 		m_frameType = frameType;
 		GetNextFrame();
 	}
+}
+
+void CSprite::Reset()
+{
+	m_frameNum = 0;
+	m_frameCount = 0;
+	
+	m_x = 0;
+	m_y = 0;
+	
+	m_oamIndex = m_spriteType;
+	m_priority = 1;
+	
+	m_alpha = 0xF;
+	
+	m_hFlip = false;
+	
+	m_sub = true;
+	
+	m_loop = true;
+}
+
+void CSprite::ResetAnimation()
+{
+	m_frameNum = 0;
+	m_frameCount = 0;
 }

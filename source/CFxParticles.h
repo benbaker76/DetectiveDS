@@ -6,14 +6,17 @@
 #define MAX_PARTICLES	80
 #define PARTICLE_START	32
 
-typedef struct
+struct Particle
 {
 	u16* Gfx;
 	int X;
 	int Y;
-	int Speed;
+	float Angle;
+	float Speed;
 	int Lifetime;
-} PARTICLE, *PPARTICLE;
+	int Radius;
+	int StartY;
+};
 
 class CFxParticles : public CFx
 {
@@ -22,7 +25,7 @@ public:
 	CFxParticles(FxType fxType, CFxManager* fxManager) : CFx(fxType, fxManager)
 	{
 		for(int i=0; i<MAX_PARTICLES; i++)
-			m_particleArray[i].Gfx = oamAllocateGfx(&oamSub, SpriteSize_8x8, SpriteColorFormat_256Color);
+			m_particleArray[i].Gfx = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_256Color);
 	}
 	~CFxParticles()
 	{
@@ -40,10 +43,18 @@ public:
 
 private:
 
-	PARTICLE m_particleArray[MAX_PARTICLES];
+	Particle m_particleArray[MAX_PARTICLES];
 	
 	int m_frameCount;
 	int m_xOffset;
+	
+	int m_perspective;
+	int m_centreX;
+	float m_ratio;
+	
+	float m_angleSpeed;
+	
+	bool m_pong;
 };
 
 #endif

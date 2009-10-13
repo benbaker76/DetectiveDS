@@ -9,7 +9,6 @@
 
 #include "Text.h"
 
-CVideo m_video;
 CGame m_game;
 
 void InterruptHandlerVBlank()
@@ -64,13 +63,14 @@ int main(void)
 	mmLoadEffect(SFX_BEEP);
 	mmLoadEffect(SFX_GHOSTLY);
 	mmLoadEffect(SFX_HOWLING);
+	mmLoadEffect(SFX_TIMEWARP);
+	mmLoadEffect(SFX_MAGIC);
 	//mmStart(MOD_WEATHER, MM_PLAY_LOOP);
 	mmJingle(MOD_WEATHER);
 	mmSetJingleVolume(0);
 	
 	consoleDebugInit(DebugDevice_NOCASH);
 	
-	m_video.Initialize();
 	m_game.Initialize();
 
 	while(1)

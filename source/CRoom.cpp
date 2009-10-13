@@ -175,14 +175,20 @@ void CRoom::InitializeDoors()
 	}
 }
 
-void CRoom::ResetDoors()
+void CRoom::Reset()
 {
+	for(int i=0; i < MAX_ROOM_DST_RECT; i++)
+	{
+		if(m_animArray[i] != NULL)
+			m_animArray[i]->Reset();
+	}
+	
 	for(int i=0; i < MAX_DOORS; i++)
 	{
 		CDoor* pDoor = m_doorArray[i];
 		
 		if(pDoor != NULL)
-			pDoor->ResetDoorState();
+			pDoor->Reset();
 	}
 }
 
@@ -403,7 +409,7 @@ bool CRoom::GetColMapRect(CollisionType colType, Rect** rect)
 				if(!mapFound)
 				{
 					mapFound = true;
-					*rect = new Rect(0, 0, 0, 0);
+					*rect = new Rect();
 					(*rect)->X = x;
 					(*rect)->Y = y;
 				}
