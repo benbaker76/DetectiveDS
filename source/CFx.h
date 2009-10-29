@@ -1,6 +1,8 @@
 #ifndef __CFX_H__
 #define __CFX_H__
 
+#include "CCallback.h"
+
 #define MAX_FX		32
 
 enum FxType
@@ -28,6 +30,8 @@ enum FxMode
 	FXMODE_HOURGLASS
 };
 
+class CGame;
+
 class CFxManager;
 
 class CFx
@@ -49,6 +53,10 @@ public:
 	
 	void SetEnabled(FxMode fxMode, bool enabled) { m_fxMode = fxMode; m_enabled = enabled; (enabled ? Initialize() : Shutdown()); }
 	void SetFxMode(FxMode fxMode) { m_fxMode = fxMode; }
+	
+	void SetCallback(CCallback<CGame, void, int>* callback) { m_callback = callback; }
+	
+	CCallback<CGame, void, int>* m_callback;
 
 private:
 

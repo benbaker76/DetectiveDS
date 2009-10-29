@@ -17,10 +17,11 @@ CGame::~CGame()
 
 void CGame::Initialize()
 {
-	InitIntro();
+	//InitIntro1();
+	InitData(0);
 }
 
-void CGame::InitData()
+void CGame::InitData(int param)
 {
 	dmaFillHalfWords(0, BG_PALETTE_SUB, 512);
 	dmaFillHalfWords(0, BG_PALETTE, 512);
@@ -42,8 +43,11 @@ void CGame::InitData()
 	ClearBG(1, false);
 	ClearBG(2, false);
 	ClearBG(3, false);
-
+	
 	m_fxManager.Initialize();
+	
+	((CFxFade*)m_fxManager.GetFx(FXTYPE_FADE))->SetBG(BG2_SUB | BG3_SUB | SPRITE_SUB, 0);
+
 	m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
 	m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
 	m_fxManager.SetFx(FXTYPE_COLOUR, FXMODE_NORMAL, true);
@@ -122,9 +126,10 @@ void CGame::InitData()
 	m_itemArray[ITEM_AN_HOURGLASS] = new CItem(ITEM_AN_HOURGLASS, ITEMATTRIB_NONE);
 	m_itemArray[ITEM_A_GOLDEN_SKULL] = new CItem(ITEM_A_GOLDEN_SKULL, ITEMATTRIB_NONE);
 	m_itemArray[ITEM_A_RED_KEY] = new CItem(ITEM_A_RED_KEY, ITEMATTRIB_USE_KEY);
-	m_itemArray[ITEM_A_FIREPLACE_BELLOW] = new CItem(ITEM_A_FIREPLACE_BELLOW, ITEMATTRIB_NONE);
+	m_itemArray[ITEM_A_VACUUM_CLEANER] = new CItem(ITEM_A_VACUUM_CLEANER, ITEMATTRIB_NONE);
 	m_itemArray[ITEM_WASHING_POWDER] = new CItem(ITEM_WASHING_POWDER, ITEMATTRIB_NONE);
 	m_itemArray[ITEM_A_DIRTY_SHIRT] = new CItem(ITEM_A_DIRTY_SHIRT, ITEMATTRIB_NONE);
+	m_itemArray[ITEM_ANGUS_MCFUNGUS] = new CItem(ITEM_ANGUS_MCFUNGUS, ITEMATTRIB_NONE);
 	
 	m_itemArray[ITEM_A_BRIEFCASE]->SetKeyItemType(ITEM_A_SMALL_KEY);
 	
@@ -668,21 +673,21 @@ void CGame::InitData()
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOPOINT, new Point(80, 184), 200));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOROOM, m_roomArray[ROOM_OUTSIDE3], m_roomArray[ROOM_DRAWING], 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOPOINT, new Point(344, 144), 0));
-	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_SPEAK, "\"HAS ANYONE SEEN MY SCALPLES?\"", 200));
+	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_SPEAK, "\"HAS ANYONE SEEN MY SCALPELS?\"", 200));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOPOINT, new Point(312, m_roomArray[ROOM_DRAWING]->CentreY()), 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOPOINT, new Point(344, 144), 200));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOROOM, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_CLOCK], 200));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOPOINT, new Point(80, 184), 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOROOM, m_roomArray[ROOM_CLOCK], m_roomArray[ROOM_DRAWING], 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOPOINT, new Point(344, 144), 0));
-	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_SPEAK, "\"HAS ANYONE SEEN MY SCALPLES?\"", 200));
+	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_SPEAK, "\"HAS ANYONE SEEN MY SCALPELS?\"", 200));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOPOINT, new Point(312, m_roomArray[ROOM_DRAWING]->CentreY()), 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOPOINT, new Point(344, 144), 200));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOROOM, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_CLOCK], 200));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOPOINT, new Point(80, 184), 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOROOM, m_roomArray[ROOM_CLOCK], m_roomArray[ROOM_DRAWING], 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOPOINT, new Point(344, 144), 0));
-	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_SPEAK, "\"HAS ANYONE SEEN MY SCALPLES?\"", 200));
+	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_SPEAK, "\"HAS ANYONE SEEN MY SCALPELS?\"", 200));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOPOINT, new Point(312, m_roomArray[ROOM_DRAWING]->CentreY()), 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOPOINT, new Point(344, 144), 200));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(GOAL_GOTOROOM, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_CLOCK], 200));
@@ -819,7 +824,7 @@ void CGame::Update()
 	{
 	case GAMEMODE_INTRO:
 		if(keys_released & KEY_START)
-			InitData();
+			InitData(0);
 		else
 			UpdateIntro();
 		break;
@@ -2064,6 +2069,8 @@ void CGame::PostProcessMenu()
 							sprintf(m_buffer, "YOU TAKE:\n\n%s", g_itemName[pItem->GetItemType()]);
 							m_console->AddText(m_buffer);
 							
+							m_menu->DrawItem(pItem->GetItemType(), 24, 18, false);
+							
 							switch(colType)
 							{
 							case COL_HOURGLASS:
@@ -2158,7 +2165,7 @@ void CGame::PostProcessMenu()
 						
 						m_displayMode = DISPLAYMODE_GAME;
 						m_pointer->Hide();
-						m_menu->Hide();
+						//m_menu->Hide();
 						m_console->HideMenu();
 						break;
 					}
@@ -2724,7 +2731,6 @@ mm_word CGame::MusicEventHandler(mm_word msg, mm_word param)
 	
 	switch( msg )
 	{
-
 	case MMCB_SONGMESSAGE:
 		//sprintf(buf, "MMCB_SONGMESSAGE: msg: %d, param: %d", msg, param);
 		//fprintf(stderr, buf);
@@ -2785,11 +2791,6 @@ void CGame::InitVideoMain()
 	videoSetModeSub(MODE_0_2D | DISPLAY_SPR_ACTIVE | DISPLAY_SPR_1D_LAYOUT | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE | DISPLAY_BG2_ACTIVE | DISPLAY_BG3_ACTIVE);
 	
 	vramSetMainBanks(VRAM_A_MAIN_BG, VRAM_B_MAIN_SPRITE_0x06400000, VRAM_C_SUB_BG, VRAM_D_SUB_SPRITE);
-	//vramSetMainBanks(VRAM_A_MAIN_BG, VRAM_B_MAIN_SPRITE, VRAM_C_SUB_BG, VRAM_D_SUB_SPRITE);
-	//vramSetMainBanks(VRAM_A_MAIN_SPRITE, VRAM_B_MAIN_BG, VRAM_C_SUB_BG, VRAM_D_SUB_SPRITE);
-	
-	//vramSetBankA(VRAM_A_MAIN_SPRITE);
-	//vramSetBankD(VRAM_D_SUB_SPRITE);
 	
 	bgInit(0, BgType_Text4bpp, BgSize_T_256x256, BG0_MAP_BASE, BG0_TILE_BASE);
 	bgInit(1, BgType_Text8bpp, BgSize_T_256x256, BG1_MAP_BASE, BG1_TILE_BASE);
@@ -2820,8 +2821,8 @@ void CGame::InitVideoMain()
 	BG_PALETTE[0] = 0;
 	BG_PALETTE_SUB[0] = 0;
 	
-	dmaCopy(font_largeTiles, BG_TILE_RAM(BG0_TILE_BASE) + fontTilesLen, font_largeTilesLen);
-	dmaCopy(font_largeTiles, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB) + fontTilesLen, font_largeTilesLen);
+	dmaCopy(font_largeTiles, BG_TILE_RAM(BG0_TILE_BASE) + (fontTilesLen / 2), font_largeTilesLen);
+	dmaCopy(font_largeTiles, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB) + (fontTilesLen / 2), font_largeTilesLen);
 	
 	WIN_IN = WIN0_BG0 | WIN0_BG1 | WIN0_BG2 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;
 	WIN_OUT = WIN0_BG1 | WIN0_BG2 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;
@@ -2851,7 +2852,7 @@ void CGame::InitVideoMain()
 	oamInit(&oamSub, SpriteMapping_Bmp_1D_128, false);
 }
 
-void CGame::InitIntro()
+void CGame::InitIntro1()
 {
 	m_introIndex = 0;
 	m_introFrameCount = 0;
@@ -2863,6 +2864,10 @@ void CGame::InitIntro()
 	
 	BG_PALETTE[0] = 0;
 	BG_PALETTE_SUB[0] = 0;
+	
+	((CFxFade*)m_fxManager.GetFx(FXTYPE_FADE))->SetBG(BG0 | BG0_SUB, BG1 | BG1_SUB);
+	
+	m_fxManager.SetFx(FXTYPE_FADE, FXMODE_BLACK_OUT, true);
 	
 	dmaCopy(intro_headsoftTiles, BG_TILE_RAM_SUB(INTRO_BG0_TILE_BASE_SUB), intro_headsoftTilesLen);
 	dmaCopy(intro_headsoftMap, BG_MAP_RAM_SUB(INTRO_BG0_MAP_BASE_SUB), intro_headsoftMapLen);
@@ -2877,6 +2882,30 @@ void CGame::InitIntro()
 	dmaCopy(intro_spacefractalMap, BG_MAP_RAM(INTRO_BG1_MAP_BASE), intro_spacefractalMapLen);
 }
 
+void CGame::InitIntro2(int param)
+{
+	dmaCopy(intro_infectuousTiles, BG_TILE_RAM_SUB(INTRO_BG0_TILE_BASE_SUB), intro_infectuousTilesLen);
+	dmaCopy(intro_infectuousMap, BG_MAP_RAM_SUB(INTRO_BG0_MAP_BASE_SUB), intro_infectuousMapLen);
+
+	dmaCopy(intro_spacefractalTiles, BG_TILE_RAM(INTRO_BG0_TILE_BASE), intro_spacefractalTilesLen);
+	dmaCopy(intro_spacefractalMap, BG_MAP_RAM(INTRO_BG0_MAP_BASE), intro_spacefractalMapLen);
+
+	dmaCopy(intro_retrobytesTiles, BG_TILE_RAM_SUB(INTRO_BG1_TILE_BASE_SUB), intro_retrobytesTilesLen);
+	dmaCopy(intro_retrobytesMap, BG_MAP_RAM_SUB(INTRO_BG1_MAP_BASE_SUB), intro_retrobytesMapLen);
+
+	dmaCopy(intro_retrogamerTiles, BG_TILE_RAM(INTRO_BG1_TILE_BASE), intro_retrogamerTilesLen);
+	dmaCopy(intro_retrogamerMap, BG_MAP_RAM(INTRO_BG1_MAP_BASE), intro_retrogamerMapLen);
+}
+
+void CGame::InitIntro3(int param)
+{
+	dmaCopy(intro_retrobytesTiles, BG_TILE_RAM_SUB(INTRO_BG0_TILE_BASE_SUB), intro_retrobytesTilesLen);
+	dmaCopy(intro_retrobytesMap, BG_MAP_RAM_SUB(INTRO_BG0_MAP_BASE_SUB), intro_retrobytesMapLen);
+	
+	dmaCopy(intro_retrogamerTiles, BG_TILE_RAM(INTRO_BG0_TILE_BASE), intro_retrogamerTilesLen);
+	dmaCopy(intro_retrogamerMap, BG_MAP_RAM(INTRO_BG0_MAP_BASE), intro_retrogamerMapLen);
+}
+
 void CGame::UpdateIntro()
 {
 	if(m_introFrameCount++ == 100)
@@ -2886,27 +2915,16 @@ void CGame::UpdateIntro()
 		switch(m_introIndex)
 		{
 		case 0:
-			dmaCopy(intro_infectuousTiles, BG_TILE_RAM_SUB(INTRO_BG0_TILE_BASE_SUB), intro_infectuousTilesLen);
-			dmaCopy(intro_infectuousMap, BG_MAP_RAM_SUB(INTRO_BG0_MAP_BASE_SUB), intro_infectuousMapLen);
-			
-			dmaCopy(intro_spacefractalTiles, BG_TILE_RAM(INTRO_BG0_TILE_BASE), intro_spacefractalTilesLen);
-			dmaCopy(intro_spacefractalMap, BG_MAP_RAM(INTRO_BG0_MAP_BASE), intro_spacefractalMapLen);
-			
-			dmaCopy(intro_retrobytesTiles, BG_TILE_RAM_SUB(INTRO_BG1_TILE_BASE_SUB), intro_retrobytesTilesLen);
-			dmaCopy(intro_retrobytesMap, BG_MAP_RAM_SUB(INTRO_BG1_MAP_BASE_SUB), intro_retrobytesMapLen);
-			
-			dmaCopy(intro_retrogamerTiles, BG_TILE_RAM(INTRO_BG1_TILE_BASE), intro_retrogamerTilesLen);
-			dmaCopy(intro_retrogamerMap, BG_MAP_RAM(INTRO_BG1_MAP_BASE), intro_retrogamerMapLen);
+			m_fxManager.SetFx(FXTYPE_FADE, FXMODE_ALPHA_IN, true);
+			((CFxFade*)m_fxManager.GetFx(FXTYPE_FADE))->SetCallback(new CCallback<CGame, void, int>(this, &CGame::InitIntro2));
 			break;
 		case 1:
-			dmaCopy(intro_retrobytesTiles, BG_TILE_RAM_SUB(INTRO_BG0_TILE_BASE_SUB), intro_retrobytesTilesLen);
-			dmaCopy(intro_retrobytesMap, BG_MAP_RAM_SUB(INTRO_BG0_MAP_BASE_SUB), intro_retrobytesMapLen);
-			
-			dmaCopy(intro_retrogamerTiles, BG_TILE_RAM(INTRO_BG0_TILE_BASE), intro_retrogamerTilesLen);
-			dmaCopy(intro_retrogamerMap, BG_MAP_RAM(INTRO_BG0_MAP_BASE), intro_retrogamerMapLen);
+			m_fxManager.SetFx(FXTYPE_FADE, FXMODE_ALPHA_IN, true);
+			((CFxFade*)m_fxManager.GetFx(FXTYPE_FADE))->SetCallback(new CCallback<CGame, void, int>(this, &CGame::InitIntro3));
 			break;
 		case 2:	
-			InitData();
+			m_fxManager.SetFx(FXTYPE_FADE, FXMODE_BLACK_IN, true);
+			((CFxFade*)m_fxManager.GetFx(FXTYPE_FADE))->SetCallback(new CCallback<CGame, void, int>(this, &CGame::InitData));
 			break;
 		}
 		
@@ -3022,7 +3040,7 @@ void CGame::InitGame(GameType gameType)
 		m_roomArray[ROOM_LIBRARY]->AddItems(1, m_itemArray[ITEM_BOOKS2], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_UTILITY]->AddItems(0, m_itemArray[ITEM_A_DIRTY_SHIRT], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_UTILITY]->AddItems(2, m_itemArray[ITEM_WASHING_POWDER], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_UTILITY]->AddItems(3, m_itemArray[ITEM_A_FIREPLACE_BELLOW], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_UTILITY]->AddItems(3, m_itemArray[ITEM_A_VACUUM_CLEANER], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_ANGUS_ROOM]->AddItems(1, m_itemArray[ITEM_A_SWORD], m_itemArray[ITEM_A_BALL_ON_CHAIN], NULL, NULL, NULL);
 		m_roomArray[ROOM_ANGUS_SECRET]->AddItems(0, m_itemArray[ITEM_AN_HOURGLASS], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_ANGUS_SECRET]->AddItems(1, m_itemArray[ITEM_A_GOLDEN_SKULL], NULL, NULL, NULL, NULL);
@@ -3066,6 +3084,8 @@ void CGame::InitGame(GameType gameType)
 	
 	mmStart(MOD_DETECTIVE, MM_PLAY_ONCE);
 	mmPosition(3);
+	
+	//m_menu->DrawItem(ITEM_ANGUS_MCFUNGUS, 24, 18, false);
 }
 
 void CGame::UpdateGame(touchPosition touch, int keys_held, int keys_pressed, int keys_released)

@@ -94,9 +94,10 @@ const char* g_itemName[] =
 	"AN HOURGLASS",
 	"A GOLDEN SKULL",
 	"A RED KEY",
-	"A FIREPLACE BELLOW",
+	"A VACUUM CLEANER",
 	"WASHING POWDER",
-	"A DIRTY SHIRT"
+	"A DIRTY SHIRT",
+	"ANGUS MCFUNGUS"
 };
 
 const char* g_itemExamine[] =
@@ -159,9 +160,10 @@ const char* g_itemExamine[] =
 	NULL, // HOURGLASS
 	NULL, // GOLDEN SKULL
 	NULL, // RED KEY
-	NULL, // FIREPLACE BELLOW
+	NULL, // VACUUM CLEANER
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
+	NULL, // ANGUS MCFUNGUS
 };
 
 const char* g_itemRead[] =
@@ -224,9 +226,10 @@ const char* g_itemRead[] =
 	NULL, // HOURGLASS
 	NULL, // GOLDEN SKULL
 	NULL, // RED KEY
-	NULL, // FIREPLACE BELLOW
+	NULL, // VACUUM CLEANER
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
+	NULL, // ANGUS MCFUNGUS
 };
 
 const char* g_colName[] =
@@ -505,9 +508,10 @@ const char* g_askAboutItem[] =
 	NULL, // HOURGLASS
 	NULL, // GOLDEN SKULL
 	NULL, // RED KEY
-	NULL, // FIREPLACE BELLOW
+	NULL, // VACUUM CLEANER
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
+	NULL, // ANGUS MCFUNGUS
 
 	// The Reverend
 	
@@ -569,9 +573,10 @@ const char* g_askAboutItem[] =
 	NULL, // HOURGLASS
 	NULL, // GOLDEN SKULL
 	NULL, // RED KEY
-	NULL, // FIREPLACE BELLOW
+	NULL, // VACUUM CLEANER
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
+	NULL, // ANGUS MCFUNGUS
 
 	// Bentley
 
@@ -633,9 +638,10 @@ const char* g_askAboutItem[] =
 	NULL, // HOURGLASS
 	NULL, // GOLDEN SKULL
 	NULL, // RED KEY
-	NULL, // FIREPLACE BELLOW
+	NULL, // VACUUM CLEANER
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
+	NULL, // ANGUS MCFUNGUS
 
 	// Cook
 	
@@ -697,9 +703,10 @@ const char* g_askAboutItem[] =
 	NULL, // HOURGLASS
 	NULL, // GOLDEN SKULL
 	NULL, // RED KEY
-	NULL, // FIREPLACE BELLOW
+	NULL, // VACUUM CLEANER
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
+	NULL, // ANGUS MCFUNGUS
 
 	// Gabriel
 	
@@ -761,9 +768,10 @@ const char* g_askAboutItem[] =
 	NULL, // HOURGLASS
 	NULL, // GOLDEN SKULL
 	NULL, // RED KEY
-	NULL, // FIREPLACE BELLOW
+	NULL, // VACUUM CLEANER
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
+	NULL, // ANGUS MCFUNGUS
 
 	// Cynthia
 	
@@ -825,9 +833,10 @@ const char* g_askAboutItem[] =
 	NULL, // HOURGLASS
 	NULL, // GOLDEN SKULL
 	NULL, // RED KEY
-	NULL, // FIREPLACE BELLOW
+	NULL, // VACUUM CLEANER
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
+	NULL, // ANGUS MCFUNGUS
 
 	// The Professor
 	
@@ -889,9 +898,10 @@ const char* g_askAboutItem[] =
 	NULL, // HOURGLASS
 	NULL, // GOLDEN SKULL
 	NULL, // RED KEY
-	NULL, // FIREPLACE BELLOW
+	NULL, // VACUUM CLEANER
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
+	NULL, // ANGUS MCFUNGUS
 
 	// The Doctor
 	
@@ -953,9 +963,10 @@ const char* g_askAboutItem[] =
 	NULL, // HOURGLASS
 	NULL, // GOLDEN SKULL
 	NULL, // RED KEY
-	NULL, // FIREPLACE BELLOW
+	NULL, // VACUUM CLEANER
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
+	NULL, // ANGUS MCFUNGUS
 
 	// The Major
 	
@@ -1017,9 +1028,10 @@ const char* g_askAboutItem[] =
 	NULL, // HOURGLASS
 	NULL, // GOLDEN SKULL
 	NULL, // RED KEY
-	NULL, // FIREPLACE BELLOW
+	NULL, // VACUUM CLEANER
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
+	NULL, // ANGUS MCFUNGUS
 
 	// Dingle
 	
@@ -1081,9 +1093,10 @@ const char* g_askAboutItem[] =
 	NULL, // HOURGLASS
 	NULL, // GOLDEN SKULL
 	NULL, // RED KEY
-	NULL, // FIREPLACE BELLOW
+	NULL, // VACUUM CLEANER
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
+	NULL, // ANGUS MCFUNGUS
 
 	// Angus
 	
@@ -1145,9 +1158,10 @@ const char* g_askAboutItem[] =
 	NULL, // HOURGLASS
 	NULL, // GOLDEN SKULL
 	NULL, // RED KEY
-	NULL, // FIREPLACE BELLOW
+	NULL, // VACUUM CLEANER
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
+	NULL, // ANGUS MCFUNGUS
 };
 
 const char* g_askAboutProfessorRandom[] =
@@ -1334,8 +1348,8 @@ void DrawStringLarge(const char* string, int x, int y, bool sub)
 	
 	for(u32 i=0; i<strlen(string); i++)
 	{	
-		*pMap = 96 * 2 + g_largeTextMap[string[i] - 0x20] * 2;
-		*(pMap+32) = 96 * 2 + g_largeTextMap[string[i] - 0x20] * 2 + 1;
+		*pMap = 96 + g_largeTextMap[string[i] - 0x20] * 2;
+		*(pMap+32) = 96 + g_largeTextMap[string[i] - 0x20] * 2 + 1;
 		pMap++;
 	}
 }
@@ -1344,7 +1358,7 @@ void DrawCharLarge(char c, int x, int y, bool sub)
 {
 	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)) + (x + y * 32);
 	
-	*pMap = 96 * 2 + g_largeTextMap[c - 0x20] * 2;
-	*(pMap+32) = 96 * 2 + g_largeTextMap[c - 0x20] * 2 + 1;
+	*pMap = 96 + g_largeTextMap[c - 0x20] * 2;
+	*(pMap+32) = 96 + g_largeTextMap[c - 0x20] * 2 + 1;
 }
 

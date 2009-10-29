@@ -15,11 +15,15 @@ public:
 	void Reset();
 	void UpdateVBlank();
 	void UpdateHBlank();
+	
+	void SetBG(int bgSrc, int bgDst) { m_bgSrc = bgSrc; m_bgDst = bgDst; }
 
 private:
 
 	u16 m_fadeValue;
 	bool m_lightsEnabled;
+	int m_bgSrc;
+	int m_bgDst;
 };
 
 class CFxFadeRamp : public CFx

@@ -131,6 +131,7 @@
 #include "font_large.h"
 
 #include "icons.h"
+#include "items.h"
 
 #define INTRO_BG0_MAP_BASE			28
 #define INTRO_BG0_MAP_BASE_SUB		28
@@ -167,6 +168,20 @@
 
 #define BG3_TILE_BASE				0
 #define BG3_TILE_BASE_SUB			0
+
+enum Background
+{
+	BG0 = BIT(0),
+	BG1 = BIT(1),
+	BG2 = BIT(2),
+	BG3 = BIT(3),
+	SPRITE = BIT(4),
+	BG0_SUB = BIT(5),
+	BG1_SUB = BIT(6),
+	BG2_SUB = BIT(7),
+	BG3_SUB = BIT(8),
+	SPRITE_SUB = BIT(9)
+};
 
 #define ARRAY_LENGTH(x)		(sizeof(x) / sizeof(x[0]))
 

@@ -255,7 +255,7 @@ bool CCharacter::MoveTo(Point* pDest)
 	if(abs(xDist) > 8 || abs(yDist) > 8)
 	{						
 		if(abs(xDist) < 32)	 		// Near the door
-		{			
+		{
 			if(xDist < 0)			// Move directly towards it
 				m_x -= 0.6f;		// left
 			else
@@ -278,7 +278,7 @@ bool CCharacter::MoveTo(Point* pDest)
 		}
 		else
 		{			
-			if(yPos > m_pRoom->CentreY())			// Below centre of room so move up diagonally
+			if(yPos > m_pRoom->CentreY() + 1)			// Below centre of room so move up diagonally
 			{
 				SetFrameType(FRAME_RIGHT);
 				SetHFlip(false);
@@ -286,7 +286,7 @@ bool CCharacter::MoveTo(Point* pDest)
 				m_x += 0.6f;
 				m_y -= 0.3f;
 			}
-			else if(yPos < m_pRoom->CentreY()) 	// Above centre of room so move down diagonally
+			else if(yPos < m_pRoom->CentreY() - 1) 	// Above centre of room so move down diagonally
 			{
 				SetFrameType(FRAME_LEFT);
 				SetHFlip(false);

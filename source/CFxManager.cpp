@@ -29,7 +29,7 @@ void CFxManager::FxOff()
 {
 	for(int i=0; i<MAX_FX; i++)
 		if(m_fxArray[i] != NULL)
-			m_fxArray[i]->SetEnabled( m_fxArray[i]->GetFxMode(), false);
+			m_fxArray[i]->SetEnabled(m_fxArray[i]->GetFxMode(), false);
 }
 
 void CFxManager::UpdateVBlank()

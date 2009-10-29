@@ -89,9 +89,21 @@ void CMenu::DrawIcon(IconType iconType, int x, int y, bool sub)
 {
 	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB) : BG_MAP_RAM(BG1_MAP_BASE)) + (x + y * 32);
 	
-	for(u32 y=0; y<2; y++)
-		for(u32 x=0; x<3; x++)
-			*(pMap+x+y*32) = iconType * 6 + x + y * ICON_WIDTH;
+	for(u32 y=0; y<ICON_HEIGHT; y++)
+		for(u32 x=0; x<ICON_WIDTH; x++)
+			*(pMap+x+y*32) = iconType * (ICON_WIDTH * ICON_HEIGHT) + x + y * ICON_WIDTH;
+}
+
+
+void CMenu::DrawItem(ItemType itemType, int x, int y, bool sub)
+{
+	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB) : BG_MAP_RAM(BG1_MAP_BASE)) + (x + y * 32);
+	
+	dmaCopy(itemsTiles + itemType * (ITEM_WIDTH * ITEM_HEIGHT * 16), BG_TILE_RAM(BG1_TILE_BASE) + (iconsTilesLen / 2), 24 * 16);
+	
+	for(u32 y=0; y<ITEM_HEIGHT; y++)
+		for(u32 x=0; x<ITEM_WIDTH; x++)
+			*(pMap+x+y*32) = 114 + x + y * ITEM_WIDTH;
 }
 
 void CMenu::HideBox()

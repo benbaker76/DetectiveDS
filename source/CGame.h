@@ -163,7 +163,7 @@ private:
 	int m_characterPos;
 	int m_characterFrameCount;
 	
-	void InitData();
+	void InitData(int param);
 	void InitDoors();
 	void ResetRooms();
 	void SortSprites();
@@ -187,7 +187,9 @@ private:
 	
 	void InitVideoIntro();
 	void InitVideoMain();
-	void InitIntro();
+	void InitIntro1();
+	void InitIntro2(int param);
+	void InitIntro3(int param);
 	void UpdateIntro();
 	void InitGame(GameType gameType);
 	void UpdateGame(touchPosition touch, int keys_held, int keys_pressed, int keys_released);

@@ -11,6 +11,9 @@
 #define ICON_WIDTH			3
 #define ICON_HEIGHT			2
 
+#define ITEM_WIDTH			3
+#define ITEM_HEIGHT			2
+
 #define MAX_ICONS			9
 
 enum IconType
@@ -65,6 +68,7 @@ public:
 	void Hide();
 	void Reset();
 	void DrawIcon(IconType iconType, int x, int y, bool sub);
+	void DrawItem(ItemType itemType, int x, int y, bool sub);
 	void DrawBox(int mapX, int mapY);
 	IconType CheckIconHit(int mapX, int mapY);
 	
