@@ -5,7 +5,7 @@
 #include "lz77.h"
 #include "Gfx.h"
 
-CRoom::CRoom(RoomType roomType, Map* pMap, Map* pOverlay, const unsigned char* pColMap, int centreY)
+CRoom::CRoom(RoomType roomType, Map* pMap, Map* pOverlay, const unsigned char* pColMap, int centreY, bool upstairs)
 {
 	m_roomType = roomType;
 	m_pMap = pMap;
@@ -13,6 +13,7 @@ CRoom::CRoom(RoomType roomType, Map* pMap, Map* pOverlay, const unsigned char* p
 	m_pColMap = pColMap;
 	m_overlayY = pMap->Height;
 	m_centreY = centreY;
+	m_upstairs = upstairs;
 	
 	for(int i=0; i<MAX_DOORS; i++)
 		m_doorArray[i] = NULL;

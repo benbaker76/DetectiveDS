@@ -89,10 +89,15 @@ public:
 	void SetX(float x) { SetPosition(x, m_y); }
 	void SetY(float y) { SetPosition(y, m_y); }
 	
+	void SetSize(int width, int height) { m_width = width; m_height = height; }
+	
 	void SetLoop(bool loop) { m_pHeadSprite->SetLoop(loop); m_pBodySprite->SetLoop(loop); }
 	
 	void SetPoint(int x, int y) { m_point->X = x; m_point->Y = y; }
 	Point* pPoint() { SetPoint(m_x + (m_width / 2), m_y + (m_height - 8) + 4); return m_point; }
+	
+	void SetRect(int x, int y, int width, int height) { m_rect->X = x; m_rect->Y = y; m_rect->Width = width; m_rect->Height = height; }
+	Rect* pRect() { SetRect(m_x, m_y, m_width, m_height); return m_rect; }
 	
 	void SetAlpha(int alpha) { m_pHeadSprite->SetAlpha(alpha); m_pBodySprite->SetAlpha(alpha); }
 	void SetGreen(bool value) { m_green = value; Face(m_facing); }
@@ -155,8 +160,9 @@ private:
 	int m_frameCount;
 	
 	bool m_goalMode;
-	
+
 	Point* m_point;
+	Rect* m_rect;
 	
 	CItemCache* m_itemCache;
 	CGoalManager* m_goalManager;

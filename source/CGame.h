@@ -77,6 +77,14 @@ enum KeyboardMode
 	KEYBOARDMODE_SAFE
 };
 
+enum MurderType
+{
+	MURDERTYPE_DINGLE,
+	MURDERTYPE_CYNTHIA,
+	MURDERTYPE_DOCTOR,
+	MURDERTYPE_GABRIEL
+};
+
 class CGame
 {
 public:
@@ -150,6 +158,8 @@ private:
 	int m_introIndex;
 	int m_introFrameCount;
 	
+	int m_condition;
+	
 	mm_sfxhand m_footsteps;
 	mm_sfxhand m_clock;
 	mm_sfxhand m_fireplace;
@@ -183,6 +193,7 @@ private:
 	void PostProcessMenu();
 	
 	void InitRoom();
+	void InitMurder(MurderType murderType);
 	void UpdateFx();
 	
 	void InitVideoIntro();
@@ -193,6 +204,8 @@ private:
 	void UpdateIntro();
 	void InitGame(GameType gameType);
 	void UpdateGame(touchPosition touch, int keys_held, int keys_pressed, int keys_released);
+	void UpdateEvents();
+	void UpdateEventFlags();
 	void InitGameOver(GameOverMode gameOverMode);
 	void UpdateGameOver();
 	void InitTitleScreen();

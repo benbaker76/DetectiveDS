@@ -84,7 +84,7 @@ void CGoalManager::NextGoal()
 		{
 			for(int i=0; i<MAX_GOALS; i++)
 			{
-				if(m_goalArray[i] == pGoal->pGoal())
+				if(m_goalArray[i]->Id() == pGoal->GotoId())
 				{
 					m_goalPosition = i;
 					

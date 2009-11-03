@@ -16,6 +16,7 @@ CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprit
 	m_deadSide = false;
 	
 	m_point = new Point();
+	m_rect = new Rect();
 	
 	m_itemCache = new CItemCache(ITEMLOCATION_CHARACTER, this);
 	m_goalManager = new CGoalManager();
@@ -559,6 +560,16 @@ void CCharacter::SetCharacterMode(CharacterMode characterMode)
 		SetFrameType(FRAME_DEAD);
 		m_pHeadSprite->GetNextFrame();
 		m_pBodySprite->GetNextFrame();
+		
+		if(m_deadSide)
+		{
+			m_width = 64;
+			m_height = 18 + 32;
+		}
+		else
+		{
+			m_height = HEAD_HEIGHT;
+		}
 		break;
 	case CHARMODE_BOMB:
 		SetFrameType(FRAME_BOMB);
