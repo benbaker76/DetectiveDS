@@ -141,7 +141,7 @@ class CDoor;
 class CRoom
 {
 public:
-	CRoom(RoomType roomType, Map* pMap, Map* pOverlay, const u8* colMap, int centreY, bool upstairs);
+	CRoom(RoomType roomType, Map* pMap, Map* pOverlay, const u8* colMap, int centreY);
 	~CRoom();
 	
 	void Initialize(int x);
@@ -160,6 +160,7 @@ public:
 	
 	void SetX(int x) { m_x = x; }
 	
+	void SetOverlay(Map* pOverlay) { m_pOverlay = pOverlay; }
 	void SetOverlay(Map* pOverlay, int overlayY) { m_pOverlay = pOverlay; m_overlayY = overlayY; }
 	void SetMap(Map* pMap) { m_pMap = pMap; }
 	void SetColMap(const u8* pColMap) { m_pColMap = pColMap; }
@@ -169,6 +170,7 @@ public:
 	
 	void AddItemCache(int index, CollisionType colType) { m_itemCache[index] = new CItemCache(ITEMLOCATION_ROOM, colType, this); }
 	void AddItems(int index, CItem* item1, CItem* item2, CItem* item3, CItem* item4, CItem* item5) { m_itemCache[index]->AddItems(item1, item2, item3, item4, item5); }
+	void AddItem(int index, CItem* item, bool force) { m_itemCache[index]->AddItem(item, force); }
 	CItemCache* GetItemCache(int index) const { return m_itemCache[index]; }
 	
 	void SetAnimFrame(DstRect dstRect, int frameNum) { m_animArray[dstRect]->SetFrame(frameNum); }
@@ -183,7 +185,6 @@ public:
 	int Height() const { return m_pMap->Height; }
 	int OverlayY() const { return m_overlayY; }
 	int CentreY() const { return m_centreY; }
-	bool Upstairs() const { return m_upstairs; }
 	u8 ColMap(int x, int y);
 	bool GetColMapRect(CollisionType, Rect** rect);
 
@@ -195,8 +196,6 @@ private:
 	
 	int m_x;
 	int m_centreY;
-	
-	bool m_upstairs;
 
 	int m_overlayY;
 	

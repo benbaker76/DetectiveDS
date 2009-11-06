@@ -97,6 +97,16 @@ bool CItemCache::AddItem(CItem* pItem)
 	
 	return false;
 }
+
+bool CItemCache::AddItem(CItem* pItem, bool force)
+{
+	if(!IsSpaceAvailable() && force)
+		RemoveItem(0);
+	
+	AddItem(pItem);
+	
+	return false;
+}
 	
 bool CItemCache::RemoveItem(CItem* pItem)
 {
@@ -114,6 +124,16 @@ bool CItemCache::RemoveItem(CItem* pItem)
 	}
 	
 	return false;
+}
+
+bool CItemCache::RemoveItem(int index)
+{
+	for(int j = index; j<m_itemCount-1; j++)
+		m_itemArray[j] = m_itemArray[j + 1];
+	
+	m_itemArray[m_itemCount-1] = NULL;
+	
+	return true;
 }
 
 bool CItemCache::ContainsItem(CItem* pItem)

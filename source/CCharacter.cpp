@@ -537,17 +537,20 @@ void CCharacter::SetCharacterMode(CharacterMode characterMode)
 	{
 	case CHARMODE_NONE:
 		SetFrameType(FRAME_NONE);
+		SetHFlip(false);
 		break;
 	case CHARMODE_WAITING:
 		SetFrameType(FRAME_WAITING);
 		m_pHeadSprite->GetNextFrame();
 		m_pBodySprite->GetNextFrame();
+		SetHFlip(false);
 		m_frameCount = 0;
 		break;
 	case CHARMODE_GOAL:
 		Face(m_facing);
 		m_pHeadSprite->GetNextFrame();
 		m_pBodySprite->GetNextFrame();
+		SetHFlip(false);
 		break;
 	case CHARMODE_TALKING:
 		(m_green ? SetFrameType(FRAME_GREEN_SPEAK) : SetFrameType(FRAME_SPEAK));
@@ -560,6 +563,7 @@ void CCharacter::SetCharacterMode(CharacterMode characterMode)
 		SetFrameType(FRAME_DEAD);
 		m_pHeadSprite->GetNextFrame();
 		m_pBodySprite->GetNextFrame();
+		SetHFlip(false);
 		
 		if(m_deadSide)
 		{
@@ -575,19 +579,23 @@ void CCharacter::SetCharacterMode(CharacterMode characterMode)
 		SetFrameType(FRAME_BOMB);
 		m_pHeadSprite->GetNextFrame();
 		m_pBodySprite->GetNextFrame();
+		SetHFlip(false);
 		break;
 	case CHARMODE_ATTACK:
 		SetFrameType(FRAME_ATTACK);
 		m_pHeadSprite->GetNextFrame();
 		m_pBodySprite->GetNextFrame();
+		SetHFlip(true);
 		break;
 	case CHARMODE_SURRENDER:
 		SetFrameType(FRAME_SURRENDER);
 		m_pHeadSprite->GetNextFrame();
 		m_pBodySprite->GetNextFrame();
+		SetHFlip(false);
 		break;
 	case CHARMODE_QUESTION:
 		SetFrameType(FRAME_QUESTION);
+		SetHFlip(false);
 		break;
 	}
 }

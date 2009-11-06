@@ -68,6 +68,8 @@ int main(void)
 	mmLoadEffect(SFX_CLOCK);
 	mmLoadEffect(SFX_FIREPLACE);
 	mmLoadEffect(SFX_VACUUM);
+	mmLoadEffect(SFX_BOMB);
+	mmLoadEffect(SFX_GUNSHOT);
 	//mmStart(MOD_WEATHER, MM_PLAY_LOOP);
 	mmJingle(MOD_WEATHER);
 	mmSetJingleVolume(0);

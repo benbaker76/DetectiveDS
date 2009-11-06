@@ -118,7 +118,7 @@ void CGame::InitData(int param)
 	m_itemArray[ITEM_A_FOLDER] = new CItem(ITEM_A_FOLDER, ITEMATTRIB_OPEN);
 	m_itemArray[ITEM_A_PAPERWEIGHT] = new CItem(ITEM_A_PAPERWEIGHT, ITEMATTRIB_NONE);
 	m_itemArray[ITEM_PADDED_ENVELOPES] = new CItem(ITEM_PADDED_ENVELOPES, ITEMATTRIB_OPEN, 10);
-	m_itemArray[ITEM_A_BOMB] = new CItem(ITEM_A_BOMB, ITEMATTRIB_EVIDENCE);								// Clue #7
+	m_itemArray[ITEM_A_BOMB] = new CItem(ITEM_A_BOMB, ITEMATTRIB_EVIDENCE | ITEMATTRIB_OPEN);				// Clue #7
 	m_itemArray[ITEM_A_SMALL_KEY] = new CItem(ITEM_A_SMALL_KEY, ITEMATTRIB_USE_KEY);
 	m_itemArray[ITEM_BULLETS] = new CItem(ITEM_BULLETS, ITEMATTRIB_NONE);
 	m_itemArray[ITEM_A_SWORD] = new CItem(ITEM_A_SWORD, ITEMATTRIB_NONE);
@@ -134,7 +134,7 @@ void CGame::InitData(int param)
 	m_itemArray[ITEM_A_BRIEFCASE]->SetKeyItemType(ITEM_A_SMALL_KEY);
 	
 	m_spriteArray[SPRITE_SNIDE_HEAD] = new CSprite(SPRITE_SNIDE_HEAD, sprite_snide_headTiles, sprite_snide_headTilesLen, sprite_snide_headPal, sprite_snide_headPalLen, g_snideHeadFrames, 16);
-	m_spriteArray[SPRITE_SNIDE_BODY] = new CSprite(SPRITE_SNIDE_BODY, sprite_snide_bodyTiles, sprite_snide_bodyTilesLen, sprite_snide_bodyPal, sprite_snide_bodyPalLen, g_snideBodyFrames, 17);
+	m_spriteArray[SPRITE_SNIDE_BODY] = new CSprite(SPRITE_SNIDE_BODY, sprite_snide_bodyTiles, sprite_snide_bodyTilesLen, sprite_snide_bodyPal, sprite_snide_bodyPalLen, g_snideBodyFrames, 18);
 	m_spriteArray[SPRITE_REVEREND_HEAD] = new CSprite(SPRITE_REVEREND_HEAD, sprite_reverend_headTiles, sprite_reverend_headTilesLen, sprite_reverend_headPal, sprite_reverend_headPalLen, g_reverendHeadFrames, 4);
 	m_spriteArray[SPRITE_REVEREND_BODY] = new CSprite(SPRITE_REVEREND_BODY, sprite_reverend_bodyTiles, sprite_reverend_bodyTilesLen, sprite_reverend_bodyPal, sprite_reverend_bodyPalLen, g_reverendBodyFrames, 6);
 	m_spriteArray[SPRITE_BENTLEY_HEAD] = new CSprite(SPRITE_BENTLEY_HEAD, sprite_bentley_headTiles, sprite_bentley_headTilesLen, sprite_bentley_headPal, sprite_bentley_headPalLen, g_bentleyHeadFrames, 4);
@@ -180,44 +180,44 @@ void CGame::InitData(int param)
 	m_characterArray[CHARTYPE_SNIDE]->SetDeadSide(true);
 	m_characterArray[CHARTYPE_DOCTOR]->SetDeadSide(true);
 	
-	m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, g_snideMap, NULL, col_room1, 144, true);
-	m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, g_reverendMap, NULL, col_room1, 144, true);
-	m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, g_bentleyMap, NULL, col_room2, 168, false);
-	m_roomArray[ROOM_COOK] = new CRoom(ROOM_COOK, g_cookMap, NULL, col_room2, 168, false);
-	m_roomArray[ROOM_GABRIEL] = new CRoom(ROOM_GABRIEL, g_gabrielMap, NULL, col_room2, 168, false);
-	m_roomArray[ROOM_CYNTHIA] = new CRoom(ROOM_CYNTHIA, g_cynthiaMap, NULL, col_room1, 144, true);
-	m_roomArray[ROOM_PROFESSOR] = new CRoom(ROOM_PROFESSOR, g_professorMap, NULL, col_room1, 144, true);
-	m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, g_doctorMap, NULL, col_room1, 144, true);		
-	m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, g_majorMap, NULL, col_room1, 144, true);
-	m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, g_dingleMap, NULL, col_room1, 144, true);
-	m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, g_outside1Map, NULL, col_outside1, 160, true);
-	m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, g_outside2Map, g_outside2_frontMap, col_outside2, 152, true);
-	m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, g_outside1Map, NULL, col_outside1, 160, false);
-	m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, g_outside2Map, g_outside2_frontMap, col_outside2, 152, false);
-	m_roomArray[ROOM_PASSAGE1] = new CRoom(ROOM_PASSAGE1, g_passage1Map, NULL, col_passage1, 152, true);
-	m_roomArray[ROOM_PASSAGE2] = new CRoom(ROOM_PASSAGE2, g_passage2Map, NULL, col_passage2, 152, true);
-	m_roomArray[ROOM_PASSAGE3] = new CRoom(ROOM_PASSAGE3, g_passage1Map, NULL, col_passage1, 152, false);
-	m_roomArray[ROOM_HALL1] = new CRoom(ROOM_HALL1, g_hall1Map, NULL, col_hall1, 160, true);
-	m_roomArray[ROOM_HALL2] = new CRoom(ROOM_HALL2, g_hall2Map, NULL, col_hall2, 160, true);
-	m_roomArray[ROOM_HALL3] = new CRoom(ROOM_HALL3, g_hall3Map, NULL, col_hall3, 160, false);
-	m_roomArray[ROOM_HALL4] = new CRoom(ROOM_HALL4, g_hall4Map, NULL, col_hall4, 160, false);
-	m_roomArray[ROOM_LANDING] = new CRoom(ROOM_LANDING, g_landingMap, g_landing_front1Map, col_landing, 144, true);
-	m_roomArray[ROOM_KITCHEN] = new CRoom(ROOM_KITCHEN, g_kitchenMap, NULL, col_kitchen, 160, false);
-	m_roomArray[ROOM_STAIRS] = new CRoom(ROOM_STAIRS, g_stairsMap, NULL, col_stairs, 168, true);
-	m_roomArray[ROOM_STUDY] = new CRoom(ROOM_STUDY, g_studyMap, NULL, col_study, 160, false);
-	m_roomArray[ROOM_CLOCK] = new CRoom(ROOM_CLOCK, g_clockMap, NULL, col_clock, 160, false);
-	m_roomArray[ROOM_CELLAR] = new CRoom(ROOM_CELLAR, g_cellarMap, NULL, col_cellar, 160, false);
-	m_roomArray[ROOM_DRAWING] = new CRoom(ROOM_DRAWING, g_drawingMap, NULL, col_drawing, 160, false);
-	m_roomArray[ROOM_LIBRARY] = new CRoom(ROOM_LIBRARY, g_libraryMap, NULL, col_library, 160, false);	
-	m_roomArray[ROOM_UTILITY] = new CRoom(ROOM_UTILITY, g_utilityMap, NULL, col_utility, 160, false);
-	m_roomArray[ROOM_GARDEN] = new CRoom(ROOM_GARDEN, g_gardenMap, g_garden_frontMap, col_garden, 152, false);
-	m_roomArray[ROOM_GRAVEYARD] = new CRoom(ROOM_GRAVEYARD, g_graveyardMap, g_graveyard_frontMap, col_graveyard, 160, false);
-	m_roomArray[ROOM_COURTYARD] = new CRoom(ROOM_COURTYARD, g_courtyardMap, g_courtyard_frontMap, col_courtyard, 160, false);
-	m_roomArray[ROOM_ANGUS_LANDING] = new CRoom(ROOM_ANGUS_LANDING, g_angus_landingMap, g_angus_landing_frontMap, col_angus_landing, 144, true);
-	m_roomArray[ROOM_ANGUS_ROOM] = new CRoom(ROOM_ANGUS_ROOM, g_angus_room1Map, g_angus_room_frontMap, col_angus_room2, 160, true);
-	m_roomArray[ROOM_ANGUS_SECRET] = new CRoom(ROOM_ANGUS_SECRET, g_angus_secretMap, g_angus_secret_frontMap, col_angus_secret, 160, true);
-	m_roomArray[ROOM_ANGUS_STAIRS] = new CRoom(ROOM_ANGUS_STAIRS, g_angus_stairsMap, NULL, col_angus_stairs, 168, false);
-	m_roomArray[ROOM_DINING] = new CRoom(ROOM_DINING, g_diningMap, g_dining_frontMap, col_dining, 160, false);
+	m_roomArray[ROOM_SNIDE] = new CRoom(ROOM_SNIDE, g_snideMap, NULL, col_room1, 144);
+	m_roomArray[ROOM_REVEREND] = new CRoom(ROOM_REVEREND, g_reverendMap, NULL, col_room1, 144);
+	m_roomArray[ROOM_BENTLEY] = new CRoom(ROOM_BENTLEY, g_bentleyMap, NULL, col_room2, 168);
+	m_roomArray[ROOM_COOK] = new CRoom(ROOM_COOK, g_cookMap, NULL, col_room2, 168);
+	m_roomArray[ROOM_GABRIEL] = new CRoom(ROOM_GABRIEL, g_gabrielMap, NULL, col_room2, 168);
+	m_roomArray[ROOM_CYNTHIA] = new CRoom(ROOM_CYNTHIA, g_cynthiaMap, NULL, col_room1, 144);
+	m_roomArray[ROOM_PROFESSOR] = new CRoom(ROOM_PROFESSOR, g_professorMap, NULL, col_room1, 144);
+	m_roomArray[ROOM_DOCTOR] = new CRoom(ROOM_DOCTOR, g_doctorMap, NULL, col_room1, 144);		
+	m_roomArray[ROOM_MAJOR] = new CRoom(ROOM_MAJOR, g_majorMap, NULL, col_room1, 144);
+	m_roomArray[ROOM_DINGLE] = new CRoom(ROOM_DINGLE, g_dingleMap, NULL, col_room1, 144);
+	m_roomArray[ROOM_OUTSIDE1] = new CRoom(ROOM_OUTSIDE1, g_outside1Map, NULL, col_outside1, 160);
+	m_roomArray[ROOM_OUTSIDE2] = new CRoom(ROOM_OUTSIDE2, g_outside2Map, g_outside2_frontMap, col_outside2, 152);
+	m_roomArray[ROOM_OUTSIDE3] = new CRoom(ROOM_OUTSIDE3, g_outside1Map, NULL, col_outside1, 160);
+	m_roomArray[ROOM_OUTSIDE4] = new CRoom(ROOM_OUTSIDE4, g_outside2Map, g_outside2_frontMap, col_outside2, 152);
+	m_roomArray[ROOM_PASSAGE1] = new CRoom(ROOM_PASSAGE1, g_passage1Map, NULL, col_passage1, 152);
+	m_roomArray[ROOM_PASSAGE2] = new CRoom(ROOM_PASSAGE2, g_passage2Map, NULL, col_passage2, 152);
+	m_roomArray[ROOM_PASSAGE3] = new CRoom(ROOM_PASSAGE3, g_passage1Map, NULL, col_passage1, 152);
+	m_roomArray[ROOM_HALL1] = new CRoom(ROOM_HALL1, g_hall1Map, NULL, col_hall1, 160);
+	m_roomArray[ROOM_HALL2] = new CRoom(ROOM_HALL2, g_hall2Map, NULL, col_hall2, 160);
+	m_roomArray[ROOM_HALL3] = new CRoom(ROOM_HALL3, g_hall3Map, NULL, col_hall3, 160);
+	m_roomArray[ROOM_HALL4] = new CRoom(ROOM_HALL4, g_hall4Map, NULL, col_hall4, 160);
+	m_roomArray[ROOM_LANDING] = new CRoom(ROOM_LANDING, g_landingMap, g_landing_front1Map, col_landing, 144);
+	m_roomArray[ROOM_KITCHEN] = new CRoom(ROOM_KITCHEN, g_kitchenMap, NULL, col_kitchen, 160);
+	m_roomArray[ROOM_STAIRS] = new CRoom(ROOM_STAIRS, g_stairsMap, NULL, col_stairs, 168);
+	m_roomArray[ROOM_STUDY] = new CRoom(ROOM_STUDY, g_studyMap, NULL, col_study, 160);
+	m_roomArray[ROOM_CLOCK] = new CRoom(ROOM_CLOCK, g_clockMap, NULL, col_clock, 160);
+	m_roomArray[ROOM_CELLAR] = new CRoom(ROOM_CELLAR, g_cellarMap, NULL, col_cellar, 168);
+	m_roomArray[ROOM_DRAWING] = new CRoom(ROOM_DRAWING, g_drawingMap, NULL, col_drawing, 160);
+	m_roomArray[ROOM_LIBRARY] = new CRoom(ROOM_LIBRARY, g_libraryMap, NULL, col_library, 160);
+	m_roomArray[ROOM_UTILITY] = new CRoom(ROOM_UTILITY, g_utilityMap, NULL, col_utility, 160);
+	m_roomArray[ROOM_GARDEN] = new CRoom(ROOM_GARDEN, g_gardenMap, g_garden_frontMap, col_garden, 152);
+	m_roomArray[ROOM_GRAVEYARD] = new CRoom(ROOM_GRAVEYARD, g_graveyardMap, g_graveyard_frontMap, col_graveyard, 160);
+	m_roomArray[ROOM_COURTYARD] = new CRoom(ROOM_COURTYARD, g_courtyardMap, g_courtyard_frontMap, col_courtyard, 160);
+	m_roomArray[ROOM_ANGUS_LANDING] = new CRoom(ROOM_ANGUS_LANDING, g_angus_landingMap, g_angus_landing_frontMap, col_angus_landing, 144);
+	m_roomArray[ROOM_ANGUS_ROOM] = new CRoom(ROOM_ANGUS_ROOM, g_angus_room1Map, g_angus_room_frontMap, col_angus_room2, 160);
+	m_roomArray[ROOM_ANGUS_SECRET] = new CRoom(ROOM_ANGUS_SECRET, g_angus_secretMap, g_angus_secret_frontMap, col_angus_secret, 160);
+	m_roomArray[ROOM_ANGUS_STAIRS] = new CRoom(ROOM_ANGUS_STAIRS, g_angus_stairsMap, NULL, col_angus_stairs, 168);
+	m_roomArray[ROOM_DINING] = new CRoom(ROOM_DINING, g_diningMap, g_dining_frontMap, col_dining, 160);
 	
 	m_roomArray[ROOM_SNIDE]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_SNIDE], m_roomArray[ROOM_HALL2], ITEM_NONE));		
 	m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_HALL1], ITEM_NONE));
@@ -671,14 +671,14 @@ void CGame::InitData(int param)
 	m_eventArray[EVENT_START_GAME] = new CEvent(EVENT_START_GAME, new CTime(9, 10, 0, 0), EVENTFLAG_NONE, EVENTFLAG_NONE);
 
 //	m_eventArray[EVENT_MURDER_DINGLE] = new CEvent(EVENT_MURDER_DINGLE, new CTime(9, 12, 0, 0), EVENTFLAG_NONE, EVENTFLAG_MURDER_DINGLE);
-//	m_eventArray[EVENT_MURDER_CYNTHIA] = new CEvent(EVENT_MURDER_CYNTHIA, new CTime(9, 30, 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_DOWNSTAIRS, EVENTFLAG_MURDER_CYNTHIA);
-//	m_eventArray[EVENT_MURDER_DOCTOR] = new CEvent(EVENT_MURDER_DOCTOR, new CTime(10, 00, 0, 0), EVENTFLAG_MURDER_CYNTHIA | EVENTFLAG_UPSTAIRS, EVENTFLAG_MURDER_DOCTOR);
-//	m_eventArray[EVENT_MURDER_GABRIEL] = new CEvent(EVENT_MURDER_GABRIEL, new CTime(10, 30, 0, 0), EVENTFLAG_MURDER_DOCTOR | EVENTFLAG_UPSTAIRS, EVENTFLAG_MURDER_GABRIEL);
+//	m_eventArray[EVENT_MURDER_CYNTHIA] = new CEvent(EVENT_MURDER_CYNTHIA, new CTime(9, 30, 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_HALL3, EVENTFLAG_MURDER_CYNTHIA);
+//	m_eventArray[EVENT_MURDER_DOCTOR] = new CEvent(EVENT_MURDER_DOCTOR, new CTime(10, 00, 0, 0), EVENTFLAG_MURDER_CYNTHIA | EVENTFLAG_HALL1, EVENTFLAG_MURDER_DOCTOR);
+//	m_eventArray[EVENT_MURDER_GABRIEL] = new CEvent(EVENT_MURDER_GABRIEL, new CTime(10, 30, 0, 0), EVENTFLAG_MURDER_DOCTOR | EVENTFLAG_HALL1, EVENTFLAG_MURDER_GABRIEL);
 
-	m_eventArray[EVENT_MURDER_DINGLE] = new CEvent(EVENT_MURDER_DINGLE, new CTime(9, 10, 0, 0), EVENTFLAG_NONE, EVENTFLAG_MURDER_DINGLE);
-	m_eventArray[EVENT_MURDER_CYNTHIA] = new CEvent(EVENT_MURDER_CYNTHIA, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_DOWNSTAIRS, EVENTFLAG_MURDER_CYNTHIA);
-	m_eventArray[EVENT_MURDER_DOCTOR] = new CEvent(EVENT_MURDER_DOCTOR, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_CYNTHIA | EVENTFLAG_UPSTAIRS, EVENTFLAG_MURDER_DOCTOR);
-	m_eventArray[EVENT_MURDER_GABRIEL] = new CEvent(EVENT_MURDER_GABRIEL, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_DOCTOR | EVENTFLAG_UPSTAIRS, EVENTFLAG_MURDER_GABRIEL);
+	//m_eventArray[EVENT_MURDER_DINGLE] = new CEvent(EVENT_MURDER_DINGLE, new CTime(9, 10, 0, 0), EVENTFLAG_NONE, EVENTFLAG_MURDER_DINGLE);
+	//m_eventArray[EVENT_MURDER_CYNTHIA] = new CEvent(EVENT_MURDER_CYNTHIA, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_HALL3, EVENTFLAG_MURDER_CYNTHIA);
+	//m_eventArray[EVENT_MURDER_DOCTOR] = new CEvent(EVENT_MURDER_DOCTOR, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_CYNTHIA | EVENTFLAG_HALL1, EVENTFLAG_MURDER_DOCTOR);
+	//m_eventArray[EVENT_MURDER_GABRIEL] = new CEvent(EVENT_MURDER_GABRIEL, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_DOCTOR | EVENTFLAG_HALL1, EVENTFLAG_MURDER_GABRIEL);
 
 	m_eventArray[EVENT_GET_SHOT] = new CEvent(EVENT_GET_SHOT, new CTime(11, 30, 0, 0), EVENTFLAG_NONE, EVENTFLAG_GAME_OVER);	// 2:20
 	
@@ -787,6 +787,9 @@ void CGame::Update()
 		if(keys_released & KEY_A || keys_pressed & KEY_TOUCH)
 			InitTitleScreen();
 		else UpdateGameOver();
+		break;
+	case GAMEMODE_ENDING:
+		UpdateEnding();
 		break;
 	default:
 		break;
@@ -1126,12 +1129,6 @@ void CGame::UpdateSnideMovement(int keys_held)
 					m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
 					
 					InitRoom();
-					
-					//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
-					
-					//char buf[256];
-					//sprintf(buf, "xDoor: %05d, xRoom: %05d, xChar: %05d", xDoor, xRoom, xChar);
-					//DrawString(buf, 0, 1, false);
 				}
 			}
 		}
@@ -1181,12 +1178,6 @@ void CGame::UpdateSnideMovement(int keys_held)
 					m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
 					
 					InitRoom();
-					
-					//m_fxManager.SetFx(FX_FADE_BLACK_IN, true);
-					
-					//char buf[256];
-					//sprintf(buf, "xDoor: %05d, xRoom: %05d, xChar: %05d", xDoor, xRoom, xChar);
-					//DrawString(buf, 0, 1, false);
 				}
 			}
 		}
@@ -1581,6 +1572,12 @@ void CGame::ProcessMenu(int x, int y)
 					{
 						if(pItem->GetItemType() == ITEM_PADDED_ENVELOPES)
 							ShowItemMenu("EVIDENCE COLLECTED:", pItemCache, NULL);
+						else if(pItem->GetItemType() == ITEM_A_BOMB)
+						{
+							mmEffectEx(&g_sfx_bomb);
+							m_snide->SetCharacterMode(CHARMODE_BOMB);
+							InitGameOver(GAMEOVERMODE_END);
+						}
 						else
 							ShowItemMenu("YOU FIND:", pItemCache, NULL);
 					}
@@ -2462,13 +2459,40 @@ void CGame::InitRoom()
 	switch(m_currentRoom->GetRoomType())
 	{
 	case ROOM_DINGLE:
+		mmEffectCancel(m_clock);
+		mmEffectCancel(m_fireplace);
+		mmSetJingleVolume(0);
+		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
+		
+		if((m_eventFlags & EVENTFLAG_MURDER_DINGLE) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_DINGLE))
+		{
+			mmPosition(1);			
+			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_DINGLE;
+		}
+		break;
 	case ROOM_STAIRS:
+		mmEffectCancel(m_clock);
+		mmEffectCancel(m_fireplace);
+		mmSetJingleVolume(0);
+		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
+		
+		if((m_eventFlags & EVENTFLAG_MURDER_CYNTHIA) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_CYNTHIA))
+		{
+			mmPosition(1);			
+			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_CYNTHIA;
+		}
+		break;
 	case ROOM_GABRIEL:
 		mmEffectCancel(m_clock);
 		mmEffectCancel(m_fireplace);
 		mmSetJingleVolume(0);
 		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
-		mmPosition(1);
+		
+		if((m_eventFlags & EVENTFLAG_MURDER_GABRIEL) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_GABRIEL))
+		{
+			mmPosition(1);			
+			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_GABRIEL;
+		}
 		break;
 	case ROOM_OUTSIDE1:
 	case ROOM_OUTSIDE3:
@@ -2494,7 +2518,11 @@ void CGame::InitRoom()
 		mmSetJingleVolume(0);
 		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
 		
-		mmPosition(1);
+		if((m_eventFlags & EVENTFLAG_MURDER_DOCTOR) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_DOCTOR))
+		{
+			mmPosition(1);			
+			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_DOCTOR;
+		}
 		break;
 	case ROOM_DRAWING:
 		m_fireplace = mmEffectEx(&g_sfx_fireplace);
@@ -2532,12 +2560,16 @@ void CGame::InitMurder(MurderType murderType)
 		
 		m_roomArray[ROOM_STAIRS]->SetColMap(col_stairs_front);
 		m_roomArray[ROOM_STAIRS]->SetOverlay(g_stairs_frontMap, 168);
+		m_roomArray[ROOM_LANDING]->SetOverlay(g_landing_front2Map);
 		break;
 	case MURDERTYPE_DOCTOR:
 		m_characterArray[CHARTYPE_DOCTOR]->SetRoom(m_roomArray[ROOM_CLOCK]);
 		m_characterArray[CHARTYPE_DOCTOR]->SetPosition(56, 132);
 		m_characterArray[CHARTYPE_DOCTOR]->SetGoalMode(false);
 		m_characterArray[CHARTYPE_DOCTOR]->SetCharacterMode(CHARMODE_DEAD);
+		
+		m_roomArray[ROOM_SNIDE]->AddItem(0, m_itemArray[ITEM_A_BOMB], true);
+		m_roomArray[ROOM_COOK]->AddItem(0, m_itemArray[ITEM_A_KNIFE], true);
 		break;
 	case MURDERTYPE_GABRIEL:
 		m_characterArray[CHARTYPE_GABRIEL]->SetRoom(m_roomArray[ROOM_GABRIEL]);
@@ -2960,7 +2992,7 @@ void CGame::InitGame(GameType gameType)
 	m_gameOverFrameCount = 0;
 	m_dieFrameCount = 0;
 	m_reverseTimeFrameCount = 0;
-	m_condition = 0;
+	m_eventFlags = 0;
 	
 	m_questionCharacter = NULL;
 	m_speakCharacter = NULL;
@@ -3020,45 +3052,107 @@ void CGame::InitGame(GameType gameType)
 		
 		// ------------------------------------
 
-		m_roomArray[ROOM_STAIRS]->SetOverlay(NULL, 0);
+		m_roomArray[ROOM_ANGUS_ROOM]->SetMap(g_angus_room1Map);
+		m_roomArray[ROOM_ANGUS_ROOM]->SetColMap(col_angus_room1);
+		
+		m_roomArray[ROOM_STAIRS]->SetColMap(col_stairs);
+		
+		m_roomArray[ROOM_STAIRS]->SetOverlay(NULL);
+		m_roomArray[ROOM_LANDING]->SetOverlay(g_landing_front1Map);
 		m_roomArray[ROOM_GRAVEYARD]->SetOverlay(g_graveyard_frontMap, 176);
 		m_roomArray[ROOM_ANGUS_SECRET]->SetOverlay(g_angus_secret_frontMap, 168);
 		m_roomArray[ROOM_ANGUS_ROOM]->SetOverlay(g_angus_room_frontMap, 176);
 		m_roomArray[ROOM_DINING]->SetOverlay(g_dining_frontMap, 168);
-	
-		m_roomArray[ROOM_ANGUS_ROOM]->SetMap(g_angus_room1Map);
-		m_roomArray[ROOM_ANGUS_ROOM]->SetColMap(col_angus_room1);
 		
 		// -------------------------------------
 		
+		m_roomArray[ROOM_SNIDE]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_SNIDE]->AddItems(1, m_itemArray[ITEM_PADDED_ENVELOPES], m_itemArray[ITEM_A_HOT_WATER_BOTTLE], NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_REVEREND]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_REVEREND]->AddItems(1, m_itemArray[ITEM_A_BOTTLE_OF_PILLS], NULL, NULL, NULL, NULL);
+		
 		m_roomArray[ROOM_BENTLEY]->AddItems(0, m_itemArray[ITEM_A_COMB], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_BENTLEY]->AddItems(1, m_itemArray[ITEM_A_JACKET], NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_COOK]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_COOK]->AddItems(1, NULL, NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_GABRIEL]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_GABRIEL]->AddItems(1, NULL, NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_CYNTHIA]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_CYNTHIA]->AddItems(1,m_itemArray[ITEM_A_MIRROR], NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_PROFESSOR]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_PROFESSOR]->AddItems(1, m_itemArray[ITEM_NOTEBOOKS], m_itemArray[ITEM_A_SMALL_BOOK], NULL, NULL, NULL);		m_roomArray[ROOM_DOCTOR]->AddItems(1, m_itemArray[ITEM_COLOGNE], m_itemArray[ITEM_A_BLACK_BAG], NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_DOCTOR]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_DOCTOR]->AddItems(1, NULL, NULL, NULL, NULL, NULL);
+		
 		m_roomArray[ROOM_MAJOR]->AddItems(0, m_itemArray[ITEM_AN_ELEPHANT_GUN], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_MAJOR]->AddItems(1, m_itemArray[ITEM_BLANK_BULLETS], NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_DINGLE]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_DINGLE]->AddItems(1, m_itemArray[ITEM_A_BRIEFCASE], NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_OUTSIDE1]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_OUTSIDE3]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
+		
 		m_roomArray[ROOM_KITCHEN]->AddItems(0, m_itemArray[ITEM_A_HAMMER], m_itemArray[ITEM_A_CANDLESTICK], NULL, NULL, NULL);
 		m_roomArray[ROOM_KITCHEN]->AddItems(1, m_itemArray[ITEM_A_BOTTLE_OF_WINE], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_KITCHEN]->AddItems(2, m_itemArray[ITEM_A_SILVER_TRAY], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_KITCHEN]->AddItems(3, NULL, NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_KITCHEN]->AddItems(4, m_itemArray[ITEM_CUTLERY], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_KITCHEN]->AddItems(5, m_itemArray[ITEM_DIRTY_PLATES], NULL, NULL, NULL, NULL);
+		
 		m_roomArray[ROOM_STUDY]->AddItems(0, m_itemArray[ITEM_BULLETS], m_itemArray[ITEM_A_PAPERWEIGHT], m_itemArray[ITEM_A_LETTER_OPENER], m_itemArray[ITEM_A_DIARY], NULL);
 		m_roomArray[ROOM_STUDY]->AddItems(1, m_itemArray[ITEM_A_FOLDER], NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_CLOCK]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
+		
 		m_roomArray[ROOM_CELLAR]->AddItems(0, m_itemArray[ITEM_A_SCREWDRIVER], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_CELLAR]->AddItems(1, m_itemArray[ITEM_A_PIECE_OF_CARD], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_CELLAR]->AddItems(2, NULL, NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_DRAWING]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_DRAWING]->AddItems(1, NULL, NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_DRAWING]->AddItems(2, m_itemArray[ITEM_A_PICTURE], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_DRAWING]->AddItems(3, m_itemArray[ITEM_THE_WILL], NULL, NULL, NULL, NULL);
+		
 		m_roomArray[ROOM_LIBRARY]->AddItems(0, m_itemArray[ITEM_BOOKS1], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_LIBRARY]->AddItems(1, m_itemArray[ITEM_BOOKS2], NULL, NULL, NULL, NULL);
+		
 		m_roomArray[ROOM_UTILITY]->AddItems(0, m_itemArray[ITEM_A_DIRTY_SHIRT], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_UTILITY]->AddItems(1, NULL, NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_UTILITY]->AddItems(2, m_itemArray[ITEM_WASHING_POWDER], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_UTILITY]->AddItems(3, m_itemArray[ITEM_A_VACUUM_CLEANER], NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_GARDEN]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_GRAVEYARD]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_GRAVEYARD]->AddItems(1, NULL, NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_COURTYARD]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_COURTYARD]->AddItems(1, NULL, NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_COURTYARD]->AddItems(2, NULL, NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_COURTYARD]->AddItems(3, NULL, NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_ANGUS_LANDING]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_ANGUS_LANDING]->AddItems(1, NULL, NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_ANGUS_LANDING]->AddItems(2, NULL, NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_ANGUS_ROOM]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_ANGUS_ROOM]->AddItems(1, m_itemArray[ITEM_A_SWORD], m_itemArray[ITEM_A_BALL_ON_CHAIN], NULL, NULL, NULL);
+		m_roomArray[ROOM_ANGUS_ROOM]->AddItems(2, NULL, NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_ANGUS_ROOM]->AddItems(3, NULL, NULL, NULL, NULL, NULL);
+		
 		m_roomArray[ROOM_ANGUS_SECRET]->AddItems(0, m_itemArray[ITEM_AN_HOURGLASS], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_ANGUS_SECRET]->AddItems(1, m_itemArray[ITEM_A_GOLDEN_SKULL], NULL, NULL, NULL, NULL);
+		
+		m_roomArray[ROOM_DINING]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
+		
 		break;
 	}
 		
@@ -3120,6 +3214,8 @@ void CGame::InitGame(GameType gameType)
 	
 	mmStart(MOD_DETECTIVE, MM_PLAY_ONCE);
 	mmPosition(3);
+	
+	InitEnding();
 }
 
 void CGame::UpdateGame(touchPosition touch, int keys_held, int keys_pressed, int keys_released)
@@ -3155,10 +3251,10 @@ void CGame::UpdateEvents()
 			{
 				if(m_eventArray[i]->Update(m_timer->pCurrentTime()))
 				{		
-					if((m_eventArray[i]->Condition() & m_condition) == m_eventArray[i]->Condition())
+					if((m_eventArray[i]->Condition() & m_eventFlags) == m_eventArray[i]->Condition())
 					{
 						m_eventArray[i]->SetDone(true);
-						m_condition |= m_eventArray[i]->Action();
+						m_eventFlags |= m_eventArray[i]->Action();
 						
 						switch(m_eventArray[i]->GetEventType())
 						{
@@ -3181,6 +3277,9 @@ void CGame::UpdateEvents()
 							fprintf(stderr, "EVENT_MURDER_GABRIEL");
 							InitMurder(MURDERTYPE_GABRIEL);
 							break;
+						case EVENT_REMOVE_BULLETS:
+							fprintf(stderr, "EVENT_REMOVE_BULLETS");
+							break;
 						case EVENT_GET_SHOT:
 							fprintf(stderr, "EVENT_GET_SHOT");
 							break;
@@ -3194,15 +3293,18 @@ void CGame::UpdateEvents()
 
 void CGame::UpdateEventFlags()
 {
-	if(m_currentRoom->Upstairs())
+	m_eventFlags &= ~(EVENTFLAG_HALL1 | EVENTFLAG_HALL3);
+	
+	switch(m_currentRoom->GetRoomType())
 	{
-		m_condition |= EVENTFLAG_UPSTAIRS;
-		m_condition &= ~EVENTFLAG_DOWNSTAIRS;
-	}
-	else
-	{
-		m_condition &= ~EVENTFLAG_UPSTAIRS;
-		m_condition |= EVENTFLAG_DOWNSTAIRS;
+		case ROOM_HALL1:
+			m_eventFlags |= EVENTFLAG_HALL1;
+			break;
+		case ROOM_HALL3:
+			m_eventFlags |= EVENTFLAG_HALL3;
+			break;
+		default:
+			break;
 	}
 }
 
@@ -3304,6 +3406,95 @@ void CGame::UpdateGameOver()
 	}
 }
 
+void CGame::InitEnding()
+{
+	m_gameMode = GAMEMODE_ENDING;
+	
+	m_endingMode = ENDINGMODE_DINGLESPEAKS;
+	m_endingFrameCount = 1000;
+	
+	m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, false);
+	
+	REG_BLDCNT_SUB = BLEND_FADE_BLACK | BLEND_ALPHA | BLEND_SRC_BG2 | BLEND_SRC_BG3 | BLEND_SRC_SPRITE | BLEND_DST_BG2 | BLEND_DST_BG3;
+	REG_BLDCNT_SUB &= ~BLEND_FADE_WHITE;
+	REG_BLDCNT_SUB |= BLEND_FADE_BLACK;
+	REG_BLDY_SUB = 17;
+	
+	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE LIGHTS GO OUT..         YOU ARE LED AT GUNPOINT THROUGH A DARK TUNNEL");
+	
+	m_console->Clear();
+	
+	m_currentRoom = m_roomArray[ROOM_CELLAR];
+	m_currentRoom->Initialize(0);
+}
+
+void CGame::UpdateEnding()
+{
+	if(--m_endingFrameCount == 0)
+	{
+		switch(m_endingMode)
+		{
+		case ENDINGMODE_DINGLESPEAKS:
+			m_endingMode = ENDINGMODE_PULLTRIGGER;
+			m_endingFrameCount = 1500;
+			
+			m_characterArray[CHARTYPE_DINGLE]->SetRoom(m_roomArray[ROOM_CELLAR]);
+			m_characterArray[CHARTYPE_DINGLE]->SetPosition(96, m_roomArray[ROOM_CELLAR]->CentreY() - m_characterArray[CHARTYPE_DINGLE]->Height());
+			m_characterArray[CHARTYPE_DINGLE]->SetGoalMode(false);
+			m_characterArray[CHARTYPE_DINGLE]->SetHFlip(true);
+			m_characterArray[CHARTYPE_DINGLE]->SetCharacterMode(CHARMODE_TALKING);
+			
+			m_snide->Reset();
+			m_snide->SetGoalMode(false);
+			m_snide->SetPosition(136, m_roomArray[ROOM_CELLAR]->CentreY() - m_snide->Height());
+			m_snide->SetCharacterMode(CHARMODE_QUESTION);
+			m_snide->SetRoom(m_roomArray[ROOM_CELLAR]);
+			
+			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("DINGLE SPEAKS \"VERY CLEVER, SNIDE.. I PAID THE DOCTOR TO CERTIFY ME DEAD, AND THEN TOOK CARE OF HIM... NOW I JUST HAVE TO TAKE CARE OF YOU!\"");
+			
+			m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
+			break;
+		case ENDINGMODE_PULLTRIGGER:
+			m_endingMode = ENDINGMODE_ESCAPE;
+			m_endingFrameCount = 500;
+			
+			m_characterArray[CHARTYPE_DINGLE]->SetCharacterMode(CHARMODE_ATTACK);
+			
+			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("HE PULLS THE TRIGGER, BUT NOTHING HAPPENS..");
+			
+			mmEffectEx(&g_sfx_gunshot);
+			break;
+		case ENDINGMODE_ESCAPE:
+			m_endingMode = ENDINGMODE_GAMEOVER;
+			m_endingFrameCount = 500;
+			
+			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("DON'T SHOOT! I'LL COME QUIETLY..");
+			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("WELL DONE, INSPECTOR.... YOU'RE A CREDIT TO THE FORCE, TAKE A PROMOTION!");
+			break;
+		case ENDINGMODE_GAMEOVER:
+			InitGameOver(GAMEOVERMODE_WIN);
+			//InitGameOver(GAMEOVERMODE_LOSE);
+			//InitGameOver(GAMEOVERMODE_END);
+			break;
+		}
+	}
+	
+	m_currentRoom->Update(m_timer->pCurrentTime());
+	
+	SortSprites();
+	UpdateCharacters();
+	
+	UpdateFx();
+	
+	//DrawTime(m_timer->pCurrentTime());
+	m_watch->Draw(m_timer->pCurrentTime());
+	m_console->Update();
+	m_cursor->Update();
+	m_cursor->Show();
+	
+	BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
+}
+
 void CGame::InitTitleScreen()
 {
 	m_gameMode = GAMEMODE_TITLESCREEN;
@@ -3327,7 +3518,7 @@ void CGame::InitTitleScreen()
 	
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->ClearText();
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->SetLoop(true);
-	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE DETECTIVE GAME  -  WRITTEN BY HEADKAZE....GRAPHICS BY LOBO....MUSIC BY SPACE FRACTAL....ORIGINAL BY SAM MANTHORPE....CHARACTERS BY PAUL JAY....PLOT CUNNINGLY DEVISED BY THE MAGNIFICENT SEVEN....   PRESS BUTTON TO START INVESTIGATION                               ");
+	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE DETECTIVE GAME  -  WRITTEN BY HEADKAZE....GRAPHICS BY LOBO....MUSIC BY SPACE FRACTAL....SUPPORT BY FLASH....ORIGINAL BY SAM MANTHORPE....CHARACTERS BY PAUL JAY....PLOT CUNNINGLY DEVISED BY THE MAGNIFICENT SEVEN....   PRESS BUTTON TO START INVESTIGATION                               ");
 	
 	m_console->AddText("\n\n    INTRODUCING\n     THE CAST..");
 

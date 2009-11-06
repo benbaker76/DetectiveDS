@@ -17,6 +17,7 @@ enum GameMode
 	GAMEMODE_RUNNING,
 	GAMEMODE_DYING,
 	GAMEMODE_REVERSETIME,
+	GAMEMODE_ENDING,
 	GAMEMODE_GAMEOVER
 };
 
@@ -26,6 +27,14 @@ enum GameOverMode
 	GAMEOVERMODE_LOSE,
 	GAMEOVERMODE_END,
 	GAMEOVERMODE_NOTHING
+};
+
+enum EndingMode
+{
+	ENDINGMODE_DINGLESPEAKS,
+	ENDINGMODE_PULLTRIGGER,
+	ENDINGMODE_ESCAPE,
+	ENDINGMODE_GAMEOVER
 };
 
 enum DisplayMode
@@ -152,13 +161,16 @@ private:
 	GameOverMode m_gameOverMode;
 	int m_gameOverFrameCount;
 	
+	EndingMode m_endingMode;
+	int m_endingFrameCount;
+	
 	int m_dieFrameCount;
 	int m_reverseTimeFrameCount;
 	
 	int m_introIndex;
 	int m_introFrameCount;
 	
-	int m_condition;
+	int m_eventFlags;
 	
 	mm_sfxhand m_footsteps;
 	mm_sfxhand m_clock;
@@ -208,6 +220,8 @@ private:
 	void UpdateEventFlags();
 	void InitGameOver(GameOverMode gameOverMode);
 	void UpdateGameOver();
+	void InitEnding();
+	void UpdateEnding();
 	void InitTitleScreen();
 	void UpdateTitleScreen();
 };

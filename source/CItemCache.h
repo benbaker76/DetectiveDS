@@ -31,7 +31,9 @@ public:
 	void AddItems(CItem* item1, CItem* item2, CItem* item3, CItem* item4, CItem* item5);
 	void AddItems(CItem* itemArray[]);
 	bool AddItem(CItem* pItem);
+	bool AddItem(CItem* pItem, bool force);
 	bool RemoveItem(CItem* pItem);
+	bool RemoveItem(int index);
 	bool ContainsItem(CItem* pItem);
 	bool ReplaceItem(CItem* pOldItem, CItem* pNewItem);
 	
