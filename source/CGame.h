@@ -14,6 +14,7 @@ enum GameMode
 	GAMEMODE_INTRO,
 	GAMEMODE_TITLESCREEN,
 	GAMEMODE_PAUSED,
+	GAMEMODE_FREEZE,
 	GAMEMODE_RUNNING,
 	GAMEMODE_DYING,
 	GAMEMODE_REVERSETIME,
@@ -31,10 +32,18 @@ enum GameOverMode
 
 enum EndingMode
 {
+	ENDINGMODE_NONE,
+	ENDINGMODE_SHOT,
+	ENDINGMODE_LEDATGUNPOINT,
 	ENDINGMODE_DINGLESPEAKS,
 	ENDINGMODE_PULLTRIGGER,
 	ENDINGMODE_ESCAPE,
-	ENDINGMODE_GAMEOVER
+	ENDINGMODE_ESCAPING,
+	ENDINGMODE_ESCAPED,
+	ENDINGMODE_ARREST,
+	ENDINGMODE_GAMEOVER_WIN,
+	ENDINGMODE_GAMEOVER_LOSE,
+	ENDINGMODE_GAMEOVER_END
 };
 
 enum DisplayMode
@@ -159,16 +168,17 @@ private:
 	CTimer* m_timer;
 	
 	GameOverMode m_gameOverMode;
-	int m_gameOverFrameCount;
-	
 	EndingMode m_endingMode;
-	int m_endingFrameCount;
+	
+	int m_frameCount;
 	
 	int m_dieFrameCount;
 	int m_reverseTimeFrameCount;
+	int m_freezeFrameCount;
 	
 	int m_introIndex;
-	int m_introFrameCount;
+	
+	int m_characterIndex;
 	
 	int m_eventFlags;
 	
@@ -181,9 +191,6 @@ private:
 	DisplayMode m_displayMode;
 	
 	int m_bg2MainVScroll;
-	
-	int m_characterPos;
-	int m_characterFrameCount;
 	
 	void InitData(int param);
 	void InitDoors();
@@ -220,8 +227,8 @@ private:
 	void UpdateEventFlags();
 	void InitGameOver(GameOverMode gameOverMode);
 	void UpdateGameOver();
-	void InitEnding();
-	void UpdateEnding();
+	void InitEnding(EndingMode endingMode);
+	void UpdateEnding(touchPosition touch, int keys_held, int keys_pressed, int keys_released);
 	void InitTitleScreen();
 	void UpdateTitleScreen();
 };

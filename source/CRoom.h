@@ -171,6 +171,7 @@ public:
 	void AddItemCache(int index, CollisionType colType) { m_itemCache[index] = new CItemCache(ITEMLOCATION_ROOM, colType, this); }
 	void AddItems(int index, CItem* item1, CItem* item2, CItem* item3, CItem* item4, CItem* item5) { m_itemCache[index]->AddItems(item1, item2, item3, item4, item5); }
 	void AddItem(int index, CItem* item, bool force) { m_itemCache[index]->AddItem(item, force); }
+	void RemoveItem(int index, CItem* item) { m_itemCache[index]->RemoveItem(item); }
 	CItemCache* GetItemCache(int index) const { return m_itemCache[index]; }
 	
 	void SetAnimFrame(DstRect dstRect, int frameNum) { m_animArray[dstRect]->SetFrame(frameNum); }

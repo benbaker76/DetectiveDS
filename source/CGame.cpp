@@ -91,7 +91,7 @@ void CGame::InitData(int param)
 	m_itemArray[ITEM_A_COMB] = new CItem(ITEM_A_COMB, ITEMATTRIB_NONE);
 	m_itemArray[ITEM_A_HARDBACK_BOOK] = new CItem(ITEM_A_HARDBACK_BOOK, ITEMATTRIB_OPEN | ITEMATTRIB_READ);
 	m_itemArray[ITEM_A_FOLDED_DOCUMENT] = new CItem(ITEM_A_FOLDED_DOCUMENT, ITEMATTRIB_EVIDENCE | ITEMATTRIB_READ);	// Clue #2
-	m_itemArray[ITEM_AN_ELEPHANT_GUN] = new CItem(ITEM_AN_ELEPHANT_GUN, ITEMATTRIB_NONE);
+	m_itemArray[ITEM_AN_ELEPHANT_GUN] = new CItem(ITEM_AN_ELEPHANT_GUN, ITEMATTRIB_SHOOT);
 	m_itemArray[ITEM_A_DIARY] = new CItem(ITEM_A_DIARY, ITEMATTRIB_NONE | ITEMATTRIB_READ);
 	m_itemArray[ITEM_A_BLACK_BAG] = new CItem(ITEM_A_BLACK_BAG, ITEMATTRIB_OPEN);
 	m_itemArray[ITEM_COLOGNE] = new CItem(ITEM_COLOGNE, ITEMATTRIB_NONE);
@@ -312,6 +312,7 @@ void CGame::InitData(int param)
 	
 	m_roomArray[ROOM_GABRIEL]->AddItemCache(0, COL_BED);
 	m_roomArray[ROOM_GABRIEL]->AddItemCache(1, COL_CLOTHES_CUPBOARD);
+	m_roomArray[ROOM_GABRIEL]->AddItemCache(2, COL_GABRIELS_BODY);
 	
 	m_roomArray[ROOM_CYNTHIA]->AddItemCache(0, COL_FOUR_POSTER_BED);
 	m_roomArray[ROOM_CYNTHIA]->AddItemCache(1, COL_CHEST_OF_DRAWERS);
@@ -327,6 +328,7 @@ void CGame::InitData(int param)
 	
 	m_roomArray[ROOM_DINGLE]->AddItemCache(0, COL_FOUR_POSTER_BED);
 	m_roomArray[ROOM_DINGLE]->AddItemCache(1, COL_CHEST_OF_DRAWERS);
+	m_roomArray[ROOM_DINGLE]->AddItemCache(2, COL_DINGLES_BODY);
 	
 	m_roomArray[ROOM_OUTSIDE1]->AddItemCache(0, COL_WINDOW);
 	
@@ -400,7 +402,7 @@ void CGame::InitData(int param)
 	m_characterArray[CHARTYPE_REVEREND]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(392, 144), 200));
 	m_characterArray[CHARTYPE_REVEREND]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(120, 184), 200));
 	m_characterArray[CHARTYPE_REVEREND]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(232, m_roomArray[ROOM_DRAWING]->CentreY()), 0));
-	m_characterArray[CHARTYPE_REVEREND]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0));
+	m_characterArray[CHARTYPE_REVEREND]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0, LOOP_INFINITE));
 	
 	// ================================================================
 	// Bentley
@@ -430,7 +432,7 @@ void CGame::InitData(int param)
 	m_characterArray[CHARTYPE_BENTLEY]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_HALL4], m_roomArray[ROOM_COOK], 200));
 	m_characterArray[CHARTYPE_BENTLEY]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_COOK], m_roomArray[ROOM_LIBRARY], 200));
 	m_characterArray[CHARTYPE_BENTLEY]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_LIBRARY], m_roomArray[ROOM_HALL3], 0));
-	m_characterArray[CHARTYPE_BENTLEY]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0));
+	m_characterArray[CHARTYPE_BENTLEY]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0, LOOP_INFINITE));
 	
 	// ================================================================
 	// Cook
@@ -464,7 +466,7 @@ void CGame::InitData(int param)
 	m_characterArray[CHARTYPE_COOK]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_COOK], m_roomArray[ROOM_KITCHEN], 0));
 	m_characterArray[CHARTYPE_COOK]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(72, 152), 200));
 	m_characterArray[CHARTYPE_COOK]->AddGoal(new CGoal(0, GOAL_SPEAK, "\"OOH YES I KNOW DEAR..\"", 200));
-	m_characterArray[CHARTYPE_COOK]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0));
+	m_characterArray[CHARTYPE_COOK]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0, LOOP_INFINITE));
 	
 	// ================================================================
 	// Gabriel
@@ -482,7 +484,7 @@ void CGame::InitData(int param)
 	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_KITCHEN], 0));
 	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(96, 168), 200));
 	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(0, GOAL_SPEAK, "\"..DUM DE DAH..\"", 200));
-	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0));
+	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0, LOOP_INFINITE));
 	
 	// ================================================================
 	// Cynthia
@@ -514,7 +516,7 @@ void CGame::InitData(int param)
 	m_characterArray[CHARTYPE_CYNTHIA]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_CYNTHIA], m_roomArray[ROOM_HALL1], 0));
 	m_characterArray[CHARTYPE_CYNTHIA]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(592, 144), 0));	// Dingle
 	m_characterArray[CHARTYPE_CYNTHIA]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(328, 184), 0));	// Landing
-	m_characterArray[CHARTYPE_CYNTHIA]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0));
+	m_characterArray[CHARTYPE_CYNTHIA]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0, LOOP_INFINITE));
 
 	// ================================================================
 	// Professor
@@ -554,7 +556,7 @@ void CGame::InitData(int param)
 	m_characterArray[CHARTYPE_PROFESSOR]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_LIBRARY], 200));
 	m_characterArray[CHARTYPE_PROFESSOR]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(168, 144), 0));
 	m_characterArray[CHARTYPE_PROFESSOR]->AddGoal(new CGoal(0, GOAL_SPEAK, "\"YES!\"", 200));
-	m_characterArray[CHARTYPE_PROFESSOR]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0));
+	m_characterArray[CHARTYPE_PROFESSOR]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0, LOOP_INFINITE));
 	
 	// ================================================================
 	// Doctor
@@ -621,7 +623,7 @@ void CGame::InitData(int param)
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(240, 144), 200));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_OUTSIDE3], m_roomArray[ROOM_DRAWING], 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(64, 184), 200));
-	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0));
+	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0, LOOP_INFINITE));
 	
 	// ================================================================
 	// Major
@@ -638,7 +640,7 @@ void CGame::InitData(int param)
 	m_characterArray[CHARTYPE_MAJOR]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(80, 184), 200));
 	m_characterArray[CHARTYPE_MAJOR]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_OUTSIDE1], m_roomArray[ROOM_HALL2], 200));
 	m_characterArray[CHARTYPE_MAJOR]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_HALL2], m_roomArray[ROOM_MAJOR], 200));
-	m_characterArray[CHARTYPE_MAJOR]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0));
+	m_characterArray[CHARTYPE_MAJOR]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0, LOOP_INFINITE));
 	
 	// ================================================================
 	// Dingle
@@ -654,6 +656,9 @@ void CGame::InitData(int param)
 	m_characterArray[CHARTYPE_DINGLE]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_HALL1], 0));
 	m_characterArray[CHARTYPE_DINGLE]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(376, 176), 200));
 	m_characterArray[CHARTYPE_DINGLE]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_DINGLE], 0));
+	m_characterArray[CHARTYPE_DINGLE]->AddGoal(new CGoal(0, GOAL_STOP, 0));
+	
+	// ... Walk to door in cellar
 	
 	// ================================================================
 	// Angus
@@ -664,7 +669,7 @@ void CGame::InitData(int param)
 	m_characterArray[CHARTYPE_ANGUS]->AddGoal(new CGoal(0, GOAL_WAIT, 500));
 	m_characterArray[CHARTYPE_ANGUS]->AddGoal(new CGoal(1, GOAL_GOTOPOINT, new Point(64, 160), 500));
 	m_characterArray[CHARTYPE_ANGUS]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(232, 160), 500));
-	m_characterArray[CHARTYPE_ANGUS]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0));
+	m_characterArray[CHARTYPE_ANGUS]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0, LOOP_INFINITE));
 	
 	// ----------------------------
 	
@@ -674,12 +679,13 @@ void CGame::InitData(int param)
 //	m_eventArray[EVENT_MURDER_CYNTHIA] = new CEvent(EVENT_MURDER_CYNTHIA, new CTime(9, 30, 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_HALL3, EVENTFLAG_MURDER_CYNTHIA);
 //	m_eventArray[EVENT_MURDER_DOCTOR] = new CEvent(EVENT_MURDER_DOCTOR, new CTime(10, 00, 0, 0), EVENTFLAG_MURDER_CYNTHIA | EVENTFLAG_HALL1, EVENTFLAG_MURDER_DOCTOR);
 //	m_eventArray[EVENT_MURDER_GABRIEL] = new CEvent(EVENT_MURDER_GABRIEL, new CTime(10, 30, 0, 0), EVENTFLAG_MURDER_DOCTOR | EVENTFLAG_HALL1, EVENTFLAG_MURDER_GABRIEL);
+//	m_eventArray[EVENT_GET_SHOT] = new CEvent(EVENT_GET_SHOT, new CTime(11, 30, 0, 0), EVENTFLAG_NONE, EVENTFLAG_GAME_OVER);	// 2:20
 
-	//m_eventArray[EVENT_MURDER_DINGLE] = new CEvent(EVENT_MURDER_DINGLE, new CTime(9, 10, 0, 0), EVENTFLAG_NONE, EVENTFLAG_MURDER_DINGLE);
-	//m_eventArray[EVENT_MURDER_CYNTHIA] = new CEvent(EVENT_MURDER_CYNTHIA, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_HALL3, EVENTFLAG_MURDER_CYNTHIA);
-	//m_eventArray[EVENT_MURDER_DOCTOR] = new CEvent(EVENT_MURDER_DOCTOR, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_CYNTHIA | EVENTFLAG_HALL1, EVENTFLAG_MURDER_DOCTOR);
-	//m_eventArray[EVENT_MURDER_GABRIEL] = new CEvent(EVENT_MURDER_GABRIEL, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_DOCTOR | EVENTFLAG_HALL1, EVENTFLAG_MURDER_GABRIEL);
-
+	m_eventArray[EVENT_MURDER_DINGLE] = new CEvent(EVENT_MURDER_DINGLE, new CTime(9, 10, 0, 0), EVENTFLAG_NONE, EVENTFLAG_MURDER_DINGLE);
+	m_eventArray[EVENT_MURDER_CYNTHIA] = new CEvent(EVENT_MURDER_CYNTHIA, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_HALL3, EVENTFLAG_MURDER_CYNTHIA);
+	m_eventArray[EVENT_MURDER_DOCTOR] = new CEvent(EVENT_MURDER_DOCTOR, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_CYNTHIA | EVENTFLAG_HALL1, EVENTFLAG_MURDER_DOCTOR);
+	m_eventArray[EVENT_MURDER_GABRIEL] = new CEvent(EVENT_MURDER_GABRIEL, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_DOCTOR | EVENTFLAG_HALL1, EVENTFLAG_MURDER_GABRIEL);
+	m_eventArray[EVENT_REMOVE_BULLETS] = new CEvent(EVENT_GET_SHOT, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_GABRIEL, EVENTFLAG_REMOVE_BULLETS);	// 2:20
 	m_eventArray[EVENT_GET_SHOT] = new CEvent(EVENT_GET_SHOT, new CTime(11, 30, 0, 0), EVENTFLAG_NONE, EVENTFLAG_GAME_OVER);	// 2:20
 	
 	m_cursor = new CCursor();
@@ -720,6 +726,11 @@ void CGame::Update()
 	//sprintf(buf, "%02d:%02d:%02d:%02d Elapsed: %08d", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes, m_timer->pCurrentTime()->Seconds, m_timer->pCurrentTime()->MilliSeconds, elapsedTime);
 	//fprintf(stderr, buf);
 	
+	if(keys_released & KEY_X)
+	{
+		InitEnding(ENDINGMODE_LEDATGUNPOINT);
+	}
+	
 	if(keys_released & KEY_L || keys_released & KEY_R)
 	{
 		lcdSwap();
@@ -751,6 +762,24 @@ void CGame::Update()
 			m_console->Update();
 			m_cursor->Update();
 			m_cursor->Show();
+		}
+		break;
+	case GAMEMODE_FREEZE:
+		if(++m_freezeFrameCount == 200)
+		{
+			m_freezeFrameCount = 0;
+			
+			m_gameMode = GAMEMODE_RUNNING;
+		}
+		else
+		{
+			//DrawTime(m_timer->pCurrentTime());
+			m_watch->Draw(m_timer->pCurrentTime());
+			m_console->Update();
+			m_cursor->Update();
+			m_cursor->Show();
+			
+			BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
 		}
 		break;
 	case GAMEMODE_RUNNING:
@@ -789,7 +818,7 @@ void CGame::Update()
 		else UpdateGameOver();
 		break;
 	case GAMEMODE_ENDING:
-		UpdateEnding();
+		UpdateEnding(touch, keys_held, keys_pressed, keys_released);
 		break;
 	default:
 		break;
@@ -1756,7 +1785,18 @@ void CGame::ProcessMenu(int x, int y)
 	case ICON_LOAD:
 	case ICON_SHOOT:
 		{
-			m_console->AddText("YOU CAN'T USE THAT HERE, YOU MIGHT HURT SOMEONE!");
+			CItemCache* pItemCache = m_snide->GetItemCache();
+			
+			if(m_endingMode == ENDINGMODE_ESCAPING && pItemCache->ContainsItem(m_itemArray[ITEM_BULLETS]))
+			{
+				m_endingMode = ENDINGMODE_ARREST;
+				
+				m_frameCount = 50;
+			}
+			else
+			{
+				m_console->AddText("YOU CAN'T USE THAT HERE, YOU MIGHT HURT SOMEONE!");
+			}
 			
 			m_pointer->Hide();
 			m_menu->Hide();
@@ -2153,16 +2193,28 @@ void CGame::PostProcessMenu()
 		break;
 	case ICON_ACCUSE:
 		{
+			CItemCache* pItemCache = m_snide->GetItemCache();
+			int evidenceCount = 0;
+			
+			for(int i=0; i<pItemCache->ItemCount(); i++)
+			{
+				CItem* pItem = pItemCache->GetItem(i);
+				
+				if(pItem != NULL)
+					if(pItem->GetItemAttribs() & ITEMATTRIB_EVIDENCE)
+						evidenceCount++;
+			}
+			
+			if(evidenceCount == 10 && m_console->SelectedIndex() == CHARTYPE_DINGLE)
+				InitEnding(ENDINGMODE_DINGLESPEAKS);
+			else
+				m_console->AddText("YOU DO NOT HAVE THE EVIDENCE TO PROVE IT.");
+		
 			m_displayMode = DISPLAYMODE_GAME;
-			m_console->AddText("YOU DO NOT HAVE THE EVIDENCE TO PROVE IT.");
 			m_pointer->Hide();
 			m_menu->Hide();
 			m_console->HideMenu();
-			
-			//char buf[256];
-			//sprintf(buf, g_accuseName[m_console->MenuItem()]);
-			//fprintf(stderr, buf);
-			}
+		}
 		break;
 	case ICON_DOOR_OPEN:
 	case ICON_DOOR_CLOSE:
@@ -2466,6 +2518,9 @@ void CGame::InitRoom()
 		
 		if((m_eventFlags & EVENTFLAG_MURDER_DINGLE) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_DINGLE))
 		{
+			m_gameMode = GAMEMODE_FREEZE;
+			m_freezeFrameCount = 0;
+			mmEffectCancel(m_footsteps);
 			mmPosition(1);			
 			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_DINGLE;
 		}
@@ -2478,6 +2533,9 @@ void CGame::InitRoom()
 		
 		if((m_eventFlags & EVENTFLAG_MURDER_CYNTHIA) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_CYNTHIA))
 		{
+			m_gameMode = GAMEMODE_FREEZE;
+			m_freezeFrameCount = 0;
+			mmEffectCancel(m_footsteps);
 			mmPosition(1);			
 			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_CYNTHIA;
 		}
@@ -2490,6 +2548,9 @@ void CGame::InitRoom()
 		
 		if((m_eventFlags & EVENTFLAG_MURDER_GABRIEL) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_GABRIEL))
 		{
+			m_gameMode = GAMEMODE_FREEZE;
+			m_freezeFrameCount = 0;
+			mmEffectCancel(m_footsteps);
 			mmPosition(1);			
 			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_GABRIEL;
 		}
@@ -2520,6 +2581,9 @@ void CGame::InitRoom()
 		
 		if((m_eventFlags & EVENTFLAG_MURDER_DOCTOR) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_DOCTOR))
 		{
+			m_gameMode = GAMEMODE_FREEZE;
+			m_freezeFrameCount = 0;
+			mmEffectCancel(m_footsteps);
 			mmPosition(1);			
 			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_DOCTOR;
 		}
@@ -2547,35 +2611,41 @@ void CGame::InitMurder(MurderType murderType)
 	switch(murderType)
 	{
 	case MURDERTYPE_DINGLE:
+		m_characterArray[CHARTYPE_DINGLE]->Reset();
 		m_characterArray[CHARTYPE_DINGLE]->SetRoom(m_roomArray[ROOM_DINGLE]);
 		m_characterArray[CHARTYPE_DINGLE]->SetPosition(336, 80);
-		m_characterArray[CHARTYPE_DINGLE]->SetGoalMode(false);
 		m_characterArray[CHARTYPE_DINGLE]->SetCharacterMode(CHARMODE_DEAD);
+		
+		m_roomArray[ROOM_DINGLE]->SetColMap(col_dingle_murder);
 		break;
 	case MURDERTYPE_CYNTHIA:
+		m_characterArray[CHARTYPE_CYNTHIA]->Reset();
 		m_characterArray[CHARTYPE_CYNTHIA]->SetRoom(m_roomArray[ROOM_STAIRS]);
 		m_characterArray[CHARTYPE_CYNTHIA]->SetPosition(232, 148);
-		m_characterArray[CHARTYPE_CYNTHIA]->SetGoalMode(false);
 		m_characterArray[CHARTYPE_CYNTHIA]->SetCharacterMode(CHARMODE_DEAD);
 		
-		m_roomArray[ROOM_STAIRS]->SetColMap(col_stairs_front);
+		m_roomArray[ROOM_STAIRS]->SetColMap(col_stairs_murder);
 		m_roomArray[ROOM_STAIRS]->SetOverlay(g_stairs_frontMap, 168);
 		m_roomArray[ROOM_LANDING]->SetOverlay(g_landing_front2Map);
 		break;
 	case MURDERTYPE_DOCTOR:
+		m_characterArray[CHARTYPE_DOCTOR]->Reset();
 		m_characterArray[CHARTYPE_DOCTOR]->SetRoom(m_roomArray[ROOM_CLOCK]);
 		m_characterArray[CHARTYPE_DOCTOR]->SetPosition(56, 132);
-		m_characterArray[CHARTYPE_DOCTOR]->SetGoalMode(false);
 		m_characterArray[CHARTYPE_DOCTOR]->SetCharacterMode(CHARMODE_DEAD);
+		
+		m_roomArray[ROOM_CLOCK]->SetColMap(col_clock_murder);
 		
 		m_roomArray[ROOM_SNIDE]->AddItem(0, m_itemArray[ITEM_A_BOMB], true);
 		m_roomArray[ROOM_COOK]->AddItem(0, m_itemArray[ITEM_A_KNIFE], true);
 		break;
 	case MURDERTYPE_GABRIEL:
+		m_characterArray[CHARTYPE_GABRIEL]->Reset();
 		m_characterArray[CHARTYPE_GABRIEL]->SetRoom(m_roomArray[ROOM_GABRIEL]);
 		m_characterArray[CHARTYPE_GABRIEL]->SetPosition(208, 112);
-		m_characterArray[CHARTYPE_GABRIEL]->SetGoalMode(false);
 		m_characterArray[CHARTYPE_GABRIEL]->SetCharacterMode(CHARMODE_DEAD);
+		
+		m_roomArray[ROOM_GABRIEL]->SetColMap(col_gabriel_murder);
 		break;
 	}
 }
@@ -2901,7 +2971,7 @@ void CGame::InitVideoMain()
 void CGame::InitIntro1()
 {
 	m_introIndex = 0;
-	m_introFrameCount = 0;
+	m_frameCount = 0;
 	
 	InitVideoIntro();
 	
@@ -2954,9 +3024,9 @@ void CGame::InitIntro3(int param)
 
 void CGame::UpdateIntro()
 {
-	if(m_introFrameCount++ == 100)
+	if(m_frameCount++ == 100)
 	{
-		m_introFrameCount = 0;
+		m_frameCount = 0;
 		
 		switch(m_introIndex)
 		{
@@ -2986,12 +3056,14 @@ void CGame::InitGame(GameType gameType)
 	m_displayMode = DISPLAYMODE_GAME;
 	m_questionMode = QUESTIONMODE_NONE;
 	m_openMode = OPENMODE_ROOM;
+	m_endingMode = ENDINGMODE_NONE;
 	m_footsteps = 0;
 	m_clock = 0;
 	m_fireplace = 0;
-	m_gameOverFrameCount = 0;
+	m_frameCount = 0;
 	m_dieFrameCount = 0;
 	m_reverseTimeFrameCount = 0;
+	m_freezeFrameCount = 0;
 	m_eventFlags = 0;
 	
 	m_questionCharacter = NULL;
@@ -3046,18 +3118,19 @@ void CGame::InitGame(GameType gameType)
 		m_itemArray[ITEM_A_BRIEFCASE]->SetLocked(true);
 		
 		// ------------------------------------
+			
+		m_roomArray[ROOM_DINGLE]->SetColMap(col_room1);
 
-		m_characterArray[CHARTYPE_GABRIEL]->AddItems(m_itemArray[ITEM_A_LOCKET], m_itemArray[ITEM_A_SYRINGE], NULL, NULL, NULL);
-		m_characterArray[CHARTYPE_DINGLE]->AddItems(m_itemArray[ITEM_A_SMALL_KEY], m_itemArray[ITEM_A_CRAVATE], NULL, NULL, NULL);
+		m_roomArray[ROOM_CLOCK]->SetColMap(col_clock);
 		
-		// ------------------------------------
-
+		m_roomArray[ROOM_GABRIEL]->SetColMap(col_room2);
+		
+		m_roomArray[ROOM_STAIRS]->SetColMap(col_stairs);
+		m_roomArray[ROOM_STAIRS]->SetOverlay(NULL);
+		
 		m_roomArray[ROOM_ANGUS_ROOM]->SetMap(g_angus_room1Map);
 		m_roomArray[ROOM_ANGUS_ROOM]->SetColMap(col_angus_room1);
 		
-		m_roomArray[ROOM_STAIRS]->SetColMap(col_stairs);
-		
-		m_roomArray[ROOM_STAIRS]->SetOverlay(NULL);
 		m_roomArray[ROOM_LANDING]->SetOverlay(g_landing_front1Map);
 		m_roomArray[ROOM_GRAVEYARD]->SetOverlay(g_graveyard_frontMap, 176);
 		m_roomArray[ROOM_ANGUS_SECRET]->SetOverlay(g_angus_secret_frontMap, 168);
@@ -3080,21 +3153,23 @@ void CGame::InitGame(GameType gameType)
 		
 		m_roomArray[ROOM_GABRIEL]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_GABRIEL]->AddItems(1, NULL, NULL, NULL, NULL, NULL);
-		
+		m_roomArray[ROOM_GABRIEL]->AddItems(2, m_itemArray[ITEM_A_LOCKET], m_itemArray[ITEM_A_SYRINGE], NULL, NULL, NULL);
+
 		m_roomArray[ROOM_CYNTHIA]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_CYNTHIA]->AddItems(1,m_itemArray[ITEM_A_MIRROR], NULL, NULL, NULL, NULL);
 		
 		m_roomArray[ROOM_PROFESSOR]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_PROFESSOR]->AddItems(1, m_itemArray[ITEM_NOTEBOOKS], m_itemArray[ITEM_A_SMALL_BOOK], NULL, NULL, NULL);		m_roomArray[ROOM_DOCTOR]->AddItems(1, m_itemArray[ITEM_COLOGNE], m_itemArray[ITEM_A_BLACK_BAG], NULL, NULL, NULL);
+		m_roomArray[ROOM_PROFESSOR]->AddItems(1, m_itemArray[ITEM_NOTEBOOKS], m_itemArray[ITEM_A_SMALL_BOOK], NULL, NULL, NULL);
 		
 		m_roomArray[ROOM_DOCTOR]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_DOCTOR]->AddItems(1, NULL, NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_DOCTOR]->AddItems(1, m_itemArray[ITEM_COLOGNE], m_itemArray[ITEM_A_BLACK_BAG], NULL, NULL, NULL);
 		
 		m_roomArray[ROOM_MAJOR]->AddItems(0, m_itemArray[ITEM_AN_ELEPHANT_GUN], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_MAJOR]->AddItems(1, m_itemArray[ITEM_BLANK_BULLETS], NULL, NULL, NULL, NULL);
 		
 		m_roomArray[ROOM_DINGLE]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_DINGLE]->AddItems(1, m_itemArray[ITEM_A_BRIEFCASE], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_DINGLE]->AddItems(2, m_itemArray[ITEM_A_SMALL_KEY], m_itemArray[ITEM_A_CRAVATE], NULL, NULL, NULL);
 		
 		m_roomArray[ROOM_OUTSIDE1]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
 		
@@ -3165,20 +3240,12 @@ void CGame::InitGame(GameType gameType)
 		m_characterArray[i]->SetCharacterMode(CHARMODE_GOAL);
 	}
 	
-	m_characterArray[CHARTYPE_DINGLE]->SetSize(24, 48);
-	m_characterArray[CHARTYPE_CYNTHIA]->SetSize(24, 49);
-	m_characterArray[CHARTYPE_DOCTOR]->SetSize(24, 49);
-	m_characterArray[CHARTYPE_GABRIEL]->SetSize(24, 48);
-	m_characterArray[CHARTYPE_SNIDE]->SetSize(24, 53);
-	
 	for(int i=0; i<MAX_EVENTS; i++)
-		m_eventArray[i]->SetDone(false);
+		if(m_eventArray[i] != NULL)
+			m_eventArray[i]->SetDone(false);
 	
 	m_question->Disable();
 	m_question->Hide();
-	
-	m_console->Clear();
-	m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
 	
 	// ------------------------
 	
@@ -3215,7 +3282,13 @@ void CGame::InitGame(GameType gameType)
 	mmStart(MOD_DETECTIVE, MM_PLAY_ONCE);
 	mmPosition(3);
 	
-	InitEnding();
+	m_console->Clear();
+	m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+	
+	//m_roomArray[ROOM_STUDY]->RemoveItem(0, m_itemArray[ITEM_BULLETS]);
+	//m_roomArray[ROOM_STUDY]->AddItem(0, m_itemArray[ITEM_BLANK_BULLETS], true);
+	
+	//m_snide->AddItems(m_itemArray[ITEM_AN_ELEPHANT_GUN], m_itemArray[ITEM_BULLETS], NULL, NULL, NULL);
 }
 
 void CGame::UpdateGame(touchPosition touch, int keys_held, int keys_pressed, int keys_released)
@@ -3259,29 +3332,29 @@ void CGame::UpdateEvents()
 						switch(m_eventArray[i]->GetEventType())
 						{
 						case EVENT_START_GAME:
-							fprintf(stderr, "EVENT_START_GAME");
 							break;
 						case EVENT_MURDER_DINGLE:
-							fprintf(stderr, "EVENT_MURDER_DINGLE");
 							InitMurder(MURDERTYPE_DINGLE);
 							break;
 						case EVENT_MURDER_CYNTHIA:
-							fprintf(stderr, "EVENT_MURDER_CYNTHIA");
 							InitMurder(MURDERTYPE_CYNTHIA);
 							break;
 						case EVENT_MURDER_DOCTOR:
-							fprintf(stderr, "EVENT_MURDER_DOCTOR");
 							InitMurder(MURDERTYPE_DOCTOR);
 							break;
 						case EVENT_MURDER_GABRIEL:
-							fprintf(stderr, "EVENT_MURDER_GABRIEL");
 							InitMurder(MURDERTYPE_GABRIEL);
 							break;
 						case EVENT_REMOVE_BULLETS:
-							fprintf(stderr, "EVENT_REMOVE_BULLETS");
+							{
+								CItemCache* pItemCache = m_roomArray[ROOM_STUDY]->GetItemCache(0);
+								
+								if(pItemCache->ContainsItem(m_itemArray[ITEM_BULLETS]))
+									pItemCache->RemoveItem(m_itemArray[ITEM_BULLETS]);
+							}
 							break;
 						case EVENT_GET_SHOT:
-							fprintf(stderr, "EVENT_GET_SHOT");
+							InitEnding(ENDINGMODE_SHOT);
 							break;
 						}
 					}
@@ -3313,6 +3386,8 @@ void CGame::InitGameOver(GameOverMode gameOverMode)
 	m_gameMode = GAMEMODE_GAMEOVER;
 	m_gameOverMode = gameOverMode;
 	
+	m_frameCount = 500;
+	
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE GAME IS OVER.");
 }
 
@@ -3336,13 +3411,13 @@ void CGame::UpdateGameOver()
 		break;
 	}
 	
-	if(++m_gameOverFrameCount == 500)
+	if(--m_frameCount == 0)
 	{
 		switch(m_gameOverMode)
 		{
 		case GAMEOVERMODE_WIN:
 			m_gameOverMode = GAMEOVERMODE_NOTHING;
-			m_gameOverFrameCount = 0;		
+			m_frameCount = 500;		
 
 			m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
 			
@@ -3368,7 +3443,7 @@ void CGame::UpdateGameOver()
 			break;
 		case GAMEOVERMODE_LOSE:
 			m_gameOverMode = GAMEOVERMODE_NOTHING;
-			m_gameOverFrameCount = 0;
+			m_frameCount = 500;
 			
 			m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
 			
@@ -3393,12 +3468,12 @@ void CGame::UpdateGameOver()
 			dmaCopy(end_bottomPal, BG_PALETTE, end_bottomPalLen);
 			break;
 		case GAMEOVERMODE_END:
-			m_gameOverFrameCount = 0;
+			m_frameCount = 500;
 			
 			InitTitleScreen();
 			break;
 		case GAMEOVERMODE_NOTHING:
-			m_gameOverFrameCount = 0;
+			m_frameCount = 500;
 			
 			InitTitleScreen();
 			break;
@@ -3406,12 +3481,16 @@ void CGame::UpdateGameOver()
 	}
 }
 
-void CGame::InitEnding()
+void CGame::InitEnding(EndingMode endingMode)
 {
 	m_gameMode = GAMEMODE_ENDING;
 	
-	m_endingMode = ENDINGMODE_DINGLESPEAKS;
-	m_endingFrameCount = 1000;
+	m_endingMode = endingMode;
+	m_frameCount = 300;
+	
+	m_pointer->Hide();
+	m_menu->Hide();
+	m_console->HideMenu();
 	
 	m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, false);
 	
@@ -3420,7 +3499,7 @@ void CGame::InitEnding()
 	REG_BLDCNT_SUB |= BLEND_FADE_BLACK;
 	REG_BLDY_SUB = 17;
 	
-	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE LIGHTS GO OUT..         YOU ARE LED AT GUNPOINT THROUGH A DARK TUNNEL");
+	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE LIGHTS GO OUT..");
 	
 	m_console->Clear();
 	
@@ -3428,79 +3507,161 @@ void CGame::InitEnding()
 	m_currentRoom->Initialize(0);
 }
 
-void CGame::UpdateEnding()
+void CGame::UpdateEnding(touchPosition touch, int keys_held, int keys_pressed, int keys_released)
 {
-	if(--m_endingFrameCount == 0)
+	switch(m_endingMode)
+	{
+	case ENDINGMODE_NONE:
+	case ENDINGMODE_SHOT:
+	case ENDINGMODE_LEDATGUNPOINT:
+	case ENDINGMODE_DINGLESPEAKS:
+	case ENDINGMODE_PULLTRIGGER:
+	case ENDINGMODE_ESCAPE:
+	case ENDINGMODE_ESCAPED:
+	case ENDINGMODE_ARREST:
+	case ENDINGMODE_GAMEOVER_WIN:
+	case ENDINGMODE_GAMEOVER_LOSE:
+	case ENDINGMODE_GAMEOVER_END:
+		m_currentRoom->Update(m_timer->pCurrentTime());
+		
+		SortSprites();
+		UpdateCharacters();
+		
+		UpdateFx();
+		
+		//DrawTime(m_timer->pCurrentTime());
+		m_watch->Draw(m_timer->pCurrentTime());
+		m_console->Update();
+		m_cursor->Update();
+		m_cursor->Show();
+		
+		BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
+		break;
+	case ENDINGMODE_ESCAPING:
+		{
+			Point p;
+			
+			UpdateGame(touch, keys_held, keys_pressed, keys_released);
+			
+			p.X = 280;
+			p.Y = 152;
+								
+			if(m_characterArray[CHARTYPE_DINGLE]->MoveTo(&p))
+			{
+				m_endingMode = ENDINGMODE_ESCAPED;
+				m_frameCount = 1;
+				
+				m_characterArray[CHARTYPE_DINGLE]->SetRoom(NULL);
+			}
+		}
+		break;
+	}
+	
+	if(--m_frameCount == 0)
 	{
 		switch(m_endingMode)
 		{
-		case ENDINGMODE_DINGLESPEAKS:
-			m_endingMode = ENDINGMODE_PULLTRIGGER;
-			m_endingFrameCount = 1500;
+		case ENDINGMODE_NONE:
+		case ENDINGMODE_SHOT:
+			m_endingMode = ENDINGMODE_GAMEOVER_LOSE;
+			m_frameCount = 500;
 			
-			m_characterArray[CHARTYPE_DINGLE]->SetRoom(m_roomArray[ROOM_CELLAR]);
-			m_characterArray[CHARTYPE_DINGLE]->SetPosition(96, m_roomArray[ROOM_CELLAR]->CentreY() - m_characterArray[CHARTYPE_DINGLE]->Height());
-			m_characterArray[CHARTYPE_DINGLE]->SetGoalMode(false);
-			m_characterArray[CHARTYPE_DINGLE]->SetHFlip(true);
-			m_characterArray[CHARTYPE_DINGLE]->SetCharacterMode(CHARMODE_TALKING);
-			
-			m_snide->Reset();
-			m_snide->SetGoalMode(false);
-			m_snide->SetPosition(136, m_roomArray[ROOM_CELLAR]->CentreY() - m_snide->Height());
-			m_snide->SetCharacterMode(CHARMODE_QUESTION);
-			m_snide->SetRoom(m_roomArray[ROOM_CELLAR]);
-			
-			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("DINGLE SPEAKS \"VERY CLEVER, SNIDE.. I PAID THE DOCTOR TO CERTIFY ME DEAD, AND THEN TOOK CARE OF HIM... NOW I JUST HAVE TO TAKE CARE OF YOU!\"");
-			
-			m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
-			break;
-		case ENDINGMODE_PULLTRIGGER:
-			m_endingMode = ENDINGMODE_ESCAPE;
-			m_endingFrameCount = 500;
-			
-			m_characterArray[CHARTYPE_DINGLE]->SetCharacterMode(CHARMODE_ATTACK);
-			
-			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("HE PULLS THE TRIGGER, BUT NOTHING HAPPENS..");
+			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("YOU ARE SHOT BY AN UNSEEN ASSASIN..");
 			
 			mmEffectEx(&g_sfx_gunshot);
 			break;
+		case ENDINGMODE_LEDATGUNPOINT:
+			m_endingMode = ENDINGMODE_DINGLESPEAKS;
+			m_frameCount = 500;
+			
+			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("YOU ARE LED AT GUNPOINT THROUGH A DARK TUNNEL");
+			break;
+		case ENDINGMODE_DINGLESPEAKS:
+			{
+				m_endingMode = ENDINGMODE_PULLTRIGGER;
+				m_frameCount = 1200;
+				
+				m_characterArray[CHARTYPE_DINGLE]->Reset();
+				m_characterArray[CHARTYPE_DINGLE]->SetHFlip(true);
+				m_characterArray[CHARTYPE_DINGLE]->SetRoom(m_roomArray[ROOM_CELLAR]);
+				m_characterArray[CHARTYPE_DINGLE]->SetPosition(96, m_characterArray[CHARTYPE_DINGLE]->CentreY());
+				m_characterArray[CHARTYPE_DINGLE]->SetCharacterMode(CHARMODE_TALKING);
+				
+				m_snide->Reset();
+				m_snide->SetRoom(m_roomArray[ROOM_CELLAR]);
+				m_snide->SetPosition(136, m_snide->CentreY());
+				m_snide->SetCharacterMode(CHARMODE_QUESTION);
+				
+				((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("DINGLE SPEAKS \"VERY CLEVER, SNIDE.. I PAID THE DOCTOR TO CERTIFY ME DEAD, AND THEN TOOK CARE OF HIM... NOW I JUST HAVE TO TAKE CARE OF YOU!\"");
+				
+				m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
+			}
+			break;
+		case ENDINGMODE_PULLTRIGGER:
+			{
+				m_endingMode = ENDINGMODE_ESCAPE;
+				m_frameCount = 500;
+				
+				m_characterArray[CHARTYPE_DINGLE]->SetCharacterMode(CHARMODE_ATTACK);
+				
+				CItemCache* pItemCache = m_roomArray[ROOM_STUDY]->GetItemCache(0);
+				
+				if(pItemCache->ContainsItem(m_itemArray[ITEM_BLANK_BULLETS]) && !pItemCache->ContainsItem(m_itemArray[ITEM_BULLETS]))
+				{
+					((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("HE PULLS THE TRIGGER, BUT NOTHING HAPPENS..");
+				}
+				else
+				{
+					mmEffectEx(&g_sfx_gunshot);
+					
+					m_snide->SetCharacterMode(CHARMODE_DEAD);
+					
+					m_endingMode = ENDINGMODE_GAMEOVER_END;
+				}
+			}
+			break;
 		case ENDINGMODE_ESCAPE:
-			m_endingMode = ENDINGMODE_GAMEOVER;
-			m_endingFrameCount = 500;
+			{
+				m_endingMode = ENDINGMODE_ESCAPING;
+				m_frameCount = 1000;			
+			}
+			break;
+		case ENDINGMODE_ESCAPING:
+			break;
+		case ENDINGMODE_ESCAPED:
+			m_endingMode = ENDINGMODE_GAMEOVER_LOSE;
+			m_frameCount = 500;
+			
+			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("DINGLE HAS ESCAPED.. NEVER TO BE SEEN AGAIN..");
+			break;
+		case ENDINGMODE_ARREST:
+			m_endingMode = ENDINGMODE_GAMEOVER_WIN;
+			m_frameCount = 1000;
+			
+			m_characterArray[CHARTYPE_DINGLE]->SetCharacterMode(CHARMODE_SURRENDER);
 			
 			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("DON'T SHOOT! I'LL COME QUIETLY..");
 			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("WELL DONE, INSPECTOR.... YOU'RE A CREDIT TO THE FORCE, TAKE A PROMOTION!");
 			break;
-		case ENDINGMODE_GAMEOVER:
+		case ENDINGMODE_GAMEOVER_WIN:
 			InitGameOver(GAMEOVERMODE_WIN);
-			//InitGameOver(GAMEOVERMODE_LOSE);
-			//InitGameOver(GAMEOVERMODE_END);
+			break;
+		case ENDINGMODE_GAMEOVER_LOSE:
+			InitGameOver(GAMEOVERMODE_LOSE);
+			break;
+		case ENDINGMODE_GAMEOVER_END:
+			InitGameOver(GAMEOVERMODE_END);
 			break;
 		}
 	}
-	
-	m_currentRoom->Update(m_timer->pCurrentTime());
-	
-	SortSprites();
-	UpdateCharacters();
-	
-	UpdateFx();
-	
-	//DrawTime(m_timer->pCurrentTime());
-	m_watch->Draw(m_timer->pCurrentTime());
-	m_console->Update();
-	m_cursor->Update();
-	m_cursor->Show();
-	
-	BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
 }
 
 void CGame::InitTitleScreen()
 {
 	m_gameMode = GAMEMODE_TITLESCREEN;
 	
-	m_characterPos = -1;
-	m_characterFrameCount = 0;
+	m_characterIndex = -1;
+	m_frameCount = 0;
 	
 	m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
 	
@@ -3557,26 +3718,26 @@ void CGame::InitTitleScreen()
 
 void CGame::UpdateTitleScreen()
 {
-	m_characterFrameCount++;
+	m_frameCount++;
 	
 	BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
 	
 	UpdateFx();
 	
-	if(m_characterPos != -1)
+	if(m_characterIndex != -1)
 	{
-		if(m_characterFrameCount == 160)
+		if(m_frameCount == 160)
 		{
 			m_question->Disable();
 			m_question->Hide();
 			
-			m_characterArray[m_characterPos]->Show();
+			m_characterArray[m_characterIndex]->Show();
 		}
 		
-		if(m_characterFrameCount == 600)
+		if(m_frameCount == 600)
 		{
-			m_characterArray[m_characterPos]->Disable();
-			m_characterArray[m_characterPos]->Hide();
+			m_characterArray[m_characterIndex]->Disable();
+			m_characterArray[m_characterIndex]->Hide();
 
 			m_question->Disable();
 			m_question->Hide();
@@ -3585,26 +3746,26 @@ void CGame::UpdateTitleScreen()
 		}
 	}
 	
-	if(m_characterFrameCount > 700)
+	if(m_frameCount > 700)
 	{
-		m_characterFrameCount = 0;
+		m_frameCount = 0;
 		
-		if(++m_characterPos == MAX_CHARACTERS-1)
-			m_characterPos = 0;
+		if(++m_characterIndex == MAX_CHARACTERS-1)
+			m_characterIndex = 0;
 		
 		m_question->ResetAnimation();
 		m_question->Show();
 		
-		m_console->AddText(g_characterText[m_characterPos]);
+		m_console->AddText(g_characterText[m_characterIndex]);
 	}
 	
-	if(m_characterPos != -1)
+	if(m_characterIndex != -1)
 	{
-		m_characterArray[m_characterPos]->Update(NULL);
-		m_characterArray[m_characterPos]->Draw();
+		m_characterArray[m_characterIndex]->Update(NULL);
+		m_characterArray[m_characterIndex]->Draw();
 	}
 	
-	if(m_characterFrameCount > 80)
+	if(m_frameCount > 80)
 		m_question->Update(NULL);
 	
 	m_question->Draw();

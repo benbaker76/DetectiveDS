@@ -13,6 +13,9 @@ CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprit
 	m_height = height;
 	m_characterSex = characterSex;
 	
+	m_origSize.Width = width;
+	m_origSize.Height = height;
+	
 	m_deadSide = false;
 	
 	m_point = new Point();
@@ -76,6 +79,9 @@ void CCharacter::Reset()
 	m_x = 0;
 	m_y = 0;
 	
+	m_width = m_origSize.Width;
+	m_height = m_origSize.Height;
+	
 	m_visible = false;
 	m_green = false;
 	m_dead = false;
@@ -94,6 +100,8 @@ void CCharacter::Reset()
 	
 	m_pHeadSprite->Reset();
 	m_pBodySprite->Reset();
+	
+	SetHFlip(false);
 }
 
 void CCharacter::ResetAnimation()

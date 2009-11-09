@@ -82,15 +82,18 @@ void CGoalManager::NextGoal()
 	{
 		if(pGoal->GetGoalType() == GOAL_GOTOGOAL)
 		{
-			for(int i=0; i<MAX_GOALS; i++)
+			if(pGoal->Loop())
 			{
-				if(m_goalArray[i]->Id() == pGoal->GotoId())
+				for(int i=0; i<MAX_GOALS; i++)
 				{
-					m_goalPosition = i;
-					
-					ResetGoals();
-					
-					break;
+					if(m_goalArray[i]->Id() == pGoal->GotoId())
+					{
+						m_goalPosition = i;
+						
+						ResetGoals();
+						
+						break;
+					}
 				}
 			}
 		}

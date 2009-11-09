@@ -152,6 +152,7 @@ private:
 	bool m_dead;
 	bool m_deadSide;
 	
+	Size m_origSize;
 	float m_x;
 	float m_y;
 	int m_width;

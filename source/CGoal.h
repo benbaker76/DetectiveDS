@@ -3,6 +3,8 @@
 
 #include "CPathFinder.h"
 
+#define LOOP_INFINITE	-1
+
 enum GoalType
 {
 	GOAL_WAIT,
@@ -11,7 +13,10 @@ enum GoalType
 	GOAL_JUMPPOINT,
 	GOAL_GOTOROOM,
 	GOAL_GOTOPOINT,
-	GOAL_GOTOGOAL
+	GOAL_GOTOGOAL,
+	GOAL_GOTOCHAR,
+	GOAL_WAITCHAR,
+	GOAL_STOP
 };
 
 class CPathFinder;
@@ -27,9 +32,24 @@ public:
 		m_goalPosition = 0;
 		m_waitValue = 0;
 		m_waitTime = waitTime;
+		m_timeValue = 0;
+		m_loopValue = 0;
 	}
 	
-	CGoal(int id, GoalType goalType, int gotoId, int waitTime)
+	CGoal(int id, GoalType goalType, int waitTime, int timeOut)
+	{
+		m_id = id;
+		m_goalType = goalType;
+		m_string = NULL;
+		m_goalPosition = 0;
+		m_waitValue = 0;
+		m_waitTime = waitTime;
+		m_timeOut = timeOut;
+		m_timeValue = 0;
+		m_loopValue = 0;
+	}
+	
+	CGoal(int id, GoalType goalType, int gotoId, int waitTime, int loopCount)
 	{
 		m_id = id;
 		m_goalType = goalType;
@@ -38,6 +58,9 @@ public:
 		m_gotoId = gotoId;
 		m_waitValue = 0;
 		m_waitTime = waitTime;
+		m_loopCount = loopCount;
+		m_timeValue = 0;
+		m_loopValue = 0;
 	}
 	
 	CGoal(int id, GoalType goalType, const char* string, int waitTime)
@@ -49,6 +72,8 @@ public:
 		m_waitTime = waitTime;
 		m_waitValue = 0;
 		m_spoken = false;
+		m_timeValue = 0;
+		m_loopValue = 0;
 	}
 	
 	CGoal(int id, GoalType goalType, CRoom* pRoomStart, CRoom* pRoomEnd, int waitTime)
@@ -59,6 +84,8 @@ public:
 		m_goalPosition = 0;
 		m_waitValue = 0;
 		m_waitTime = waitTime;
+		m_timeValue = 0;
+		m_loopValue = 0;
 		
 		m_pathFinder = new CPathFinder();
 		m_pathFinder->FindRoute(pRoomStart, pRoomEnd);
@@ -75,6 +102,8 @@ public:
 		m_goalPosition = 0;
 		m_waitValue = 0;
 		m_waitTime = 0;
+		m_timeValue = 0;
+		m_loopValue = 0;
 	
 		m_roomArray[0] = pRoom;
 	}
@@ -88,6 +117,8 @@ public:
 		m_goalPosition = 0;
 		m_waitValue = 0;
 		m_waitTime = waitTime;
+		m_timeValue = 0;
+		m_loopValue = 0;
 	}
 	
 	CGoal(int id, GoalType goalType, Point* pPoint)
@@ -99,13 +130,26 @@ public:
 		m_goalPosition = 0;
 		m_waitValue = 0;
 		m_waitTime = 0;
+		m_timeValue = 0;
+		m_loopValue = 0;
 	}
 	
 	void Reset()
 	{
 		m_goalPosition = 0;
 		m_waitValue = 0;
+		m_timeValue = 0;
+		m_loopValue = 0;
 		m_spoken = false;
+	}
+	
+	void CalculatePath(CRoom* pRoomStart, CRoom* pRoomEnd)
+	{
+		m_pathFinder = new CPathFinder();
+		m_pathFinder->FindRoute(pRoomStart, pRoomEnd);
+		
+		for(int i=1; i<MAX_ROOMS; i++)
+			m_roomArray[i - 1] = m_pathFinder->GetRoom(i);
 	}
 	
 	GoalType GetGoalType() const { return m_goalType; }
@@ -118,6 +162,7 @@ public:
 	bool TryGetSpeech(const char** string) { if(!m_spoken) { *string = m_string; m_spoken = true; return true; } else return false; }
 	
 	bool NextRoom() { return (m_roomArray[(m_goalPosition < MAX_ROOMS ? ++m_goalPosition : m_goalPosition)] != NULL); }
+	bool Loop() { return (m_loopCount == -1  || m_loopValue++ < m_loopCount); }
 
 private:
 	
@@ -133,8 +178,15 @@ private:
 	const char* m_string;
 	
 	int m_goalPosition;
+	
 	int m_waitValue;
 	int m_waitTime;
+	
+	int m_timeOut;
+	int m_timeValue;
+	
+	int m_loopValue;
+	int m_loopCount;
 };
 
 #endif

@@ -3,7 +3,7 @@
 
 #include "CItemCache.h"
 
-#define MAX_ITEMS			61
+#define MAX_ITEMS			62
 
 enum ItemType
 {

@@ -14,6 +14,9 @@ CRoom::CRoom(RoomType roomType, Map* pMap, Map* pOverlay, const unsigned char* p
 	m_overlayY = pMap->Height;
 	m_centreY = centreY;
 	
+	for(int i=0; i<MAX_ITEM_CACHE; i++)
+		m_itemCache[i] = NULL;
+	
 	for(int i=0; i<MAX_DOORS; i++)
 		m_doorArray[i] = NULL;
 	
