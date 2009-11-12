@@ -4,6 +4,8 @@
 #include "CFxTextScroller.h"
 #include "CFxParticles.h"
 #include "CFxC64.h"
+#include "CFxRat.h"
+#include "CFxLeak.h"
 
 CFxManager::CFxManager()
 {
@@ -23,6 +25,8 @@ void CFxManager::Initialize()
 	m_fxArray[FXTYPE_COLOUR] = new CFxColourPulse(FXTYPE_COLOUR, this);
 	m_fxArray[FXTYPE_PARTICLES] = new CFxParticles(FXTYPE_PARTICLES, this);
 	m_fxArray[FXTYPE_C64] = new CFxC64(FXTYPE_C64, this);
+	m_fxArray[FXTYPE_RAT] = new CFxRat(FXTYPE_RAT, this);
+	m_fxArray[FXTYPE_LEAK] = new CFxLeak(FXTYPE_LEAK, this);
 }
 
 void CFxManager::FxOff()

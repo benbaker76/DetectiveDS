@@ -5,6 +5,8 @@
 #include "Text.h"
 #include "Gfx.h"
 #include "CFxParticles.h"
+#include "CFxRat.h"
+#include "CFxLeak.h"
 #include "windows.h"
 
 CGame::CGame()
@@ -209,7 +211,7 @@ void CGame::InitData(int param)
 	m_roomArray[ROOM_CELLAR] = new CRoom(ROOM_CELLAR, g_cellarMap, NULL, col_cellar, 168);
 	m_roomArray[ROOM_DRAWING] = new CRoom(ROOM_DRAWING, g_drawingMap, NULL, col_drawing, 160);
 	m_roomArray[ROOM_LIBRARY] = new CRoom(ROOM_LIBRARY, g_libraryMap, NULL, col_library, 160);
-	m_roomArray[ROOM_UTILITY] = new CRoom(ROOM_UTILITY, g_utilityMap, NULL, col_utility, 160);
+	m_roomArray[ROOM_LAUNDRY] = new CRoom(ROOM_LAUNDRY, g_laundryMap, NULL, col_laundry, 160);
 	m_roomArray[ROOM_GARDEN] = new CRoom(ROOM_GARDEN, g_gardenMap, g_garden_frontMap, col_garden, 152);
 	m_roomArray[ROOM_GRAVEYARD] = new CRoom(ROOM_GRAVEYARD, g_graveyardMap, g_graveyard_frontMap, col_graveyard, 160);
 	m_roomArray[ROOM_COURTYARD] = new CRoom(ROOM_COURTYARD, g_courtyardMap, g_courtyard_frontMap, col_courtyard, 160);
@@ -218,6 +220,7 @@ void CGame::InitData(int param)
 	m_roomArray[ROOM_ANGUS_SECRET] = new CRoom(ROOM_ANGUS_SECRET, g_angus_secretMap, g_angus_secret_frontMap, col_angus_secret, 160);
 	m_roomArray[ROOM_ANGUS_STAIRS] = new CRoom(ROOM_ANGUS_STAIRS, g_angus_stairsMap, NULL, col_angus_stairs, 168);
 	m_roomArray[ROOM_DINING] = new CRoom(ROOM_DINING, g_diningMap, g_dining_frontMap, col_dining, 160);
+	m_roomArray[ROOM_SEWERS] = new CRoom(ROOM_SEWERS, g_sewersMap, NULL, col_sewers, 160);
 	
 	m_roomArray[ROOM_SNIDE]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_SNIDE], m_roomArray[ROOM_HALL2], ITEM_NONE));		
 	m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_HALL1], ITEM_NONE));
@@ -261,7 +264,7 @@ void CGame::InitData(int param)
 	m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR4, new CDoor(DOOR_DOOR4, DOORSTATE_LOCKED, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_BENTLEY], ITEM_A_BUNCH_OF_KEYS));
 	m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR5, new CDoor(DOOR_DOOR5, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_DRAWING], ITEM_NONE));
 	m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR6, new CDoor(DOOR_DOOR6, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_LIBRARY], ITEM_NONE));
-	m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR7, new CDoor(DOOR_DOOR7, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_UTILITY], ITEM_NONE));
+	m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR7, new CDoor(DOOR_DOOR7, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_LAUNDRY], ITEM_NONE));
 	m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR8, new CDoor(DOOR_DOOR8, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_HALL4], ITEM_NONE));
 	m_roomArray[ROOM_HALL4]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL4], m_roomArray[ROOM_HALL3], ITEM_NONE));
 	m_roomArray[ROOM_HALL4]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL4], m_roomArray[ROOM_COOK], ITEM_NONE));
@@ -284,7 +287,7 @@ void CGame::InitData(int param)
 	m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_CLOSED, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_HALL3], ITEM_NONE));
 	m_roomArray[ROOM_DRAWING]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_HIDDEN, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_OUTSIDE4], ITEM_NONE));
 	m_roomArray[ROOM_LIBRARY]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_LIBRARY], m_roomArray[ROOM_HALL3], ITEM_NONE));	
-	m_roomArray[ROOM_UTILITY]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_UTILITY], m_roomArray[ROOM_HALL3], ITEM_NONE));
+	m_roomArray[ROOM_LAUNDRY]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_LAUNDRY], m_roomArray[ROOM_HALL3], ITEM_NONE));
 	m_roomArray[ROOM_GARDEN]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_LOCKED, m_roomArray[ROOM_GARDEN], m_roomArray[ROOM_GRAVEYARD], ITEM_A_RED_KEY));
 	m_roomArray[ROOM_GARDEN]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_GARDEN], m_roomArray[ROOM_OUTSIDE4], ITEM_NONE));
 	m_roomArray[ROOM_GRAVEYARD]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_LOCKED, m_roomArray[ROOM_GRAVEYARD], m_roomArray[ROOM_GARDEN], ITEM_A_RED_KEY));
@@ -358,10 +361,10 @@ void CGame::InitData(int param)
 	m_roomArray[ROOM_LIBRARY]->AddItemCache(0, COL_BOOKCASE1);
 	m_roomArray[ROOM_LIBRARY]->AddItemCache(1, COL_BOOKCASE2);
 	
-	m_roomArray[ROOM_UTILITY]->AddItemCache(0, COL_WASHING_MACHINE);
-	m_roomArray[ROOM_UTILITY]->AddItemCache(1, COL_WASHING_BASKET);
-	m_roomArray[ROOM_UTILITY]->AddItemCache(2, COL_CUPBOARD);
-	m_roomArray[ROOM_UTILITY]->AddItemCache(3, COL_WOODEN_CABINET);
+	m_roomArray[ROOM_LAUNDRY]->AddItemCache(0, COL_WASHING_MACHINE);
+	m_roomArray[ROOM_LAUNDRY]->AddItemCache(1, COL_WASHING_BASKET);
+	m_roomArray[ROOM_LAUNDRY]->AddItemCache(2, COL_CUPBOARD);
+	m_roomArray[ROOM_LAUNDRY]->AddItemCache(3, COL_WOODEN_CABINET);
 	
 	m_roomArray[ROOM_GARDEN]->AddItemCache(0, COL_WINDOW);
 	
@@ -685,9 +688,19 @@ void CGame::InitData(int param)
 	m_eventArray[EVENT_MURDER_CYNTHIA] = new CEvent(EVENT_MURDER_CYNTHIA, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_HALL3, EVENTFLAG_MURDER_CYNTHIA);
 	m_eventArray[EVENT_MURDER_DOCTOR] = new CEvent(EVENT_MURDER_DOCTOR, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_CYNTHIA | EVENTFLAG_HALL1, EVENTFLAG_MURDER_DOCTOR);
 	m_eventArray[EVENT_MURDER_GABRIEL] = new CEvent(EVENT_MURDER_GABRIEL, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_DOCTOR | EVENTFLAG_HALL1, EVENTFLAG_MURDER_GABRIEL);
-	m_eventArray[EVENT_REMOVE_BULLETS] = new CEvent(EVENT_GET_SHOT, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_GABRIEL, EVENTFLAG_REMOVE_BULLETS);	// 2:20
+	m_eventArray[EVENT_REMOVE_BULLETS] = new CEvent(EVENT_REMOVE_BULLETS, new CTime(9, 10, 0, 0), EVENTFLAG_MURDER_GABRIEL, EVENTFLAG_REMOVE_BULLETS);	// 2:20
 	m_eventArray[EVENT_GET_SHOT] = new CEvent(EVENT_GET_SHOT, new CTime(11, 30, 0, 0), EVENTFLAG_NONE, EVENTFLAG_GAME_OVER);	// 2:20
 	
+	//m_ratPoints[0] = new Point(88, 144);
+	//m_ratPoints[1] = new Point(192, 136);
+	//m_ratPoints[2] = new Point(144, 176);
+	//m_ratPoints[3] = new Point(168, 160);
+	
+	m_ratPoints[0] = new Point(88, 144);
+	m_ratPoints[1] = new Point(264, 144);
+	m_ratPoints[2] = new Point(200, 176);
+	m_ratPoints[3] = new Point(32, 176);
+
 	m_cursor = new CCursor();
 	m_pointer = new CPointer();
 	
@@ -2511,95 +2524,100 @@ void CGame::InitRoom()
 	switch(m_currentRoom->GetRoomType())
 	{
 	case ROOM_DINGLE:
-		mmEffectCancel(m_clock);
-		mmEffectCancel(m_fireplace);
-		mmSetJingleVolume(0);
-		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
+		SoundOff();
+		FxOff();
 		
 		if((m_eventFlags & EVENTFLAG_MURDER_DINGLE) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_DINGLE))
 		{
 			m_gameMode = GAMEMODE_FREEZE;
 			m_freezeFrameCount = 0;
-			mmEffectCancel(m_footsteps);
 			mmPosition(1);			
 			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_DINGLE;
 		}
 		break;
 	case ROOM_STAIRS:
-		mmEffectCancel(m_clock);
-		mmEffectCancel(m_fireplace);
-		mmSetJingleVolume(0);
-		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
+		SoundOff();
+		FxOff();
 		
 		if((m_eventFlags & EVENTFLAG_MURDER_CYNTHIA) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_CYNTHIA))
 		{
 			m_gameMode = GAMEMODE_FREEZE;
 			m_freezeFrameCount = 0;
-			mmEffectCancel(m_footsteps);
 			mmPosition(1);			
 			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_CYNTHIA;
 		}
 		break;
 	case ROOM_GABRIEL:
-		mmEffectCancel(m_clock);
-		mmEffectCancel(m_fireplace);
-		mmSetJingleVolume(0);
-		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
+		SoundOff();
+		FxOff();
 		
 		if((m_eventFlags & EVENTFLAG_MURDER_GABRIEL) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_GABRIEL))
 		{
 			m_gameMode = GAMEMODE_FREEZE;
 			m_freezeFrameCount = 0;
-			mmEffectCancel(m_footsteps);
 			mmPosition(1);			
 			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_GABRIEL;
 		}
 		break;
 	case ROOM_OUTSIDE1:
 	case ROOM_OUTSIDE3:
-		mmEffectCancel(m_clock);
-		mmEffectCancel(m_fireplace);
+		SoundOff();
 		mmSetJingleVolume(1024);
-		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
+		FxOff();
 		break;
 	case ROOM_OUTSIDE2:
 	case ROOM_OUTSIDE4:
 	case ROOM_GARDEN:
 	case ROOM_GRAVEYARD:
 	case ROOM_COURTYARD:
-		mmEffectCancel(m_clock);
-		mmEffectCancel(m_fireplace);
+		SoundOff();
+		FxOff();
 		mmSetJingleVolume(1024);
 		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, true);
 		break;
 	case ROOM_CLOCK:
+		SoundOff();
+		FxOff();
 		m_clock = mmEffectEx(&g_sfx_clock);
-		
-		mmEffectCancel(m_fireplace);
-		mmSetJingleVolume(0);
-		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
 		
 		if((m_eventFlags & EVENTFLAG_MURDER_DOCTOR) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_DOCTOR))
 		{
 			m_gameMode = GAMEMODE_FREEZE;
 			m_freezeFrameCount = 0;
-			mmEffectCancel(m_footsteps);
 			mmPosition(1);			
 			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_DOCTOR;
 		}
 		break;
 	case ROOM_DRAWING:
-		m_fireplace = mmEffectEx(&g_sfx_fireplace);
+		SoundOff();
+		FxOff();
 		
-		mmEffectCancel(m_clock);
-		mmSetJingleVolume(0);
-		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
+		m_fireplace = mmEffectEx(&g_sfx_fireplace);
+		break;
+	case ROOM_LAUNDRY:
+	case ROOM_SEWERS:
+		SoundOff();
+		FxOff();
+		
+		m_waterdrip = mmEffectEx(&g_sfx_waterdrip);
+	
+		m_fxManager.SetFx(FXTYPE_RAT, FXMODE_NORMAL, true);
+		m_fxManager.SetFx(FXTYPE_LEAK, FXMODE_NORMAL, true);
+		
+		if(m_currentRoom->GetRoomType() == ROOM_LAUNDRY)
+		{
+			((CFxRat*)m_fxManager.GetFx(FXTYPE_RAT))->SetPoints(m_ratPoints[0], m_ratPoints[1], m_ratPoints[2], m_ratPoints[3]);
+			((CFxLeak*)m_fxManager.GetFx(FXTYPE_LEAK))->SetLocation(80, 56, 80, 128);
+		}
+		else
+		{
+			((CFxRat*)m_fxManager.GetFx(FXTYPE_RAT))->SetPoints(m_ratPoints[0], m_ratPoints[1], m_ratPoints[2], m_ratPoints[3]);
+			((CFxLeak*)m_fxManager.GetFx(FXTYPE_LEAK))->SetLocation(152, 104, 152, 136);
+		}
 		break;
 	default:
-		mmEffectCancel(m_clock);
-		mmEffectCancel(m_fireplace);
-		mmSetJingleVolume(0);
-		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
+		SoundOff();
+		FxOff();
 		break;
 	}
 	
@@ -2669,7 +2687,7 @@ void CGame::UpdateFx()
 			
 			lastUpdate++;
 			
-			((CFxParticles*)m_fxManager.GetFx(FXTYPE_PARTICLES))->SetXOffset(m_currentRoom->Width() - m_currentRoom->X());
+			((CFxParticles*)m_fxManager.GetFx(FXTYPE_PARTICLES))->SetXOffset(m_currentRoom->X());
 			
 			if(lastUpdate == 8)
 			{
@@ -2688,6 +2706,10 @@ void CGame::UpdateFx()
 				}
 			}
 		}
+		break;
+	case ROOM_LAUNDRY:
+		((CFxRat*)m_fxManager.GetFx(FXTYPE_RAT))->SetXOffset(m_currentRoom->X());
+		((CFxLeak*)m_fxManager.GetFx(FXTYPE_LEAK))->SetXOffset(m_currentRoom->X());
 		break;
 	default:
 		break;
@@ -2834,13 +2856,13 @@ bool CGame::CheckCharacterCollision(DirectionType directionType, CharacterType* 
 
 mm_word CGame::MusicEventHandler(mm_word msg, mm_word param)
 {
-	//static char buf[256];
+	static char buf[256];
 	
 	switch( msg )
 	{
 	case MMCB_SONGMESSAGE:
-		//sprintf(buf, "MMCB_SONGMESSAGE: msg: %d, param: %d", msg, param);
-		//fprintf(stderr, buf);
+		sprintf(buf, "MMCB_SONGMESSAGE: msg: %d, param: %d", msg, param);
+		fprintf(stderr, buf);
 		
 		switch(param)
 		{
@@ -2853,8 +2875,8 @@ mm_word CGame::MusicEventHandler(mm_word msg, mm_word param)
         break;
 	case MMCB_SONGFINISHED:
 		mmJingle(MOD_WEATHER);
-		//sprintf(buf, "MMCB_SONGFINISHED: msg: %d, param: %d", msg, param);
-		//fprintf(stderr, buf);
+		sprintf(buf, "MMCB_SONGFINISHED: msg: %d, param: %d", msg, param);
+		fprintf(stderr, buf);
 		break;
     }
 	
@@ -3060,6 +3082,7 @@ void CGame::InitGame(GameType gameType)
 	m_footsteps = 0;
 	m_clock = 0;
 	m_fireplace = 0;
+	m_waterdrip = 0;
 	m_frameCount = 0;
 	m_dieFrameCount = 0;
 	m_reverseTimeFrameCount = 0;
@@ -3068,6 +3091,9 @@ void CGame::InitGame(GameType gameType)
 	
 	m_questionCharacter = NULL;
 	m_speakCharacter = NULL;
+	
+	SoundOff();
+	FxOff();
 	
 	m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
 	
@@ -3199,10 +3225,10 @@ void CGame::InitGame(GameType gameType)
 		m_roomArray[ROOM_LIBRARY]->AddItems(0, m_itemArray[ITEM_BOOKS1], NULL, NULL, NULL, NULL);
 		m_roomArray[ROOM_LIBRARY]->AddItems(1, m_itemArray[ITEM_BOOKS2], NULL, NULL, NULL, NULL);
 		
-		m_roomArray[ROOM_UTILITY]->AddItems(0, m_itemArray[ITEM_A_DIRTY_SHIRT], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_UTILITY]->AddItems(1, NULL, NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_UTILITY]->AddItems(2, m_itemArray[ITEM_WASHING_POWDER], NULL, NULL, NULL, NULL);
-		m_roomArray[ROOM_UTILITY]->AddItems(3, m_itemArray[ITEM_A_VACUUM_CLEANER], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_LAUNDRY]->AddItems(0, m_itemArray[ITEM_A_DIRTY_SHIRT], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_LAUNDRY]->AddItems(1, NULL, NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_LAUNDRY]->AddItems(2, m_itemArray[ITEM_WASHING_POWDER], NULL, NULL, NULL, NULL);
+		m_roomArray[ROOM_LAUNDRY]->AddItems(3, m_itemArray[ITEM_A_VACUUM_CLEANER], NULL, NULL, NULL, NULL);
 		
 		m_roomArray[ROOM_GARDEN]->AddItems(0, NULL, NULL, NULL, NULL, NULL);
 		
@@ -3293,9 +3319,6 @@ void CGame::InitGame(GameType gameType)
 
 void CGame::UpdateGame(touchPosition touch, int keys_held, int keys_pressed, int keys_released)
 {
-	UpdateEventFlags();
-	UpdateEvents();
-	
 	UpdateDisplayMode(touch, keys_held, keys_pressed, keys_released);
 	
 	m_currentRoom->Update(m_timer->pCurrentTime());
@@ -3312,6 +3335,9 @@ void CGame::UpdateGame(touchPosition touch, int keys_held, int keys_pressed, int
 	m_cursor->Show();
 	
 	BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
+	
+	UpdateEventFlags();
+	UpdateEvents();
 }
 
 void CGame::UpdateEvents()
@@ -3387,6 +3413,9 @@ void CGame::InitGameOver(GameOverMode gameOverMode)
 	m_gameOverMode = gameOverMode;
 	
 	m_frameCount = 500;
+	
+	SoundOff();
+	FxOff();
 	
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE GAME IS OVER.");
 }
@@ -3488,6 +3517,9 @@ void CGame::InitEnding(EndingMode endingMode)
 	m_endingMode = endingMode;
 	m_frameCount = 300;
 	
+	SoundOff();
+	FxOff();
+	
 	m_pointer->Hide();
 	m_menu->Hide();
 	m_console->HideMenu();
@@ -3503,8 +3535,10 @@ void CGame::InitEnding(EndingMode endingMode)
 	
 	m_console->Clear();
 	
-	m_currentRoom = m_roomArray[ROOM_CELLAR];
+	m_currentRoom = m_roomArray[ROOM_SEWERS];
 	m_currentRoom->Initialize(0);
+	
+	mmPosition(2);
 }
 
 void CGame::UpdateEnding(touchPosition touch, int keys_held, int keys_pressed, int keys_released)
@@ -3543,8 +3577,8 @@ void CGame::UpdateEnding(touchPosition touch, int keys_held, int keys_pressed, i
 			
 			UpdateGame(touch, keys_held, keys_pressed, keys_released);
 			
-			p.X = 280;
-			p.Y = 152;
+			p.X = 288;
+			p.Y = 144;
 								
 			if(m_characterArray[CHARTYPE_DINGLE]->MoveTo(&p))
 			{
@@ -3583,18 +3617,23 @@ void CGame::UpdateEnding(touchPosition touch, int keys_held, int keys_pressed, i
 				
 				m_characterArray[CHARTYPE_DINGLE]->Reset();
 				m_characterArray[CHARTYPE_DINGLE]->SetHFlip(true);
-				m_characterArray[CHARTYPE_DINGLE]->SetRoom(m_roomArray[ROOM_CELLAR]);
+				m_characterArray[CHARTYPE_DINGLE]->SetRoom(m_roomArray[ROOM_SEWERS]);
 				m_characterArray[CHARTYPE_DINGLE]->SetPosition(96, m_characterArray[CHARTYPE_DINGLE]->CentreY());
 				m_characterArray[CHARTYPE_DINGLE]->SetCharacterMode(CHARMODE_TALKING);
 				
 				m_snide->Reset();
-				m_snide->SetRoom(m_roomArray[ROOM_CELLAR]);
+				m_snide->SetRoom(m_roomArray[ROOM_SEWERS]);
 				m_snide->SetPosition(136, m_snide->CentreY());
 				m_snide->SetCharacterMode(CHARMODE_QUESTION);
 				
 				((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("DINGLE SPEAKS \"VERY CLEVER, SNIDE.. I PAID THE DOCTOR TO CERTIFY ME DEAD, AND THEN TOOK CARE OF HIM... NOW I JUST HAVE TO TAKE CARE OF YOU!\"");
 				
 				m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
+				
+				m_console->Clear();
+				m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+				
+				InitRoom();
 			}
 			break;
 		case ENDINGMODE_PULLTRIGGER:
@@ -3632,11 +3671,21 @@ void CGame::UpdateEnding(touchPosition touch, int keys_held, int keys_pressed, i
 			m_endingMode = ENDINGMODE_GAMEOVER_LOSE;
 			m_frameCount = 500;
 			
+			mmEffectCancel(m_footsteps);
+			m_footsteps = 0;
+			
+			m_snide->SetCharacterMode(CHARMODE_NONE);
+			
 			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("DINGLE HAS ESCAPED.. NEVER TO BE SEEN AGAIN..");
 			break;
 		case ENDINGMODE_ARREST:
 			m_endingMode = ENDINGMODE_GAMEOVER_WIN;
 			m_frameCount = 1000;
+			
+			mmEffectCancel(m_footsteps);
+			m_footsteps = 0;
+			
+			m_snide->SetCharacterMode(CHARMODE_NONE);
 			
 			m_characterArray[CHARTYPE_DINGLE]->SetCharacterMode(CHARMODE_SURRENDER);
 			
@@ -3774,4 +3823,26 @@ void CGame::UpdateTitleScreen()
 	m_console->Update();
 	m_cursor->Update();
 	m_cursor->Show();
+}
+
+void CGame::SoundOff()
+{
+	mmEffectCancel(m_footsteps);
+	mmEffectCancel(m_clock);
+	mmEffectCancel(m_fireplace);
+	mmEffectCancel(m_waterdrip);
+	
+	m_footsteps = 0;
+	m_clock = 0;
+	m_fireplace = 0;
+	m_waterdrip = 0;
+	
+	mmSetJingleVolume(0);
+}
+
+void CGame::FxOff()
+{
+	m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, false);
+	m_fxManager.SetFx(FXTYPE_RAT, FXMODE_NORMAL, false);
+	m_fxManager.SetFx(FXTYPE_LEAK, FXMODE_NORMAL, false);
 }

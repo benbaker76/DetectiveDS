@@ -38,6 +38,14 @@ struct Point
 	int Y;
 };
 
+struct FPoint
+{
+	FPoint() : X(0), Y(0) {}
+	FPoint(int x, int y) : X(x), Y(y) {}
+	float X;
+	float Y;
+};
+
 struct Size
 {
 	Size() : Width(0), Height(0) {}
@@ -59,6 +67,8 @@ enum DirectionType
 bool IsRectEmpty(Rect* pRect);
 bool IntersectRect(Rect* pRectA, Rect* pRectB);
 void PrintRect(Rect* pRect);
+DirectionType GetDirection(Point* startPoint, Point* endPoint);
+void PrintDirection(DirectionType directionType);
 
 extern const u32 g_snideHeadFrames[];
 extern const u32 g_snideBodyFrames[];
@@ -119,7 +129,8 @@ extern Map* g_reverendMap;
 extern Map* g_snideMap;
 extern Map* g_stairsMap;
 extern Map* g_studyMap;
-extern Map* g_utilityMap;
+extern Map* g_laundryMap;
+extern Map* g_sewersMap;
 
 extern Map* g_angus_landing_frontMap;
 extern Map* g_angus_room_frontMap;
@@ -152,7 +163,9 @@ extern mm_sound_effect g_sfx_fireplace;
 extern mm_sound_effect g_sfx_vacuum;
 extern mm_sound_effect g_sfx_bomb;
 extern mm_sound_effect g_sfx_gunshot;
+extern mm_sound_effect g_sfx_waterdrip;
 
 extern u16 g_lightningBgPal[];
 extern u16 g_lightningSpritePal[];
 extern u16 g_c64Pal[];
+

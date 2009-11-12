@@ -56,7 +56,8 @@
 #include "map_snide.h"
 #include "map_stairs.h"
 #include "map_study.h"
-#include "map_utility.h"
+#include "map_laundry.h"
+#include "map_sewers.h"
 
 #include "map_angus_landing_front.h"
 #include "map_angus_room_front.h"

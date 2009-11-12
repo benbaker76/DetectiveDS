@@ -41,7 +41,7 @@ void CFxParticles::Initialize()
 void CFxParticles::Shutdown()
 {
 	for(int i=0; i<MAX_PARTICLES; i++)
-		oamSet(&oamSub, PARTICLE_START + i, 0, 0, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, 0, false, true, false, false, false);
+		oamSet(&oamSub, PARTICLE_START + i, 0, 0, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, -1, false, true, false, false, false);
 }
 
 void CFxParticles::Reset()
@@ -56,7 +56,7 @@ void CFxParticles::Reset()
 			m_particleArray[i].Speed = (rand() % 4) + 2;
 			m_particleArray[i].Lifetime = 0;
 			
-			oamSet(&oamSub, PARTICLE_START + i, 0, 0, 1, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, 0, false, true, false, false, false);
+			oamSet(&oamSub, PARTICLE_START + i, 0, 0, 1, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, -1, false, true, false, false, false);
 		}
 		break;
 	case FXMODE_SKULL:
@@ -68,7 +68,7 @@ void CFxParticles::Reset()
 			m_particleArray[i].Radius = (int) (m_particleArray[i].StartY / 2);
 			m_particleArray[i].Lifetime = 0;
 			
-			oamSet(&oamSub, PARTICLE_START + i, 0, 0, 1, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, 0, false, true, false, false, false);
+			oamSet(&oamSub, PARTICLE_START + i, 0, 0, 1, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, -1, false, true, false, false, false);
 		}
 		break;
 	default:
@@ -138,7 +138,7 @@ void CFxParticles::UpdateVBlank()
 			if(m_particleArray[i].Y > 192)
 				m_particleArray[i].Y = 0;
 			
-			oamSet(&oamSub, PARTICLE_START + i, (m_xOffset + m_particleArray[i].X) & 0xFF, m_particleArray[i].Y, 1, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, 0, false, false, false, false, false);
+			oamSet(&oamSub, PARTICLE_START + i, (m_particleArray[i].X - m_xOffset) & 0xFF, m_particleArray[i].Y, 1, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, -1, false, false, false, false, false);
 		}
 		break;
 	case FXMODE_SKULL:
@@ -181,7 +181,7 @@ void CFxParticles::UpdateVBlank()
 			
 			dmaCopy((CFx::GetFxMode() == FXMODE_SKULL ? sprite_fx_skullTiles : sprite_fx_hourglassTiles) + (m_particleArray[i].Lifetime * 64), m_particleArray[i].Gfx, 16 * 16);
 			
-			oamSet(&oamSub, PARTICLE_START + i, m_particleArray[i].X, m_particleArray[i].Y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, 0, false, false, false, false, false);
+			oamSet(&oamSub, PARTICLE_START + i, m_particleArray[i].X, m_particleArray[i].Y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, -1, false, false, false, false, false);
 		}
 		break;
 	default:

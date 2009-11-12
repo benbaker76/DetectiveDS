@@ -316,11 +316,11 @@ bool CCharacter::MoveTo(Point* pDest)
 					SetHFlip(true);
 				}
 			
-				float direction = atan2(yDist, xDist);
+				float angle = atan2(yDist, xDist);
 				
 				// Move directly towards door
-				m_x += cos(direction) * 0.6f;
-				//m_y += sin(direction) * 0.3f;
+				m_x += cos(angle) * 0.6f;
+				//m_y += sin(angle) * 0.3f;
 			}
 		}
 		

@@ -7,6 +7,8 @@
 #include "soundbank_bin.h"
 #include "soundbank.h"
 
+#define MAX_POINTS 4
+
 #define MAKEITEMARRAY(a,b,c,d,e)	{ itemArray[0] = a; itemArray[1] = b; itemArray[2] = c; itemArray[3] = d; itemArray[4] = e; }
 
 enum GameMode
@@ -182,9 +184,12 @@ private:
 	
 	int m_eventFlags;
 	
+	Point* m_ratPoints[MAX_POINTS];
+	
 	mm_sfxhand m_footsteps;
 	mm_sfxhand m_clock;
 	mm_sfxhand m_fireplace;
+	mm_sfxhand m_waterdrip;
 	
 	IconType m_lastIconType;
 	
@@ -231,6 +236,8 @@ private:
 	void UpdateEnding(touchPosition touch, int keys_held, int keys_pressed, int keys_released);
 	void InitTitleScreen();
 	void UpdateTitleScreen();
+	void SoundOff();
+	void FxOff();
 };
 
 #endif

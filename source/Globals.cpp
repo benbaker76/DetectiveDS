@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <math.h>
 #include "TDG.h"
 
 bool IsRectEmpty(Rect* pRect)
@@ -25,6 +26,44 @@ void PrintRect(Rect* pRect)
 	static char buf[256];
 	sprintf(buf, "X:%d, Y:%d, Width:%d, Height:%d", pRect->X, pRect->Y, pRect->Width, pRect->Height);
 	fprintf(stderr, buf);
+}
+
+DirectionType GetDirection(Point* startPoint, Point* endPoint)
+{
+	int xDist = endPoint->X - startPoint->X;
+	int yDist = endPoint->Y - startPoint->Y;
+	float radians = atan2(yDist, xDist);
+	float degrees = radians * (180 / PI) + 180;
+	
+	if(degrees > 315)
+		return DIRECTION_LEFT;
+	else if(degrees > 225)
+		return DIRECTION_DOWN;
+	else if(degrees > 135)
+		return DIRECTION_RIGHT;
+	else if(degrees > 45)
+		return DIRECTION_UP;
+	else
+		return DIRECTION_LEFT;
+}
+
+void PrintDirection(DirectionType directionType)
+{
+	switch(directionType)
+	{
+	case DIRECTION_UP:
+		fprintf(stderr, "DIRECTION_UP");
+		break;
+	case DIRECTION_DOWN:
+		fprintf(stderr, "DIRECTION_DOWN");
+		break;
+	case DIRECTION_LEFT:
+		fprintf(stderr, "DIRECTION_LEFT");
+		break;
+	case DIRECTION_RIGHT:
+		fprintf(stderr, "DIRECTION_RIGHT");
+		break;
+	}
 }
 
 const u32 g_snideHeadFrames[] = { FRAME_WAITING | FRAME_SPEAK, FRAME_SPEAK, FRAME_SPEAK, FRAME_SPEAK | FRAME_DOWN, FRAME_RIGHT, FRAME_UP, FRAME_LEFT, FRAME_DEAD, FRAME_BOMB, FRAME_GREEN_SPEAK, FRAME_GREEN_SPEAK, FRAME_GREEN_SPEAK, FRAME_GREEN_SPEAK | FRAME_GREEN_DOWN, FRAME_GREEN_RIGHT, FRAME_GREEN_UP, FRAME_GREEN_LEFT };
@@ -88,7 +127,8 @@ Map* g_gabrielMap = new Map(344, 256, map_gabrielTiles, map_gabrielTilesLen, map
 
 Map* g_stairsMap = new Map(416, 256, map_stairsTiles, map_stairsTilesLen, map_stairsMap, map_stairsMapLen, map_stairsPal, map_stairsPalLen);
 Map* g_studyMap = new Map(320, 256, map_studyTiles, map_studyTilesLen, map_studyMap, map_studyMapLen, map_studyPal, map_studyPalLen);
-Map* g_utilityMap = new Map(296, 256, map_utilityTiles, map_utilityTilesLen, map_utilityMap, map_utilityMapLen, map_utilityPal, map_utilityPalLen);
+Map* g_laundryMap = new Map(296, 256, map_laundryTiles, map_laundryTilesLen, map_laundryMap, map_laundryMapLen, map_laundryPal, map_laundryPalLen);
+Map* g_sewersMap = new Map(400, 192, map_sewersTiles, map_sewersTilesLen, map_sewersMap, map_sewersMapLen, map_sewersPal, map_sewersPalLen);
 
 Map* g_angus_landing_frontMap = new Map(320, 192, map_angus_landing_frontTiles, map_angus_landing_frontTilesLen, map_angus_landing_frontMap, map_angus_landing_frontMapLen);
 Map* g_angus_room_frontMap = new Map(320, 192, map_angus_room_frontTiles, map_angus_room_frontTilesLen, map_angus_room_frontMap, map_angus_room_frontMapLen);
@@ -121,6 +161,7 @@ mm_sound_effect g_sfx_fireplace = { { SFX_FIREPLACE } , (int)(1.0f * (1<<10)), 0
 mm_sound_effect g_sfx_vacuum = { { SFX_VACUUM } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_bomb = { { SFX_BOMB } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_gunshot = { { SFX_GUNSHOT } , (int)(1.0f * (1<<10)), 0, 255, 127 };
+mm_sound_effect g_sfx_waterdrip = { { SFX_WATERDRIP } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 
 u16 g_lightningBgPal[] =
 {
@@ -199,4 +240,3 @@ u16 g_c64Pal[] =
 	0x0000,0x3c85,0x5d6d,0x5ead,0x4373,0x1e4a,0x3737,0x00c7,
 	0x0d2e,0x10cd,0x2993,0x7fff,0x4e73,0x35ad,0x2108,0x0000
 };
-

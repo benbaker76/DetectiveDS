@@ -6,7 +6,7 @@
 #include "CGoalManager.h"
 
 #define MAX_CHARACTERS			11
-#define MAX_ROOMS				38
+#define MAX_ROOMS				39
 
 #define CHARACTER_WIDTH			24
 #define CHARACTER_HEIGHT		53

@@ -145,7 +145,7 @@ void CSprite::Draw()
 		else
 		{
 			dmaCopy(m_pTiles + (m_frameNum * 256), m_gfxMain, 32 * 32);
-			oamSet(&oamMain, m_oamIndex,m_x - (m_hFlip ? 8 : 0), m_y, m_priority, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxMain, -1, false, false, m_hFlip, false, false);	
+			oamSet(&oamMain, m_oamIndex, m_x - (m_hFlip ? 8 : 0), m_y, m_priority, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxMain, -1, false, false, m_hFlip, false, false);	
 		}
 	}
 

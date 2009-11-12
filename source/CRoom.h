@@ -8,7 +8,7 @@
 #include "CAnimation.h"
 #include "CItemCache.h"
 
-#define MAX_ROOMS			38
+#define MAX_ROOMS			39
 #define MAX_DOORS			9
 #define MAX_ROOM_SRC_RECT	48
 #define MAX_ROOM_DST_RECT	19
@@ -44,7 +44,7 @@ enum RoomType
 	ROOM_CELLAR,
 	ROOM_DRAWING,
 	ROOM_LIBRARY,
-	ROOM_UTILITY,
+	ROOM_LAUNDRY,
 	ROOM_GARDEN,
 	ROOM_GRAVEYARD,
 	ROOM_COURTYARD,
@@ -52,7 +52,8 @@ enum RoomType
 	ROOM_ANGUS_ROOM,
 	ROOM_ANGUS_SECRET,
 	ROOM_ANGUS_STAIRS,
-	ROOM_DINING
+	ROOM_DINING,
+	ROOM_SEWERS
 };
 
 enum SrcRect

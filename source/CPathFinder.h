@@ -4,7 +4,7 @@
 #include "CRoom.h"
 
 #define MAX_STEPS				54
-#define MAX_ROOMS				38
+#define MAX_ROOMS				39
 
 class CRoomNode
 {
