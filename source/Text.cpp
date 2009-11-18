@@ -5,7 +5,7 @@
 #include "TDG.h"
 #include "lz77.h"
 
-const char* g_characterText[] =
+const char* g_characterText[MAX_CHARACTERS] =
 {
 	"INSPECTOR SNIDE:\n\nSCOTLAND YARD DETECTIVE PLAYED BY YOURSELF.",
 	"REVERAND WRINKLEBUM:\n\nLOCAL VICAR WHOSE WIFE DISSAPEARED IN MYSTERIOUS CIRCUMSTANCES",
@@ -16,10 +16,11 @@ const char* g_characterText[] =
 	"PROFESSOR BULL:\n\nOLD FRIEND OF THE LATE MR. MCFUNGUS. SCATTERBRAINED AND COMPLETELY MAD.",
 	"DOCTOR MORTEM:\n\nSHORTSIGHTED FAMILY DOCTOR.",
 	"MAJOR SLUDGEBUCKET:\n\nRETIRED MAJOR. DISTURBED BUT HARMLESS.",
-	"MR DINGLE:\n\nFAMILY SOLICITOR. HERE TO READ THE WILL."
+	"MR DINGLE:\n\nFAMILY SOLICITOR. HERE TO READ THE WILL.",
+	"ANGUS MCFUNGUS:\n\nTHE GENEROUS AND DEEPLY RELIGIOUS ARISTOCRAT WHO HAS BEEN MURDERED."
 };
 
-const char* g_characterName[] =
+const char* g_characterName[MAX_CHARACTERS] =
 {
 	"SNIDE",
 	"THE REVEREND",
@@ -34,7 +35,7 @@ const char* g_characterName[] =
 	"MR MCFUNGUS"
 };
 
-const char* g_itemName[] =
+const char* g_itemName[MAX_ITEMS] =
 {
 	"NOTHING HERE",
 	"A HOT WATER BOTTLE",
@@ -97,10 +98,11 @@ const char* g_itemName[] =
 	"A VACUUM CLEANER",
 	"WASHING POWDER",
 	"A DIRTY SHIRT",
-	"ANGUS MCFUNGUS"
+	"ANGUS MCFUNGUS",
+	"A HIDDEN KEY"
 };
 
-const char* g_itemExamine[] =
+const char* g_itemExamine[MAX_ITEMS] =
 {
 	"YOU FIND NOTHING OF INTEREST.",
 	"HIGHEST QUALITY, WITH A FURRY COVER", // A HOT WATER BOTTLE
@@ -164,9 +166,10 @@ const char* g_itemExamine[] =
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
 	NULL, // ANGUS MCFUNGUS
+	NULL, // A HIDDEN KEY
 };
 
-const char* g_itemRead[] =
+const char* g_itemRead[MAX_ITEMS] =
 {
 	NULL,
 	NULL, // A HOT WATER BOTTLE
@@ -230,6 +233,7 @@ const char* g_itemRead[] =
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
 	NULL, // ANGUS MCFUNGUS
+	NULL, // A HIDDEN KEYa
 };
 
 const char* g_colName[] =
@@ -300,7 +304,7 @@ const char* g_colName[] =
 	"A GLASS CABINET"
 };
 
-const char* g_askAboutCharacter[] =
+const char* g_askAboutCharacter[MAX_CHARACTERS * MAX_CHARACTERS] =
 {
 	// Snide
 	NULL, 										// Snide
@@ -446,7 +450,7 @@ const char* g_askAboutCharacter[] =
 	NULL										// Angus
 };
 
-const char* g_askAboutItem[] =
+const char* g_askAboutItem[MAX_ITEMS * MAX_CHARACTERS] =
 {
 	// Snide
 	
@@ -512,6 +516,7 @@ const char* g_askAboutItem[] =
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
 	NULL, // ANGUS MCFUNGUS
+	NULL, // A HIDDEN KEY
 
 	// The Reverend
 	
@@ -577,6 +582,7 @@ const char* g_askAboutItem[] =
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
 	NULL, // ANGUS MCFUNGUS
+	NULL, // A HIDDEN KEY
 
 	// Bentley
 
@@ -642,6 +648,7 @@ const char* g_askAboutItem[] =
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
 	NULL, // ANGUS MCFUNGUS
+	NULL, // A HIDDEN KEY
 
 	// Cook
 	
@@ -707,6 +714,7 @@ const char* g_askAboutItem[] =
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
 	NULL, // ANGUS MCFUNGUS
+	NULL, // A HIDDEN KEY
 
 	// Gabriel
 	
@@ -772,6 +780,7 @@ const char* g_askAboutItem[] =
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
 	NULL, // ANGUS MCFUNGUS
+	NULL, // A HIDDEN KEY
 
 	// Cynthia
 	
@@ -837,6 +846,7 @@ const char* g_askAboutItem[] =
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
 	NULL, // ANGUS MCFUNGUS
+	NULL, // A HIDDEN KEY
 
 	// The Professor
 	
@@ -902,6 +912,7 @@ const char* g_askAboutItem[] =
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
 	NULL, // ANGUS MCFUNGUS
+	NULL, // A HIDDEN KEY
 
 	// The Doctor
 	
@@ -967,6 +978,7 @@ const char* g_askAboutItem[] =
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
 	NULL, // ANGUS MCFUNGUS
+	NULL, // A HIDDEN KEY
 
 	// The Major
 	
@@ -1032,6 +1044,7 @@ const char* g_askAboutItem[] =
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
 	NULL, // ANGUS MCFUNGUS
+	NULL, // A HIDDEN KEY
 
 	// Dingle
 	
@@ -1097,6 +1110,7 @@ const char* g_askAboutItem[] =
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
 	NULL, // ANGUS MCFUNGUS
+	NULL, // A HIDDEN KEY
 
 	// Angus
 	
@@ -1162,6 +1176,7 @@ const char* g_askAboutItem[] =
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
 	NULL, // ANGUS MCFUNGUS
+	NULL, // A HIDDEN KEY
 };
 
 const char* g_askAboutProfessorRandom[] =
@@ -1204,7 +1219,7 @@ const char* g_iconName[] =
 	"BAG"
 };
 
-const char* g_roomName[] =
+const char* g_roomName[MAX_ROOMS] =
 {
 	"SNIDE",
 	"REVEREND",
@@ -1247,7 +1262,7 @@ const char* g_roomName[] =
 	"SEWERS"
 };
 
-const char* g_enterRoomText[] =
+const char* g_enterRoomText[MAX_ROOMS] =
 {
 	"YOU ARE IN YOUR ROOM.",
 	"YOU ARE IN THE REVEREND'S ROOM.",

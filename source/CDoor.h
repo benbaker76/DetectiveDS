@@ -48,6 +48,7 @@ public:
 	bool Initialize();
 	void SetDoorState(DoorState doorState);
 	void Draw();
+	void Draw(CRoom* pCurrentRoom);
 	
 	Point* pPoint() const { return m_point; }
 	Rect* pRect() const { return m_rect; }

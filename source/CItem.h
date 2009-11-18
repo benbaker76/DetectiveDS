@@ -3,7 +3,7 @@
 
 #include "CItemCache.h"
 
-#define MAX_ITEMS			62
+#define MAX_ITEMS			63
 
 enum ItemType
 {
@@ -68,7 +68,8 @@ enum ItemType
 	ITEM_A_VACUUM_CLEANER,
 	ITEM_WASHING_POWDER,
 	ITEM_A_DIRTY_SHIRT,
-	ITEM_ANGUS_MCFUNGUS
+	ITEM_ANGUS_MCFUNGUS,
+	ITEM_A_HIDDEN_KEY
 };
 
 enum ItemAttributes

@@ -15,6 +15,8 @@ CSprite::CSprite(SpriteType spriteType, const u32* pBmp, const u32* frameArray, 
 	m_frameTotal = frameTotal;
 	m_bitmapSprite = true;
 	
+	m_oamIndex = m_spriteType;
+	
 	Reset();
 	
 	m_gfxMain = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_Bmp);
@@ -32,6 +34,8 @@ CSprite::CSprite(SpriteType spriteType, const u32* pTiles, int tilesLen, const u
 	m_frameArray = frameArray;
 	m_frameTotal = frameTotal;
 	m_bitmapSprite = false;
+	
+	m_oamIndex = m_spriteType;
 	
 	Reset();
 	
@@ -168,7 +172,6 @@ void CSprite::Reset()
 	m_x = 0;
 	m_y = 0;
 	
-	m_oamIndex = m_spriteType;
 	m_priority = 1;
 	
 	m_alpha = 0xF;

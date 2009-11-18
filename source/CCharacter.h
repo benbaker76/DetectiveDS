@@ -67,7 +67,7 @@ public:
 	void SetPriority(int priority);
 	void Reset();
 	void ResetAnimation();
-	void Update(CRoom* pCurrentRoom);
+	uint64 Update(CRoom* pCurrentRoom, uint64 eventFlags);
 	bool MoveTo(Point* pDest);
 	bool IsVisible(CRoom* pRoom);
 	void Show();
@@ -131,6 +131,8 @@ public:
 	
 	void SetGoalMode(bool value) { m_goalMode = value; }
 	bool GetGoalMode() const { return m_goalMode; }
+	
+	void SetKeyItemType(ItemType keyItemType) { m_keyItemType = keyItemType; }
 
 private:
 	CharacterType m_characterType;
@@ -141,6 +143,7 @@ private:
 	CSprite* m_pBodySprite;
 	
 	CRoom* m_pRoom;
+	CDoor* m_pLastDoor;
 	
 	CSprite* m_spriteCol1;
 	CSprite* m_spriteCol2;
@@ -169,6 +172,8 @@ private:
 	CGoalManager* m_goalManager;
 	
 	const char* m_string;
+	
+	ItemType m_keyItemType;
 	
 	void SetFrameType(FrameType frameType);
 };

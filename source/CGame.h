@@ -105,6 +105,14 @@ enum MurderType
 	MURDERTYPE_GABRIEL
 };
 
+enum SongType
+{
+	SONGTYPE_TITLESCREEN,
+	SONGTYPE_MURDER,
+	SONGTYPE_TENSION,
+	SONGTYPE_INGAME
+};
+
 class CGame
 {
 public:
@@ -140,9 +148,6 @@ private:
 	
 	CCharacter* m_question;
 	
-	bool m_charactersInRoom[MAX_CHARACTERS];
-	bool m_someoneInRoom;
-	
 	QuestionMode m_questionMode;
 	QuestionType m_questionType;
 	
@@ -159,8 +164,6 @@ private:
 	CItem* m_inItem;
 	CCharacter* m_questionCharacter;
 	CCharacter* m_speakCharacter;
-	
-	char m_buffer[2048];
 	
 	bool m_gargoyleActive[3];
 
@@ -182,7 +185,7 @@ private:
 	
 	int m_characterIndex;
 	
-	int m_eventFlags;
+	uint64 m_eventFlags;
 	
 	Point* m_ratPoints[MAX_POINTS];
 	
@@ -195,12 +198,15 @@ private:
 	
 	DisplayMode m_displayMode;
 	
+	SongType m_songType;
+	
 	int m_bg2MainVScroll;
 	
 	void InitData(int param);
 	void InitDoors();
 	void ResetRooms();
 	void SortSprites();
+	uint64 GetCharactersInRoom(CRoom* pRoom);
 	void UpdateCharacters();
 	void CharacterSpeak(CCharacter* pCharacter, const char* string);
 	void HideCharacters();
@@ -238,6 +244,8 @@ private:
 	void UpdateTitleScreen();
 	void SoundOff();
 	void FxOff();
+	void PlaySong(SongType songType);
+	void StopSong();
 };
 
 #endif

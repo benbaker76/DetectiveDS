@@ -99,4 +99,21 @@ void CDoor::Draw()
 	}
 }
 
+void CDoor::Draw(CRoom* pCurrentRoom)
+{
+	if(pCurrentRoom != NULL)
+	{
+		if(m_pRoomIn != NULL)
+		{
+			if(m_pRoomIn == pCurrentRoom)
+				m_pRoomIn->Draw();
+		}
+		
+		if(m_pRoomOut != NULL)
+		{
+			if(m_pRoomOut == pCurrentRoom)
+				m_pRoomOut->Draw();
+		}
+	}
+}
 

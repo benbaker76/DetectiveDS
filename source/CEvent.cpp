@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "CEvent.h"
 
-CEvent::CEvent(EventType eventType, CTime* pEventTime, int condition, int action)
+CEvent::CEvent(EventType eventType, CTime* pEventTime, uint64 condition, uint64 action)
 {
 	m_eventType = eventType;
 	m_pEventTime = pEventTime;

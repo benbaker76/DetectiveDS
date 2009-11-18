@@ -73,29 +73,26 @@ void CGoalManager::ResetGoals()
 
 void CGoalManager::NextGoal()
 {
+	if(m_goalArray[m_goalPosition] == NULL)
+		return;
+	
 	if(m_goalPosition < MAX_GOALS)
 		m_goalPosition++;
-		
+}
+
+void CGoalManager::GotoGoal()
+{
 	CGoal* pGoal = m_goalArray[m_goalPosition];
 	
-	if(pGoal != NULL)
+	for(int i=0; i<MAX_GOALS; i++)
 	{
-		if(pGoal->GetGoalType() == GOAL_GOTOGOAL)
+		if(m_goalArray[i]->Id() == pGoal->GotoId())
 		{
-			if(pGoal->Loop())
-			{
-				for(int i=0; i<MAX_GOALS; i++)
-				{
-					if(m_goalArray[i]->Id() == pGoal->GotoId())
-					{
-						m_goalPosition = i;
-						
-						ResetGoals();
-						
-						break;
-					}
-				}
-			}
+			m_goalPosition = i;
+			
+			ResetGoals();
+			
+			break;
 		}
 	}
 }

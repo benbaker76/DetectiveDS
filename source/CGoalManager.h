@@ -6,7 +6,7 @@
 #include "CGoal.h"
 #include "Text.h"
 
-#define MAX_GOALS		64
+#define MAX_GOALS		96
 
 class CGoalManager
 {
@@ -19,6 +19,7 @@ public:
 	bool InsertGoal(CGoal* pGoal);
 	bool RemoveGoal(CGoal* pGoal);
 	void ResetGoals();
+	void GotoGoal();
 	
 	void SetGoalPosition(int value) { m_goalPosition = value; }
 	

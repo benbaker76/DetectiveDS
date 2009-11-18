@@ -87,6 +87,7 @@ void CCharacter::Reset()
 	m_dead = false;
 	
 	m_pRoom = NULL;
+	m_pLastDoor = NULL;
 	
 	m_point->X = 0;
 	m_point->Y = 0;
@@ -110,7 +111,7 @@ void CCharacter::ResetAnimation()
 	m_pBodySprite->ResetAnimation();
 }
 
-void CCharacter::Update(CRoom* pCurrentRoom)
+uint64 CCharacter::Update(CRoom* pCurrentRoom, uint64 eventFlags)
 {
 	switch(m_characterMode)
 	{
@@ -187,8 +188,88 @@ void CCharacter::Update(CRoom* pCurrentRoom)
 						}
 					}
 					break;
-				case GOAL_GOTOROOM:
+				case GOAL_WAITEVENT:
+					if((pGoal->EventFlags() & eventFlags) == pGoal->EventFlags())
 					{
+						if(pGoal->Waiting())
+							SetFrameType(FRAME_NONE);
+						else
+							m_goalManager->NextGoal();
+						
+						break;
+					}
+					else
+					{
+						if(!pGoal->TimeOut())
+							SetFrameType(FRAME_NONE);
+						else
+							m_goalManager->NextGoal();
+						
+						break;
+					}
+					break;
+				case GOAL_SETEVENT:
+					eventFlags |= pGoal->EventFlags();
+					
+					if(pGoal->Waiting())
+						SetFrameType(FRAME_NONE);
+					else
+						m_goalManager->NextGoal();
+					break;
+				case GOAL_LOCKDOOR:
+					if(m_pLastDoor != NULL)
+					{
+						if(m_pLastDoor->GetDoorState() != DOORSTATE_LOCKED)
+						{
+							m_pLastDoor->SetDoorState(DOORSTATE_LOCKED);
+						
+							m_pLastDoor->Draw(pCurrentRoom);
+						}
+					}
+					
+					if(pGoal->Waiting())
+						SetFrameType(FRAME_NONE);
+					else
+						m_goalManager->NextGoal();
+					break;
+				case GOAL_GOTOGOAL:
+					{					
+						if(pGoal->Loop() && ((pGoal->EventFlags() & eventFlags) == pGoal->EventFlags()))
+						{
+							int loopValue = pGoal->GetLoopValue();
+							
+							m_goalManager->GotoGoal();
+							
+							pGoal->SetLoopValue(loopValue);
+						}
+						else
+							m_goalManager->NextGoal();
+					}
+					break;
+				case GOAL_GOTOROOM:
+				case GOAL_GOTOCHAR:
+					{
+						if(pGoal->GetGoalType() == GOAL_GOTOCHAR)
+						{
+							if(!pGoal->PathFound())
+								pGoal->CalculateCharacterPath(m_pRoom);
+				
+							if(pGoal->pCharacter()->GetRoom() == m_pRoom)
+							{
+								if(pGoal->Waiting())
+									SetFrameType(FRAME_NONE);
+								else
+									m_goalManager->NextGoal();
+								
+								break;
+							}
+						}
+						else
+						{
+							if(!pGoal->PathFound())
+								pGoal->CalculateRoomPath(m_pRoom);
+						}
+						
 						CRoom* pRoom = pGoal->pRoom();
 						
 						if(pRoom != NULL)
@@ -200,10 +281,35 @@ void CCharacter::Update(CRoom* pCurrentRoom)
 							
 							if(MoveTo(&point))
 							{
-								pDoor->SetDoorState(DOORSTATE_OPEN);
+								DoorState doorState = pDoor->GetDoorState();
 								
-								if(m_pRoom == pCurrentRoom || pRoom == pCurrentRoom)
-									pCurrentRoom->Draw();
+								if(pDoor->GetKeyItemType() != ITEM_NONE)
+								{
+									if(m_keyItemType == pDoor->GetKeyItemType())
+									{							
+										if(doorState == DOORSTATE_LOCKED || doorState == DOORSTATE_CLOSED)
+											pDoor->SetDoorState(DOORSTATE_OPEN);
+									}
+									else
+									{
+										if(doorState == DOORSTATE_LOCKED)
+										{
+											if(pGoal->GotoId() != 0)
+												m_goalManager->GotoGoal();
+												
+											SetFrameType(FRAME_NONE);
+												
+											break;
+										}
+										else
+											pDoor->SetDoorState(DOORSTATE_OPEN);
+									}
+								}
+								else
+									pDoor->SetDoorState(DOORSTATE_OPEN);
+								
+								pDoor->Draw(pCurrentRoom);
+								m_pLastDoor = pDoor;
 								
 								m_pRoom = pRoom;
 								
@@ -228,7 +334,7 @@ void CCharacter::Update(CRoom* pCurrentRoom)
 				case GOAL_GOTOPOINT:
 					{					
 						if(MoveTo(pGoal->pPoint()))
-						{
+						{						
 							if(pGoal->Waiting())
 								SetFrameType(FRAME_NONE);
 							else
@@ -250,6 +356,8 @@ void CCharacter::Update(CRoom* pCurrentRoom)
 
 	m_pHeadSprite->Update();
 	m_pBodySprite->Update();
+	
+	return eventFlags;
 }
 
 bool CCharacter::MoveTo(Point* pDest)
@@ -257,77 +365,68 @@ bool CCharacter::MoveTo(Point* pDest)
 	int xPos = pPoint()->X;
 	int yPos = pPoint()->Y;
 	int xEnd = pDest->X;
-	int yEnd = pDest->Y;
+	int yEnd = pDest->Y;	
 	int xDist = xEnd - xPos;
 	int yDist = yEnd - yPos;
-
-	if(abs(xDist) > 8 || abs(yDist) > 8)
-	{						
-		if(abs(xDist) < 32)	 		// Near the door
+	
+	float angle = atan2(yDist, xDist);
+	float degrees = angle * (180 / PI) + 180;
+	
+	if(abs(xDist) < 8 && abs(yDist) < 8)
+		return true;
+	
+	if(abs(xDist) > 32 && yPos != m_pRoom->CentreY())
+	{
+		if(yPos < m_pRoom->CentreY())
 		{
-			if(xDist < 0)			// Move directly towards it
-				m_x -= 0.6f;		// left
-			else
-				m_x += 0.6f;		// right
-				
-			if(yDist < 0)			// Move directly towards it
-			{
-				SetFrameType(FRAME_RIGHT);
-				SetHFlip(false);
-				
-				m_y -= 0.3f;		// up
-			}
-			else
-			{
-				//SetFrameType(FRAME_LEFT);
-				//SetHFlip(false);
-				
-				m_y += 0.3f;		// down
-			}
+			SetFrameType(FRAME_LEFT);
+			SetHFlip(false);
+			m_x -= 0.6f;
+			m_y += 0.3f;
 		}
 		else
-		{			
-			if(yPos > m_pRoom->CentreY() + 1)			// Below centre of room so move up diagonally
-			{
-				SetFrameType(FRAME_RIGHT);
-				SetHFlip(false);
-				
-				m_x += 0.6f;
-				m_y -= 0.3f;
-			}
-			else if(yPos < m_pRoom->CentreY() - 1) 	// Above centre of room so move down diagonally
-			{
-				SetFrameType(FRAME_LEFT);
-				SetHFlip(false);
-				
-				m_x -= 0.6f;
-				m_y += 0.3f;
-			}
-			else
-			{						
-				if(xDist < 0)
-				{
-					SetFrameType(FRAME_LEFT);
-					SetHFlip(false);
-				}
-				else
-				{
-					SetFrameType(FRAME_LEFT);
-					SetHFlip(true);
-				}
-			
-				float angle = atan2(yDist, xDist);
-				
-				// Move directly towards door
-				m_x += cos(angle) * 0.6f;
-				//m_y += sin(angle) * 0.3f;
-			}
+		{
+			SetFrameType(FRAME_RIGHT);
+			SetHFlip(false);
+			m_x += 0.6f;
+			m_y -= 0.3f;
 		}
 		
 		return false;
 	}
+	
+	if(degrees > 315) // Left
+	{
+		SetFrameType(FRAME_LEFT);
+		SetHFlip(false);
+	}
+	else if(degrees > 225) // Down
+	{
+		SetFrameType(FRAME_LEFT);
+		SetHFlip(false);
+	}
+	else if(degrees > 135) // Right
+	{
+		SetFrameType(FRAME_LEFT);
+		SetHFlip(true);
+	}
+	else if(degrees > 45) // Up
+	{
+		SetFrameType(FRAME_RIGHT);
+		SetHFlip(false);
+	}
+	else // Left
+	{
+		SetFrameType(FRAME_LEFT);
+		SetHFlip(false);
+	}
 
-	return true;
+	m_x += cos(angle) * 0.6f;
+	
+	if(abs(xDist) < 32)
+		m_y += sin(angle) * 0.3f;
+	
+	return false;
 }
 
 bool CCharacter::IsVisible(CRoom* pRoom)
