@@ -222,8 +222,11 @@ void CConsole::MoveSelectorBar(DirectionType directionType)
 
 void CConsole::DrawSelectorBar()
 {
-	m_selector.SetPosition(CONSOLE_MENU_X - 1, CONSOLE_MENU_Y + m_menuPos * 8 - 1);
-	m_selector.Draw();
+	if(m_menuCount > 0)
+	{
+		m_selector.SetPosition(CONSOLE_MENU_X - 1, CONSOLE_MENU_Y + m_menuPos * 8 - 1);
+		m_selector.Draw();
+	}
 }
 
 void CConsole::HideSelectorBar()

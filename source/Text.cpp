@@ -1191,7 +1191,7 @@ const char* g_askAboutProfessorRandom[] =
 const char* g_askAboutMajorRandom[] =
 {
 	"\"..DIRTY RATS..\" MUMBLES THE MAJOR.",
-	"THE MAJOR GRUMBLES \"OUGHT TO BE SHOT\"",
+	"THE MAJOR GRUMBLES \"OUGHT TO BE SHOT.\"",
 	"THE MAJOR BABBLES INCOMPREHENSIBLY..",
 	"\"GRENADE!\" SHOUTS THE MAJOR."
 };

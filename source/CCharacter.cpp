@@ -178,14 +178,22 @@ uint64 CCharacter::Update(CRoom* pCurrentRoom, uint64 eventFlags)
 					}
 					break;
 				case GOAL_SPEAK:
+					if((pGoal->EventFlags() & eventFlags) == pGoal->EventFlags())
 					{
 						if(pGoal->TryGetSpeech(&m_string))
+						{
 							SetFrameType(FRAME_SPEAK);
+						}
 						else
 						{
 							if(!pGoal->Waiting())
 								m_goalManager->NextGoal();
 						}
+					}
+					else
+					{
+						if(!pGoal->Waiting())
+							m_goalManager->NextGoal();
 					}
 					break;
 				case GOAL_WAITEVENT:

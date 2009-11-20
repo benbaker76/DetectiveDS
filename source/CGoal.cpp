@@ -82,6 +82,23 @@ CGoal::CGoal(int id, GoalType goalType, const char* string, int waitTime)
 	m_id = id;
 	m_goalType = goalType;
 	m_string = string;
+	m_eventFlags = 0;
+	m_goalPosition = 0;
+	m_waitTime = waitTime;
+	m_waitValue = 0;
+	m_spoken = false;
+	m_timeValue = 0;
+	m_loopValue = 0;
+	m_gotoId = 0;
+	m_pathFound = false;
+}
+
+CGoal::CGoal(int id, GoalType goalType, const char* string, uint64 eventFlags, int waitTime)
+{
+	m_id = id;
+	m_goalType = goalType;
+	m_string = string;
+	m_eventFlags = eventFlags;
 	m_goalPosition = 0;
 	m_waitTime = waitTime;
 	m_waitValue = 0;

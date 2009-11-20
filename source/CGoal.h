@@ -34,6 +34,7 @@ public:
 	CGoal(int id, GoalType goalType, uint64 eventFlags, int waitTime, int timeOut);
 	CGoal(int id, GoalType goalType, int gotoId, uint64 eventFlags, int waitTime, int loopCount);
 	CGoal(int id, GoalType goalType, const char* string, int waitTime);
+	CGoal(int id, GoalType goalType, const char* string, uint64 eventFlags,int waitTime);
 	CGoal(int id, GoalType goalType, CRoom* pRoomEnd, int waitTime);
 	CGoal(int id, GoalType goalType, CRoom* pRoomStart, CRoom* pRoomEnd, int waitTime);
 	CGoal(int id, GoalType goalType, CRoom* pRoomStart, CRoom* pRoomEnd, int gotoId, int waitTime);

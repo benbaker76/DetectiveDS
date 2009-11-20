@@ -86,7 +86,9 @@ bool CFxTextScroller::AddText(const char* text)
 	{
 		if(m_textArray[i] == NULL)
 		{
-			m_textArray[i] = text;
+			strcpy(m_textBuffer[i], text);
+			
+			m_textArray[i] = m_textBuffer[i];
 			return true;
 		}
 	}
@@ -95,7 +97,9 @@ bool CFxTextScroller::AddText(const char* text)
 	{
 		if(m_textArray[i] == NULL)
 		{
-			m_textArray[i] = text;
+			strcpy(m_textBuffer[i], text);
+			
+			m_textArray[i] = m_textBuffer[i];
 			return true;
 		}
 	}

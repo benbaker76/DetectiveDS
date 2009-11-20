@@ -105,6 +105,7 @@ public:
 	CItem(ItemType itemType, int itemAttribs, int itemCount);
 	~CItem();
 	
+	void AddItem(CItem* pItem) { m_itemCache->AddItem(pItem); }
 	void AddItems(CItem* item1, CItem* item2, CItem* item3, CItem* item4, CItem* item5) { m_itemCache->AddItems(item1, item2, item3, item4, item5); }
 	void ClearItems() { m_itemCache->ClearItems(); }
 	CItemCache* GetItemCache() const { return m_itemCache; }

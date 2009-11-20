@@ -4,6 +4,7 @@
 #include "CFx.h"
 
 #define MAX_TEXT_SCROLLER	8
+#define MAX_TEXT_BUFFER		1024
 
 class CFxTextScroller : public CFx
 {
@@ -30,6 +31,7 @@ private:
 	const char* m_charPos;
 	u32 m_textPos;
 	const char* m_textArray[MAX_TEXT_SCROLLER];
+	char m_textBuffer[MAX_TEXT_SCROLLER][MAX_TEXT_BUFFER];
 	
 	u32 m_loop;
 };

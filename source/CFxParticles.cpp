@@ -192,3 +192,10 @@ void CFxParticles::UpdateVBlank()
 void CFxParticles::UpdateHBlank()
 {
 }
+
+void CFxParticles::AllocateGfx()
+{
+	for(int i=0; i<MAX_PARTICLES; i++)
+		m_particleArray[i].Gfx = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_256Color);
+}
+

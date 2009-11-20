@@ -43,6 +43,8 @@ void CFxLeak::UpdateVBlank()
 		{
 			m_frameCount = 0;
 			m_waiting = false;
+			
+			mmEffectEx(&g_sfx_waterdrip);
 		}
 		
 		return;

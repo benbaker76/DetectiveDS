@@ -7,7 +7,8 @@
 #include "soundbank_bin.h"
 #include "soundbank.h"
 
-#define MAX_POINTS 4
+#define MAX_POINTS	4
+#define MAX_TEXT_BUFFER		1024
 
 #define MAKEITEMARRAY(a,b,c,d,e)	{ itemArray[0] = a; itemArray[1] = b; itemArray[2] = c; itemArray[3] = d; itemArray[4] = e; }
 
@@ -192,7 +193,7 @@ private:
 	mm_sfxhand m_footsteps;
 	mm_sfxhand m_clock;
 	mm_sfxhand m_fireplace;
-	mm_sfxhand m_waterdrip;
+	//mm_sfxhand m_waterdrip;
 	
 	IconType m_lastIconType;
 	

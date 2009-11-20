@@ -21,12 +21,12 @@ void CFxFade::Initialize()
 		m_callback = NULL;
 	}
 	
-	int bgSrc = (m_bgSrc & BG0 ? BLEND_SRC_BG0 : 0) |  (m_bgSrc & BG1 ? BLEND_SRC_BG1 : 0) |  (m_bgSrc & BG2 ? BLEND_SRC_BG2 : 0) | (m_bgSrc & BG3 ? BLEND_SRC_BG3 : 0) | (m_bgSrc & SPRITE ? BLEND_SRC_SPRITE : 0);
-	int bgSrcSub = (m_bgSrc & BG0_SUB ? BLEND_SRC_BG0 : 0) | (m_bgSrc & BG1_SUB ? BLEND_SRC_BG1 : 0) |  (m_bgSrc & BG2_SUB ? BLEND_SRC_BG2 : 0) | (m_bgSrc & BG3_SUB ? BLEND_SRC_BG3 : 0) | (m_bgSrc & SPRITE_SUB ? BLEND_SRC_SPRITE : 0);
-	
-	int bgDst = (m_bgDst & BG0 ? BLEND_DST_BG0 : 0) |  (m_bgDst & BG1 ? BLEND_DST_BG1 : 0) |  (m_bgDst & BG2 ? BLEND_DST_BG2 : 0) | (m_bgDst & BG3 ? BLEND_DST_BG3 : 0) | (m_bgDst & SPRITE ? BLEND_DST_SPRITE : 0);
-	int bgDstSub = (m_bgDst & BG0_SUB ? BLEND_DST_BG0 : 0) |  (m_bgDst & BG1_SUB ? BLEND_DST_BG1 : 0) |  (m_bgDst & BG2_SUB ? BLEND_DST_BG2 : 0) | (m_bgDst & BG3_SUB ? BLEND_DST_BG3 : 0) | (m_bgDst & SPRITE_SUB ? BLEND_DST_SPRITE : 0);
-	
+	int bgSrc = (m_bgSrc & BG0 ? BLEND_SRC_BG0 : 0) | (m_bgSrc & BG1 ? BLEND_SRC_BG1 : 0) | (m_bgSrc & BG2 ? BLEND_SRC_BG2 : 0) | (m_bgSrc & BG3 ? BLEND_SRC_BG3 : 0) | (m_bgSrc & SPRITE ? BLEND_SRC_SPRITE : 0);
+	int bgDst = (m_bgDst & BG0 ? BLEND_DST_BG0 : 0) | (m_bgDst & BG1 ? BLEND_DST_BG1 : 0) | (m_bgDst & BG2 ? BLEND_DST_BG2 : 0) | (m_bgDst & BG3 ? BLEND_DST_BG3 : 0) | (m_bgDst & SPRITE ? BLEND_DST_SPRITE : 0);
+
+	int bgSrcSub = (m_bgSrc & BG0_SUB ? BLEND_SRC_BG0 : 0) | (m_bgSrc & BG1_SUB ? BLEND_SRC_BG1 : 0) |  (m_bgSrc & BG2_SUB ? BLEND_SRC_BG2 : 0) | (m_bgSrc & BG3_SUB ? BLEND_SRC_BG3 : 0) | (m_bgSrc & SPRITE_SUB ? BLEND_SRC_SPRITE : 0);	
+	int bgDstSub = (m_bgDst & BG0_SUB ? BLEND_DST_BG0 : 0) |  (m_bgDst & BG1_SUB ? BLEND_DST_BG1 : 0) | (m_bgDst & BG2_SUB ? BLEND_DST_BG2 : 0) | (m_bgDst & BG3_SUB ? BLEND_DST_BG3 : 0) | (m_bgDst & SPRITE_SUB ? BLEND_DST_SPRITE : 0);
+
 	REG_BLDCNT = bgSrc | bgDst;
 	REG_BLDCNT_SUB = bgSrcSub | bgDstSub;
 	
@@ -124,7 +124,7 @@ void CFxFade::UpdateVBlank()
 				m_fadeValue++;
 			else
 			{
-				SetEnabled(GetFxMode(), false);
+				SetEnabled(CFx::GetFxMode(), false);
 				
 				if(m_callback != NULL)
 					(*m_callback)(0);
@@ -136,7 +136,7 @@ void CFxFade::UpdateVBlank()
 				m_fadeValue++;
 			else
 			{
-				SetEnabled(GetFxMode(), false);
+				SetEnabled(CFx::GetFxMode(), false);
 				
 				if(m_callback != NULL)
 					(*m_callback)(0);

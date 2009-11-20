@@ -24,8 +24,6 @@ public:
 
 	CFxParticles(FxType fxType, CFxManager* fxManager) : CFx(fxType, fxManager)
 	{
-		for(int i=0; i<MAX_PARTICLES; i++)
-			m_particleArray[i].Gfx = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_256Color);
 	}
 	~CFxParticles()
 	{
@@ -39,6 +37,7 @@ public:
 	void UpdateVBlank();
 	void UpdateHBlank();
 	
+	void AllocateGfx();
 	void SetXOffset(int xOffset) { m_xOffset = xOffset; }
 
 private:
