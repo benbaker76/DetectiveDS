@@ -164,6 +164,7 @@ extern mm_sound_effect g_sfx_vacuum;
 extern mm_sound_effect g_sfx_bomb;
 extern mm_sound_effect g_sfx_gunshot;
 extern mm_sound_effect g_sfx_waterdrip;
+extern mm_sound_effect g_sfx_glass;
 
 extern u16 g_lightningBgPal[];
 extern u16 g_lightningSpritePal[];

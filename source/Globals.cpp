@@ -162,6 +162,7 @@ mm_sound_effect g_sfx_vacuum = { { SFX_VACUUM } , (int)(1.0f * (1<<10)), 0, 255,
 mm_sound_effect g_sfx_bomb = { { SFX_BOMB } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_gunshot = { { SFX_GUNSHOT } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_waterdrip = { { SFX_WATERDRIP } , (int)(1.0f * (1<<10)), 0, 255, 127 };
+mm_sound_effect g_sfx_glass = { { SFX_GLASS } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 
 u16 g_lightningBgPal[] =
 {

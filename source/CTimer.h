@@ -35,6 +35,8 @@ public:
 
 	CTime* pCurrentTime() const { return m_pCurrentTime; }
 	
+	void ToString();
+	
 private:
 	CTime* m_pCurrentTime;
 };

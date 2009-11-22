@@ -65,7 +65,7 @@ void CTimer::Reverse()
 {
 	m_pCurrentTime->MilliSeconds = 0;
 	
-	m_pCurrentTime->Seconds-=5;
+	m_pCurrentTime->Seconds -= 5;
 	
 	if(m_pCurrentTime->Seconds < 0)
 	{		
@@ -79,4 +79,13 @@ void CTimer::Reverse()
 		}
 	}
 }
+
+void CTimer::ToString()
+{
+	static char buf[256];
+	
+	sprintf(buf, "%02d:%02d:%02d:%02d", m_pCurrentTime->Hours, m_pCurrentTime->Minutes, m_pCurrentTime->Seconds, m_pCurrentTime->MilliSeconds);
+	fprintf(stderr, buf);
+}
+
 

@@ -25,35 +25,8 @@ void CGame::Initialize()
 
 void CGame::InitData(int param)
 {
-	dmaFillHalfWords(0, BG_PALETTE_SUB, 512);
-	dmaFillHalfWords(0, BG_PALETTE, 512);
-	dmaFillHalfWords(0, BG_MAP_RAM_SUB(INTRO_BG0_MAP_BASE_SUB), 2048);
-	dmaFillHalfWords(0, BG_MAP_RAM(INTRO_BG0_MAP_BASE), 2048);
-	dmaFillHalfWords(0, BG_MAP_RAM_SUB(INTRO_BG1_MAP_BASE_SUB), 2048);
-	dmaFillHalfWords(0, BG_MAP_RAM(INTRO_BG1_MAP_BASE), 2048); 
-	
 	InitVideoMain();
 	
-	ClearBG(0, true);
-	ClearBG(1, true);
-	ClearBG(2, true);
-	ClearBG(3, true);
-	
-	ClearBG(0, false);
-	ClearBG(1, false);
-	ClearBG(2, false);
-	ClearBG(3, false);
-	
-	//m_fxManager.Initialize();
-	
-	((CFxParticles*)m_fxManager.GetFx(FXTYPE_PARTICLES))->AllocateGfx();
-	((CFxFade*)m_fxManager.GetFx(FXTYPE_FADE))->SetBG(BG2_SUB | BG3_SUB | SPRITE_SUB, 0);
-
-	m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
-	m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
-	m_fxManager.SetFx(FXTYPE_COLOUR, FXMODE_NORMAL, true);
-	m_fxManager.SetFx(FXTYPE_C64, FXMODE_NORMAL, true);
-		
 	for(int i=0; i<MAX_CHARACTERS; i++)
 		m_characterArray[i] = NULL;
 		
@@ -532,9 +505,12 @@ void CGame::InitData(int param)
 	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(1, GOAL_GOTOROOM, m_roomArray[ROOM_KITCHEN], m_roomArray[ROOM_STUDY], 2, 0));
 	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(264, 144), 0));
 	
-	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(2, GOAL_GOTOROOM, m_roomArray[ROOM_GABRIEL], 0));
+	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(2, GOAL_GOTOROOM, m_roomArray[ROOM_HALL4], 0));
+	
+	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_HALL4], m_roomArray[ROOM_GABRIEL], 3, 0));
+	
 	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(288, 144), 200));
-	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_GABRIEL], m_roomArray[ROOM_DRAWING], 0));
+	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(3, GOAL_GOTOROOM, m_roomArray[ROOM_DRAWING], 0));
 	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(344, 144), 0));
 	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_KITCHEN], 0));
 	m_characterArray[CHARTYPE_GABRIEL]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(96, 168), 200));
@@ -897,10 +873,10 @@ void CGame::Update()
 			UpdateGame(touch, keys_held, keys_pressed, keys_released);
 		break;
 	case GAMEMODE_REVERSETIME:
-		if(++m_reverseTimeFrameCount == 500)
+		if(++m_reverseTimeFrameCount == 365) // 100:8:13
 		{
 			m_reverseTimeFrameCount = 0;
-			
+				
 			m_gameMode = GAMEMODE_RUNNING;
 		}
 		else
@@ -2539,12 +2515,16 @@ void CGame::PostProcessMenu()
 					{
 						useSuccess = true;
 						pItemCache->ReplaceItem(m_withItem, m_itemArray[ITEM_A_BIG_IRON_KEY]);
+						
+						mmEffectEx(&g_sfx_glass);
 					}
 					
 					if(m_useItem->GetItemType() == ITEM_A_HAMMER && m_withItem->GetItemType() == ITEM_DIRTY_PLATES)
 					{
 						useSuccess = true;
 						pItemCache->ReplaceItem(m_withItem, m_itemArray[ITEM_BROKEN_PLATES]);
+						
+						mmEffectEx(&g_sfx_glass);
 					}
 					break;
 				case USETYPE_CUT:
@@ -3048,6 +3028,13 @@ void CGame::InitVideoIntro()
 
 void CGame::InitVideoMain()
 {
+	dmaFillHalfWords(0, BG_PALETTE_SUB, 512);
+	dmaFillHalfWords(0, BG_PALETTE, 512);
+	dmaFillHalfWords(0, BG_MAP_RAM_SUB(INTRO_BG0_MAP_BASE_SUB), 2048);
+	dmaFillHalfWords(0, BG_MAP_RAM(INTRO_BG0_MAP_BASE), 2048);
+	dmaFillHalfWords(0, BG_MAP_RAM_SUB(INTRO_BG1_MAP_BASE_SUB), 2048);
+	dmaFillHalfWords(0, BG_MAP_RAM(INTRO_BG1_MAP_BASE), 2048); 
+	
 	videoSetMode(MODE_0_2D | DISPLAY_WIN0_ON | DISPLAY_SPR_ACTIVE | DISPLAY_SPR_1D_LAYOUT | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE | DISPLAY_BG2_ACTIVE | DISPLAY_BG3_ACTIVE);
 	videoSetModeSub(MODE_0_2D | DISPLAY_SPR_ACTIVE | DISPLAY_SPR_1D_LAYOUT | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE | DISPLAY_BG2_ACTIVE | DISPLAY_BG3_ACTIVE);
 	
@@ -3111,6 +3098,16 @@ void CGame::InitVideoMain()
 	
 	oamInit(&oamMain, SpriteMapping_Bmp_1D_128, false);
 	oamInit(&oamSub, SpriteMapping_Bmp_1D_128, false);
+	
+	//m_fxManager.Initialize();
+	
+	((CFxParticles*)m_fxManager.GetFx(FXTYPE_PARTICLES))->AllocateGfx();
+	((CFxFade*)m_fxManager.GetFx(FXTYPE_FADE))->SetBG(BG2_SUB | BG3_SUB | SPRITE_SUB, 0);
+
+	m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
+	m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
+	m_fxManager.SetFx(FXTYPE_COLOUR, FXMODE_NORMAL, true);
+	m_fxManager.SetFx(FXTYPE_C64, FXMODE_NORMAL, true);
 }
 
 void CGame::InitIntro1()
@@ -3441,7 +3438,6 @@ void CGame::InitGame(GameType gameType)
 	//m_roomArray[ROOM_STUDY]->AddItem(0, m_itemArray[ITEM_BLANK_BULLETS], true);
 	
 	//m_snide->AddItems(m_itemArray[ITEM_AN_ELEPHANT_GUN], m_itemArray[ITEM_BULLETS], m_itemArray[ITEM_A_BUNCH_OF_KEYS], NULL, NULL);
-	
 	
 	/* m_snide->AddItems(m_itemArray[ITEM_PADDED_ENVELOPES], NULL, NULL, NULL, NULL);
 	m_itemArray[ITEM_PADDED_ENVELOPES]->AddItem(m_itemArray[ITEM_THE_WILL]);

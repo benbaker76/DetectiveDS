@@ -14,7 +14,7 @@ void CFxLeak::Initialize()
 	m_frameNum = 0;
 	m_frameCount = 0;
 	m_frameRate = 0;
-	m_waiting = false;
+	m_waiting = true;
 	
 	m_gfx = oamAllocateGfx(&oamSub, SpriteSize_16x16, SpriteColorFormat_256Color);
 	
@@ -48,7 +48,7 @@ void CFxLeak::UpdateVBlank()
 		}
 		
 		return;
-	}		
+	}
 	
 	if(m_location.Y < m_endPoint.Y)
 		m_location.Y++;
