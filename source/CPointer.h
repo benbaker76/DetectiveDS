@@ -20,7 +20,7 @@ public:
 	void Hide();
 	void Update();
 	
-	void SetRect(int x, int y, int width, int height) { m_x = x; m_y = y + 4; m_rect->X = x; m_rect->Y = y; m_rect->Width = width; m_rect->Height = height; SetPoint(m_x, m_y); }
+	void SetRect(int x, int y, int width, int height) { m_x = x - POINTER_X; m_y = y - POINTER_Y; m_rect->X = x; m_rect->Y = y; m_rect->Width = width; m_rect->Height = height; SetPoint(m_x, m_y); }
 	Rect* pRect() { return m_rect; }
 	
 	void SetPoint(int x, int y) { m_point->X = x; m_point->Y = y; }

@@ -27,7 +27,7 @@ private:
 	
 	DirectionType m_direction;
 	
-	FPoint m_location;
+	PointF m_location;
 
 	int m_frameNum;
 	int m_frameCount;

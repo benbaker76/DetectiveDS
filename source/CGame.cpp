@@ -729,9 +729,8 @@ void CGame::InitData(int param)
 	
 	// ----------------------------
 	
-	m_eventArray[EVENT_START_GAME] = new CEvent(EVENT_START_GAME, new CTime(9, 10, 0, 0), EVENTFLAG_NONE, EVENTFLAG_NONE);
-
 	// 2:20
+	m_eventArray[EVENT_START_GAME] = new CEvent(EVENT_START_GAME, new CTime(9, 10, 0, 0), EVENTFLAG_NONE, EVENTFLAG_NONE);
 	m_eventArray[EVENT_MURDER_DINGLE] = new CEvent(EVENT_MURDER_DINGLE, new CTime(9, 12, 0, 0), EVENTFLAG_READY_MURDER_DINGLE | EVENTFLAG_NONE, EVENTFLAG_MURDER_DINGLE); // 9:12
 	m_eventArray[EVENT_LOCK_DINGLES_ROOM] = new CEvent(EVENT_LOCK_DINGLES_ROOM, new CTime(9, 20, 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_HALL3, EVENT_LOCK_DINGLES_ROOM); // 9:20
 	m_eventArray[EVENT_MURDER_CYNTHIA] = new CEvent(EVENT_MURDER_CYNTHIA, new CTime(9, 27, 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_HALL3, EVENTFLAG_MURDER_CYNTHIA); // 9:30
@@ -936,7 +935,7 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 							m_questionMode = QUESTIONMODE_ASKABOUT;
 							m_lastIconType = ICON_QUESTION;
 							
-							m_questionCharacter->SetCharacterMode(CHARMODE_NONE);
+							m_questionCharacter->SetCharacterMode(CHARMODE_WAITING);
 							m_console->AddText("ASK ABOUT:");
 							m_console->ClearMenu();
 							m_console->AddMenuItem("MR MCFUNGUS", NULL);
@@ -958,7 +957,7 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 						m_displayMode = DISPLAYMODE_MENU;
 						SetMenuIcons(MENUMODE_GENERAL, NULL);
 						m_snide->SetCharacterMode(CHARMODE_NONE);
-						m_pointer->SetRect(MENU_X, MENU_Y, MENU_WIDTH, MENU_HEIGHT);
+						m_pointer->SetRect(MENU_X+8, MENU_Y+8, MENU_WIDTH-(8 * 2), MENU_HEIGHT-(8 * 2));
 						//m_pointer->SetRect(CONSOLE_MENU_X, CONSOLE_MENU_Y, CONSOLE_MENU_WIDTH, CONSOLE_MENU_HEIGHT);
 					}
 				}
@@ -970,7 +969,7 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 					m_displayMode = DISPLAYMODE_MENU;
 					SetMenuIcons(MENUMODE_GENERAL, NULL);
 					m_snide->SetCharacterMode(CHARMODE_NONE);
-					m_pointer->SetRect(MENU_X, MENU_Y, MENU_WIDTH, MENU_HEIGHT);
+					m_pointer->SetRect(MENU_X+8, MENU_Y+8, MENU_WIDTH-(8 * 2), MENU_HEIGHT-(8 * 2));
 					//m_pointer->SetRect(CONSOLE_MENU_X, CONSOLE_MENU_Y, CONSOLE_MENU_WIDTH, CONSOLE_MENU_HEIGHT);
 				}
 			}
@@ -978,7 +977,14 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 		break;
 	case DISPLAYMODE_MENU:
 		{
-			if(keys_pressed & KEY_TOUCH)
+			if(keys_released & KEY_B)
+			{
+				m_displayMode = DISPLAYMODE_GAME;
+
+				m_pointer->Hide();
+				m_menu->Hide();
+			}
+			else if(keys_pressed & KEY_TOUCH)
 			{
 				m_displayMode = DISPLAYMODE_GAME;
 				
@@ -1005,6 +1011,8 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 			if(keys_released & KEY_A || keys_released & KEY_B || keys_released & KEY_LEFT || keys_released & KEY_RIGHT)
 			{
 				m_displayMode = DISPLAYMODE_GAME;
+				m_questionMode = QUESTIONMODE_NONE;
+				
 				m_pointer->Hide();
 				m_menu->Hide();
 				m_console->HideMenu();
@@ -1032,6 +1040,8 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 			else if(keys_released & KEY_B || keys_released & KEY_LEFT || keys_released & KEY_RIGHT)
 			{
 				m_displayMode = DISPLAYMODE_GAME;
+				m_questionMode = QUESTIONMODE_NONE;
+				
 				m_pointer->Hide();
 				m_menu->Hide();
 				m_console->HideMenu();
@@ -1526,7 +1536,7 @@ int CGame::ShowItemMenu(const char* text, CItemCache* pItemCache, CItem* pItemEx
 	return itemCount;
 }
 
-void CGame::ShowVisibleCharactersMenu()
+bool CGame::ShowVisibleCharactersMenu()
 {
 	m_displayMode = DISPLAYMODE_CONSOLE_MENU;
 	
@@ -1541,10 +1551,14 @@ void CGame::ShowVisibleCharactersMenu()
 			
 		m_console->ShowMenu();
 		m_console->DrawSelectorBar();
+		
+		return true;
 	}
 	else
 	{
 		m_console->AddText("IN THE ROOM YOU SEE:\n\nNOBODY..");
+		
+		return false;
 	}
 }
 
@@ -1993,7 +2007,12 @@ void CGame::ProcessMenu(int x, int y)
 		{
 			m_questionMode = QUESTIONMODE_WAITING;
 			
-			ShowVisibleCharactersMenu();
+			if(!ShowVisibleCharactersMenu())
+			{
+				m_questionMode = QUESTIONMODE_NONE;
+				m_displayMode = DISPLAYMODE_GAME;
+				m_console->HideMenu();
+			}
 			
 			m_pointer->Hide();
 			m_menu->Hide();
@@ -2250,7 +2269,7 @@ void CGame::PostProcessMenu()
 			//m_console->AddText(buffer);
 			m_displayMode = DISPLAYMODE_MENU;
 			SetMenuIcons(MENUMODE_ITEM, pItem);
-			m_pointer->SetRect(MENU_X, MENU_Y, MENU_WIDTH, MENU_HEIGHT);
+			m_pointer->SetRect(MENU_X+8, MENU_Y+8, MENU_WIDTH-(8 * 2), MENU_HEIGHT-(8 * 2));
 			//m_pointer->SetRect(CONSOLE_MENU_X, CONSOLE_MENU_Y, CONSOLE_MENU_WIDTH, CONSOLE_MENU_HEIGHT);
 	
 			//m_snide->CheckCollision(m_snide->Facing(), &colNear, &colFar);
@@ -2560,7 +2579,7 @@ void CGame::PostProcessMenu()
 		{
 			m_inItem = (CItem*) m_console->SelectedObject();
 			
-			if(m_inItem->GetItemAttribs() & ITEMATTRIB_OPEN)
+			if(m_inItem->GetItemAttribs() & ITEMATTRIB_OPEN && !m_inItem->GetLocked())
 			{
 				CItemCache* itemCache = m_inItem->GetItemCache();
 				
@@ -3900,7 +3919,7 @@ void CGame::InitTitleScreen()
 	
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->ClearText();
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->SetLoop(true);
-	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE DETECTIVE GAME  -  WRITTEN BY HEADKAZE....GRAPHICS BY LOBO....MUSIC BY SPACE FRACTAL....SUPPORT BY FLASH....ORIGINAL BY SAM MANTHORPE....CHARACTERS BY PAUL JAY....PLOT CUNNINGLY DEVISED BY THE MAGNIFICENT SEVEN....   PRESS BUTTON TO START INVESTIGATION                               ");
+	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE DETECTIVE GAME  -  WRITTEN BY HEADKAZE....GRAPHICS BY LOBO....MUSIC BY SPACE FRACTAL....SUPPORT BY FLASH....ORIGINAL BY SAM MANTHORPE....CHARACTERS BY PAUL JAY....PLOT CUNNINGLY DEVISED BY THE MAGNIFICENT SEVEN....   PRESS START TO BEGIN INVESTIGATION                               ");
 	
 	m_console->AddText("\n\n    INTRODUCING\n     THE CAST..");
 

@@ -122,9 +122,10 @@ uint64 CCharacter::Update(CRoom* pCurrentRoom, uint64 eventFlags)
 		{
 			m_frameCount++;
 			
-			if(m_frameCount > 500)
+			if(m_frameCount > 800)
 			{
 				m_frameCount = 0;
+				
 				m_characterMode = CHARMODE_GOAL;
 			}
 		}

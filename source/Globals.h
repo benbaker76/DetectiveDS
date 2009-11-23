@@ -38,10 +38,10 @@ struct Point
 	int Y;
 };
 
-struct FPoint
+struct PointF
 {
-	FPoint() : X(0), Y(0) {}
-	FPoint(int x, int y) : X(x), Y(y) {}
+	PointF() : X(0), Y(0) {}
+	PointF(int x, int y) : X(x), Y(y) {}
 	float X;
 	float Y;
 };
@@ -67,6 +67,8 @@ enum DirectionType
 bool IsRectEmpty(Rect* pRect);
 bool IntersectRect(Rect* pRectA, Rect* pRectB);
 void PrintRect(Rect* pRect);
+float RandomFloat(float min, float max);
+int RandomInt(int min, int max);
 DirectionType GetDirection(Point* startPoint, Point* endPoint);
 void PrintDirection(DirectionType directionType);
 

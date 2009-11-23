@@ -7,6 +7,7 @@
 #define MENU_Y				128
 #define MENU_WIDTH			72
 #define MENU_HEIGHT			48
+#define MENU_PADDING		8
 
 #define ICON_WIDTH			3
 #define ICON_HEIGHT			2

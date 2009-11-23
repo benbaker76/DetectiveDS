@@ -28,6 +28,17 @@ void PrintRect(Rect* pRect)
 	fprintf(stderr, buf);
 }
 
+float RandomFloat(float min, float max)
+{
+	float r = (float)rand() / (float)RAND_MAX;
+	return min + r * (max - min);
+}
+
+int RandomInt(int min, int max)
+{
+	return rand () % (max - min + 1) + min;
+}
+
 DirectionType GetDirection(Point* startPoint, Point* endPoint)
 {
 	int xDist = endPoint->X - startPoint->X;
