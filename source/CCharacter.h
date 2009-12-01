@@ -54,6 +54,7 @@ enum CharacterSex
 
 class CRoom;
 class CCharacter;
+class CSave;
 
 class CCharacter
 {
@@ -133,6 +134,9 @@ public:
 	bool GetGoalMode() const { return m_goalMode; }
 	
 	void SetKeyItemType(ItemType keyItemType) { m_keyItemType = keyItemType; }
+	
+	void Save(CSave* pSave);
+	void Load(CSave* pSave);
 
 private:
 	CharacterType m_characterType;
@@ -145,8 +149,8 @@ private:
 	CRoom* m_pRoom;
 	CDoor* m_pLastDoor;
 	
-	CSprite* m_spriteCol1;
-	CSprite* m_spriteCol2;
+	//CSprite* m_spriteCol1;
+	//CSprite* m_spriteCol2;
 	
 	DirectionType m_facing;
 	

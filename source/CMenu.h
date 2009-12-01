@@ -70,8 +70,8 @@ public:
 	void Reset();
 	void DrawIcon(IconType iconType, int x, int y, bool sub);
 	void DrawItem(ItemType itemType, int x, int y, bool sub);
-	void DrawBox(int mapX, int mapY);
-	IconType CheckIconHit(int mapX, int mapY);
+	void DrawBox(int x, int y);
+	IconType CheckIconHit(int x, int y);
 	
 	MenuMode GetMenuMode() const { return m_menuMode; }
 
@@ -79,7 +79,7 @@ private:
 	IconType m_iconArray[MAX_ICONS];
 	MenuMode m_menuMode;
 	
-	u16* m_gfx;
+	u16* m_gfxBox;
 	
 	void HideBox();
 };

@@ -3,6 +3,7 @@
 
 CDoor::CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoomOut, ItemType keyItemType)
 {
+	m_doorId = (doorType | (pRoomIn->GetRoomType() << 8) | (pRoomOut->GetRoomType() << 16));
 	m_doorType = doorType;
 	m_defaultDoorState = m_doorState = doorState;
 	m_pRoomIn = pRoomIn;

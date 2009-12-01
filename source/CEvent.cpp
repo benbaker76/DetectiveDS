@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "CEvent.h"
+#include "CSave.h"
 
 CEvent::CEvent(EventType eventType, CTime* pEventTime, uint64 condition, uint64 action)
 {
@@ -27,3 +28,14 @@ bool CEvent::Update(CTime* pCurrentTime)
 	
 	return false;
 }
+
+void CEvent::Save(CSave* pSave)
+{
+	pSave->WriteBool(m_done);
+}
+
+void CEvent::Load(CSave* pSave)
+{
+	pSave->ReadBool(&m_done);
+}
+

@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "CPathFinder.h"
+#include "Text.h"
 
 #define LOOP_INFINITE	-1
 
@@ -23,6 +24,7 @@ enum GoalType
 };
 
 class CCharacter;
+class CSave;
 
 class CGoal
 {
@@ -60,6 +62,8 @@ public:
 	bool Loop() { return (m_loopCount == -1  || m_loopValue++ < m_loopCount); }
 	//bool Loop() { static char buf[256]; sprintf(buf, "%d:%d", m_loopValue, m_loopCount); fprintf(stderr, buf); return (m_loopCount == -1  || m_loopValue++ < m_loopCount); }
 	
+	void PrintRooms() { for(int i=0; i<MAX_ROOMS; i++) if(m_roomArray[i] != NULL) fprintf(stderr, g_roomName[m_roomArray[i]->GetRoomType()]); }
+	
 	bool GetGoalPosition() const { return m_goalPosition; }
 	void SetGoalPosition(int goalPosition) { m_goalPosition = goalPosition; }
 	
@@ -71,6 +75,9 @@ public:
 	void SetLoopValue(int loopValue) { m_loopValue = loopValue; }
 	
 	uint64 EventFlags() const { return m_eventFlags; }
+	
+	void Save(CSave* pSave);
+	void Load(CSave* pSave);
 
 private:
 	

@@ -427,15 +427,38 @@ bool CRoom::GetColMapRect(CollisionType colType, Rect** rect)
 }
 
 
-CDoor* CRoom::GetRoomDoor(CRoom* pRoom)
+bool CRoom::TryGetRoomDoor(CRoom* pRoom, CDoor** pDoor)
 {
+	*pDoor = NULL;
+	
 	for(int i=0; i<MAX_DOORS; i++)
 	{
 		if(m_doorArray[i]->pRoomOut() == pRoom)
-			return m_doorArray[i];
+		{
+			*pDoor = m_doorArray[i];
+			
+			return true;
+		}
 	}
 	
-	return NULL;
+	return false;
+}
+
+bool CRoom::TryGetDoor(int doorId, CDoor** pDoor)
+{
+	*pDoor = NULL;
+	
+	for(int i=0; i<MAX_DOORS; i++)
+	{
+		if(m_doorArray[i]->GetDoorId() == doorId)
+		{
+			*pDoor = m_doorArray[i];
+			
+			return true;
+		}
+	}
+	
+	return false;
 }
 
 u8 CRoom::ColMap(int x, int y)
@@ -448,3 +471,4 @@ u8 CRoom::ColMap(int x, int y)
 	
 	return 0;
 }
+

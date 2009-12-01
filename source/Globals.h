@@ -1,6 +1,6 @@
 #include <maxmod9.h>
 
-#include "soundbank_bin.h"
+//#include "soundbank_bin.h"
 #include "soundbank.h"
 
 #ifndef __GLOBALS_H__

@@ -1,6 +1,7 @@
 #include <nds.h>
 #include <stdio.h>
 #include "CTimer.h"
+#include "CSave.h"
 
 CTimer::CTimer()
 {
@@ -86,6 +87,22 @@ void CTimer::ToString()
 	
 	sprintf(buf, "%02d:%02d:%02d:%02d", m_pCurrentTime->Hours, m_pCurrentTime->Minutes, m_pCurrentTime->Seconds, m_pCurrentTime->MilliSeconds);
 	fprintf(stderr, buf);
+}
+
+void CTimer::Save(CSave* pSave)
+{
+	pSave->WriteUInt32(m_pCurrentTime->Hours);
+	pSave->WriteUInt32(m_pCurrentTime->Minutes);
+	pSave->WriteUInt32(m_pCurrentTime->Seconds);
+	pSave->WriteUInt32(m_pCurrentTime->MilliSeconds);
+}
+
+void CTimer::Load(CSave* pSave)
+{
+	pSave->ReadUInt32((u32*)&m_pCurrentTime->Hours);
+	pSave->ReadUInt32((u32*)&m_pCurrentTime->Minutes);
+	pSave->ReadUInt32((u32*)&m_pCurrentTime->Seconds);
+	pSave->ReadUInt32((u32*)&m_pCurrentTime->MilliSeconds);
 }
 
 

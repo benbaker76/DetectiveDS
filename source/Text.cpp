@@ -1324,7 +1324,7 @@ const char* g_KeyboardHit[] =
 	"\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000",
 	"\000\000\000\000\000A\000S\000D\000F\000G\000H\000J\000K\000L\000\n\n\n\n\n\000\000\000\000",
 	"\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000",
-	"\000\000\000\000\000\000Z\000X\000C\000V\000B\000N\000M\000\000     \000\000\000\000\000\000"
+	"\000\000\000\000\000\000Z\000X\000C\000V\000B\000N\000M\000       \000\000\000\000\000"
 };
 
 const int g_largeTextMap[] =
@@ -1348,7 +1348,7 @@ void DrawString(const char* string, int x, int y, bool sub)
 {
 	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)) + (x + y * 32);
 	
-	for(u32 i=0; i<strlen(string); i++)
+	for(int i=0; i<(int)strlen(string); i++)
 		*pMap++ = string[i] - 0x20;
 }
 
@@ -1356,7 +1356,7 @@ void DrawString(const char* string, int x, int y, int count, bool sub)
 {
 	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)) + (x + y * 32);
 	
-	for(u32 i=0; i<strlen(string) && i < count; i++)
+	for(int i=0; i<(int)strlen(string) && i < count; i++)
 		*pMap++ = string[i] - 0x20;
 }
 
@@ -1364,7 +1364,7 @@ void DrawStringLarge(const char* string, int x, int y, bool sub)
 {
 	u16* pMap = (sub ? BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB) : BG_MAP_RAM(BG0_MAP_BASE)) + (x + y * 32);
 	
-	for(u32 i=0; i<strlen(string); i++)
+	for(int i=0; i<(int)strlen(string); i++)
 	{	
 		*pMap = 96 + g_largeTextMap[string[i] - 0x20] * 2;
 		*(pMap+32) = 96 + g_largeTextMap[string[i] - 0x20] * 2 + 1;

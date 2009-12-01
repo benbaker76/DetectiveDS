@@ -767,6 +767,8 @@ void CGame::InitData(int param)
 
 	m_watch = new CWatch(113, 21);
 	
+	m_save = new CSave(1024*256, m_characterArray, m_spriteArray, m_roomArray, m_itemArray, m_eventArray);
+	
 	InitDoors();
 	
 	m_fxManager.SetFx(FXTYPE_C64, FXMODE_NORMAL, false);
@@ -795,10 +797,15 @@ void CGame::Update()
 	//sprintf(buf, "%02d:%02d:%02d:%02d Elapsed: %08d", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes, m_timer->pCurrentTime()->Seconds, m_timer->pCurrentTime()->MilliSeconds, elapsedTime);
 	//fprintf(stderr, buf);
 	
-	/* if(keys_released & KEY_X)
+	if(keys_released & KEY_X)
 	{
-		InitEnding(ENDINGMODE_LEDATGUNPOINT);
-	} */
+		Save();
+	}
+	
+	if(keys_released & KEY_Y)
+	{
+		Load();
+	}
 	
 	if(keys_released & KEY_L || keys_released & KEY_R)
 	{
@@ -1067,101 +1074,103 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 		break;
 	case DISPLAYMODE_KEYBOARD:
 		{
+			char c = '\0';
+			
 			if(keys_pressed & KEY_TOUCH)
-			{		
-				char c = m_keyboard->CheckKeyTouch(touch.px, touch.py);
+				c = m_keyboard->CheckKeyTouch(touch.px, touch.py);
+			else
+				c = m_keyboard->CheckKeyPress(keys_released);
 				
-				switch(c)
+			switch(c)
+			{
+			case 0:
+				break;
+			case '\e':	// Exit
 				{
-				case 0:
-					break;
-				case '\e':	// Exit
+					m_displayMode = DISPLAYMODE_GAME;
+					
+					m_keyboard->Hide();
+					m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
+					m_console->Clear();
+					m_menu->Hide();
+					
+					mmEffectEx(&g_sfx_beep);
+				}
+				break;
+			case '\n':
+				{
+					const char* text = m_keyboard->GetText();
+					
+					switch(m_keyboardMode)
 					{
-						m_displayMode = DISPLAYMODE_GAME;
-						
-						m_keyboard->Hide();
-						m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
-						m_console->Clear();
-						m_menu->Hide();
-						
-						mmEffectEx(&g_sfx_beep);
-					}
-					break;
-				case '\n':
-					{
-						const char* text = m_keyboard->GetText();
-						
-						switch(m_keyboardMode)
-						{
-							case KEYBOARDMODE_BOOK1:
+						case KEYBOARDMODE_BOOK1:
+							{
+								if(strcmp(text, "101 DETECTIVE STORIES") == 0)
 								{
-									if(strcmp(text, "101 DETECTIVE STORIES") == 0)
+									if(m_itemArray[ITEM_A_HARDBACK_BOOK]->GetParent() == NULL)
 									{
-										if(m_itemArray[ITEM_A_HARDBACK_BOOK]->GetParent() == NULL)
-										{
-											m_console->AddText("YOU FIND THE BOOK.");
-											CItemCache* itemCache = m_snide->GetItemCache();
-											
-											itemCache->AddItem(m_itemArray[ITEM_A_HARDBACK_BOOK]);
-										}
-										else
-										{
-											m_console->AddText("YOU DO NOT FIND THE BOOK.");
-										}
+										m_console->AddText("YOU FIND THE BOOK.");
+										CItemCache* itemCache = m_snide->GetItemCache();
+										
+										itemCache->AddItem(m_itemArray[ITEM_A_HARDBACK_BOOK]);
 									}
 									else
 									{
 										m_console->AddText("YOU DO NOT FIND THE BOOK.");
 									}
 								}
-								break;
-							case KEYBOARDMODE_BOOK2:
-								m_console->AddText("YOU DO NOT FIND THE BOOK.");
-								break;
-							case KEYBOARDMODE_SAFE:
+								else
 								{
-									if(strncmp(text, "210319", 6) == 0)
-									{
-										CItemCache* itemCache = m_currentRoom->GetItemCache(3);
-										
-										if(itemCache->ContainsItem(m_itemArray[ITEM_THE_WILL]))
-										{									
-											m_currentRoom->SetAnimFrame(DSTRECT_SAFE, 1);
-											m_currentRoom->SetAnimState(DSTRECT_SAFE, ANIMSTATE_PLAY);
-											m_currentRoom->Draw();
-										}
-										else
-										{
-											m_currentRoom->SetAnimFrame(DSTRECT_SAFE, 2);
-											m_currentRoom->SetAnimState(DSTRECT_SAFE, ANIMSTATE_PLAY);
-											m_currentRoom->Draw();
-										}
-										
-										m_console->AddText("THE SAFE IS OPEN!");
-										
-										mmEffectEx(&g_sfx_opendoor);
+									m_console->AddText("YOU DO NOT FIND THE BOOK.");
+								}
+							}
+							break;
+						case KEYBOARDMODE_BOOK2:
+							m_console->AddText("YOU DO NOT FIND THE BOOK.");
+							break;
+						case KEYBOARDMODE_SAFE:
+							{
+								if(strncmp(text, "210319", 6) == 0)
+								{
+									CItemCache* itemCache = m_currentRoom->GetItemCache(3);
+									
+									if(itemCache->ContainsItem(m_itemArray[ITEM_THE_WILL]))
+									{									
+										m_currentRoom->SetAnimFrame(DSTRECT_SAFE, 1);
+										m_currentRoom->SetAnimState(DSTRECT_SAFE, ANIMSTATE_PLAY);
+										m_currentRoom->Draw();
 									}
 									else
 									{
-										m_console->AddText("THE SAFE DOESN'T OPEN");
+										m_currentRoom->SetAnimFrame(DSTRECT_SAFE, 2);
+										m_currentRoom->SetAnimState(DSTRECT_SAFE, ANIMSTATE_PLAY);
+										m_currentRoom->Draw();
 									}
+									
+									m_console->AddText("THE SAFE IS OPEN!");
+									
+									mmEffectEx(&g_sfx_opendoor);
 								}
-								break;
-						}
-						
-						m_displayMode = DISPLAYMODE_GAME;
-						
-						m_keyboard->Hide();
-						m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
-						m_menu->Hide();
-						
-						mmEffectEx(&g_sfx_beep);
+								else
+								{
+									m_console->AddText("THE SAFE DOESN'T OPEN");
+								}
+							}
+							break;
 					}
-					break;
-				default:
-					mmEffectEx(&g_sfx_click);
-					break;
+					
+					m_displayMode = DISPLAYMODE_GAME;
+					
+					m_keyboard->Hide();
+					m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
+					m_menu->Hide();
+					
+					mmEffectEx(&g_sfx_beep);
 				}
+				break;
+			default:
+				mmEffectEx(&g_sfx_click);
+				break;
 			}
 		}
 		break;
@@ -2867,7 +2876,7 @@ uint64 CGame::GetCharactersInRoom(CRoom* pRoom)
 
 	for (int i=0; i < MAX_CHARACTERS; i++)
 	{
-		if(m_characterArray[i]->GetRoom() == pRoom)
+		if(!m_characterArray[i]->Dead() && m_characterArray[i]->GetRoom() == pRoom)
 			charsInRoom |= BIT64(i);
 	}
 	
@@ -3426,7 +3435,6 @@ void CGame::InitGame(GameType gameType)
 	//m_currentRoom = m_roomArray[ROOM_DINGLE];
 	//m_currentRoom = m_roomArray[ROOM_GABRIEL];
 	//m_currentRoom = m_roomArray[ROOM_CLOCK];
-	m_currentRoom->Initialize(69);
 	
 	m_snide = m_characterArray[CHARTYPE_SNIDE];
 	
@@ -3449,6 +3457,8 @@ void CGame::InitGame(GameType gameType)
 	//m_menu->DrawItem(ITEM_ANGUS_MCFUNGUS, 24, 18, false);
 	
 	PlaySong(SONGTYPE_INGAME);
+	
+	m_currentRoom->Initialize(m_snide->X() - 128);
 	
 	m_console->Clear();
 	m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
@@ -3515,7 +3525,7 @@ void CGame::UpdateEvents()
 	{
 		if(m_eventArray[i] != NULL)
 		{
-			if(!m_eventArray[i]->Done())
+			if(!m_eventArray[i]->GetDone())
 			{
 				if(m_eventArray[i]->Update(m_timer->pCurrentTime()))
 				{		
@@ -4067,3 +4077,52 @@ void CGame::StopSong()
 	mmStop();
 }
 
+void CGame::Save()
+{
+	m_save->SetBufferPos(0);
+
+	m_save->WriteString("TDG");
+	m_timer->Save(m_save);
+	
+	for(int i=0; i<MAX_CHARACTERS; i++)
+		m_characterArray[i]->Save(m_save);
+		
+	m_save->WriteUInt64(m_eventFlags);
+	
+	m_save->WriteBuffer("/TDG/Data/Save.dat");
+	DC_FlushAll();
+	
+	static char buf[256];
+	sprintf(buf, "Saved %d Bytes, %d KB", m_save->GetBufferPos(), m_save->GetBufferPos() / 1024);
+	fprintf(stderr, buf);
+}
+
+bool CGame::Load()
+{
+	m_save->SetBufferPos(0);
+
+	static char buf[256];
+	m_save->ReadBuffer("/TDG/Data/Save.dat");
+	DC_FlushAll();
+	
+	m_save->ReadString(buf);
+	
+	if(strcmp(buf, "TDG") != 0)
+		return false;
+	
+	m_timer->Load(m_save);
+	
+	for(int i=0; i<MAX_CHARACTERS; i++)
+		m_characterArray[i]->Load(m_save);
+		
+	m_save->ReadUInt64(&m_eventFlags);
+		
+	m_currentRoom = m_snide->GetRoom();
+	m_currentRoom->Initialize(m_snide->X() - 128);
+	InitRoom();
+	
+	sprintf(buf, "Loaded %d Bytes, %d KB", m_save->GetBufferPos(), m_save->GetBufferPos() / 1024);
+	fprintf(stderr, buf);
+	
+	return true;
+}

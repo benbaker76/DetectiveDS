@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "CCharacter.h"
+#include "CSave.h"
 #include "Text.h"
 
 CCharacter::CCharacter(CharacterType characterType, CSprite* pHeadSprite, CSprite* pBodySprite, CharacterSex characterSex, int width, int height)
@@ -283,7 +284,11 @@ uint64 CCharacter::Update(CRoom* pCurrentRoom, uint64 eventFlags)
 						
 						if(pRoom != NULL)
 						{
-							CDoor* pDoor = m_pRoom->GetRoomDoor(pRoom);
+							CDoor* pDoor = NULL;
+							
+							if(!m_pRoom->TryGetRoomDoor(pRoom, &pDoor))
+								break;
+							
 							Point point(pDoor->pPoint()->X, pDoor->pPoint()->Y);
 							point.X *= 8;
 							point.Y *= 8;
@@ -719,4 +724,97 @@ void CCharacter::SetCharacterMode(CharacterMode characterMode)
 int CCharacter::ScreenX()
 {
 	return m_x - (m_pRoom == NULL ? 0 : m_pRoom->X());
+}
+
+void CCharacter::Save(CSave* pSave)
+{
+	pSave->WriteByte(m_characterMode);
+	pSave->WriteUInt32(m_facing);
+	pSave->WriteUInt32(m_frameCount);
+	
+	pSave->WriteFloat(m_x);
+	pSave->WriteFloat(m_y);
+	
+	pSave->WriteUInt32(m_width);
+	pSave->WriteUInt32(m_height);
+	
+	pSave->WriteBool(m_visible);
+	pSave->WriteBool(m_green);
+	pSave->WriteBool(m_dead);
+	
+	pSave->WriteRoom(m_pRoom);
+	pSave->WriteDoor(m_pLastDoor);
+	
+	pSave->WritePoint(m_point);
+	
+	//pSave->WriteUInt32((u32)m_string);
+	
+	pSave->WriteBool(m_goalMode);
+	
+	pSave->WriteUInt32(m_goalManager->GetGoalPosition());
+	
+	for(int i=0; i<MAX_GOALS; i++)
+	{
+		CGoal* pGoal = m_goalManager->GetGoal(i);
+		
+		if(pGoal != NULL)
+			pGoal->Save(pSave);
+	}
+	
+	//m_goalManager->ResetGoals();
+	//m_goalManager->SetGoalPosition(0);
+	
+	//m_pHeadSprite->Reset();
+	//m_pBodySprite->Reset();
+	
+	//SetHFlip(false);
+}
+
+void CCharacter::Load(CSave* pSave)
+{
+	pSave->ReadByte((byte*)&m_characterMode);	
+	pSave->ReadUInt32((u32*)&m_facing);
+	pSave->ReadUInt32((u32*)&m_frameCount);
+	
+	pSave->ReadFloat(&m_x);
+	pSave->ReadFloat(&m_y);
+	
+	pSave->ReadUInt32((u32*)&m_width);
+	pSave->ReadUInt32((u32*)&m_height);
+	
+	pSave->ReadBool(&m_visible);
+	pSave->ReadBool(&m_green);
+	pSave->ReadBool(&m_dead);
+	
+	pSave->ReadRoom(&m_pRoom);
+	pSave->ReadDoor(&m_pLastDoor);
+	
+	pSave->ReadPoint(m_point);
+	
+	//pSave->ReadUInt32((u32*)m_string);
+	
+	pSave->ReadBool(&m_goalMode);
+	
+	u32 goalPosition;
+	pSave->ReadUInt32(&goalPosition);
+	m_goalManager->SetGoalPosition(goalPosition);
+
+	for(int i=0; i<MAX_GOALS; i++)
+	{
+		CGoal* pGoal = m_goalManager->GetGoal(i);
+		
+		if(pGoal != NULL)
+			pGoal->Load(pSave);
+	}
+	
+	//m_goalManager->ResetGoals();
+	//m_goalManager->SetGoalPosition(0);
+	
+	//m_pHeadSprite->Reset();
+	//m_pBodySprite->Reset();
+	
+	//SetHFlip(false);
+	
+	Face(m_facing);
+	SetCharacterMode(m_characterMode);
 }

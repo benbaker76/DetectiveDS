@@ -2,9 +2,10 @@
 #define __CGAME_H__
 
 #include "TDG.h"
+#include "CSave.h"
 #include <maxmod9.h>
 
-#include "soundbank_bin.h"
+//#include "soundbank_bin.h"
 #include "soundbank.h"
 
 #define MAX_POINTS	4
@@ -201,6 +202,8 @@ private:
 	
 	SongType m_songType;
 	
+	CSave* m_save;
+	
 	int m_bg2MainVScroll;
 	
 	void InitData(int param);
@@ -247,6 +250,9 @@ private:
 	void FxOff();
 	void PlaySong(SongType songType);
 	void StopSong();
+	
+	void Save();
+	bool Load();
 };
 
 #endif

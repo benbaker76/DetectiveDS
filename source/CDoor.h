@@ -64,8 +64,11 @@ public:
 	void Reset() { m_doorState = m_defaultDoorState; }
 	
 	bool Hidden() const { return m_hidden; }
+	
+	int GetDoorId() const { return m_doorId; }
 
 private:
+	int m_doorId;
 	DoorType m_doorType;
 	DoorState m_doorState;
 	DoorState m_defaultDoorState;

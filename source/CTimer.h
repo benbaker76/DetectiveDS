@@ -20,6 +20,8 @@ public:
 	int MilliSeconds;
 };
 
+class CSave;
+
 class CTimer
 {
 public:
@@ -36,6 +38,9 @@ public:
 	CTime* pCurrentTime() const { return m_pCurrentTime; }
 	
 	void ToString();
+	
+	void Save(CSave* pSave);
+	void Load(CSave* pSave);
 	
 private:
 	CTime* m_pCurrentTime;

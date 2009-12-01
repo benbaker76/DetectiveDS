@@ -3,9 +3,9 @@
 
 CMenu::CMenu()
 {
-	m_gfx = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
+	m_gfxBox = oamAllocateGfx(&oamMain, SpriteSize_32x32, SpriteColorFormat_256Color);
 	
-	dmaCopy(sprite_miscTiles + 256 * 2, m_gfx, 32 * 32);
+	dmaCopy(sprite_miscTiles + 256 * 2, m_gfxBox, 32 * 32);
 }
 
 CMenu::~CMenu()
@@ -108,7 +108,7 @@ void CMenu::DrawItem(ItemType itemType, int x, int y, bool sub)
 
 void CMenu::HideBox()
 {
-	oamSet(&oamMain, 122, 0, 0, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfx, 0, false, true, false, false, false);
+	oamSet(&oamMain, 122, 0, 0, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxBox, 0, false, true, false, false, false);
 }
 
 void CMenu::DrawBox(int x, int y)
@@ -124,7 +124,7 @@ void CMenu::DrawBox(int x, int y)
 			if((mapX >= (MENU_X / 8) + (x * ICON_WIDTH)) && (mapX < (MENU_X / 8) + (x * ICON_WIDTH) + ICON_WIDTH) && (mapY >= (MENU_Y / 8) + (y * ICON_HEIGHT)) && (mapY < (MENU_Y / 8) + (y * ICON_HEIGHT) + ICON_HEIGHT))
 				if(m_iconArray[x + y * ICON_WIDTH] != NULL)
 				{
-					oamSet(&oamMain, 122, MENU_X + (x * ICON_WIDTH * 8) - 2, MENU_Y + (y * ICON_HEIGHT * 8) - 2, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfx, 0, false, false, false, false, false);
+					oamSet(&oamMain, 122, MENU_X + (x * ICON_WIDTH * 8) - 2, MENU_Y + (y * ICON_HEIGHT * 8) - 2, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxBox, 0, false, false, false, false, false);
 					return;
 				}
 				

@@ -1,5 +1,6 @@
 #include "CGoal.h"
 #include "CCharacter.h"
+#include "CSave.h"
 
 CGoal::CGoal(int id, GoalType goalType, int waitTime)
 {
@@ -240,3 +241,71 @@ void CGoal::CalculatePath(CRoom* pRoomStart, CRoom* pRoomEnd)
 	
 	m_pathFound = true;
 }
+
+void CGoal::Save(CSave* pSave)
+{
+	pSave->WriteUInt32(m_id);
+	pSave->WriteUInt32(m_goalType);
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		pSave->WriteRoom(m_roomArray[i]);
+	
+	pSave->WriteCharacter(m_character);
+	pSave->WriteRoom(m_roomEnd);
+	pSave->WritePoint(m_pPoint);
+	pSave->WriteUInt32(m_gotoId);
+	
+	pSave->WriteBool(m_spoken);
+	pSave->WriteBool(m_pathFound);
+	
+	//pSave->WriteUInt32((u32)m_string);
+
+	pSave->WriteUInt32(m_goalPosition);
+	
+	pSave->WriteUInt32(m_waitValue);
+	pSave->WriteUInt32(m_waitTime);
+	
+	pSave->WriteUInt32(m_timeOut);
+	pSave->WriteUInt32(m_timeValue);
+	
+	pSave->WriteUInt32(m_loopValue);
+	pSave->WriteUInt32(m_loopCount);
+	
+	pSave->WriteUInt64(m_eventFlags);
+}
+
+void CGoal::Load(CSave* pSave)
+{
+	Reset();
+
+	pSave->ReadUInt32((u32*)&m_id);
+	pSave->ReadUInt32((u32*)&m_goalType);
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		pSave->ReadRoom(&m_roomArray[i]);
+	
+	pSave->ReadCharacter(&m_character);
+	pSave->ReadRoom(&m_roomEnd);
+	pSave->ReadPoint(m_pPoint);
+	pSave->ReadUInt32((u32*)&m_gotoId);
+	
+	pSave->ReadBool(&m_spoken);
+	pSave->ReadBool(&m_pathFound);
+	
+	//pSave->ReadUInt32((u32*)m_string);
+
+	pSave->ReadUInt32((u32*)&m_goalPosition);
+	
+	pSave->ReadUInt32((u32*)&m_waitValue);
+	pSave->ReadUInt32((u32*)&m_waitTime);
+	
+	pSave->ReadUInt32((u32*)&m_timeOut);
+	pSave->ReadUInt32((u32*)&m_timeValue);
+	
+	pSave->ReadUInt32((u32*)&m_loopValue);
+	pSave->ReadUInt32((u32*)&m_loopCount);
+	
+	pSave->ReadUInt64((u64*)&m_eventFlags);
+}
+
+

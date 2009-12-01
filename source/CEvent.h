@@ -108,6 +108,8 @@ const static uint64 EVENTFLAG_REMOVE_BULLETS = BIT64(38);
 const static uint64 EVENTFLAG_LOCK_DINGLES_ROOM = BIT64(39);
 const static uint64 EVENTFLAG_GABRIELS_DOOR_LOCKED = BIT64(40);
 
+class CSave;
+
 class CEvent
 {
 public:
@@ -116,14 +118,16 @@ public:
 	
 	bool Update(CTime* pCurrentTime);
 
-	bool Done() const { return m_done; }
-	
 	uint64 Condition() const { return m_condition; }
 	uint64 Action() const { return m_action; }
 	
 	EventType GetEventType() const { return m_eventType; }
 	
+	bool GetDone() const { return m_done; }
 	void SetDone(bool value) { m_done = value; }
+	
+	void Save(CSave* pSave);
+	void Load(CSave* pSave);
 
 private:
 	EventType m_eventType;

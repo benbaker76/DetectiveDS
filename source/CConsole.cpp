@@ -282,7 +282,10 @@ bool CConsole::CheckMenuTouch(int x, int y)
 
 	m_menuPos = mapY - 18;
 	
-	return true;
+	if(m_menuPos < m_menuCount)
+		return true;
+	
+	return false;
 }
 
 int CConsole::WordWrap(const char* text)

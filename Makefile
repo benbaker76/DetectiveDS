@@ -29,7 +29,8 @@ DATA			:=  data
 INCLUDES		:=	include
 GRAPHICS		:=	graphics
 AUDIO			:=	audio
-SOUNDBANK_NAME	:=	soundbank
+#SOUNDBANK_NAME	:=	soundbank
+EFS				:=	0
 
 #---------------------------------------------------------------------------------
 # Header variables
@@ -61,7 +62,7 @@ LDFLAGS		:=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS		:= -lmm9 -lnds9
+LIBS		:= -lmm9 -lnds9 -lfat
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -88,7 +89,7 @@ export DEPSDIR	:=	$(CURDIR)/$(BUILD)
 CFILES			:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
 CPPFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
 SFILES			:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
-BINFILES		:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*))) $(SOUNDBANK_NAME).bin
+#BINFILES		:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*))) $(SOUNDBANK_NAME).bin
 PNGFILES		:=	$(foreach dir,$(GRAPHICS),$(notdir $(wildcard $(dir)/*.png)))
 
 #---------------------------------------------------------------------------------
@@ -127,9 +128,12 @@ export LIBPATHS		:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 $(BUILD):
 	@[ -d $@ ] || mkdir -p $@
 	@make --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
-	ndstool -c $(TARGET).nds -9 $(TARGET).arm9 $(LOGO) $(ICON) "$(NAME);$(AUTHOR);$(VERSION)"
-#	ndstool -c $(TARGET).nds -9 $(TARGET).arm9 $(NITRODIR) $(LOGO) $(ICON) "$(NAME);$(AUTHOR);$(VERSION)"
-#	efs $(TARGET).nds
+ifeq ($(EFS), 1)
+	ndstool -c $(OUTPUT).nds -9 $(OUTPUT).arm9 $(NITRODIR) $(LOGO) $(ICON) "$(NAME);$(AUTHOR);$(VERSION)"
+	efs $(TARGET).nds
+else
+	ndstool -c $(OUTPUT).nds -9 $(OUTPUT).arm9 $(LOGO) $(ICON) "$(NAME);$(AUTHOR);$(VERSION)"
+endif
 
 #---------------------------------------------------------------------------------
 clean:
@@ -175,10 +179,10 @@ $(OUTPUT).elf	:	$(OFILES)
 # mmutil takes all audio files in the audio folder and puts them into a
 # soundbank file.
 #---------------------------------------------------------------------------------
-$(SOUNDBANK_NAME).bin	:	$(AUDIOFILES)
+#$(SOUNDBANK_NAME).bin	:	$(AUDIOFILES)
 #---------------------------------------------------------------------------------
-	@echo $(notdir $^)
-	@mmutil -d $^ -o$(SOUNDBANK_NAME).bin -h$(SOUNDBANK_NAME).h
+#	@echo $(notdir $^)
+#	@mmutil -d $^ -o$(SOUNDBANK_NAME).bin -h$(SOUNDBANK_NAME).h
 
 -include $(DEPSDIR)/*.d
 

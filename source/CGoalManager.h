@@ -21,7 +21,10 @@ public:
 	void ResetGoals();
 	void GotoGoal();
 	
+	int GetGoalPosition() const { return m_goalPosition; }
 	void SetGoalPosition(int value) { m_goalPosition = value; }
+	
+	CGoal* GetGoal(int index) const { return m_goalArray[index]; }
 	
 	CGoal* CurrentGoal() const { return m_goalArray[m_goalPosition]; }
 	void NextGoal();
