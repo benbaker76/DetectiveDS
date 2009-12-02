@@ -37,13 +37,15 @@ void CItem::Save(CSave* pSave)
 {
 	pSave->WriteBool(m_locked);
 	
-	m_itemCache->Save(pSave);
+	if(m_itemCache != NULL)
+		m_itemCache->Save(pSave);
 }
 
 void CItem::Load(CSave* pSave)
 {
 	pSave->ReadBool(&m_locked);
 	
-	m_itemCache->Load(pSave);
+	if(m_itemCache != NULL)
+		m_itemCache->Load(pSave);
 }
 

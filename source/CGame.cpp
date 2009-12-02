@@ -4124,25 +4124,31 @@ void CGame::StopSong()
 void CGame::Save(const char* fileName)
 {
 	m_save->SetBufferPos(0);
+	m_save->ClearBuffer();
 
 	m_save->WriteString("TDG");
 	m_timer->Save(m_save);
 	
 	for(int i=0; i<MAX_CHARACTERS; i++)
-		m_characterArray[i]->Save(m_save);
-	
+		if(m_characterArray[i] != NULL)
+			m_characterArray[i]->Save(m_save);
+		
 	for(int i=0; i<MAX_SPRITES; i++)
-		m_spriteArray[i]->Save(m_save);
-		
+		if(m_spriteArray[i] != NULL)
+			m_spriteArray[i]->Save(m_save);
+			
 	for(int i=0; i<MAX_ROOMS; i++)
-		m_roomArray[i]->Save(m_save);
-	
-	for(int i=0; i<MAX_ITEMS; i++)
-		m_itemArray[i]->Save(m_save);
-	
-	for(int i=0; i<MAX_EVENTS; i++)
-		m_eventArray[i]->Save(m_save);
+		if(m_roomArray[i] != NULL)
+			m_roomArray[i]->Save(m_save);
 		
+	for(int i=0; i<MAX_ITEMS; i++)
+		if(m_itemArray[i] != NULL)
+			m_itemArray[i]->Save(m_save);
+		
+	for(int i=0; i<MAX_EVENTS; i++)
+		if(m_eventArray[i] != NULL)
+			m_eventArray[i]->Save(m_save);
+	
 	m_save->WriteByte(m_questionMode);
 	m_save->WriteByte(m_questionType);
 	
@@ -4204,9 +4210,13 @@ void CGame::Save(const char* fileName)
 bool CGame::Load(const char* fileName)
 {
 	m_save->SetBufferPos(0);
+	m_save->ClearBuffer();
 
 	static char buf[256];
-	m_save->ReadBuffer(fileName);
+	
+	if(m_save->ReadBuffer(fileName) != m_save->GetBufferSize())
+		return false;
+	
 	DC_FlushAll();
 	
 	m_save->ReadString(buf);
@@ -4217,19 +4227,24 @@ bool CGame::Load(const char* fileName)
 	m_timer->Load(m_save);
 	
 	for(int i=0; i<MAX_CHARACTERS; i++)
-		m_characterArray[i]->Load(m_save);
+		if(m_characterArray[i] != NULL)
+			m_characterArray[i]->Load(m_save);
 	
 	for(int i=0; i<MAX_SPRITES; i++)
-		m_spriteArray[i]->Load(m_save);
+		if(m_spriteArray[i] != NULL)
+			m_spriteArray[i]->Load(m_save);
 	
 	for(int i=0; i<MAX_ROOMS; i++)
-		m_roomArray[i]->Load(m_save);
+		if(m_roomArray[i] != NULL)
+			m_roomArray[i]->Load(m_save);
 		
 	for(int i=0; i<MAX_ITEMS; i++)
-		m_itemArray[i]->Load(m_save);
+		if(m_itemArray[i] != NULL)
+			m_itemArray[i]->Load(m_save);
 	
 	for(int i=0; i<MAX_EVENTS; i++)
-		m_eventArray[i]->Load(m_save);
+		if(m_eventArray[i] != NULL)
+			m_eventArray[i]->Load(m_save);
 	
 	m_save->ReadByte((byte*)&m_questionMode);
 	m_save->ReadByte((byte*)&m_questionType);

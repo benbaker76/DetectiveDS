@@ -9,11 +9,17 @@ CGoal::CGoal(int id, GoalType goalType, int waitTime)
 	m_string = NULL;
 	m_goalPosition = 0;
 	m_waitValue = 0;
+	m_character = NULL;
+	m_roomEnd = NULL;
+	m_pPoint = NULL;
 	m_waitTime = waitTime;
 	m_timeValue = 0;
 	m_loopValue = 0;
 	m_gotoId = 0;
 	m_pathFound = false;
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i] = NULL;
 }
 
 CGoal::CGoal(int id, GoalType goalType, CCharacter* character, int waitTime)
@@ -24,11 +30,16 @@ CGoal::CGoal(int id, GoalType goalType, CCharacter* character, int waitTime)
 	m_goalPosition = 0;
 	m_waitValue = 0;
 	m_character = character;
+	m_roomEnd = NULL;
+	m_pPoint = NULL;
 	m_waitTime = waitTime;
 	m_timeValue = 0;
 	m_loopValue = 0;
 	m_gotoId = 0;
 	m_pathFound = false;
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i] = NULL;
 }
 
 CGoal::CGoal(int id, GoalType goalType, uint64 eventFlags, int waitTime)
@@ -39,11 +50,17 @@ CGoal::CGoal(int id, GoalType goalType, uint64 eventFlags, int waitTime)
 	m_goalPosition = 0;
 	m_waitValue = 0;
 	m_eventFlags = eventFlags;
+	m_character = NULL;
+	m_roomEnd = NULL;
+	m_pPoint = NULL;
 	m_waitTime = waitTime;
 	m_timeValue = 0;
 	m_loopValue = 0;
 	m_gotoId = 0;
 	m_pathFound = false;
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i] = NULL;
 }
 
 CGoal::CGoal(int id, GoalType goalType, uint64 eventFlags, int waitTime, int timeOut)
@@ -55,11 +72,17 @@ CGoal::CGoal(int id, GoalType goalType, uint64 eventFlags, int waitTime, int tim
 	m_waitValue = 0;
 	m_eventFlags = eventFlags;
 	m_waitTime = waitTime;
+	m_character = NULL;
+	m_roomEnd = NULL;
+	m_pPoint = NULL;
 	m_timeOut = timeOut;
 	m_timeValue = 0;
 	m_loopValue = 0;
 	m_gotoId = 0;
 	m_pathFound = false;
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i] = NULL;
 }
 
 CGoal::CGoal(int id, GoalType goalType, int gotoId, uint64 eventFlags, int waitTime, int loopCount)
@@ -72,10 +95,16 @@ CGoal::CGoal(int id, GoalType goalType, int gotoId, uint64 eventFlags, int waitT
 	m_eventFlags = eventFlags;
 	m_waitValue = 0;
 	m_waitTime = waitTime;
+	m_character = NULL;
+	m_roomEnd = NULL;
+	m_pPoint = NULL;
 	m_loopCount = loopCount;
 	m_timeValue = 0;
 	m_loopValue = 0;
 	m_pathFound = false;
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i] = NULL;
 }
 
 CGoal::CGoal(int id, GoalType goalType, const char* string, int waitTime)
@@ -86,12 +115,18 @@ CGoal::CGoal(int id, GoalType goalType, const char* string, int waitTime)
 	m_eventFlags = 0;
 	m_goalPosition = 0;
 	m_waitTime = waitTime;
+	m_character = NULL;
+	m_roomEnd = NULL;
+	m_pPoint = NULL;
 	m_waitValue = 0;
 	m_spoken = false;
 	m_timeValue = 0;
 	m_loopValue = 0;
 	m_gotoId = 0;
 	m_pathFound = false;
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i] = NULL;
 }
 
 CGoal::CGoal(int id, GoalType goalType, const char* string, uint64 eventFlags, int waitTime)
@@ -102,12 +137,18 @@ CGoal::CGoal(int id, GoalType goalType, const char* string, uint64 eventFlags, i
 	m_eventFlags = eventFlags;
 	m_goalPosition = 0;
 	m_waitTime = waitTime;
+	m_character = NULL;
+	m_roomEnd = NULL;
+	m_pPoint = NULL;
 	m_waitValue = 0;
 	m_spoken = false;
 	m_timeValue = 0;
 	m_loopValue = 0;
 	m_gotoId = 0;
 	m_pathFound = false;
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i] = NULL;
 }
 
 CGoal::CGoal(int id, GoalType goalType, CRoom* pRoomEnd, int waitTime)
@@ -119,10 +160,15 @@ CGoal::CGoal(int id, GoalType goalType, CRoom* pRoomEnd, int waitTime)
 	m_roomEnd = pRoomEnd;
 	m_waitValue = 0;
 	m_waitTime = waitTime;
+	m_character = NULL;
+	m_pPoint = NULL;
 	m_timeValue = 0;
 	m_loopValue = 0;
 	m_gotoId = 0;
 	m_pathFound = false;
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i] = NULL;
 }
 
 CGoal::CGoal(int id, GoalType goalType, CRoom* pRoomStart, CRoom* pRoomEnd, int waitTime)
@@ -134,10 +180,15 @@ CGoal::CGoal(int id, GoalType goalType, CRoom* pRoomStart, CRoom* pRoomEnd, int 
 	m_roomEnd = pRoomEnd;
 	m_waitValue = 0;
 	m_waitTime = waitTime;
+	m_character = NULL;
+	m_pPoint = NULL;
 	m_timeValue = 0;
 	m_loopValue = 0;
 	m_gotoId = 0;
 	m_pathFound = false;
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i] = NULL;
 	
 	CalculatePath(pRoomStart, pRoomEnd);
 }
@@ -152,9 +203,14 @@ CGoal::CGoal(int id, GoalType goalType, CRoom* pRoomStart, CRoom* pRoomEnd, int 
 	m_gotoId = gotoId;
 	m_waitValue = 0;
 	m_waitTime = waitTime;
+	m_character = NULL;
+	m_pPoint = NULL;
 	m_timeValue = 0;
 	m_loopValue = 0;
 	m_pathFound = false;
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i] = NULL;
 	
 	CalculatePath(pRoomStart, pRoomEnd);
 }
@@ -167,10 +223,16 @@ CGoal::CGoal(int id, GoalType goalType, CRoom* pRoom)
 	m_goalPosition = 0;
 	m_waitValue = 0;
 	m_waitTime = 0;
+	m_character = NULL;
+	m_roomEnd = NULL;
+	m_pPoint = NULL;
 	m_timeValue = 0;
 	m_loopValue = 0;
 	m_gotoId = 0;
 	m_pathFound = false;
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i] = NULL;
 
 	m_roomArray[0] = pRoom;
 }
@@ -184,10 +246,15 @@ CGoal::CGoal(int id, GoalType goalType, Point* pPoint, int waitTime)
 	m_goalPosition = 0;
 	m_waitValue = 0;
 	m_waitTime = waitTime;
+	m_character = NULL;
+	m_roomEnd = NULL;
 	m_timeValue = 0;
 	m_loopValue = 0;
 	m_gotoId = 0;
 	m_pathFound = false;
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i] = NULL;
 }
 
 CGoal::CGoal(int id, GoalType goalType, Point* pPoint)
@@ -199,10 +266,15 @@ CGoal::CGoal(int id, GoalType goalType, Point* pPoint)
 	m_goalPosition = 0;
 	m_waitValue = 0;
 	m_waitTime = 0;
+	m_character = NULL;
+	m_roomEnd = NULL;
 	m_timeValue = 0;
 	m_loopValue = 0;
 	m_gotoId = 0;
 	m_pathFound = false;
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i] = NULL;
 }
 
 void CGoal::Reset()
@@ -245,7 +317,7 @@ void CGoal::CalculatePath(CRoom* pRoomStart, CRoom* pRoomEnd)
 void CGoal::Save(CSave* pSave)
 {
 	pSave->WriteUInt32(m_id);
-	pSave->WriteUInt32(m_goalType);
+	pSave->WriteByte(m_goalType);
 	
 	for(int i=0; i<MAX_ROOMS; i++)
 		pSave->WriteRoom(m_roomArray[i]);
@@ -276,10 +348,8 @@ void CGoal::Save(CSave* pSave)
 
 void CGoal::Load(CSave* pSave)
 {
-	Reset();
-
 	pSave->ReadUInt32((u32*)&m_id);
-	pSave->ReadUInt32((u32*)&m_goalType);
+	pSave->ReadByte((byte*)&m_goalType);
 	
 	for(int i=0; i<MAX_ROOMS; i++)
 		pSave->ReadRoom(&m_roomArray[i]);

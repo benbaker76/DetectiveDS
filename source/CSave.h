@@ -25,6 +25,7 @@ public:
 	
 	int ReadBuffer(const char* pFileName);
 	int WriteBuffer(const char* pFileName);
+	void ClearBuffer();
 	
 	void ReadUInt64(u64* value);
 	void ReadUInt32(u32* value);
@@ -66,6 +67,8 @@ public:
 	
 	int GetBufferPos() const { return m_bufferPos; }
 	void SetBufferPos(int bufferPos) { m_bufferPos = bufferPos; }
+	
+	int GetBufferSize() const { return m_bufferSize; }
 	
 private:
 

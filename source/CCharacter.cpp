@@ -729,7 +729,7 @@ int CCharacter::ScreenX()
 void CCharacter::Save(CSave* pSave)
 {
 	pSave->WriteByte(m_characterMode);
-	pSave->WriteUInt32(m_facing);
+	pSave->WriteByte(m_facing);
 	pSave->WriteUInt32(m_frameCount);
 	
 	pSave->WriteFloat(m_x);
@@ -759,7 +759,7 @@ void CCharacter::Save(CSave* pSave)
 void CCharacter::Load(CSave* pSave)
 {
 	pSave->ReadByte((byte*)&m_characterMode);	
-	pSave->ReadUInt32((u32*)&m_facing);
+	pSave->ReadByte((byte*)&m_facing);
 	pSave->ReadUInt32((u32*)&m_frameCount);
 	
 	pSave->ReadFloat(&m_x);

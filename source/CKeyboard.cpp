@@ -147,7 +147,7 @@ char CKeyboard::CheckKeyPress(int keys_released)
 	}
 	
 	if(keys_released & KEY_A)
-		c = ProcessKey();
+		c = ProcessKey(m_x, m_y);
 	
 	DrawBox();
 	
@@ -161,24 +161,27 @@ char CKeyboard::CheckKeyTouch(int x, int y)
 	int mapX = x / 8;
 	int mapY = y / 8;
 	
-	if(mapY < 16)
+	if(mapY < KEYBOARD_TOP)
 		return '\0';
 	
-	m_x = mapX;
-	m_y = mapY;
+	char c = ProcessKey(mapX, mapY);
 	
-	char c = ProcessKey();
-	
-	DrawBox();
+	if(c != '\0')
+	{
+		m_x = mapX;
+		m_y = mapY;
+		
+		DrawBox();
+	}
 	
 	m_pCursor->Show();
 	
 	return c;
 }
 
-char CKeyboard::ProcessKey()
+char CKeyboard::ProcessKey(int x, int y)
 {
-	char c = g_keyboardHit[m_y - KEYBOARD_TOP][m_x];
+	char c = g_keyboardHit[y - KEYBOARD_TOP][x];
 	
 	switch(c)
 	{

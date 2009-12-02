@@ -40,7 +40,7 @@ private:
 	char m_textEntry[MAX_TEXT_ENTRY+1];
 	
 	void HideBox();
-	char ProcessKey();
+	char ProcessKey(int x, int y);
 };
 
 #endif

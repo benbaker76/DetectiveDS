@@ -88,6 +88,11 @@ int CSave::WriteBuffer(const char* fileName)
 	return result;
 }
 
+void CSave::ClearBuffer()
+{
+	memset(m_pBuffer, 0, m_bufferSize);
+}
+
 void CSave::ReadUInt64(u64* value)
 {
 	*value = (u64)m_pBuffer[m_bufferPos++];
@@ -131,6 +136,9 @@ bool CSave::ReadBool()
 
 void CSave::ReadFloat(float* value)
 {
+	if(value == NULL)
+		return;
+	
 	IFConvert ifconvert;
 	u32 integer;
 	
@@ -142,6 +150,9 @@ void CSave::ReadFloat(float* value)
 
 void CSave::ReadString(char* value)
 {
+	if(value == NULL)
+		return;
+	
 	do
 	{
 		*value++ = m_pBuffer[m_bufferPos];
@@ -150,6 +161,9 @@ void CSave::ReadString(char* value)
 
 void CSave::ReadRect(Rect* pRect)
 {
+	if(pRect == NULL)
+		return;
+
 	ReadUInt32((u32*)&pRect->X);
 	ReadUInt32((u32*)&pRect->Y);
 	ReadUInt32((u32*)&pRect->Width);
@@ -158,18 +172,27 @@ void CSave::ReadRect(Rect* pRect)
 
 void CSave::ReadPoint(Point* pPoint)
 {
+	if(pPoint == NULL)
+		return;
+
 	ReadUInt32((u32*)&pPoint->X);
 	ReadUInt32((u32*)&pPoint->Y);
 }
 
 void CSave::ReadPointF(PointF* pPointF)
 {
+	if(pPointF == NULL)
+		return;
+	
 	ReadFloat(&pPointF->X);
 	ReadFloat(&pPointF->Y);
 }
 
 void CSave::ReadSize(Size* pSize)
 {
+	if(pSize == NULL)
+		return;
+	
 	ReadUInt32((u32*)&pSize->Width);
 	ReadUInt32((u32*)&pSize->Height);
 }
@@ -307,6 +330,9 @@ void CSave::WriteFloat(float value)
 
 void CSave::WriteString(const char* value)
 {
+	if(value == NULL)
+		return;
+	
 	do
 	{
 		WriteByte(*value);
@@ -315,6 +341,9 @@ void CSave::WriteString(const char* value)
 
 void CSave::WriteRect(Rect* pRect)
 {
+	if(pRect == NULL)
+		return;
+	
 	WriteUInt32(pRect->X);
 	WriteUInt32(pRect->Y);
 	WriteUInt32(pRect->Width);
@@ -323,18 +352,27 @@ void CSave::WriteRect(Rect* pRect)
 
 void CSave::WritePoint(Point* pPoint)
 {
+	if(pPoint == NULL)
+		return;
+	
 	WriteUInt32(pPoint->X);
 	WriteUInt32(pPoint->Y);
 }
 
 void CSave::WritePointF(PointF* pPointF)
 {
+	if(pPointF == NULL)
+		return;
+	
 	WriteFloat(pPointF->X);
 	WriteFloat(pPointF->Y);
 }
 
 void CSave::WriteSize(Size* pSize)
 {
+	if(pSize == NULL)
+		return;
+	
 	WriteUInt32(pSize->Width);
 	WriteUInt32(pSize->Height);
 }
