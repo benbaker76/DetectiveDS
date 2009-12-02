@@ -149,7 +149,7 @@ void CGame::InitData(int param)
 	m_characterArray[CHARTYPE_DINGLE] = new CCharacter(CHARTYPE_DINGLE, m_spriteArray[SPRITE_DINGLE_HEAD], m_spriteArray[SPRITE_DINGLE_BODY], CHARSEX_MALE, 24, 48);
 	m_characterArray[CHARTYPE_ANGUS] = new CCharacter(CHARTYPE_ANGUS, m_spriteArray[SPRITE_ANGUS_HEAD], m_spriteArray[SPRITE_ANGUS_BODY], CHARSEX_MALE, 24, 48);
 	
-	m_question = new CCharacter(CHARTYPE_QUESTION, m_spriteArray[SPRITE_QUESTION_HEAD], m_spriteArray[SPRITE_QUESTION_BODY], CHARSEX_NONE, 24, 48);
+	m_questionMark = new CCharacter(CHARTYPE_QUESTIONMARK, m_spriteArray[SPRITE_QUESTION_HEAD], m_spriteArray[SPRITE_QUESTION_BODY], CHARSEX_NONE, 24, 48);
 	
 	m_characterArray[CHARTYPE_SNIDE]->SetDeadSide(true);
 	m_characterArray[CHARTYPE_DOCTOR]->SetDeadSide(true);
@@ -767,7 +767,7 @@ void CGame::InitData(int param)
 
 	m_watch = new CWatch(113, 21);
 	
-	m_save = new CSave(1024*256, m_characterArray, m_spriteArray, m_roomArray, m_itemArray, m_eventArray);
+	m_save = new CSave(1024 * 32, m_characterArray, m_spriteArray, m_roomArray, m_itemArray, m_eventArray);
 	
 	InitDoors();
 	
@@ -796,16 +796,6 @@ void CGame::Update()
 	//char buf[256];
 	//sprintf(buf, "%02d:%02d:%02d:%02d Elapsed: %08d", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes, m_timer->pCurrentTime()->Seconds, m_timer->pCurrentTime()->MilliSeconds, elapsedTime);
 	//fprintf(stderr, buf);
-	
-	if(keys_released & KEY_X)
-	{
-		Save();
-	}
-	
-	if(keys_released & KEY_Y)
-	{
-		Load();
-	}
 	
 	if(keys_released & KEY_L || keys_released & KEY_R)
 	{
@@ -1094,6 +1084,8 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 					m_console->Clear();
 					m_menu->Hide();
 					
+					DrawString("@2009 HEADSOFT", 9, 1, false);
+					
 					mmEffectEx(&g_sfx_beep);
 				}
 				break;
@@ -1164,6 +1156,8 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 					m_keyboard->Hide();
 					m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
 					m_menu->Hide();
+					
+					DrawString("@2009 HEADSOFT", 9, 1, false);
 					
 					mmEffectEx(&g_sfx_beep);
 				}
@@ -1421,6 +1415,9 @@ void CGame::SetMenuIcons(MenuMode menuMode, CItem* pItem)
 				
 				if((m_eventFlags & 0x7FELL) != 0)
 					m_menu->AddIcon(ICON_QUESTION);
+				
+				m_menu->AddIcon(ICON_SAVE);
+				m_menu->AddIcon(ICON_LOAD);
 			}
 		}
 		else
@@ -1429,6 +1426,9 @@ void CGame::SetMenuIcons(MenuMode menuMode, CItem* pItem)
 			
 			if((m_eventFlags & 0x7FELL) != 0)
 				m_menu->AddIcon(ICON_QUESTION);
+			
+			m_menu->AddIcon(ICON_SAVE);
+			m_menu->AddIcon(ICON_LOAD);
 		}
 		break;
 	case MENUMODE_ITEM:
@@ -1581,6 +1581,20 @@ void CGame::ShowCharacterMenu(const char* text, CCharacter* pCharacterExclude)
 	for(int i=1; i<MAX_CHARACTERS-1; i++)
 		if(m_characterArray[i] != pCharacterExclude)
 			m_console->AddMenuItem(g_characterName[i], m_characterArray[i]);
+		
+	m_console->ShowMenu();
+	m_console->DrawSelectorBar();
+}
+
+void CGame::ShowSaveMenu(const char* text)
+{
+	m_displayMode = DISPLAYMODE_CONSOLE_MENU;
+	
+	m_console->AddText(text);
+	m_console->ClearMenu();
+	
+	for(int i=0; i<5; i++)
+		m_console->AddMenuItem(g_saveText[i], NULL);
 		
 	m_console->ShowMenu();
 	m_console->DrawSelectorBar();
@@ -1882,7 +1896,17 @@ void CGame::ProcessMenu(int x, int y)
 		}
 		break;
 	case ICON_SAVE:
+		ShowSaveMenu("SELECT SAVE SLOT:");
+		
+		m_pointer->Hide();
+		m_menu->Hide();
+		break;
 	case ICON_LOAD:
+		ShowSaveMenu("SELECT LOAD SLOT:");
+		
+		m_pointer->Hide();
+		m_menu->Hide();
+		break;
 	case ICON_SHOOT:
 		{
 			CItemCache* pItemCache = m_snide->GetItemCache();
@@ -2291,7 +2315,26 @@ void CGame::PostProcessMenu()
 		break;
 	case ICON_DROP:
 	case ICON_SAVE:
+		Save(g_saveName[m_console->SelectedIndex()]);
+		
+		m_console->AddText("SAVED.");
+	
+		m_displayMode = DISPLAYMODE_GAME;
+		m_pointer->Hide();
+		m_menu->Hide();
+		m_console->HideMenu();
+		break;
 	case ICON_LOAD:
+		if(Load(g_saveName[m_console->SelectedIndex()]))	
+			m_console->AddText("LOADED.");
+		else
+			m_console->AddText("LOAD FAILED.");
+	
+		m_displayMode = DISPLAYMODE_GAME;
+		m_pointer->Hide();
+		m_menu->Hide();
+		m_console->HideMenu();
+		break;
 	case ICON_SHOOT:
 		break;
 	case ICON_ACCUSE:
@@ -2845,7 +2888,7 @@ void CGame::SortSprites()
 		else
 			m_characterArray[i]->SetPriority(1);
 		
-		if(!(m_eventFlags & BIT64(i)))
+		if(!(m_eventFlags & BIT64(i)) && !m_characterArray[i]->Dead())
 			continue;
 		
 		for(int j=0; j < MAX_CHARACTERS; j++)
@@ -2853,7 +2896,7 @@ void CGame::SortSprites()
 			if(m_characterArray[i] == m_characterArray[j])
 				continue;
 			
-			if (!(m_eventFlags & BIT64(j)))
+			if (!(m_eventFlags & BIT64(j)) && !m_characterArray[j]->Dead())
 				continue;
 
 			if (IntersectRect(m_characterArray[i]->pRect(), m_characterArray[j]->pRect()))
@@ -3310,6 +3353,7 @@ void CGame::InitGame(GameType gameType)
 		m_roomArray[ROOM_ANGUS_ROOM]->SetColMap(col_angus_room1);
 		
 		m_roomArray[ROOM_LANDING]->SetOverlay(g_landing_front1Map);
+		
 		m_roomArray[ROOM_GRAVEYARD]->SetOverlay(g_graveyard_frontMap, 176);
 		m_roomArray[ROOM_ANGUS_SECRET]->SetOverlay(g_angus_secret_frontMap, 168);
 		m_roomArray[ROOM_ANGUS_ROOM]->SetOverlay(g_angus_room_frontMap, 176);
@@ -3422,8 +3466,8 @@ void CGame::InitGame(GameType gameType)
 		if(m_eventArray[i] != NULL)
 			m_eventArray[i]->SetDone(false);
 	
-	m_question->Disable();
-	m_question->Hide();
+	m_questionMark->Disable();
+	m_questionMark->Hide();
 	
 	// ------------------------
 	
@@ -3955,12 +3999,12 @@ void CGame::InitTitleScreen()
 		m_characterArray[i]->SetGoalMode(false);
 	}
 	
-	m_question->Reset();
-	m_question->SetSub(false);
-	m_question->SetPriority(0);
-	m_question->SetPosition(192, 128);
-	m_question->SetCharacterMode(CHARMODE_QUESTION);
-	m_question->SetLoop(false);
+	m_questionMark->Reset();
+	m_questionMark->SetSub(false);
+	m_questionMark->SetPriority(0);
+	m_questionMark->SetPosition(192, 128);
+	m_questionMark->SetCharacterMode(CHARMODE_QUESTION);
+	m_questionMark->SetLoop(false);
 	
 	PlaySong(SONGTYPE_TITLESCREEN);
 }
@@ -3977,8 +4021,8 @@ void CGame::UpdateTitleScreen()
 	{
 		if(m_frameCount == 160)
 		{
-			m_question->Disable();
-			m_question->Hide();
+			m_questionMark->Disable();
+			m_questionMark->Hide();
 			
 			m_characterArray[m_characterIndex]->Show();
 		}
@@ -3988,8 +4032,8 @@ void CGame::UpdateTitleScreen()
 			m_characterArray[m_characterIndex]->Disable();
 			m_characterArray[m_characterIndex]->Hide();
 
-			m_question->Disable();
-			m_question->Hide();
+			m_questionMark->Disable();
+			m_questionMark->Hide();
 			
 			m_console->Clear();
 		}
@@ -4002,8 +4046,8 @@ void CGame::UpdateTitleScreen()
 		if(++m_characterIndex == MAX_CHARACTERS-1)
 			m_characterIndex = 0;
 		
-		m_question->ResetAnimation();
-		m_question->Show();
+		m_questionMark->ResetAnimation();
+		m_questionMark->Show();
 		
 		m_console->AddText(g_characterText[m_characterIndex]);
 	}
@@ -4015,9 +4059,9 @@ void CGame::UpdateTitleScreen()
 	}
 	
 	if(m_frameCount > 80)
-		m_question->Update(NULL, 0);
+		m_questionMark->Update(NULL, 0);
 	
-	m_question->Draw();
+	m_questionMark->Draw();
 	
 	//DrawTime(m_timer->pCurrentTime());
 	m_console->Update();
@@ -4077,7 +4121,7 @@ void CGame::StopSong()
 	mmStop();
 }
 
-void CGame::Save()
+void CGame::Save(const char* fileName)
 {
 	m_save->SetBufferPos(0);
 
@@ -4086,23 +4130,83 @@ void CGame::Save()
 	
 	for(int i=0; i<MAX_CHARACTERS; i++)
 		m_characterArray[i]->Save(m_save);
+	
+	for(int i=0; i<MAX_SPRITES; i++)
+		m_spriteArray[i]->Save(m_save);
+		
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i]->Save(m_save);
+	
+	for(int i=0; i<MAX_ITEMS; i++)
+		m_itemArray[i]->Save(m_save);
+	
+	for(int i=0; i<MAX_EVENTS; i++)
+		m_eventArray[i]->Save(m_save);
+		
+	m_save->WriteByte(m_questionMode);
+	m_save->WriteByte(m_questionType);
+	
+	m_save->WriteByte(m_useMode);
+	m_save->WriteByte(m_useType);
+	
+	m_save->WriteByte(m_openMode);
+	m_save->WriteByte(m_keyboardMode);
+	m_save->WriteByte(m_gameOverMode);
+	m_save->WriteByte(m_endingMode);
+	m_save->WriteByte(m_displayMode);
+	
+	m_save->WriteByte(m_lastIconType);
+	m_save->WriteByte(m_songType);
+	
+	m_save->WriteItem(m_useItem);
+	m_save->WriteItem(m_withItem);
+	m_save->WriteItem(m_placeItem);
+	m_save->WriteItem(m_inItem);
+	
+	m_save->WriteCharacter(m_questionCharacter);
+	m_save->WriteCharacter(m_speakCharacter);
+	
+	m_save->WriteBool(m_gargoyleActive[0]);
+	m_save->WriteBool(m_gargoyleActive[1]);
+	m_save->WriteBool(m_gargoyleActive[2]);
+	
+	m_save->WriteRoom(m_currentRoom);
+	
+	m_save->WriteUInt32(m_frameCount);
+	
+	m_save->WriteUInt32(m_dieFrameCount);
+	m_save->WriteUInt32(m_reverseTimeFrameCount);
+	m_save->WriteUInt32(m_freezeFrameCount);
+	
+	m_save->WriteUInt32(m_introIndex);
+	
+	m_save->WriteUInt32(m_characterIndex);
 		
 	m_save->WriteUInt64(m_eventFlags);
 	
-	m_save->WriteBuffer("/TDG/Data/Save.dat");
+	m_save->WriteBool(m_roomArray[ROOM_DINGLE]->GetColMap() == col_room1);
+	m_save->WriteBool(m_roomArray[ROOM_CLOCK]->GetColMap() == col_clock);
+	m_save->WriteBool(m_roomArray[ROOM_GABRIEL]->GetColMap() == col_room2);
+	m_save->WriteBool(m_roomArray[ROOM_STAIRS]->GetColMap() == col_stairs);
+	m_save->WriteBool(m_roomArray[ROOM_STAIRS]->GetOverlay() == NULL);
+	m_save->WriteBool(m_roomArray[ROOM_LANDING]->GetOverlay() == g_landing_front1Map);
+	m_save->WriteBool(m_roomArray[ROOM_ANGUS_ROOM]->GetMap() == g_angus_room1Map);
+	m_save->WriteBool(m_roomArray[ROOM_ANGUS_ROOM]->GetColMap() == col_angus_room1);
+	
+	m_save->WriteBuffer(fileName);
 	DC_FlushAll();
 	
-	static char buf[256];
-	sprintf(buf, "Saved %d Bytes, %d KB", m_save->GetBufferPos(), m_save->GetBufferPos() / 1024);
-	fprintf(stderr, buf);
+	//static char buf[256];
+	//sprintf(buf, "Saved %d Bytes, %d KB", m_save->GetBufferPos(), m_save->GetBufferPos() / 1024);
+	//fprintf(stderr, buf);
 }
 
-bool CGame::Load()
+bool CGame::Load(const char* fileName)
 {
 	m_save->SetBufferPos(0);
 
 	static char buf[256];
-	m_save->ReadBuffer("/TDG/Data/Save.dat");
+	m_save->ReadBuffer(fileName);
 	DC_FlushAll();
 	
 	m_save->ReadString(buf);
@@ -4114,15 +4218,75 @@ bool CGame::Load()
 	
 	for(int i=0; i<MAX_CHARACTERS; i++)
 		m_characterArray[i]->Load(m_save);
+	
+	for(int i=0; i<MAX_SPRITES; i++)
+		m_spriteArray[i]->Load(m_save);
+	
+	for(int i=0; i<MAX_ROOMS; i++)
+		m_roomArray[i]->Load(m_save);
+		
+	for(int i=0; i<MAX_ITEMS; i++)
+		m_itemArray[i]->Load(m_save);
+	
+	for(int i=0; i<MAX_EVENTS; i++)
+		m_eventArray[i]->Load(m_save);
+	
+	m_save->ReadByte((byte*)&m_questionMode);
+	m_save->ReadByte((byte*)&m_questionType);
+	
+	m_save->ReadByte((byte*)&m_useMode);
+	m_save->ReadByte((byte*)&m_useType);
+	
+	m_save->ReadByte((byte*)&m_openMode);
+	m_save->ReadByte((byte*)&m_keyboardMode);
+	m_save->ReadByte((byte*)&m_gameOverMode);
+	m_save->ReadByte((byte*)&m_endingMode);
+	m_save->ReadByte((byte*)&m_displayMode);
+	
+	m_save->ReadByte((byte*)&m_lastIconType);
+	m_save->ReadByte((byte*)&m_songType);
+	
+	m_save->ReadItem(&m_useItem);
+	m_save->ReadItem(&m_withItem);
+	m_save->ReadItem(&m_placeItem);
+	m_save->ReadItem(&m_inItem);
+	
+	m_save->ReadCharacter(&m_questionCharacter);
+	m_save->ReadCharacter(&m_speakCharacter);
+	
+	m_save->ReadBool(&m_gargoyleActive[0]);
+	m_save->ReadBool(&m_gargoyleActive[1]);
+	m_save->ReadBool(&m_gargoyleActive[2]);
+	
+	m_save->ReadRoom(&m_currentRoom);
+	
+	m_save->ReadUInt32((u32*)&m_frameCount);
+	
+	m_save->ReadUInt32((u32*)&m_dieFrameCount);
+	m_save->ReadUInt32((u32*)&m_reverseTimeFrameCount);
+	m_save->ReadUInt32((u32*)&m_freezeFrameCount);
+	
+	m_save->ReadUInt32((u32*)&m_introIndex);
+	
+	m_save->ReadUInt32((u32*)&m_characterIndex);
 		
 	m_save->ReadUInt64(&m_eventFlags);
+	
+	m_roomArray[ROOM_DINGLE]->SetColMap(m_save->ReadBool() ? col_room1 : col_dingle_murder);		
+	m_roomArray[ROOM_CLOCK]->SetColMap(m_save->ReadBool() ? col_clock : col_clock_murder);
+	m_roomArray[ROOM_GABRIEL]->SetColMap(m_save->ReadBool() ? col_room2 : col_gabriel_murder);
+	m_roomArray[ROOM_STAIRS]->SetColMap(m_save->ReadBool() ? col_stairs : col_stairs_murder);
+	m_roomArray[ROOM_STAIRS]->SetOverlay(m_save->ReadBool() ? NULL : g_stairs_frontMap, 168);
+	m_roomArray[ROOM_LANDING]->SetOverlay(m_save->ReadBool() ? g_landing_front1Map : g_landing_front2Map);
+	m_roomArray[ROOM_ANGUS_ROOM]->SetMap(m_save->ReadBool() ? g_angus_room1Map : g_angus_room2Map);
+	m_roomArray[ROOM_ANGUS_ROOM]->SetColMap(m_save->ReadBool() ? col_angus_room1 : col_angus_room2);
 		
-	m_currentRoom = m_snide->GetRoom();
+	//m_currentRoom = m_snide->GetRoom();
 	m_currentRoom->Initialize(m_snide->X() - 128);
 	InitRoom();
 	
-	sprintf(buf, "Loaded %d Bytes, %d KB", m_save->GetBufferPos(), m_save->GetBufferPos() / 1024);
-	fprintf(stderr, buf);
+	//sprintf(buf, "Loaded %d Bytes, %d KB", m_save->GetBufferPos(), m_save->GetBufferPos() / 1024);
+	//fprintf(stderr, buf);
 	
 	return true;
 }

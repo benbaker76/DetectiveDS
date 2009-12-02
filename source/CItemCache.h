@@ -17,6 +17,7 @@ enum ItemLocation
 class CCharacter;
 class CItem;
 class CRoom;
+class CSave;
 
 class CItemCache
 {
@@ -44,6 +45,9 @@ public:
 	CItem* GetItem(int index) const { return m_itemArray[index]; }
 	
 	int ItemCount() const { return m_itemCount; }
+	
+	void Save(CSave* pSave);
+	void Load(CSave* pSave);
 	
 private:
 	CollisionType m_colType;

@@ -131,13 +131,8 @@ enum DstRect
 	DSTRECT_BULB
 };
 
-class CRoomAnim : public CAnimation
-{
-public:
-private:
-};
-
 class CDoor;
+class CSave;
 
 class CRoom
 {
@@ -164,8 +159,14 @@ public:
 	
 	void SetOverlay(Map* pOverlay) { m_pOverlay = pOverlay; }
 	void SetOverlay(Map* pOverlay, int overlayY) { m_pOverlay = pOverlay; m_overlayY = overlayY; }
+	
+	Map* GetOverlay() const { return m_pOverlay; }
+	
 	void SetMap(Map* pMap) { m_pMap = pMap; }
+	Map* GetMap() const { return m_pMap; }
+	
 	void SetColMap(const u8* pColMap) { m_pColMap = pColMap; }
+	const u8* GetColMap() const { return m_pColMap; }
 	
 	void SetPalette(u16* pPalette) { dmaCopy(pPalette, BG_PALETTE_SUB, 512); }
 	void RestorePalette() { dmaCopy(m_pMap->pPalette, BG_PALETTE_SUB, m_pMap->PaletteLen); }
@@ -190,6 +191,9 @@ public:
 	int CentreY() const { return m_centreY; }
 	u8 ColMap(int x, int y);
 	bool GetColMapRect(CollisionType, Rect** rect);
+	
+	void Save(CSave* pSave);
+	void Load(CSave* pSave);
 
 private:
 	RoomType m_roomType;

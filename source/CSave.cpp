@@ -124,6 +124,11 @@ void CSave::ReadBool(bool* value)
 	*value = m_pBuffer[m_bufferPos++];
 }
 
+bool CSave::ReadBool()
+{
+	return m_pBuffer[m_bufferPos++];
+}
+
 void CSave::ReadFloat(float* value)
 {
 	IFConvert ifconvert;
@@ -172,14 +177,12 @@ void CSave::ReadSize(Size* pSize)
 void CSave::ReadCharacter(CCharacter** pCharacter)
 {
 	byte charType;
+	*pCharacter = NULL;
 	
 	ReadByte((byte*) &charType);
 	
 	if(charType == -1)
-	{
-		*pCharacter = NULL;
 		return;
-	}
 	
 	for(int i=0; i<MAX_CHARACTERS; i++)
 	{
@@ -187,7 +190,7 @@ void CSave::ReadCharacter(CCharacter** pCharacter)
 		{
 			*pCharacter = m_characterArray[i];
 			
-			break;
+			return;
 		}
 	}
 }
@@ -195,14 +198,12 @@ void CSave::ReadCharacter(CCharacter** pCharacter)
 void CSave::ReadRoom(CRoom** pRoom)
 {
 	byte roomType;
+	*pRoom = NULL;
 
 	ReadByte((byte*) &roomType);
 	
 	if(roomType == -1)
-	{
-		*pRoom = NULL;
 		return;
-	}
 	
 	for(int i=0; i<MAX_ROOMS; i++)
 	{
@@ -210,7 +211,28 @@ void CSave::ReadRoom(CRoom** pRoom)
 		{
 			*pRoom = m_roomArray[i];
 			
-			break;
+			return;
+		}
+	}
+}
+
+void CSave::ReadItem(CItem** pItem)
+{
+	byte itemType;
+	*pItem = NULL;
+
+	ReadByte((byte*) &itemType);
+	
+	if(itemType == -1)
+		return;
+	
+	for(int i=0; i<MAX_ITEMS; i++)
+	{
+		if(m_itemArray[i]->GetItemType() == itemType)
+		{
+			*pItem = m_itemArray[i];
+			
+			return;
 		}
 	}
 }
@@ -218,14 +240,12 @@ void CSave::ReadRoom(CRoom** pRoom)
 void CSave::ReadDoor(CDoor** pDoor)
 {
 	int doorId;
+	*pDoor = NULL;
 
 	ReadUInt32((u32*)&doorId);
 	
 	if(doorId == -1)
-	{
-		*pDoor = NULL;
 		return;
-	}
 	
 	for(int i=0; i<MAX_ROOMS; i++)
 	{
@@ -333,6 +353,14 @@ void CSave::WriteRoom(CRoom* pRoom)
 		WriteByte(-1);
 	else
 		WriteByte(pRoom->GetRoomType());
+}
+
+void CSave::WriteItem(CItem* pItem)
+{
+	if(pItem == NULL)
+		WriteByte(-1);
+	else
+		WriteByte(pItem->GetItemType());
 }
 
 void CSave::WriteDoor(CDoor* pDoor)

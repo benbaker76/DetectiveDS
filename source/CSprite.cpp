@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include "CSprite.h"
+#include "CSave.h"
 #include "TDG.h"
 
 CSprite::CSprite(SpriteType spriteType, const u32* pBmp, const u32* frameArray, int frameTotal)
@@ -188,3 +189,48 @@ void CSprite::ResetAnimation()
 	m_frameNum = 0;
 	m_frameCount = 0;
 }
+
+void CSprite::Save(CSave* pSave)
+{
+	pSave->WriteByte(m_frameType);
+	
+	pSave->WriteUInt32(m_frameNum);
+	pSave->WriteUInt32(m_frameTotal);
+	pSave->WriteUInt32(m_frameCount);
+	
+	pSave->WriteUInt32(m_oamIndex);
+	pSave->WriteUInt32(m_priority);
+	
+	pSave->WriteUInt32(m_x);
+	pSave->WriteUInt32(m_y);
+	
+	pSave->WriteUInt32(m_alpha);
+	
+	pSave->WriteBool(m_hFlip);
+	pSave->WriteBool(m_sub);
+	
+	pSave->WriteBool(m_loop);
+}
+
+void CSprite::Load(CSave* pSave)
+{
+	pSave->ReadByte((byte*)&m_frameType);
+	
+	pSave->ReadUInt32((u32*)&m_frameNum);
+	pSave->ReadUInt32((u32*)&m_frameTotal);
+	pSave->ReadUInt32((u32*)&m_frameCount);
+	
+	pSave->ReadUInt32((u32*)&m_oamIndex);
+	pSave->ReadUInt32((u32*)&m_priority);
+	
+	pSave->ReadUInt32((u32*)&m_x);
+	pSave->ReadUInt32((u32*)&m_y);
+	
+	pSave->ReadUInt32((u32*)&m_alpha);
+	
+	pSave->ReadBool(&m_hFlip);
+	pSave->ReadBool(&m_sub);
+	
+	pSave->ReadBool(&m_loop);
+}
+

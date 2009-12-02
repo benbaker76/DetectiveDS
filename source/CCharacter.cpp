@@ -751,23 +751,9 @@ void CCharacter::Save(CSave* pSave)
 	
 	pSave->WriteBool(m_goalMode);
 	
-	pSave->WriteUInt32(m_goalManager->GetGoalPosition());
+	m_goalManager->Save(pSave);
 	
-	for(int i=0; i<MAX_GOALS; i++)
-	{
-		CGoal* pGoal = m_goalManager->GetGoal(i);
-		
-		if(pGoal != NULL)
-			pGoal->Save(pSave);
-	}
-	
-	//m_goalManager->ResetGoals();
-	//m_goalManager->SetGoalPosition(0);
-	
-	//m_pHeadSprite->Reset();
-	//m_pBodySprite->Reset();
-	
-	//SetHFlip(false);
+	m_itemCache->Save(pSave);
 }
 
 void CCharacter::Load(CSave* pSave)
@@ -795,26 +781,7 @@ void CCharacter::Load(CSave* pSave)
 	
 	pSave->ReadBool(&m_goalMode);
 	
-	u32 goalPosition;
-	pSave->ReadUInt32(&goalPosition);
-	m_goalManager->SetGoalPosition(goalPosition);
-
-	for(int i=0; i<MAX_GOALS; i++)
-	{
-		CGoal* pGoal = m_goalManager->GetGoal(i);
-		
-		if(pGoal != NULL)
-			pGoal->Load(pSave);
-	}
+	m_goalManager->Load(pSave);
 	
-	//m_goalManager->ResetGoals();
-	//m_goalManager->SetGoalPosition(0);
-	
-	//m_pHeadSprite->Reset();
-	//m_pBodySprite->Reset();
-	
-	//SetHFlip(false);
-	
-	Face(m_facing);
-	SetCharacterMode(m_characterMode);
+	m_itemCache->Load(pSave);
 }

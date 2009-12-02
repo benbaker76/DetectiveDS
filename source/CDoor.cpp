@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "CDoor.h"
+#include "CSave.h"
 
 CDoor::CDoor(DoorType doorType, DoorState doorState, CRoom* pRoomIn, CRoom* pRoomOut, ItemType keyItemType)
 {
@@ -116,5 +117,15 @@ void CDoor::Draw(CRoom* pCurrentRoom)
 				m_pRoomOut->Draw();
 		}
 	}
+}
+
+void CDoor::Save(CSave* pSave)
+{
+	pSave->WriteByte(m_doorState);
+}
+
+void CDoor::Load(CSave* pSave)
+{
+	pSave->ReadByte((byte*)&m_doorState);
 }
 

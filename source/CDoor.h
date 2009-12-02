@@ -38,6 +38,7 @@ enum DoorRect
 };
 
 class CRoom;
+class CSave;
 
 class CDoor
 {
@@ -66,6 +67,9 @@ public:
 	bool Hidden() const { return m_hidden; }
 	
 	int GetDoorId() const { return m_doorId; }
+	
+	void Save(CSave* pSave);
+	void Load(CSave* pSave);
 
 private:
 	int m_doorId;

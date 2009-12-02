@@ -70,7 +70,7 @@ public:
 	void Reset();
 	void DrawIcon(IconType iconType, int x, int y, bool sub);
 	void DrawItem(ItemType itemType, int x, int y, bool sub);
-	void DrawBox(int x, int y);
+	IconType DrawBox(int x, int y);
 	IconType CheckIconHit(int x, int y);
 	
 	MenuMode GetMenuMode() const { return m_menuMode; }

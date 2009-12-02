@@ -1,6 +1,7 @@
 #include <nds.h>
 #include "CItem.h"
 #include "CItemCache.h"
+#include "CSave.h"
 
 CItem::CItem(ItemType itemType, int itemAttribs)
 {
@@ -31,3 +32,18 @@ CItem::CItem(ItemType itemType, int itemAttribs, int itemCount)
 CItem::~CItem()
 {
 }
+
+void CItem::Save(CSave* pSave)
+{
+	pSave->WriteBool(m_locked);
+	
+	m_itemCache->Save(pSave);
+}
+
+void CItem::Load(CSave* pSave)
+{
+	pSave->ReadBool(&m_locked);
+	
+	m_itemCache->Load(pSave);
+}
+

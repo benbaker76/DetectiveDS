@@ -1198,25 +1198,25 @@ const char* g_askAboutMajorRandom[] =
 
 const char* g_iconName[] =
 {
-	"NONE",
-	"OPEN",
-	"EXAMINE",
-	"INVENTORY",
-	"DROP",
-	"SAVE",
-	"LOAD",
-	"SHOOT",
-	"ACCUSE",
-	"DOOR_OPEN",
-	"DOOR_CLOSE",
-	"USE_KEY",
-	"QUESTION",
-	"READ",
-	"CONSUME",
-	"USE",
-	"TIME",
-	"PLACE",
-	"BAG"
+	"           ",
+	"    OPEN   ",
+	"  EXAMINE  ",
+	" INVENTORY ",
+	"    DROP   ",
+	"    SAVE   ",
+	"    LOAD   ",
+	"   SHOOT   ",
+	"   ACCUSE  ",
+	" OPEN DOOR ",
+	"CLOSE DOOR ",
+	"  USE KEY  ",
+	" QUESTION  ",
+	"    READ   ",
+	"  CONSUME  ",
+	"    USE    ",
+	"   PAUSE   ",
+	"   PUT IN  ",
+	"    BAG    "
 };
 
 const char* g_roomName[MAX_ROOMS] =
@@ -1305,7 +1305,25 @@ const char* g_enterRoomText[MAX_ROOMS] =
 	"YOU ARE IN THE SEWERS"
 };
 
-const char* g_KeyboardText[] =
+const char* g_saveName[] =
+{
+	"/TDG/Data/Save01.dat",
+	"/TDG/Data/Save02.dat",
+	"/TDG/Data/Save03.dat",
+	"/TDG/Data/Save04.dat",
+	"/TDG/Data/Save05.dat"
+};
+
+const char* g_saveText[] =
+{
+	"Save Slot 01",
+	"Save Slot 02",
+	"Save Slot 03",
+	"Save Slot 04",
+	"Save Slot 05"
+};
+
+const char* g_keyboardText[] =
 {
 	"    1 2 3 4 5 6 7 8 9 0 EXIT    ",
 	"                                ",
@@ -1316,7 +1334,7 @@ const char* g_KeyboardText[] =
 	"      Z X C V B N M  SPACE      "
 };
 
-const char* g_KeyboardHit[] =
+const char* g_keyboardHit[] =
 {
 	"\000\000\000\0001\0002\0003\0004\0005\0006\0007\0008\0009\0000\000\e\e\e\e\000\000\000\000",
 	"\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000",

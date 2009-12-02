@@ -1,6 +1,7 @@
 #include <nds.h>
 #include <math.h>
 #include "CAnimation.h"
+#include "CSave.h"
 
 CAnimation::CAnimation(AnimationType animType, int startDelay, int frameRate, int frameTotal)
 {
@@ -90,4 +91,34 @@ bool CAnimation::Update()
 	}
 	
 	return false;
+}
+
+void CAnimation::Save(CSave* pSave)
+{
+	pSave->WriteByte(m_animType);
+	pSave->WriteByte(m_animState);
+	pSave->WriteByte(m_animMode);
+	
+	pSave->WriteUInt32(m_startDelay);
+	pSave->WriteUInt32(m_frameNum);
+	pSave->WriteUInt32(m_frameCount);
+	pSave->WriteUInt32(m_frameTotal);
+	pSave->WriteUInt32(m_frameRate);
+	
+	pSave->WriteBool(m_ping);
+}
+
+void CAnimation::Load(CSave* pSave)
+{
+	pSave->ReadByte((byte*)&m_animType);
+	pSave->ReadByte((byte*)&m_animState);
+	pSave->ReadByte((byte*)&m_animMode);
+	
+	pSave->ReadUInt32((u32*)&m_startDelay);
+	pSave->ReadUInt32((u32*)&m_frameNum);
+	pSave->ReadUInt32((u32*)&m_frameCount);
+	pSave->ReadUInt32((u32*)&m_frameTotal);
+	pSave->ReadUInt32((u32*)&m_frameRate);
+	
+	pSave->ReadBool(&m_ping);
 }

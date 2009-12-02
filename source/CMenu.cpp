@@ -80,6 +80,9 @@ void CMenu::Draw()
 
 void CMenu::Hide()
 {
+	DrawString(g_iconName[ICON_NONE], 20, 15, false);
+	//DrawString(g_iconName[ICON_NONE], 20, 22, false);
+	
 	ClearIcons();
 	HideBox();
 	Draw();
@@ -111,13 +114,13 @@ void CMenu::HideBox()
 	oamSet(&oamMain, 122, 0, 0, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxBox, 0, false, true, false, false, false);
 }
 
-void CMenu::DrawBox(int x, int y)
+IconType CMenu::DrawBox(int x, int y)
 {
 	int mapX = x / 8;
 	int mapY = y / 8;
 	
 	if(mapX < 21 || mapX > 30 || mapY < 16 || mapY > 22)
-		return;
+		return ICON_NONE;
 	
 	for(int y=0; y<3; y++)
 		for(int x=0; x<3; x++)
@@ -125,10 +128,18 @@ void CMenu::DrawBox(int x, int y)
 				if(m_iconArray[x + y * ICON_WIDTH] != NULL)
 				{
 					oamSet(&oamMain, 122, MENU_X + (x * ICON_WIDTH * 8) - 2, MENU_Y + (y * ICON_HEIGHT * 8) - 2, 0, 0, SpriteSize_32x32, SpriteColorFormat_256Color, m_gfxBox, 0, false, false, false, false, false);
-					return;
+					
+					IconType iconType = m_iconArray[x + y * ICON_WIDTH];
+									
+					DrawString(g_iconName[iconType], 20, 15, false);
+					//DrawString(g_iconName[iconType], 20, 22, false);
+				
+					return iconType;
 				}
 				
 	HideBox();
+	
+	return ICON_NONE;
 }
 
 IconType CMenu::CheckIconHit(int x, int y)

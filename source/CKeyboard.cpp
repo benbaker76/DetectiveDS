@@ -35,7 +35,7 @@ void CKeyboard::Show(const char* string)
 	DrawString(string, 1, 11, false);
 	
 	for(int i=0; i<7; i++)
-		DrawString(g_KeyboardText[i], 0, 16 + i, false);
+		DrawString(g_keyboardText[i], 0, 16 + i, false);
 		
 	m_pCursor->SetPosition(m_charPos + 1, 12);
 	DrawBox();
@@ -60,7 +60,7 @@ void CKeyboard::DrawBox()
 {
 	HideBox();
 	
-	char c = g_KeyboardHit[m_y - KEYBOARD_TOP][m_x];
+	char c = g_keyboardHit[m_y - KEYBOARD_TOP][m_x];
 
 	switch(c)
 	{
@@ -178,7 +178,7 @@ char CKeyboard::CheckKeyTouch(int x, int y)
 
 char CKeyboard::ProcessKey()
 {
-	char c = g_KeyboardHit[m_y - KEYBOARD_TOP][m_x];
+	char c = g_keyboardHit[m_y - KEYBOARD_TOP][m_x];
 	
 	switch(c)
 	{

@@ -1,5 +1,6 @@
 #include "CGoalManager.h"
 #include "CPathFinder.h"
+#include "CSave.h"
 
 CGoalManager::CGoalManager()
 {
@@ -94,5 +95,31 @@ void CGoalManager::GotoGoal()
 			
 			break;
 		}
+	}
+}
+
+void CGoalManager::Save(CSave* pSave)
+{
+	pSave->WriteUInt32(m_goalPosition);
+	
+	for(int i=0; i<MAX_GOALS; i++)
+	{
+		CGoal* pGoal = m_goalArray[i];
+		
+		if(pGoal != NULL)
+			pGoal->Save(pSave);
+	}
+}
+
+void CGoalManager::Load(CSave* pSave)
+{
+	pSave->ReadUInt32((uint32*)&m_goalPosition);
+
+	for(int i=0; i<MAX_GOALS; i++)
+	{
+		CGoal* pGoal = m_goalArray[i];
+		
+		if(pGoal != NULL)
+			pGoal->Load(pSave);
 	}
 }

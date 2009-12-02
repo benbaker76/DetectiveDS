@@ -142,13 +142,21 @@ private:
 	CConsole* m_console;
 	CKeyboard* m_keyboard;
 	
+	CCharacter* m_questionMark;
+	
 	CCharacter* m_characterArray[MAX_CHARACTERS];
 	CSprite* m_spriteArray[MAX_SPRITES];
 	CRoom* m_roomArray[MAX_ROOMS];
 	CItem* m_itemArray[MAX_ITEMS];
 	CEvent* m_eventArray[MAX_EVENTS];
 	
-	CCharacter* m_question;
+	CItem* m_useItem;
+	CItem* m_withItem;
+	CItem* m_placeItem;
+	CItem* m_inItem;
+	
+	CCharacter* m_questionCharacter;
+	CCharacter* m_speakCharacter;
 	
 	QuestionMode m_questionMode;
 	QuestionType m_questionType;
@@ -157,15 +165,13 @@ private:
 	UseType m_useType;
 	
 	OpenMode m_openMode;
-	
 	KeyboardMode m_keyboardMode;
+	GameOverMode m_gameOverMode;
+	EndingMode m_endingMode;
+	DisplayMode m_displayMode;
 	
-	CItem* m_useItem;
-	CItem* m_withItem;
-	CItem* m_placeItem;
-	CItem* m_inItem;
-	CCharacter* m_questionCharacter;
-	CCharacter* m_speakCharacter;
+	IconType m_lastIconType;
+	SongType m_songType;
 	
 	bool m_gargoyleActive[3];
 
@@ -173,9 +179,7 @@ private:
 	CCharacter* m_snide;
 	CWatch* m_watch;
 	CTimer* m_timer;
-	
-	GameOverMode m_gameOverMode;
-	EndingMode m_endingMode;
+	CSave* m_save;
 	
 	int m_frameCount;
 	
@@ -196,14 +200,6 @@ private:
 	mm_sfxhand m_fireplace;
 	//mm_sfxhand m_waterdrip;
 	
-	IconType m_lastIconType;
-	
-	DisplayMode m_displayMode;
-	
-	SongType m_songType;
-	
-	CSave* m_save;
-	
 	int m_bg2MainVScroll;
 	
 	void InitData(int param);
@@ -223,6 +219,7 @@ private:
 	int ShowItemMenu(const char* text, CItemCache* pItemCache, CItem* pItemExclude);
 	bool ShowVisibleCharactersMenu();
 	void ShowCharacterMenu(const char* text, CCharacter* pCharacterExclude);
+	void ShowSaveMenu(const char* text);
 	void ProcessMenu(int x, int y);
 	void PostProcessMenu();
 	
@@ -251,8 +248,8 @@ private:
 	void PlaySong(SongType songType);
 	void StopSong();
 	
-	void Save();
-	bool Load();
+	void Save(const char* fileName);
+	bool Load(const char* fileName);
 };
 
 #endif

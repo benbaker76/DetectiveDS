@@ -31,6 +31,7 @@ public:
 	void ReadUInt16(u16* value);
 	void ReadByte(byte* value);
 	void ReadBool(bool* value);
+	bool ReadBool();
 	void ReadFloat(float* value);
 	void ReadString(char* value);
 	void ReadRect(Rect* pRect);
@@ -39,6 +40,7 @@ public:
 	void ReadSize(Size* pSize);
 	void ReadCharacter(CCharacter** pCharacter);
 	void ReadRoom(CRoom** pRoom);
+	void ReadItem(CItem** pItem);
 	void ReadDoor(CDoor** pDoor);
 	void ReadPadding(int count);
 
@@ -55,6 +57,7 @@ public:
 	void WriteSize(Size* pSize);
 	void WriteCharacter(CCharacter* pCharacter);
 	void WriteRoom(CRoom* pRoom);
+	void WriteItem(CItem* pItem);
 	void WriteDoor(CDoor* pDoor);
 	void WritePadding(int count);
 	

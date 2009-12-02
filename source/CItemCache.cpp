@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "CItem.h"
 #include "CItemCache.h"
+#include "CSave.h"
 
 CItemCache::CItemCache(ItemLocation itemLocation, void* pParent)
 {
@@ -159,4 +160,21 @@ bool CItemCache::ReplaceItem(CItem* pOldItem, CItem* pNewItem)
 	}
 	
 	return false;
+}
+
+void CItemCache::Save(CSave* pSave)
+{
+	for(int i=0; i<m_itemCount; i++)
+		pSave->WriteItem(m_itemArray[i]);
+}
+
+void CItemCache::Load(CSave* pSave)
+{
+	for(int i=0; i<m_itemCount; i++)
+	{
+		pSave->ReadItem(&m_itemArray[i]);
+		
+		if(m_itemArray[i] != NULL)
+			m_itemArray[i]->SetParent(this);
+	}
 }

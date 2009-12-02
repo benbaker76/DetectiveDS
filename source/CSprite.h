@@ -55,6 +55,8 @@ enum SpriteType
 	SPRITE_QUESTION_BODY
 };
 
+class CSave;
+
 class CSprite
 {
 public:
@@ -86,6 +88,9 @@ public:
 	
 	void Reset();
 	void ResetAnimation();
+	
+	void Save(CSave* pSave);
+	void Load(CSave* pSave);
 
 private:
 	SpriteType m_spriteType;
@@ -98,17 +103,18 @@ private:
 	
 	bool m_bitmapSprite;
 	
+	u16* m_gfxMain;
+	u16* m_gfxSub;
+	
 	const u32* m_frameArray;
 	FrameType m_frameType;
+	
 	int m_frameNum;
 	int m_frameTotal;
 	int m_frameCount;
 	
 	int m_oamIndex;
 	int m_priority;
-	
-	u16* m_gfxMain;
-	u16* m_gfxSub;
 	
 	int m_x;
 	int m_y;

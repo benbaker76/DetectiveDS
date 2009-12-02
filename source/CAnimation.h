@@ -22,6 +22,8 @@ enum AnimationMode
 	ANIMMODE_RUNNING
 };
 
+class CSave;
+
 class CAnimation
 {
 public:
@@ -36,6 +38,9 @@ public:
 	AnimationState GetState() const { return m_animState; }
 	void SetFrame(int frameNum) { m_frameNum = frameNum; }
 	int FrameNum() const { return m_frameNum; }
+	
+	void Save(CSave* pSave);
+	void Load(CSave* pSave);
 
 private:
 

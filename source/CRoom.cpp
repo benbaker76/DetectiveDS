@@ -4,6 +4,7 @@
 #include "Text.h"
 #include "lz77.h"
 #include "Gfx.h"
+#include "CSave.h"
 
 CRoom::CRoom(RoomType roomType, Map* pMap, Map* pOverlay, const unsigned char* pColMap, int centreY)
 {
@@ -470,5 +471,47 @@ u8 CRoom::ColMap(int x, int y)
 	}
 	
 	return 0;
+}
+
+void CRoom::Save(CSave* pSave)
+{
+	for(int i=0; i<MAX_ROOM_DST_RECT; i++)
+	{
+		if(m_animArray[i] != NULL)
+			m_animArray[i]->Save(pSave);
+	}
+
+	for(int i=0; i<MAX_DOORS; i++)
+	{
+		if(m_doorArray[i] != NULL)
+			m_doorArray[i]->Save(pSave);
+	}
+	
+	for(int i=0; i<MAX_ITEM_CACHE; i++)
+	{
+		if(m_itemCache[i] != NULL)
+			m_itemCache[i]->Save(pSave);
+	}
+}
+
+void CRoom::Load(CSave* pSave)
+{
+	for(int i=0; i<MAX_ROOM_DST_RECT; i++)
+	{
+		if(m_animArray[i] != NULL)
+			m_animArray[i]->Load(pSave);
+	}
+	
+	for(int i=0; i<MAX_DOORS; i++)
+	{
+		if(m_doorArray[i] != NULL)
+			m_doorArray[i]->Load(pSave);
+	}
+	
+	for(int i=0; i<MAX_ITEM_CACHE; i++)
+	{
+		if(m_itemCache[i] != NULL)
+			m_itemCache[i]->Load(pSave);
+	}
 }
 

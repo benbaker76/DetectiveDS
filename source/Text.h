@@ -15,8 +15,10 @@ extern const char* g_askAboutMajorRandom[];
 extern const char* g_iconName[];
 extern const char* g_roomName[];
 extern const char* g_enterRoomText[];
-extern const char* g_KeyboardText[];
-extern const char* g_KeyboardHit[];
+extern const char* g_saveName[];
+extern const char* g_saveText[];
+extern const char* g_keyboardText[];
+extern const char* g_keyboardHit[];
 
 void DrawChar(char c, int x, int y, bool sub);
 void DrawString(const char* string, int x, int y, bool sub);

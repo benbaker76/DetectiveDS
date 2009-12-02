@@ -99,6 +99,8 @@ typedef struct
 	CItem* ItemDst;
 } USEITEM, *PUSEITEM;
 
+class CSave;
+
 class CItem
 {
 public:
@@ -121,6 +123,9 @@ public:
 	
 	void SetLocked(bool locked) { m_locked = locked; }
 	bool GetLocked() const { return m_locked; }
+	
+	void Save(CSave* pSave);
+	void Load(CSave* pSave);
 	
 private:
 	ItemType m_itemType;

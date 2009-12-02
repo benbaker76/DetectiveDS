@@ -142,6 +142,8 @@ void CFxFade::UpdateVBlank()
 					(*m_callback)(0);
 			}
 		break;
+	default:
+		break;
 	}
 }
 

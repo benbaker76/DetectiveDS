@@ -29,6 +29,9 @@ public:
 	CGoal* CurrentGoal() const { return m_goalArray[m_goalPosition]; }
 	void NextGoal();
 	
+	void Save(CSave* pSave);
+	void Load(CSave* pSave);
+	
 private:
 
 	CGoal* m_goalArray[MAX_GOALS];
