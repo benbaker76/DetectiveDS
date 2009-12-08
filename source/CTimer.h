@@ -3,6 +3,8 @@
 
 #include <nds.h>
 
+class CSave;
+
 class CTime
 {
 public:
@@ -18,9 +20,10 @@ public:
 	int Minutes;
 	int Seconds;
 	int MilliSeconds;
+	
+	void Save(CSave* pSave);
+	void Load(CSave* pSave);
 };
-
-class CSave;
 
 class CTimer
 {

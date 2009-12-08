@@ -3,6 +3,22 @@
 #include "CTimer.h"
 #include "CSave.h"
 
+void CTime::Save(CSave* pSave)
+{
+	pSave->WriteUInt32(Hours);
+	pSave->WriteUInt32(Minutes);
+	pSave->WriteUInt32(Seconds);
+	pSave->WriteUInt32(MilliSeconds);
+}
+
+void CTime::Load(CSave* pSave)
+{
+	pSave->ReadUInt32((u32*)&Hours);
+	pSave->ReadUInt32((u32*)&Minutes);
+	pSave->ReadUInt32((u32*)&Seconds);
+	pSave->ReadUInt32((u32*)&MilliSeconds);
+}
+
 CTimer::CTimer()
 {
 	m_pCurrentTime = new CTime(0, 0, 0, 0);
@@ -91,18 +107,11 @@ void CTimer::ToString()
 
 void CTimer::Save(CSave* pSave)
 {
-	pSave->WriteUInt32(m_pCurrentTime->Hours);
-	pSave->WriteUInt32(m_pCurrentTime->Minutes);
-	pSave->WriteUInt32(m_pCurrentTime->Seconds);
-	pSave->WriteUInt32(m_pCurrentTime->MilliSeconds);
+	m_pCurrentTime->Save(pSave);
 }
 
 void CTimer::Load(CSave* pSave)
 {
-	pSave->ReadUInt32((u32*)&m_pCurrentTime->Hours);
-	pSave->ReadUInt32((u32*)&m_pCurrentTime->Minutes);
-	pSave->ReadUInt32((u32*)&m_pCurrentTime->Seconds);
-	pSave->ReadUInt32((u32*)&m_pCurrentTime->MilliSeconds);
+	m_pCurrentTime->Load(pSave);
 }
-
 

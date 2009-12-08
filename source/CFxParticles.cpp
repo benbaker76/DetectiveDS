@@ -11,7 +11,8 @@ void CFxParticles::Initialize()
 	m_frameCount = 0;
 	m_xOffset = 0;
 	m_perspective = 300;
-	m_centreX = (CFx::GetFxMode() == FXMODE_SKULL ? 152 : 88);
+	m_position.X = 0;
+	m_position.Y = 0;
 	m_ratio = 0;
 	m_angleSpeed = PI / 24;
 	
@@ -171,8 +172,8 @@ void CFxParticles::UpdateVBlank()
 			float b = (float) cos(m_particleArray[i].Angle) * m_particleArray[i].Radius;
 			float scalar = m_perspective / (b + m_perspective);
 			
-			m_particleArray[i].X = (int) (m_ratio * a * scalar + m_centreX);
-			m_particleArray[i].Y = (int) (152 - (m_ratio * (b * scalar / 4 + m_particleArray[i].StartY)));
+			m_particleArray[i].X = (int) (m_ratio * a * scalar + m_position.X);
+			m_particleArray[i].Y = (int) (m_position.Y - (m_ratio * (b * scalar / 4 + m_particleArray[i].StartY)));
 			
 			if(CFx::GetFxMode() == FXMODE_SKULL)
 				m_particleArray[i].Lifetime = (int) (m_pong ? m_ratio * 7 : ((1 - m_ratio) * 7) + 8);
@@ -181,7 +182,7 @@ void CFxParticles::UpdateVBlank()
 			
 			dmaCopy((CFx::GetFxMode() == FXMODE_SKULL ? sprite_fx_skullTiles : sprite_fx_hourglassTiles) + (m_particleArray[i].Lifetime * 64), m_particleArray[i].Gfx, 16 * 16);
 			
-			oamSet(&oamSub, PARTICLE_START + i, m_particleArray[i].X, m_particleArray[i].Y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, -1, false, false, false, false, false);
+			oamSet(&oamSub, PARTICLE_START + i, (m_particleArray[i].X - m_xOffset), m_particleArray[i].Y, 0, 0, SpriteSize_16x16, SpriteColorFormat_256Color, m_particleArray[i].Gfx, -1, false, false, false, false, false);
 		}
 		break;
 	default:

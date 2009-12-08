@@ -297,30 +297,33 @@ uint64 CCharacter::Update(CRoom* pCurrentRoom, uint64 eventFlags)
 							{
 								DoorState doorState = pDoor->GetDoorState();
 								
-								if(pDoor->GetKeyItemType() != ITEM_NONE)
+								if(doorState != DOORSTATE_OPENING)
 								{
-									if(m_keyItemType == pDoor->GetKeyItemType())
-									{							
-										if(doorState == DOORSTATE_LOCKED || doorState == DOORSTATE_CLOSED)
-											pDoor->SetDoorState(DOORSTATE_OPEN);
-									}
-									else
+									if(pDoor->GetKeyItemType() != ITEM_NONE)
 									{
-										if(doorState == DOORSTATE_LOCKED)
-										{
-											if(pGoal->GotoId() != 0)
-												m_goalManager->GotoGoal();
-												
-											SetFrameType(FRAME_NONE);
-												
-											break;
+										if(m_keyItemType == pDoor->GetKeyItemType())
+										{							
+											if(doorState == DOORSTATE_LOCKED || doorState == DOORSTATE_CLOSED)
+												pDoor->SetDoorState(DOORSTATE_OPEN);
 										}
 										else
-											pDoor->SetDoorState(DOORSTATE_OPEN);
+										{
+											if(doorState == DOORSTATE_LOCKED)
+											{
+												if(pGoal->GotoId() != 0)
+													m_goalManager->GotoGoal();
+													
+												SetFrameType(FRAME_NONE);
+													
+												break;
+											}
+											else
+												pDoor->SetDoorState(DOORSTATE_OPEN);
+										}
 									}
+									else
+										pDoor->SetDoorState(DOORSTATE_OPEN);
 								}
-								else
-									pDoor->SetDoorState(DOORSTATE_OPEN);
 								
 								pDoor->Draw(pCurrentRoom);
 								m_pLastDoor = pDoor;

@@ -192,7 +192,7 @@ void CSprite::ResetAnimation()
 
 void CSprite::Save(CSave* pSave)
 {
-	pSave->WriteByte(m_frameType);
+	pSave->WriteUInt16(m_frameType);
 	
 	pSave->WriteUInt32(m_frameNum);
 	pSave->WriteUInt32(m_frameTotal);
@@ -214,7 +214,7 @@ void CSprite::Save(CSave* pSave)
 
 void CSprite::Load(CSave* pSave)
 {
-	pSave->ReadByte((byte*)&m_frameType);
+	pSave->ReadUInt16((u16*)&m_frameType);
 	
 	pSave->ReadUInt32((u32*)&m_frameNum);
 	pSave->ReadUInt32((u32*)&m_frameTotal);

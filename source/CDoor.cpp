@@ -98,6 +98,8 @@ void CDoor::Draw()
 		else
 			m_pRoomIn->MoveMap(m_rectArray[DOORRECT_SMALL_HIDDEN], m_rect);
 		break;
+	case DOORSTATE_OPENING:
+		break;
 	}
 }
 

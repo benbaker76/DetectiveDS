@@ -100,7 +100,7 @@ void CGame::InitData(int param)
 	m_itemArray[ITEM_AN_HOURGLASS] = new CItem(ITEM_AN_HOURGLASS, ITEMATTRIB_NONE);
 	m_itemArray[ITEM_A_GOLDEN_SKULL] = new CItem(ITEM_A_GOLDEN_SKULL, ITEMATTRIB_NONE);
 	m_itemArray[ITEM_A_RED_KEY] = new CItem(ITEM_A_RED_KEY, ITEMATTRIB_USE_KEY);
-	m_itemArray[ITEM_A_VACUUM_CLEANER] = new CItem(ITEM_A_VACUUM_CLEANER, ITEMATTRIB_NONE);
+	m_itemArray[ITEM_A_VACUUM_CLEANER] = new CItem(ITEM_A_VACUUM_CLEANER, ITEMATTRIB_VACUUM | ITEMATTRIB_OPEN);
 	m_itemArray[ITEM_WASHING_POWDER] = new CItem(ITEM_WASHING_POWDER, ITEMATTRIB_NONE);
 	m_itemArray[ITEM_A_DIRTY_SHIRT] = new CItem(ITEM_A_DIRTY_SHIRT, ITEMATTRIB_NONE);
 	m_itemArray[ITEM_ANGUS_MCFUNGUS] = new CItem(ITEM_ANGUS_MCFUNGUS, ITEMATTRIB_NONE);
@@ -216,23 +216,23 @@ void CGame::InitData(int param)
 	m_roomArray[ROOM_OUTSIDE3]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_OUTSIDE3], m_roomArray[ROOM_CLOCK], ITEM_NONE));
 	m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_HIDDEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_CELLAR], ITEM_NONE));
 	m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_DRAWING], ITEM_NONE));
-	m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_GARDEN], ITEM_NONE));
-	m_roomArray[ROOM_PASSAGE1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE1], m_roomArray[ROOM_REVEREND], ITEM_NONE));
-	m_roomArray[ROOM_PASSAGE1]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE1], m_roomArray[ROOM_OUTSIDE2], ITEM_NONE));
-	m_roomArray[ROOM_PASSAGE2]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE2], m_roomArray[ROOM_HALL1], ITEM_NONE));
-	m_roomArray[ROOM_PASSAGE2]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE2], m_roomArray[ROOM_HALL2], ITEM_NONE));
-	m_roomArray[ROOM_PASSAGE3]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE3], m_roomArray[ROOM_KITCHEN], ITEM_NONE));
-	m_roomArray[ROOM_PASSAGE3]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE3], m_roomArray[ROOM_CELLAR], ITEM_NONE));
+	m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPENING, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_GARDEN], ITEM_NONE));
+	m_roomArray[ROOM_PASSAGE1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPENING, m_roomArray[ROOM_PASSAGE1], m_roomArray[ROOM_REVEREND], ITEM_NONE));
+	m_roomArray[ROOM_PASSAGE1]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPENING, m_roomArray[ROOM_PASSAGE1], m_roomArray[ROOM_OUTSIDE2], ITEM_NONE));
+	m_roomArray[ROOM_PASSAGE2]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPENING, m_roomArray[ROOM_PASSAGE2], m_roomArray[ROOM_HALL1], ITEM_NONE));
+	m_roomArray[ROOM_PASSAGE2]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPENING, m_roomArray[ROOM_PASSAGE2], m_roomArray[ROOM_HALL2], ITEM_NONE));
+	m_roomArray[ROOM_PASSAGE3]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPENING, m_roomArray[ROOM_PASSAGE3], m_roomArray[ROOM_KITCHEN], ITEM_NONE));
+	m_roomArray[ROOM_PASSAGE3]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPENING, m_roomArray[ROOM_PASSAGE3], m_roomArray[ROOM_CELLAR], ITEM_NONE));
 	m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_REVEREND], ITEM_NONE));
 	m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_CYNTHIA], ITEM_NONE));
 	m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_DOCTOR], ITEM_NONE));
 	m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR4, new CDoor(DOOR_DOOR4, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_DINGLE], ITEM_A_HIDDEN_KEY));
 	m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR5, new CDoor(DOOR_DOOR5, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_OUTSIDE1], ITEM_NONE));
-	m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR6, new CDoor(DOOR_DOOR6, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_LANDING], ITEM_NONE));
-	m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR7, new CDoor(DOOR_DOOR7, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_PASSAGE2], ITEM_NONE));
+	m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR6, new CDoor(DOOR_DOOR6, DOORSTATE_OPENING, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_LANDING], ITEM_NONE));
+	m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR7, new CDoor(DOOR_DOOR7, DOORSTATE_OPENING, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_PASSAGE2], ITEM_NONE));
 	m_roomArray[ROOM_HALL2]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_LOCKED, m_roomArray[ROOM_HALL2], m_roomArray[ROOM_PROFESSOR], ITEM_A_BIG_IRON_KEY));
 	m_roomArray[ROOM_HALL2]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_HALL2], m_roomArray[ROOM_MAJOR], ITEM_NONE));
-	m_roomArray[ROOM_HALL2]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_HALL2], m_roomArray[ROOM_PASSAGE2], ITEM_NONE));
+	m_roomArray[ROOM_HALL2]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPENING, m_roomArray[ROOM_HALL2], m_roomArray[ROOM_PASSAGE2], ITEM_NONE));
 	m_roomArray[ROOM_HALL2]->SetDoor(DOOR_DOOR4, new CDoor(DOOR_DOOR4, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL2], m_roomArray[ROOM_SNIDE], ITEM_NONE));
 	m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_KITCHEN], ITEM_NONE));
 	m_roomArray[ROOM_HALL3]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_STAIRS], ITEM_NONE));
@@ -245,12 +245,12 @@ void CGame::InitData(int param)
 	m_roomArray[ROOM_HALL4]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL4], m_roomArray[ROOM_HALL3], ITEM_NONE));
 	m_roomArray[ROOM_HALL4]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL4], m_roomArray[ROOM_COOK], ITEM_A_HIDDEN_KEY));
 	m_roomArray[ROOM_HALL4]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL4], m_roomArray[ROOM_GABRIEL], ITEM_A_BUNCH_OF_KEYS));
-	m_roomArray[ROOM_LANDING]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_LANDING], m_roomArray[ROOM_HALL1], ITEM_NONE));
-	m_roomArray[ROOM_LANDING]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_LANDING], m_roomArray[ROOM_STAIRS], ITEM_NONE));
+	m_roomArray[ROOM_LANDING]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPENING, m_roomArray[ROOM_LANDING], m_roomArray[ROOM_HALL1], ITEM_NONE));
+	m_roomArray[ROOM_LANDING]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPENING, m_roomArray[ROOM_LANDING], m_roomArray[ROOM_STAIRS], ITEM_NONE));
 	m_roomArray[ROOM_KITCHEN]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_HIDDEN, m_roomArray[ROOM_KITCHEN], m_roomArray[ROOM_PASSAGE3], ITEM_NONE));
 	m_roomArray[ROOM_KITCHEN]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_CLOSED, m_roomArray[ROOM_KITCHEN], m_roomArray[ROOM_HALL3], ITEM_NONE));
-	m_roomArray[ROOM_KITCHEN]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_KITCHEN], m_roomArray[ROOM_DINING], ITEM_NONE));
-	m_roomArray[ROOM_STAIRS]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_LANDING], ITEM_NONE));
+	m_roomArray[ROOM_KITCHEN]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPENING, m_roomArray[ROOM_KITCHEN], m_roomArray[ROOM_DINING], ITEM_NONE));
+	m_roomArray[ROOM_STAIRS]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPENING, m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_LANDING], ITEM_NONE));
 	m_roomArray[ROOM_STAIRS]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_CLOSED, m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_HALL3], ITEM_NONE));
 	m_roomArray[ROOM_STAIRS]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPEN, m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_COURTYARD], ITEM_NONE));
 	m_roomArray[ROOM_STAIRS]->SetDoor(DOOR_DOOR4, new CDoor(DOOR_DOOR4, DOORSTATE_LOCKED, m_roomArray[ROOM_STAIRS], m_roomArray[ROOM_ANGUS_STAIRS], ITEM_A_BUNCH_OF_KEYS));
@@ -265,17 +265,17 @@ void CGame::InitData(int param)
 	m_roomArray[ROOM_LIBRARY]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_LIBRARY], m_roomArray[ROOM_HALL3], ITEM_NONE));	
 	m_roomArray[ROOM_LAUNDRY]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_LAUNDRY], m_roomArray[ROOM_HALL3], ITEM_NONE));
 	m_roomArray[ROOM_GARDEN]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_LOCKED, m_roomArray[ROOM_GARDEN], m_roomArray[ROOM_GRAVEYARD], ITEM_A_RED_KEY));
-	m_roomArray[ROOM_GARDEN]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_GARDEN], m_roomArray[ROOM_OUTSIDE4], ITEM_NONE));
+	m_roomArray[ROOM_GARDEN]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPENING, m_roomArray[ROOM_GARDEN], m_roomArray[ROOM_OUTSIDE4], ITEM_NONE));
 	m_roomArray[ROOM_GRAVEYARD]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_LOCKED, m_roomArray[ROOM_GRAVEYARD], m_roomArray[ROOM_GARDEN], ITEM_A_RED_KEY));
 	m_roomArray[ROOM_COURTYARD]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_COURTYARD], m_roomArray[ROOM_STAIRS], ITEM_NONE));
 	m_roomArray[ROOM_ANGUS_LANDING]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_LOCKED, m_roomArray[ROOM_ANGUS_LANDING], m_roomArray[ROOM_ANGUS_ROOM], ITEM_A_BUNCH_OF_KEYS));
-	m_roomArray[ROOM_ANGUS_LANDING]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_ANGUS_LANDING], m_roomArray[ROOM_ANGUS_STAIRS], ITEM_NONE));
+	m_roomArray[ROOM_ANGUS_LANDING]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPENING, m_roomArray[ROOM_ANGUS_LANDING], m_roomArray[ROOM_ANGUS_STAIRS], ITEM_NONE));
 	m_roomArray[ROOM_ANGUS_ROOM]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_LOCKED, m_roomArray[ROOM_ANGUS_ROOM], m_roomArray[ROOM_ANGUS_LANDING], ITEM_A_BUNCH_OF_KEYS));
-	m_roomArray[ROOM_ANGUS_ROOM]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_ANGUS_ROOM], m_roomArray[ROOM_ANGUS_SECRET], ITEM_NONE));
+	m_roomArray[ROOM_ANGUS_ROOM]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPENING, m_roomArray[ROOM_ANGUS_ROOM], m_roomArray[ROOM_ANGUS_SECRET], ITEM_NONE));
 	m_roomArray[ROOM_ANGUS_SECRET]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_ANGUS_SECRET], m_roomArray[ROOM_ANGUS_ROOM], ITEM_NONE));
 	m_roomArray[ROOM_ANGUS_STAIRS]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_LOCKED, m_roomArray[ROOM_ANGUS_STAIRS], m_roomArray[ROOM_STAIRS], ITEM_A_BUNCH_OF_KEYS));
-	m_roomArray[ROOM_ANGUS_STAIRS]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_ANGUS_STAIRS], m_roomArray[ROOM_ANGUS_LANDING], ITEM_NONE));
-	m_roomArray[ROOM_DINING]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_DINING], m_roomArray[ROOM_KITCHEN], ITEM_NONE));
+	m_roomArray[ROOM_ANGUS_STAIRS]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPENING, m_roomArray[ROOM_ANGUS_STAIRS], m_roomArray[ROOM_ANGUS_LANDING], ITEM_NONE));
+	m_roomArray[ROOM_DINING]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPENING, m_roomArray[ROOM_DINING], m_roomArray[ROOM_KITCHEN], ITEM_NONE));
 	
 	m_roomArray[ROOM_SNIDE]->AddItemCache(0, COL_FOUR_POSTER_BED);
 	m_roomArray[ROOM_SNIDE]->AddItemCache(1, COL_CHEST_OF_DRAWERS);
@@ -732,10 +732,15 @@ void CGame::InitData(int param)
 	// 2:20
 	m_eventArray[EVENT_START_GAME] = new CEvent(EVENT_START_GAME, new CTime(9, 10, 0, 0), EVENTFLAG_NONE, EVENTFLAG_NONE);
 	m_eventArray[EVENT_MURDER_DINGLE] = new CEvent(EVENT_MURDER_DINGLE, new CTime(9, 12, 0, 0), EVENTFLAG_READY_MURDER_DINGLE | EVENTFLAG_NONE, EVENTFLAG_MURDER_DINGLE); // 9:12
+
+	m_eventArray[EVENT_EVIDENCE_COUNT_6] = new CEvent(EVENT_EVIDENCE_COUNT_6, new CTime(9, RandomInt(20, 25), 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_EVIDENCE_COUNT_6 | EVENTFLAG_HALL3, EVENTFLAG_MURDER_CYNTHIA); // 9:15
+	m_eventArray[EVENT_EVIDENCE_COUNT_7] = new CEvent(EVENT_EVIDENCE_COUNT_7, new CTime(9, RandomInt(25, 30), 0, 0), EVENTFLAG_EVIDENCE_COUNT_7 | EVENTFLAG_HALL1, EVENTFLAG_MURDER_DOCTOR); // 9:17
+	m_eventArray[EVENT_EVIDENCE_COUNT_8] = new CEvent(EVENT_EVIDENCE_COUNT_8, new CTime(9, RandomInt(30, 35), 0, 0), EVENTFLAG_EVIDENCE_COUNT_8 | EVENTFLAG_HALL1, EVENTFLAG_MURDER_GABRIEL); // 9:18
+	
 	m_eventArray[EVENT_LOCK_DINGLES_ROOM] = new CEvent(EVENT_LOCK_DINGLES_ROOM, new CTime(9, 20, 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_HALL3, EVENT_LOCK_DINGLES_ROOM); // 9:20
-	m_eventArray[EVENT_MURDER_CYNTHIA] = new CEvent(EVENT_MURDER_CYNTHIA, new CTime(9, 27, 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_HALL3, EVENTFLAG_MURDER_CYNTHIA); // 9:30
-	m_eventArray[EVENT_MURDER_DOCTOR] = new CEvent(EVENT_MURDER_DOCTOR, new CTime(9, 42, 0, 0), EVENTFLAG_MURDER_CYNTHIA | EVENTFLAG_HALL1, EVENTFLAG_MURDER_DOCTOR); // 10:00
-	m_eventArray[EVENT_MURDER_GABRIEL] = new CEvent(EVENT_MURDER_GABRIEL, new CTime(9, 57, 0, 0), EVENTFLAG_MURDER_DOCTOR | EVENTFLAG_HALL1, EVENTFLAG_MURDER_GABRIEL); // 10:30
+	m_eventArray[EVENT_MURDER_CYNTHIA] = new CEvent(EVENT_MURDER_CYNTHIA, new CTime(9, RandomInt(20, 30), 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_HALL3, EVENTFLAG_MURDER_CYNTHIA); // 9:30
+	m_eventArray[EVENT_MURDER_DOCTOR] = new CEvent(EVENT_MURDER_DOCTOR, new CTime(9, RandomInt(35, 45), 0, 0), EVENTFLAG_MURDER_CYNTHIA | EVENTFLAG_HALL1, EVENTFLAG_MURDER_DOCTOR); // 10:00
+	m_eventArray[EVENT_MURDER_GABRIEL] = new CEvent(EVENT_MURDER_GABRIEL, new CTime(10, RandomInt(0, 30), 0, 0), EVENTFLAG_MURDER_DOCTOR | EVENTFLAG_HALL1, EVENTFLAG_MURDER_GABRIEL); // 10:30
 	m_eventArray[EVENT_REMOVE_BULLETS] = new CEvent(EVENT_REMOVE_BULLETS, new CTime(11, 00, 0, 0), EVENTFLAG_MURDER_GABRIEL, EVENTFLAG_REMOVE_BULLETS); // 11:00
 	m_eventArray[EVENT_GET_SHOT] = new CEvent(EVENT_GET_SHOT, new CTime(11, 30, 0, 0), EVENTFLAG_NONE, EVENTFLAG_GAME_OVER);
 	// 11:30
@@ -793,15 +798,6 @@ void CGame::Update()
 	elapsedTime = m_timer->pCurrentTime()->MilliSeconds - lastUpdate;
 	lastUpdate = m_timer->pCurrentTime()->MilliSeconds;
 	
-	//char buf[256];
-	//sprintf(buf, "%02d:%02d:%02d:%02d Elapsed: %08d", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes, m_timer->pCurrentTime()->Seconds, m_timer->pCurrentTime()->MilliSeconds, elapsedTime);
-	//fprintf(stderr, buf);
-	
-	if(keys_released & KEY_L || keys_released & KEY_R)
-	{
-		lcdSwap();
-	}
-	
 	switch(m_gameMode)
 	{
 	case GAMEMODE_INTRO:
@@ -817,11 +813,22 @@ void CGame::Update()
 			UpdateTitleScreen();
 		break;
 	case GAMEMODE_PAUSED:
-		if(keys_released & KEY_A || keys_pressed & KEY_TOUCH)
+		if(keys_released & KEY_START || keys_released & KEY_A || keys_pressed & KEY_TOUCH)
 		{
 			m_gameMode = GAMEMODE_RUNNING;
+			
+			ClearBG(0, true);
+			
 			m_console->Clear();
 			m_timer->Start();
+		}
+		else if(keys_released & KEY_SELECT)
+		{
+			InitTitleScreen();
+		}
+		else if(keys_released & KEY_B)
+		{
+			InitGame(GAMETYPE_NORMAL);
 		}
 		else
 		{
@@ -831,9 +838,9 @@ void CGame::Update()
 		}
 		break;
 	case GAMEMODE_FREEZE:
-		if(++m_freezeFrameCount == 200)
+		if(++m_frameCount == 200)
 		{
-			m_freezeFrameCount = 0;
+			m_frameCount = 0;
 			
 			m_gameMode = GAMEMODE_RUNNING;
 		}
@@ -852,12 +859,17 @@ void CGame::Update()
 		}
 		break;
 	case GAMEMODE_RUNNING:
-		UpdateGame(touch, keys_held, keys_pressed, keys_released);
+		if(keys_released & KEY_START && m_displayMode == DISPLAYMODE_GAME)
+			PauseGame();
+		else if(keys_released & KEY_L || keys_released & KEY_R)
+			lcdSwap();
+		else
+			UpdateGame(touch, keys_held, keys_pressed, keys_released);
 		break;
 	case GAMEMODE_DYING:
-		if(++m_dieFrameCount == 500)
+		if(++m_frameCount == 500)
 		{
-			m_dieFrameCount = 0;
+			m_frameCount = 0;
 			
 			m_snide->SetCharacterMode(CHARMODE_DEAD);
 			m_snide->Update(m_currentRoom, m_eventFlags);
@@ -868,10 +880,35 @@ void CGame::Update()
 		else
 			UpdateGame(touch, keys_held, keys_pressed, keys_released);
 		break;
-	case GAMEMODE_REVERSETIME:
-		if(++m_reverseTimeFrameCount == 365) // 100:8:13
+	case GAMEMODE_ANGUS:
+		if(++m_frameCount == 100)
 		{
-			m_reverseTimeFrameCount = 0;
+			m_characterArray[CHARTYPE_ANGUS]->SetCharacterMode(CHARMODE_TALKING);
+			
+			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("MR MCFUNGUS SPEAKS \"THANK YOU INSPECTOR! YOU HAVE SET ME FREE!\"");
+		}
+		else if(m_frameCount == 800)
+		{
+			m_frameCount = 0;
+			
+			m_characterArray[CHARTYPE_ANGUS]->SetGoalMode(false);
+			m_characterArray[CHARTYPE_ANGUS]->SetRoom(NULL);
+		
+			m_characterArray[CHARTYPE_ANGUS]->Disable();
+			m_characterArray[CHARTYPE_ANGUS]->Hide();
+			m_characterArray[CHARTYPE_ANGUS]->Draw();
+						
+			mmEffectEx(&g_sfx_magic);
+			
+			m_gameMode = GAMEMODE_RUNNING;
+		}
+		else
+			UpdateGame(touch, keys_held, keys_pressed, keys_released);
+		break;
+	case GAMEMODE_REVERSETIME:
+		if(++m_frameCount == 365) // 100:8:13
+		{
+			m_frameCount = 0;
 				
 			m_gameMode = GAMEMODE_RUNNING;
 		}
@@ -1064,107 +1101,123 @@ void CGame::UpdateDisplayMode(touchPosition touch, int keys_held, int keys_press
 		break;
 	case DISPLAYMODE_KEYBOARD:
 		{
-			char c = '\0';
-			
-			if(keys_pressed & KEY_TOUCH)
-				c = m_keyboard->CheckKeyTouch(touch.px, touch.py);
-			else
-				c = m_keyboard->CheckKeyPress(keys_released);
-				
-			switch(c)
+			if(keys_released & KEY_B)
 			{
-			case 0:
-				break;
-			case '\e':	// Exit
+				m_displayMode = DISPLAYMODE_GAME;
+				
+				m_keyboard->Hide();
+				m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
+				m_console->Clear();
+				m_menu->Hide();
+				
+				DrawString("@2009 HEADSOFT", 9, 1, false);
+				
+				mmEffectEx(&g_sfx_beep);
+			}
+			else
+			{
+				char c = '\0';
+				
+				if(keys_pressed & KEY_TOUCH)
+					c = m_keyboard->CheckKeyTouch(touch.px, touch.py);
+				else
+					c = m_keyboard->CheckKeyPress(keys_released);
+					
+				switch(c)
 				{
-					m_displayMode = DISPLAYMODE_GAME;
-					
-					m_keyboard->Hide();
-					m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
-					m_console->Clear();
-					m_menu->Hide();
-					
-					DrawString("@2009 HEADSOFT", 9, 1, false);
-					
-					mmEffectEx(&g_sfx_beep);
-				}
-				break;
-			case '\n':
-				{
-					const char* text = m_keyboard->GetText();
-					
-					switch(m_keyboardMode)
+				case 0:
+					break;
+				case '\e':	// Exit
 					{
-						case KEYBOARDMODE_BOOK1:
-							{
-								if(strcmp(text, "101 DETECTIVE STORIES") == 0)
+						m_displayMode = DISPLAYMODE_GAME;
+						
+						m_keyboard->Hide();
+						m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
+						m_console->Clear();
+						m_menu->Hide();
+						
+						DrawString("@2009 HEADSOFT", 9, 1, false);
+						
+						mmEffectEx(&g_sfx_beep);
+					}
+					break;
+				case '\n':
+					{
+						const char* text = m_keyboard->GetText();
+						
+						switch(m_keyboardMode)
+						{
+							case KEYBOARDMODE_BOOK1:
 								{
-									if(m_itemArray[ITEM_A_HARDBACK_BOOK]->GetParent() == NULL)
+									if(strcmp(text, "101 DETECTIVE STORIES") == 0)
 									{
-										m_console->AddText("YOU FIND THE BOOK.");
-										CItemCache* itemCache = m_snide->GetItemCache();
-										
-										itemCache->AddItem(m_itemArray[ITEM_A_HARDBACK_BOOK]);
+										if(m_itemArray[ITEM_A_HARDBACK_BOOK]->GetParent() == NULL)
+										{
+											m_console->AddText("YOU FIND THE BOOK.");
+											CItemCache* itemCache = m_snide->GetItemCache();
+											
+											itemCache->AddItem(m_itemArray[ITEM_A_HARDBACK_BOOK]);
+										}
+										else
+										{
+											m_console->AddText("YOU DO NOT FIND THE BOOK.");
+										}
 									}
 									else
 									{
 										m_console->AddText("YOU DO NOT FIND THE BOOK.");
 									}
 								}
-								else
+								break;
+							case KEYBOARDMODE_BOOK2:
+								m_console->AddText("YOU DO NOT FIND THE BOOK.");
+								break;
+							case KEYBOARDMODE_SAFE:
 								{
-									m_console->AddText("YOU DO NOT FIND THE BOOK.");
-								}
-							}
-							break;
-						case KEYBOARDMODE_BOOK2:
-							m_console->AddText("YOU DO NOT FIND THE BOOK.");
-							break;
-						case KEYBOARDMODE_SAFE:
-							{
-								if(strncmp(text, "210319", 6) == 0)
-								{
-									CItemCache* itemCache = m_currentRoom->GetItemCache(3);
-									
-									if(itemCache->ContainsItem(m_itemArray[ITEM_THE_WILL]))
-									{									
-										m_currentRoom->SetAnimFrame(DSTRECT_SAFE, 1);
-										m_currentRoom->SetAnimState(DSTRECT_SAFE, ANIMSTATE_PLAY);
-										m_currentRoom->Draw();
+									if(strncmp(text, "210319", 6) == 0)
+									{
+										CItemCache* itemCache = m_currentRoom->GetItemCache(3);
+										
+										if(itemCache->ContainsItem(m_itemArray[ITEM_THE_WILL]))
+										{									
+											m_currentRoom->SetAnimFrame(DSTRECT_SAFE, 1);
+											m_currentRoom->SetAnimState(DSTRECT_SAFE, ANIMSTATE_PLAY);
+											m_currentRoom->Draw();
+										}
+										else
+										{
+											m_currentRoom->SetAnimFrame(DSTRECT_SAFE, 2);
+											m_currentRoom->SetAnimState(DSTRECT_SAFE, ANIMSTATE_PLAY);
+											m_currentRoom->Draw();
+										}
+										
+										m_console->AddText("THE SAFE IS OPEN!");
+										
+										mmEffectEx(&g_sfx_opendoor);
 									}
 									else
 									{
-										m_currentRoom->SetAnimFrame(DSTRECT_SAFE, 2);
-										m_currentRoom->SetAnimState(DSTRECT_SAFE, ANIMSTATE_PLAY);
-										m_currentRoom->Draw();
+										m_console->AddText("THE SAFE DOESN'T OPEN");
 									}
-									
-									m_console->AddText("THE SAFE IS OPEN!");
-									
-									mmEffectEx(&g_sfx_opendoor);
 								}
-								else
-								{
-									m_console->AddText("THE SAFE DOESN'T OPEN");
-								}
-							}
-							break;
+								break;
+						}
+						
+						m_displayMode = DISPLAYMODE_GAME;
+						
+						m_keyboard->Hide();
+						m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
+						m_menu->Hide();
+						
+						DrawString("@2009 HEADSOFT", 9, 1, false);
+						
+						mmEffectEx(&g_sfx_beep);
 					}
-					
-					m_displayMode = DISPLAYMODE_GAME;
-					
-					m_keyboard->Hide();
-					m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
-					m_menu->Hide();
-					
-					DrawString("@2009 HEADSOFT", 9, 1, false);
-					
-					mmEffectEx(&g_sfx_beep);
+					break;
+				default:
+					mmEffectEx(&g_sfx_click);
+					break;
 				}
-				break;
-			default:
-				mmEffectEx(&g_sfx_click);
-				break;
 			}
 		}
 		break;
@@ -1205,8 +1258,8 @@ void CGame::UpdateSnideMovement(int keys_held)
 					m_currentRoom->SetAnimState(DSTRECT_FOUNTAIN, ANIMSTATE_STOP);
 					m_currentRoom->Draw();
 					
-					//CItemCache* itemCache = m_roomArray[ROOM_COURTYARD]->GetItemCache(0);
-					//itemCache->AddItem(m_itemArray[ITEM_RED_KEY]);
+					//CItemCache* pItemCache = m_roomArray[ROOM_COURTYARD]->GetItemCache(0);
+					//pItemCache->AddItem(m_itemArray[ITEM_RED_KEY]);
 					mmEffectEx(&g_sfx_drain);
 				}
 				else if(colNear == COL_GARGOYLE1 && m_gargoyleActive[0])
@@ -1219,7 +1272,7 @@ void CGame::UpdateSnideMovement(int keys_held)
 			
 			if(TryGetDoor(colNear, colNear, &pDoor))
 			{
-				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+				if(pDoor->GetDoorState() == DOORSTATE_OPEN || pDoor->GetDoorState() == DOORSTATE_OPENING)
 				{		
 					m_currentRoom = pDoor->pRoomOut();
 					Point* pDoorPoint = pDoor->pDoorOut()->pPoint();
@@ -1231,8 +1284,9 @@ void CGame::UpdateSnideMovement(int keys_held)
 					
 					int xChar = xDoor;
 					int yChar = yDoor - m_snide->Height() - 8;
-						
-					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
+					
+					if(pDoor->GetDoorState() != DOORSTATE_OPENING)
+						pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 					
 					m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
 					
@@ -1268,7 +1322,7 @@ void CGame::UpdateSnideMovement(int keys_held)
 			
 			if(TryGetDoor(colNear, colNear, &pDoor))
 			{
-				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
+				if(pDoor->GetDoorState() == DOORSTATE_OPEN || pDoor->GetDoorState() == DOORSTATE_OPENING)
 				{
 					m_currentRoom = pDoor->pRoomOut();
 					Point* pDoorPoint = pDoor->pDoorOut()->pPoint();
@@ -1281,7 +1335,8 @@ void CGame::UpdateSnideMovement(int keys_held)
 					int xChar = xDoor;
 					int yChar = yDoor - m_snide->Height() + 8;
 					
-					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
+					if(pDoor->GetDoorState() != DOORSTATE_OPENING)
+						pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 					
 					m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
 					
@@ -1321,7 +1376,8 @@ void CGame::UpdateSnideMovement(int keys_held)
 			{
 				m_currentRoom = pDoor->pRoomOut();
 				
-				pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
+				if(pDoor->GetDoorState() != DOORSTATE_OPENING)
+					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 				
 				int xChar = m_currentRoom->Width() - m_snide->Width() - 8;
 				
@@ -1362,7 +1418,8 @@ void CGame::UpdateSnideMovement(int keys_held)
 			{
 				m_currentRoom = pDoor->pRoomOut();
 				
-				pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
+				if(pDoor->GetDoorState() != DOORSTATE_OPENING)
+					pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
 				
 				int xChar = 8;
 				
@@ -1402,8 +1459,8 @@ void CGame::SetMenuIcons(MenuMode menuMode, CItem* pItem)
 	case MENUMODE_GENERAL:
 		if(TryGetDoor(colNear, colFar, &pDoor))
 		{
-			if(!pDoor->Hidden())
-			{
+			if(!pDoor->Hidden() && pDoor->GetDoorState() != DOORSTATE_OPENING)
+			{			
 				if(pDoor->GetDoorState() == DOORSTATE_OPEN)
 					m_menu->AddIconSet(ICONSET_DOOR_CLOSE);
 				else
@@ -1416,8 +1473,8 @@ void CGame::SetMenuIcons(MenuMode menuMode, CItem* pItem)
 				if((m_eventFlags & 0x7FELL) != 0)
 					m_menu->AddIcon(ICON_QUESTION);
 				
-				m_menu->AddIcon(ICON_SAVE);
 				m_menu->AddIcon(ICON_LOAD);
+				m_menu->AddIcon(ICON_SAVE);
 			}
 		}
 		else
@@ -1427,8 +1484,8 @@ void CGame::SetMenuIcons(MenuMode menuMode, CItem* pItem)
 			if((m_eventFlags & 0x7FELL) != 0)
 				m_menu->AddIcon(ICON_QUESTION);
 			
-			m_menu->AddIcon(ICON_SAVE);
 			m_menu->AddIcon(ICON_LOAD);
+			m_menu->AddIcon(ICON_SAVE);
 		}
 		break;
 	case MENUMODE_ITEM:
@@ -1454,6 +1511,9 @@ void CGame::SetMenuIcons(MenuMode menuMode, CItem* pItem)
 		
 		if(pItem->GetItemAttribs() & ITEMATTRIB_CONSUME)
 			m_menu->AddIcon(ICON_CONSUME);
+			
+		if(pItem->GetItemAttribs() & ITEMATTRIB_VACUUM)
+			m_menu->AddIcon(ICON_VACUUM);
 		break;
 	}
 	
@@ -1857,7 +1917,7 @@ void CGame::ProcessMenu(int x, int y)
 							break;
 						case COL_TROPHY:
 							if(pItem->GetItemType() == ITEM_A_BALL_ON_CHAIN)
-							{
+							{								
 								m_currentRoom->SetAnimFrame(DSTRECT_TROPHY, 0);
 								m_currentRoom->SetAnimState(DSTRECT_TROPHY, ANIMSTATE_PLAY);
 								m_currentRoom->Draw();
@@ -1866,10 +1926,15 @@ void CGame::ProcessMenu(int x, int y)
 								m_currentRoom->SetAnimState(DSTRECT_STATUE, ANIMSTATE_PLAY);
 								m_currentRoom->Draw();
 								
-								CItemCache* itemCache = m_roomArray[ROOM_ANGUS_LANDING]->GetItemCache(1);
-								itemCache->AddItem(m_itemArray[ITEM_A_RED_KEY]);
-								
-								mmEffectEx(&g_sfx_keydrop);
+								if(!(m_eventFlags & EVENTFLAG_COLLECTED_RED_KEY))
+								{
+									m_eventFlags |= EVENTFLAG_COLLECTED_RED_KEY;
+									
+									CItemCache* itemCache = m_roomArray[ROOM_ANGUS_LANDING]->GetItemCache(1);
+									itemCache->AddItem(m_itemArray[ITEM_A_RED_KEY]);
+									
+									mmEffectEx(&g_sfx_keydrop);
+								}
 							}
 							break;
 						case COL_DESK_WITH_A_STATUE:
@@ -1878,6 +1943,28 @@ void CGame::ProcessMenu(int x, int y)
 								m_currentRoom->SetAnimFrame(DSTRECT_STATUE, 0);
 								m_currentRoom->SetAnimState(DSTRECT_STATUE, ANIMSTATE_PLAY);
 								m_currentRoom->Draw();
+							}
+							break;
+						case COL_HEADSTONE1:
+							if(pItem->GetItemType() == ITEM_ANGUS_MCFUNGUS)
+							{
+								pItemCache->RemoveItem(m_itemArray[ITEM_ANGUS_MCFUNGUS]);
+								
+								m_characterArray[CHARTYPE_ANGUS]->SetGoalMode(false);
+								m_characterArray[CHARTYPE_ANGUS]->SetCharacterMode(CHARMODE_NONE);
+								m_characterArray[CHARTYPE_ANGUS]->SetRoom(m_roomArray[ROOM_GRAVEYARD]);
+								m_characterArray[CHARTYPE_ANGUS]->SetPosition(8, 176 - m_characterArray[CHARTYPE_ANGUS]->Height());
+								m_characterArray[CHARTYPE_ANGUS]->Face(DIRECTION_LEFT);
+								m_characterArray[CHARTYPE_ANGUS]->SetHFlip(true);
+							
+								m_characterArray[CHARTYPE_ANGUS]->Show();
+								m_characterArray[CHARTYPE_ANGUS]->Draw();
+								
+								mmEffectEx(&g_sfx_magic);
+								
+								m_frameCount = 0;
+								
+								m_gameMode = GAMEMODE_ANGUS;
 							}
 							break;
 						default:
@@ -2098,13 +2185,7 @@ void CGame::ProcessMenu(int x, int y)
 		break;
 	case ICON_TIME:
 		{
-			sprintf(buffer, " THE TIME IS NOW:\n\n      %02d: %02d\n\n PAUSED..PRESS A TO CONTINUE.", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes);
-			m_console->AddText(buffer);
-			m_gameMode = GAMEMODE_PAUSED;
-			m_timer->Stop();
-			
-			m_pointer->Hide();
-			m_menu->Hide();
+			PauseGame();
 		}
 		break;
 	case ICON_PLACE:
@@ -2119,9 +2200,38 @@ void CGame::ProcessMenu(int x, int y)
 			m_menu->Hide();
 		}
 		break;
-	case ICON_BAG:
-		m_pointer->Hide();
-		m_menu->Hide();
+	case ICON_VACUUM:
+		{
+			mmEffectEx(&g_sfx_vacuum);
+					
+			CharacterType charNear, charFar;
+			
+			if(CheckCharacterCollision(m_snide->Facing(), &charNear, &charFar))
+			{			
+				if(charNear == CHARTYPE_ANGUS || charFar == CHARTYPE_ANGUS)
+				{
+					CItemCache* pItemCache = m_itemArray[ITEM_A_VACUUM_CLEANER]->GetItemCache();
+					
+					if(pItemCache->AddItem(m_itemArray[ITEM_ANGUS_MCFUNGUS]))
+					{
+						if(!(m_eventFlags & EVENTFLAG_COLLECTED_ANGUS))
+						{
+							m_eventFlags |= EVENTFLAG_COLLECTED_ANGUS;
+						
+							m_characterArray[CHARTYPE_ANGUS]->SetGoalMode(false);
+							m_characterArray[CHARTYPE_ANGUS]->SetRoom(NULL);
+						
+							m_characterArray[CHARTYPE_ANGUS]->Disable();
+							m_characterArray[CHARTYPE_ANGUS]->Hide();
+							m_characterArray[CHARTYPE_ANGUS]->Draw();
+						}
+					}
+				}
+			}
+			
+			m_pointer->Hide();
+			m_menu->Hide();
+		}
 		break;
 	}
 }
@@ -2194,6 +2304,8 @@ void CGame::PostProcessMenu()
 									pItemCache->RemoveItem(m_itemArray[ITEM_AN_HOURGLASS]);
 									m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_HOURGLASS, true);
 									
+									((CFxParticles*)m_fxManager.GetFx(FXTYPE_PARTICLES))->SetPosition(88, 152);
+									
 									mmEffectEx(&g_sfx_timewarp);
 									
 									m_gameMode = GAMEMODE_REVERSETIME;
@@ -2204,6 +2316,8 @@ void CGame::PostProcessMenu()
 								{
 									pItemCache->RemoveItem(m_itemArray[ITEM_A_GOLDEN_SKULL]);
 									m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_SKULL, true);
+									
+									((CFxParticles*)m_fxManager.GetFx(FXTYPE_PARTICLES))->SetPosition(152, 152);
 									
 									mmEffectEx(&g_sfx_magic);
 									
@@ -2357,7 +2471,7 @@ void CGame::PostProcessMenu()
 			}
 			
 			if(evidenceCount == 10 && m_console->SelectedIndex() == 8)
-				InitEnding(ENDINGMODE_DINGLESPEAKS);
+				InitEnding(ENDINGMODE_LEDATGUNPOINT);
 			else
 				m_console->AddText("YOU DO NOT HAVE THE EVIDENCE TO PROVE IT.");
 		
@@ -2657,7 +2771,7 @@ void CGame::PostProcessMenu()
 			//sprintf(buffer, "Place %s in %s",g_itemName[m_placeItem->GetItemType()], g_itemName[m_inItem->GetItemType()]);
 			//fprintf(stderr, buffer);
 		}
-	case ICON_BAG:
+	case ICON_VACUUM:
 		break;
 	}
 }
@@ -2673,7 +2787,7 @@ void CGame::InitRoom()
 		if((m_eventFlags & EVENTFLAG_MURDER_DINGLE) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_DINGLE))
 		{
 			m_gameMode = GAMEMODE_FREEZE;
-			m_freezeFrameCount = 0;
+			m_frameCount = 0;
 			PlaySong(SONGTYPE_MURDER);
 			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_DINGLE;
 		}
@@ -2685,7 +2799,7 @@ void CGame::InitRoom()
 		if((m_eventFlags & EVENTFLAG_MURDER_CYNTHIA) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_CYNTHIA))
 		{
 			m_gameMode = GAMEMODE_FREEZE;
-			m_freezeFrameCount = 0;
+			m_frameCount = 0;
 			PlaySong(SONGTYPE_MURDER);
 			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_CYNTHIA;
 		}
@@ -2697,7 +2811,7 @@ void CGame::InitRoom()
 		if((m_eventFlags & EVENTFLAG_MURDER_GABRIEL) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_GABRIEL))
 		{
 			m_gameMode = GAMEMODE_FREEZE;
-			m_freezeFrameCount = 0;
+			m_frameCount = 0;
 			PlaySong(SONGTYPE_MURDER);
 			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_GABRIEL;
 		}
@@ -2726,7 +2840,7 @@ void CGame::InitRoom()
 		if((m_eventFlags & EVENTFLAG_MURDER_DOCTOR) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_DOCTOR))
 		{
 			m_gameMode = GAMEMODE_FREEZE;
-			m_freezeFrameCount = 0;
+			m_frameCount = 0;
 			PlaySong(SONGTYPE_MURDER);
 			m_eventFlags |= EVENTFLAG_WITNESS_MURDER_DOCTOR;
 		}
@@ -3116,7 +3230,7 @@ void CGame::InitVideoMain()
 	bgInit(2, BgType_Text8bpp, BgSize_T_256x256, BG2_MAP_BASE, BG2_TILE_BASE);
 	bgInit(3, BgType_Text8bpp, BgSize_T_256x256, BG3_MAP_BASE, BG3_TILE_BASE);
 	
-	bgInitSub(0, BgType_Text4bpp, BgSize_T_256x256, BG0_MAP_BASE_SUB, BG0_TILE_BASE_SUB);
+	bgInitSub(0, BgType_Text8bpp, BgSize_T_256x256, BG0_MAP_BASE_SUB, BG0_TILE_BASE_SUB);
 	bgInitSub(1, BgType_Text8bpp, BgSize_T_256x256, BG1_MAP_BASE_SUB, BG1_TILE_BASE_SUB);
 	int bg2Sub = bgInitSub(2, BgType_Text8bpp, BgSize_T_512x256, BG2_MAP_BASE_SUB, BG2_TILE_BASE_SUB);
 	int bg3Sub = bgInitSub(3, BgType_Text8bpp, BgSize_T_512x256, BG3_MAP_BASE_SUB, BG3_TILE_BASE_SUB);
@@ -3124,7 +3238,11 @@ void CGame::InitVideoMain()
 	bgSetControlBits(bg2Sub, BG_PRIORITY_0);
 	bgSetControlBits(bg3Sub, BG_PRIORITY_2);
 	
-	videoBgDisableSub(0);
+	ClearBG(0, true);
+	
+	dmaFillHalfWords(0, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB), 8 * 8 * 2);
+	
+	videoBgEnableSub(0);
 	
 	lcdMainOnBottom();
 	
@@ -3132,16 +3250,16 @@ void CGame::InitVideoMain()
 	dmaCopy(sprite_watchPal, SPRITE_PALETTE_SUB, sprite_watchPalLen);
 	
 	dmaCopy(fontTiles, BG_TILE_RAM(BG0_TILE_BASE), fontTilesLen);
-	dmaCopy(fontTiles, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB) , fontTilesLen);
+	//dmaCopy(fontTiles, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB) , fontTilesLen);
 	
 	dmaCopy(fontPal, BG_PALETTE, fontPalLen);
-	dmaCopy(fontPal, BG_PALETTE_SUB, fontPalLen);
+	//dmaCopy(fontPal, BG_PALETTE_SUB, fontPalLen);
 	
 	BG_PALETTE[0] = 0;
 	BG_PALETTE_SUB[0] = 0;
 	
 	dmaCopy(font_largeTiles, BG_TILE_RAM(BG0_TILE_BASE) + (fontTilesLen / 2), font_largeTilesLen);
-	dmaCopy(font_largeTiles, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB) + (fontTilesLen / 2), font_largeTilesLen);
+	//dmaCopy(font_largeTiles, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB) + (fontTilesLen / 2), font_largeTilesLen);
 	
 	WIN_IN = WIN0_BG0 | WIN0_BG1 | WIN0_BG2 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;
 	WIN_OUT = WIN0_BG1 | WIN0_BG2 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;
@@ -3279,9 +3397,6 @@ void CGame::InitGame(GameType gameType)
 	m_fireplace = 0;
 	//m_waterdrip = 0;
 	m_frameCount = 0;
-	m_dieFrameCount = 0;
-	m_reverseTimeFrameCount = 0;
-	m_freezeFrameCount = 0;
 	m_eventFlags = 0;	
 	
 	m_questionCharacter = NULL;
@@ -3292,15 +3407,19 @@ void CGame::InitGame(GameType gameType)
 	
 	m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
 	
-	videoBgDisableSub(0);
+	videoBgEnableSub(0);
 	
 	ClearBG(0, false);
 	ClearBG(1, false);
+	
+	ClearBG(0, true);
 	
 	DrawString("@2009 HEADSOFT", 9, 1, false);
 	
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->SetLoop(false);
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->ClearText();
+	
+	dmaFillHalfWords(0, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB), 8 * 8 * 2);
 	
 	dmaCopy(watchTiles, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), watchTilesLen);
 	dmaCopy(watchMap, BG_MAP_RAM_SUB(BG1_MAP_BASE_SUB), watchMapLen);
@@ -3510,7 +3629,9 @@ void CGame::InitGame(GameType gameType)
 	//m_roomArray[ROOM_STUDY]->RemoveItem(0, m_itemArray[ITEM_BULLETS]);
 	//m_roomArray[ROOM_STUDY]->AddItem(0, m_itemArray[ITEM_BLANK_BULLETS], true);
 	
-	//m_snide->AddItems(m_itemArray[ITEM_AN_ELEPHANT_GUN], m_itemArray[ITEM_BULLETS], m_itemArray[ITEM_A_BUNCH_OF_KEYS], NULL, NULL);
+	//m_snide->AddItems(m_itemArray[ITEM_AN_ELEPHANT_GUN], m_itemArray[ITEM_BULLETS], m_itemArray[ITEM_A_BUNCH_OF_KEYS], m_itemArray[ITEM_A_RED_KEY], m_itemArray[ITEM_A_VACUUM_CLEANER]);
+	//m_snide->AddItems(m_itemArray[ITEM_A_RED_KEY], m_itemArray[ITEM_ANGUS_MCFUNGUS], m_itemArray[ITEM_A_BUNCH_OF_KEYS], NULL, NULL);
+	//m_snide->AddItems(m_itemArray[ITEM_A_RED_KEY], m_itemArray[ITEM_A_BUNCH_OF_KEYS], m_itemArray[ITEM_A_VACUUM_CLEANER], NULL, NULL);
 	
 	/* m_snide->AddItems(m_itemArray[ITEM_PADDED_ENVELOPES], NULL, NULL, NULL, NULL);
 	m_itemArray[ITEM_PADDED_ENVELOPES]->AddItem(m_itemArray[ITEM_THE_WILL]);
@@ -3546,6 +3667,23 @@ void CGame::UpdateGame(touchPosition touch, int keys_held, int keys_pressed, int
 	
 	UpdateEventFlags();
 	UpdateEvents();
+}
+
+void CGame::PauseGame()
+{
+	static char buffer[64];
+	
+	m_gameMode = GAMEMODE_PAUSED;
+	
+	dmaCopy(pausedTiles, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB), pausedTilesLen);
+	dmaCopy(pausedMap, BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB), pausedMapLen);
+	
+	sprintf(buffer, " THE TIME IS NOW:\n\n      %02d: %02d\n\nPAUSED..", m_timer->pCurrentTime()->Hours, m_timer->pCurrentTime()->Minutes);
+	m_console->AddText(buffer);
+				
+	m_timer->Stop();
+	m_pointer->Hide();
+	m_menu->Hide();
 }
 
 void CGame::UpdateEvents()
@@ -3594,13 +3732,25 @@ void CGame::UpdateEvents()
 								InitMurder(MURDERTYPE_DINGLE);
 							}
 							break;
+						case EVENT_EVIDENCE_COUNT_6:
 						case EVENT_MURDER_CYNTHIA:
+							m_eventArray[EVENT_EVIDENCE_COUNT_6]->SetDone(true);
+							m_eventArray[EVENT_MURDER_CYNTHIA]->SetDone(true);
+							
 							InitMurder(MURDERTYPE_CYNTHIA);
 							break;
+						case EVENT_EVIDENCE_COUNT_7:
 						case EVENT_MURDER_DOCTOR:
+							m_eventArray[EVENT_EVIDENCE_COUNT_7]->SetDone(true);
+							m_eventArray[EVENT_MURDER_DOCTOR]->SetDone(true);
+							
 							InitMurder(MURDERTYPE_DOCTOR);
 							break;
+						case EVENT_EVIDENCE_COUNT_8:
 						case EVENT_MURDER_GABRIEL:
+							m_eventArray[EVENT_EVIDENCE_COUNT_8]->SetDone(true);
+							m_eventArray[EVENT_MURDER_GABRIEL]->SetDone(true);
+							
 							InitMurder(MURDERTYPE_GABRIEL);
 							break;
 						case EVENT_LOCK_DINGLES_ROOM:
@@ -3650,6 +3800,12 @@ void CGame::UpdateEventFlags()
 		default:
 			break;
 	}
+	
+	int evidenceCount = GetEvidenceCount();
+	
+	m_eventFlags |= (evidenceCount == 6 ? EVENTFLAG_EVIDENCE_COUNT_6 : 0);
+	m_eventFlags |= (evidenceCount == 7 ? EVENTFLAG_EVIDENCE_COUNT_7 : 0);
+	m_eventFlags |= (evidenceCount == 8 ? EVENTFLAG_EVIDENCE_COUNT_8 : 0);
 }
 
 void CGame::InitGameOver(GameOverMode gameOverMode)
@@ -3658,6 +3814,8 @@ void CGame::InitGameOver(GameOverMode gameOverMode)
 	m_gameOverMode = gameOverMode;
 	
 	m_frameCount = 500;
+	
+	videoBgDisableSub(0);
 	
 	SoundOff();
 	FxOff();
@@ -3845,7 +4003,7 @@ void CGame::UpdateEnding(touchPosition touch, int keys_held, int keys_pressed, i
 			m_endingMode = ENDINGMODE_GAMEOVER_LOSE;
 			m_frameCount = 500;
 			
-			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("YOU ARE SHOT BY AN UNSEEN ASSASIN..");
+			((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("YOU ARE SHOT BY AN UNSEEN ASSASSIN..");
 			
 			mmEffectEx(&g_sfx_gunshot);
 			break;
@@ -3961,8 +4119,14 @@ void CGame::InitTitleScreen()
 	
 	videoBgDisableSub(0);
 	
+	lcdMainOnBottom();
+	
 	ClearBG(0, false);
 	ClearBG(1, false);
+	
+	ClearBG(0, true);
+	
+	dmaFillHalfWords(0, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB), 8 * 8 * 2);
 	
 	HideCharacters();
 	
@@ -3987,6 +4151,9 @@ void CGame::InitTitleScreen()
 	dmaCopy(menu_bottomTiles, BG_TILE_RAM(BG3_TILE_BASE), menu_bottomTilesLen);
 	dmaCopy(menu_bottomMap, BG_MAP_RAM(BG3_MAP_BASE), menu_bottomMapLen);
 	dmaCopy(menu_bottomPal, BG_PALETTE, menu_bottomPalLen);
+	
+	BG_PALETTE[0] = 0;
+	BG_PALETTE_SUB[0] = 0;
 	
 	for(int i=0; i<MAX_CHARACTERS; i++)
 	{
@@ -4121,6 +4288,38 @@ void CGame::StopSong()
 	mmStop();
 }
 
+int CGame::GetEvidenceCount()
+{
+	CItemCache* pItemCache = m_snide->GetItemCache();
+	int evidenceCount = 0;
+	
+	for(int i=0; i<pItemCache->ItemCount(); i++)
+	{
+		CItem* pItem = pItemCache->GetItem(i);
+		
+		if(pItem != NULL)
+		{
+			if(pItem->GetItemAttribs() & ITEMATTRIB_EVIDENCE)
+				evidenceCount++;
+	
+			CItemCache* pItemItemCache = pItem->GetItemCache();
+			
+			if(pItemItemCache != NULL)
+			{
+				for(int j=0; j<pItemItemCache->ItemCount(); j++)
+				{
+					CItem* pItemItem = pItemItemCache->GetItem(j);
+					
+					if(pItemItem->GetItemAttribs() & ITEMATTRIB_EVIDENCE)
+						evidenceCount++;
+				}
+			}
+		}
+	}
+	
+	return evidenceCount;
+}
+
 void CGame::Save(const char* fileName)
 {
 	m_save->SetBufferPos(0);
@@ -4132,11 +4331,11 @@ void CGame::Save(const char* fileName)
 	for(int i=0; i<MAX_CHARACTERS; i++)
 		if(m_characterArray[i] != NULL)
 			m_characterArray[i]->Save(m_save);
-		
+	
 	for(int i=0; i<MAX_SPRITES; i++)
 		if(m_spriteArray[i] != NULL)
 			m_spriteArray[i]->Save(m_save);
-			
+	
 	for(int i=0; i<MAX_ROOMS; i++)
 		if(m_roomArray[i] != NULL)
 			m_roomArray[i]->Save(m_save);
@@ -4144,7 +4343,7 @@ void CGame::Save(const char* fileName)
 	for(int i=0; i<MAX_ITEMS; i++)
 		if(m_itemArray[i] != NULL)
 			m_itemArray[i]->Save(m_save);
-		
+	
 	for(int i=0; i<MAX_EVENTS; i++)
 		if(m_eventArray[i] != NULL)
 			m_eventArray[i]->Save(m_save);
@@ -4179,10 +4378,6 @@ void CGame::Save(const char* fileName)
 	m_save->WriteRoom(m_currentRoom);
 	
 	m_save->WriteUInt32(m_frameCount);
-	
-	m_save->WriteUInt32(m_dieFrameCount);
-	m_save->WriteUInt32(m_reverseTimeFrameCount);
-	m_save->WriteUInt32(m_freezeFrameCount);
 	
 	m_save->WriteUInt32(m_introIndex);
 	
@@ -4277,10 +4472,6 @@ bool CGame::Load(const char* fileName)
 	
 	m_save->ReadUInt32((u32*)&m_frameCount);
 	
-	m_save->ReadUInt32((u32*)&m_dieFrameCount);
-	m_save->ReadUInt32((u32*)&m_reverseTimeFrameCount);
-	m_save->ReadUInt32((u32*)&m_freezeFrameCount);
-	
 	m_save->ReadUInt32((u32*)&m_introIndex);
 	
 	m_save->ReadUInt32((u32*)&m_characterIndex);
@@ -4305,3 +4496,4 @@ bool CGame::Load(const char* fileName)
 	
 	return true;
 }
+

@@ -1,4 +1,5 @@
 #include <nds.h>
+#include <math.h>
 #include <stdio.h>
 #include "TDG.h"
 #include "CGame.h"
@@ -10,7 +11,7 @@
 #include "fat.h"
 #include "Text.h"
 
-#define EFS			0
+#define EFS			1
 
 CGame m_game;
 u8* pSoundBankBuffer = NULL;
@@ -42,6 +43,7 @@ mm_word mmEventHandler(mm_word msg, mm_word param)
 
 int main(void)
 {
+	int retVal = 0;
 	//irqInit();
 
 	irqSet(IRQ_VBLANK, InterruptHandlerVBlank);
@@ -52,49 +54,54 @@ int main(void)
 	irqEnable(IRQ_VBLANK | IRQ_HBLANK | IRQ_TIMER1 | IRQ_TIMER2);
 	
 #if (EFS == 1)
-	EFS_Init(EFS_AND_FAT | EFS_DEFAULT_DEVICE, NULL);	// Init EFS
+	retVal = EFS_Init(EFS_AND_FAT | EFS_DEFAULT_DEVICE, NULL);	// Init EFS
 #else
-	fatInitDefault();							// Init FAT
+	retVal = fatInitDefault();							// Init FAT
 #endif
 
-	int soundBankSize = readFileSize("/TDG/Audio/soundbank.bin");
-	
-	if(soundBankSize != 0)
+	if(retVal)
 	{
-		pSoundBankBuffer = (u8*) malloc(soundBankSize);
-		
-		if(pSoundBankBuffer != NULL)
+		int soundBankSize = readFileSize("/TDG/Audio/soundbank.bin");
+
+		if(soundBankSize != 0)
 		{
-			readFileBuffer("/TDG/Audio/soundbank.bin", (char*) pSoundBankBuffer);
+			pSoundBankBuffer = (u8*) malloc(soundBankSize);
 			
-			mmInitDefaultMem((mm_addr)pSoundBankBuffer);
-			mmSetEventHandler(mmEventHandler);
-			mmLoad(MOD_DETECTIVE);
-			mmLoad(MOD_WEATHER);
-			mmLoadEffect(SFX_FOOTSTEPS);
-			mmLoadEffect(SFX_OPENDOOR);
-			mmLoadEffect(SFX_CLOSEDOOR);
-			mmLoadEffect(SFX_SECRETDOOR);
-			mmLoadEffect(SFX_DRAIN);
-			mmLoadEffect(SFX_GATE);
-			mmLoadEffect(SFX_UNLOCK);
-			mmLoadEffect(SFX_KEYDROP);
-			mmLoadEffect(SFX_CLICK);
-			mmLoadEffect(SFX_BEEP);
-			mmLoadEffect(SFX_GHOSTLY);
-			mmLoadEffect(SFX_HOWLING);
-			mmLoadEffect(SFX_TIMEWARP);
-			mmLoadEffect(SFX_MAGIC);
-			mmLoadEffect(SFX_CLOCK);
-			mmLoadEffect(SFX_FIREPLACE);
-			mmLoadEffect(SFX_VACUUM);
-			mmLoadEffect(SFX_BOMB);
-			mmLoadEffect(SFX_GUNSHOT);
-			mmLoadEffect(SFX_WATERDRIP);
-			mmLoadEffect(SFX_GLASS);
-			//mmStart(MOD_WEATHER, MM_PLAY_LOOP);
-			mmJingle(MOD_WEATHER);
-			mmSetJingleVolume(0);
+			if(pSoundBankBuffer != NULL)
+			{
+				readFileBuffer("/TDG/Audio/soundbank.bin", (char*) pSoundBankBuffer);
+				
+				mmInitDefaultMem((mm_addr)pSoundBankBuffer);
+				
+				//mmInitDefault((char*) "/TDG/Audio/soundbank.bin");
+		
+				mmSetEventHandler(mmEventHandler);
+				mmLoad(MOD_DETECTIVE);
+				mmLoad(MOD_WEATHER);
+				mmLoadEffect(SFX_FOOTSTEPS);
+				mmLoadEffect(SFX_OPENDOOR);
+				mmLoadEffect(SFX_CLOSEDOOR);
+				mmLoadEffect(SFX_SECRETDOOR);
+				mmLoadEffect(SFX_DRAIN);
+				mmLoadEffect(SFX_GATE);
+				mmLoadEffect(SFX_UNLOCK);
+				mmLoadEffect(SFX_KEYDROP);
+				mmLoadEffect(SFX_CLICK);
+				mmLoadEffect(SFX_BEEP);
+				mmLoadEffect(SFX_GHOSTLY);
+				mmLoadEffect(SFX_HOWLING);
+				mmLoadEffect(SFX_TIMEWARP);
+				mmLoadEffect(SFX_MAGIC);
+				mmLoadEffect(SFX_CLOCK);
+				mmLoadEffect(SFX_FIREPLACE);
+				mmLoadEffect(SFX_VACUUM);
+				mmLoadEffect(SFX_BOMB);
+				mmLoadEffect(SFX_GUNSHOT);
+				mmLoadEffect(SFX_WATERDRIP);
+				mmLoadEffect(SFX_GLASS);
+				mmJingle(MOD_WEATHER);
+				mmSetJingleVolume(0);
+			}
 		}
 	}
 	

@@ -31,11 +31,15 @@ bool CEvent::Update(CTime* pCurrentTime)
 
 void CEvent::Save(CSave* pSave)
 {
+	m_pEventTime->Save(pSave);
+	
 	pSave->WriteBool(m_done);
 }
 
 void CEvent::Load(CSave* pSave)
 {
+	m_pEventTime->Load(pSave);
+	
 	pSave->ReadBool(&m_done);
 }
 

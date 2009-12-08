@@ -30,7 +30,7 @@ INCLUDES		:=	include
 GRAPHICS		:=	graphics
 AUDIO			:=	audio
 #SOUNDBANK_NAME	:=	soundbank
-EFS				:=	0
+EFS				:=	1
 
 #---------------------------------------------------------------------------------
 # Header variables

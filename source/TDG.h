@@ -118,6 +118,8 @@
 
 #include "watch.h"
 
+#include "paused.h"
+
 #include "menu_top.h"
 #include "menu_bottom.h"
 #include "menu_questions.h"
@@ -188,6 +190,6 @@ enum Background
 
 #define PI 3.1415926536
 
-#define ASSERT(expr)	(if(!expr) fprintf("Error!");)
+#define ASSERT(expr)	(if(!expr) fprintf(stderr, "Error!");)
 
 #endif

@@ -39,16 +39,18 @@ public:
 	
 	void AllocateGfx();
 	void SetXOffset(int xOffset) { m_xOffset = xOffset; }
+	void SetPosition(int x, int y) { m_position.X = x; m_position.Y = y; }
 
 private:
 
 	Particle m_particleArray[MAX_PARTICLES];
 	
+	Point m_position;
+	
 	int m_frameCount;
 	int m_xOffset;
 	
 	int m_perspective;
-	int m_centreX;
 	float m_ratio;
 	
 	float m_angleSpeed;

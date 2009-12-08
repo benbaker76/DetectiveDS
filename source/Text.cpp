@@ -165,7 +165,7 @@ const char* g_itemExamine[MAX_ITEMS] =
 	NULL, // VACUUM CLEANER
 	NULL, // WASHING POWDER
 	NULL, // DIRTY SHIRT
-	NULL, // ANGUS MCFUNGUS
+	"IT'S MR. MCFUNGUS' SOUL!", // ANGUS MCFUNGUS
 	NULL, // A HIDDEN KEY
 };
 
@@ -447,7 +447,7 @@ const char* g_askAboutCharacter[MAX_CHARACTERS * MAX_CHARACTERS] =
 	NULL, 										// The Doctor
 	NULL, 										// The Major
 	NULL, 										// Dingle
-	NULL										// Angus
+	"\"I'M TRAPPED HERE..\""					// Angus
 };
 
 const char* g_askAboutItem[MAX_ITEMS * MAX_CHARACTERS] =
@@ -1216,7 +1216,7 @@ const char* g_iconName[] =
 	"    USE    ",
 	"   PAUSE   ",
 	"   PUT IN  ",
-	"    BAG    "
+	"   VACUUM  "
 };
 
 const char* g_roomName[MAX_ROOMS] =
@@ -1316,11 +1316,11 @@ const char* g_saveName[] =
 
 const char* g_saveText[] =
 {
-	"Save Slot 01",
-	"Save Slot 02",
-	"Save Slot 03",
-	"Save Slot 04",
-	"Save Slot 05"
+	"Slot 1",
+	"Slot 2",
+	"Slot 3",
+	"Slot 4",
+	"Slot 5"
 };
 
 const char* g_keyboardText[] =

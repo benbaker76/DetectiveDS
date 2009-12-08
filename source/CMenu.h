@@ -37,7 +37,7 @@ enum IconType
 	ICON_USE,
 	ICON_TIME,
 	ICON_PLACE,
-	ICON_BAG
+	ICON_VACUUM
 };
 
 enum IconSet

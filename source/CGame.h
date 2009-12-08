@@ -20,6 +20,7 @@ enum GameMode
 	GAMEMODE_PAUSED,
 	GAMEMODE_FREEZE,
 	GAMEMODE_RUNNING,
+	GAMEMODE_ANGUS,
 	GAMEMODE_DYING,
 	GAMEMODE_REVERSETIME,
 	GAMEMODE_ENDING,
@@ -183,10 +184,6 @@ private:
 	
 	int m_frameCount;
 	
-	int m_dieFrameCount;
-	int m_reverseTimeFrameCount;
-	int m_freezeFrameCount;
-	
 	int m_introIndex;
 	
 	int m_characterIndex;
@@ -235,6 +232,7 @@ private:
 	void UpdateIntro();
 	void InitGame(GameType gameType);
 	void UpdateGame(touchPosition touch, int keys_held, int keys_pressed, int keys_released);
+	void PauseGame();
 	void UpdateEvents();
 	void UpdateEventFlags();
 	void InitGameOver(GameOverMode gameOverMode);
@@ -247,6 +245,7 @@ private:
 	void FxOff();
 	void PlaySong(SongType songType);
 	void StopSong();
+	int GetEvidenceCount();
 	
 	void Save(const char* fileName);
 	bool Load(const char* fileName);
