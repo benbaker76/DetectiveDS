@@ -184,7 +184,10 @@ uint64 CCharacter::Update(CRoom* pCurrentRoom, uint64 eventFlags)
 					{
 						if(pGoal->TryGetSpeech(&m_string))
 						{
-							SetFrameType(FRAME_SPEAK);
+							if(strchr(m_string, '\"') != NULL)
+								SetFrameType(FRAME_SPEAK);
+							else
+								SetFrameType(FRAME_WAITING);
 						}
 						else
 						{
@@ -298,11 +301,11 @@ uint64 CCharacter::Update(CRoom* pCurrentRoom, uint64 eventFlags)
 								DoorState doorState = pDoor->GetDoorState();
 								
 								if(doorState != DOORSTATE_OPENING)
-								{
+								{							
 									if(pDoor->GetKeyItemType() != ITEM_NONE)
 									{
 										if(m_keyItemType == pDoor->GetKeyItemType())
-										{							
+										{	
 											if(doorState == DOORSTATE_LOCKED || doorState == DOORSTATE_CLOSED)
 												pDoor->SetDoorState(DOORSTATE_OPEN);
 										}
@@ -420,7 +423,11 @@ bool CCharacter::MoveTo(Point* pDest)
 	else if(degrees > 225) // Down
 	{
 		SetFrameType(FRAME_LEFT);
-		SetHFlip(false);
+		
+		if(degrees > 270)
+			SetHFlip(false);
+		else
+			SetHFlip(true);
 	}
 	else if(degrees > 135) // Right
 	{
@@ -430,7 +437,11 @@ bool CCharacter::MoveTo(Point* pDest)
 	else if(degrees > 45) // Up
 	{
 		SetFrameType(FRAME_RIGHT);
-		SetHFlip(false);
+		
+		if(degrees > 90)
+			SetHFlip(false);
+		else
+			SetHFlip(true);
 	}
 	else // Left
 	{

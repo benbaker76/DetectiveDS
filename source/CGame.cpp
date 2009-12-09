@@ -200,7 +200,7 @@ void CGame::InitData(int param)
 	
 	m_roomArray[ROOM_SNIDE]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_SNIDE], m_roomArray[ROOM_HALL2], ITEM_NONE));		
 	m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_HALL1], ITEM_NONE));
-	m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_HIDDEN, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_PASSAGE1], ITEM_NONE));		
+	m_roomArray[ROOM_REVEREND]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_HIDDEN, m_roomArray[ROOM_REVEREND], m_roomArray[ROOM_PASSAGE1], ITEM_NONE));
 	m_roomArray[ROOM_BENTLEY]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_LOCKED, m_roomArray[ROOM_BENTLEY], m_roomArray[ROOM_HALL3], ITEM_A_BUNCH_OF_KEYS));		
 	m_roomArray[ROOM_COOK]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_COOK], m_roomArray[ROOM_HALL4], ITEM_A_HIDDEN_KEY));
 	m_roomArray[ROOM_GABRIEL]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_GABRIEL], m_roomArray[ROOM_HALL4], ITEM_A_BUNCH_OF_KEYS));
@@ -217,11 +217,11 @@ void CGame::InitData(int param)
 	m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_HIDDEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_CELLAR], ITEM_NONE));
 	m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_DRAWING], ITEM_NONE));
 	m_roomArray[ROOM_OUTSIDE4]->SetDoor(DOOR_DOOR3, new CDoor(DOOR_DOOR3, DOORSTATE_OPENING, m_roomArray[ROOM_OUTSIDE4], m_roomArray[ROOM_GARDEN], ITEM_NONE));
-	m_roomArray[ROOM_PASSAGE1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPENING, m_roomArray[ROOM_PASSAGE1], m_roomArray[ROOM_REVEREND], ITEM_NONE));
+	m_roomArray[ROOM_PASSAGE1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE1], m_roomArray[ROOM_REVEREND], ITEM_NONE));
 	m_roomArray[ROOM_PASSAGE1]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPENING, m_roomArray[ROOM_PASSAGE1], m_roomArray[ROOM_OUTSIDE2], ITEM_NONE));
 	m_roomArray[ROOM_PASSAGE2]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPENING, m_roomArray[ROOM_PASSAGE2], m_roomArray[ROOM_HALL1], ITEM_NONE));
 	m_roomArray[ROOM_PASSAGE2]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPENING, m_roomArray[ROOM_PASSAGE2], m_roomArray[ROOM_HALL2], ITEM_NONE));
-	m_roomArray[ROOM_PASSAGE3]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPENING, m_roomArray[ROOM_PASSAGE3], m_roomArray[ROOM_KITCHEN], ITEM_NONE));
+	m_roomArray[ROOM_PASSAGE3]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_OPEN, m_roomArray[ROOM_PASSAGE3], m_roomArray[ROOM_KITCHEN], ITEM_NONE));
 	m_roomArray[ROOM_PASSAGE3]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPENING, m_roomArray[ROOM_PASSAGE3], m_roomArray[ROOM_CELLAR], ITEM_NONE));
 	m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR1, new CDoor(DOOR_DOOR1, DOORSTATE_CLOSED, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_REVEREND], ITEM_NONE));
 	m_roomArray[ROOM_HALL1]->SetDoor(DOOR_DOOR2, new CDoor(DOOR_DOOR2, DOORSTATE_OPEN, m_roomArray[ROOM_HALL1], m_roomArray[ROOM_CYNTHIA], ITEM_NONE));
@@ -651,21 +651,24 @@ void CGame::InitData(int param)
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_DOCTOR], m_roomArray[ROOM_DINGLE], 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(248, 152), 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(360, 120), 200));
-	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_SPEAK, "\"INSPECTOR..MR. DINGLE'S BEEN STRANGLED! HERE.. POOR FELLOW ..TERRIBLE\"", 400));
-	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, EVENTFLAG_SNIDE_IN_ROOM, 0, 1));
-	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(2, GOAL_GOTOCHAR, m_characterArray[CHARTYPE_SNIDE], 0));
-	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 2, 0, 0, 3));
+	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(1, GOAL_GOTOCHAR, m_characterArray[CHARTYPE_SNIDE], 0));
+	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 1, 0, 0, 3));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_SPEAK, "\"INSPECTOR..MR. DINGLE'S BEEN STRANGLED!\"", 200));
-	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(1, GOAL_GOTOROOM, m_roomArray[ROOM_DINGLE], m_roomArray[ROOM_DOCTOR], 200));
-	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_DOCTOR], m_roomArray[ROOM_DRAWING], 0));
+	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_DINGLE], 200));
+	
+	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(248, 152), 0));
+	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(360, 120), 0));
+	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_SPEAK, "\"..TRAGIC.. POOR FELLOW\"", 200));
+	
+	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_DINGLE], m_roomArray[ROOM_DRAWING], 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(368, 144), 200));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_HALL3], 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_HALL3], m_roomArray[ROOM_DRAWING], 0));
-	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(3, GOAL_GOTOROOM, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_OUTSIDE3], 0));
+	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(2, GOAL_GOTOROOM, m_roomArray[ROOM_DRAWING], m_roomArray[ROOM_OUTSIDE3], 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(240, 144), 200));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOROOM, m_roomArray[ROOM_OUTSIDE3], m_roomArray[ROOM_DRAWING], 0));
 	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOPOINT, new Point(64, 184), 200));
-	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 3, 0, 0, LOOP_INFINITE));
+	m_characterArray[CHARTYPE_DOCTOR]->AddGoal(new CGoal(0, GOAL_GOTOGOAL, 2, 0, 0, LOOP_INFINITE));
 	
 	// ================================================================
 	// Major
@@ -733,14 +736,14 @@ void CGame::InitData(int param)
 	m_eventArray[EVENT_START_GAME] = new CEvent(EVENT_START_GAME, new CTime(9, 10, 0, 0), EVENTFLAG_NONE, EVENTFLAG_NONE);
 	m_eventArray[EVENT_MURDER_DINGLE] = new CEvent(EVENT_MURDER_DINGLE, new CTime(9, 12, 0, 0), EVENTFLAG_READY_MURDER_DINGLE | EVENTFLAG_NONE, EVENTFLAG_MURDER_DINGLE); // 9:12
 
-	m_eventArray[EVENT_EVIDENCE_COUNT_6] = new CEvent(EVENT_EVIDENCE_COUNT_6, new CTime(9, RandomInt(20, 25), 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_EVIDENCE_COUNT_6 | EVENTFLAG_HALL3, EVENTFLAG_MURDER_CYNTHIA); // 9:15
-	m_eventArray[EVENT_EVIDENCE_COUNT_7] = new CEvent(EVENT_EVIDENCE_COUNT_7, new CTime(9, RandomInt(25, 30), 0, 0), EVENTFLAG_EVIDENCE_COUNT_7 | EVENTFLAG_HALL1, EVENTFLAG_MURDER_DOCTOR); // 9:17
-	m_eventArray[EVENT_EVIDENCE_COUNT_8] = new CEvent(EVENT_EVIDENCE_COUNT_8, new CTime(9, RandomInt(30, 35), 0, 0), EVENTFLAG_EVIDENCE_COUNT_8 | EVENTFLAG_HALL1, EVENTFLAG_MURDER_GABRIEL); // 9:18
+	m_eventArray[EVENT_EVIDENCE_COUNT_6] = new CEvent(EVENT_EVIDENCE_COUNT_6, new CTime(9, 20, 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_EVIDENCE_COUNT_6 | EVENTFLAG_HALL3, EVENTFLAG_MURDER_CYNTHIA); // 9:15
+	m_eventArray[EVENT_EVIDENCE_COUNT_7] = new CEvent(EVENT_EVIDENCE_COUNT_7, new CTime(9, 21, 0, 0), EVENTFLAG_EVIDENCE_COUNT_7 | EVENTFLAG_HALL1, EVENTFLAG_MURDER_DOCTOR); // 9:17
+	m_eventArray[EVENT_EVIDENCE_COUNT_8] = new CEvent(EVENT_EVIDENCE_COUNT_8, new CTime(9, 22, 0, 0), EVENTFLAG_EVIDENCE_COUNT_8 | EVENTFLAG_HALL1, EVENTFLAG_MURDER_GABRIEL); // 9:18
 	
 	m_eventArray[EVENT_LOCK_DINGLES_ROOM] = new CEvent(EVENT_LOCK_DINGLES_ROOM, new CTime(9, 20, 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_HALL3, EVENT_LOCK_DINGLES_ROOM); // 9:20
 	m_eventArray[EVENT_MURDER_CYNTHIA] = new CEvent(EVENT_MURDER_CYNTHIA, new CTime(9, RandomInt(20, 30), 0, 0), EVENTFLAG_MURDER_DINGLE | EVENTFLAG_HALL3, EVENTFLAG_MURDER_CYNTHIA); // 9:30
-	m_eventArray[EVENT_MURDER_DOCTOR] = new CEvent(EVENT_MURDER_DOCTOR, new CTime(9, RandomInt(35, 45), 0, 0), EVENTFLAG_MURDER_CYNTHIA | EVENTFLAG_HALL1, EVENTFLAG_MURDER_DOCTOR); // 10:00
-	m_eventArray[EVENT_MURDER_GABRIEL] = new CEvent(EVENT_MURDER_GABRIEL, new CTime(10, RandomInt(0, 30), 0, 0), EVENTFLAG_MURDER_DOCTOR | EVENTFLAG_HALL1, EVENTFLAG_MURDER_GABRIEL); // 10:30
+	m_eventArray[EVENT_MURDER_DOCTOR] = new CEvent(EVENT_MURDER_DOCTOR, new CTime(9, RandomInt(30, 40), 0, 0), EVENTFLAG_MURDER_CYNTHIA | EVENTFLAG_HALL1, EVENTFLAG_MURDER_DOCTOR); // 10:00
+	m_eventArray[EVENT_MURDER_GABRIEL] = new CEvent(EVENT_MURDER_GABRIEL, new CTime(9, RandomInt(40, 50), 0, 0), EVENTFLAG_MURDER_DOCTOR | EVENTFLAG_HALL1, EVENTFLAG_MURDER_GABRIEL); // 10:30
 	m_eventArray[EVENT_REMOVE_BULLETS] = new CEvent(EVENT_REMOVE_BULLETS, new CTime(11, 00, 0, 0), EVENTFLAG_MURDER_GABRIEL, EVENTFLAG_REMOVE_BULLETS); // 11:00
 	m_eventArray[EVENT_GET_SHOT] = new CEvent(EVENT_GET_SHOT, new CTime(11, 30, 0, 0), EVENTFLAG_NONE, EVENTFLAG_GAME_OVER);
 	// 11:30
@@ -1996,13 +1999,16 @@ void CGame::ProcessMenu(int x, int y)
 		break;
 	case ICON_SHOOT:
 		{
-			CItemCache* pItemCache = m_snide->GetItemCache();
+			//CItemCache* pItemCache = m_snide->GetItemCache();
 			
-			if(m_endingMode == ENDINGMODE_ESCAPING && pItemCache->ContainsItem(m_itemArray[ITEM_BULLETS]))
+			if(m_endingMode == ENDINGMODE_ESCAPING)
 			{
-				m_endingMode = ENDINGMODE_ARREST;
-				
-				m_frameCount = 50;
+				//if(pItemCache->ContainsItem(m_itemArray[ITEM_BULLETS])) // ?????
+				//{
+					m_endingMode = ENDINGMODE_ARREST;
+					
+					m_frameCount = 50;
+				//}
 			}
 			else
 			{
@@ -2575,6 +2581,13 @@ void CGame::PostProcessMenu()
 								else
 									CharacterSpeak(m_questionCharacter, pReplyText);
 								break;
+							case CHARTYPE_MAJOR:
+								CharacterSpeak(m_questionCharacter, g_askAboutMajorRandom[rand() % 4]);
+								break;
+							case CHARTYPE_ANGUS:
+								mmEffectEx(&g_sfx_ghostly);
+								CharacterSpeak(m_questionCharacter, "\"WOOOOOO!\"");
+								break;
 							default:
 								CharacterSpeak(m_questionCharacter, (pReplyText == NULL ? "\"DON'T KNOW ANYTHING ABOUT IT.\"" : pReplyText));
 								break;
@@ -3067,7 +3080,7 @@ void CGame::UpdateCharacters()
 		
 		if(m_characterArray[i]->GetCharacterType() == CHARTYPE_MAJOR)
 		{
-			if(m_characterArray[i]->GetRoom() == m_currentRoom && rand() % 400 == 0)
+			if(m_characterArray[i]->GetRoom() == m_currentRoom && rand() % 500 == 0)
 				if(((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->ScrollerEmpty())
 					((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText(g_askAboutMajorRandom[rand() % 4]);
 		}
@@ -3085,7 +3098,7 @@ void CGame::CharacterSpeak(CCharacter* pCharacter, const char* string)
 
 	if(m_speakCharacter != pCharacter)
 	{
-		if(string[0] == '"')
+		if(strchr(string, '\"') != NULL)
 		{
 			m_speakCharacter = pCharacter;
 
@@ -4137,7 +4150,7 @@ void CGame::InitTitleScreen()
 	
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->ClearText();
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->SetLoop(true);
-	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE DETECTIVE GAME  -  WRITTEN BY HEADKAZE....GRAPHICS BY LOBO....MUSIC BY SPACE FRACTAL....SUPPORT BY FLASH....ORIGINAL BY SAM MANTHORPE....CHARACTERS BY PAUL JAY....PLOT CUNNINGLY DEVISED BY THE MAGNIFICENT SEVEN....   PRESS START TO BEGIN INVESTIGATION                               ");
+	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE DETECTIVE GAME  -  WRITTEN BY HEADKAZE....GRAPHICS BY LOBO....MUSIC BY SPACE FRACTAL....SUPPORT BY FLASH....TESTING BY SASHANAN....ORIGINAL BY SAM MANTHORPE....CHARACTERS BY PAUL JAY....PLOT CUNNINGLY DEVISED BY THE MAGNIFICENT SEVEN....   PRESS START TO BEGIN INVESTIGATION                               ");
 	
 	m_console->AddText("\n\n    INTRODUCING\n     THE CAST..");
 
