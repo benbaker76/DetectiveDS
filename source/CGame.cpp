@@ -2880,8 +2880,6 @@ void CGame::InitRoom()
 	case ROOM_SEWERS:
 		SoundOff();
 		FxOff();
-		
-		//m_waterdrip = mmEffectEx(&g_sfx_waterdrip);
 	
 		m_fxManager.SetFx(FXTYPE_RAT, FXMODE_NORMAL, true);
 		m_fxManager.SetFx(FXTYPE_LEAK, FXMODE_NORMAL, true);
@@ -2902,6 +2900,9 @@ void CGame::InitRoom()
 		FxOff();
 		break;
 	}
+	
+	m_menu->ClearIcons();
+	m_menu->Draw();
 	
 	dmaCopy(sprite_watchPal, SPRITE_PALETTE_SUB, sprite_watchPalLen);
 }
