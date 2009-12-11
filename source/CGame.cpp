@@ -4278,7 +4278,7 @@ void CGame::SoundOff()
 	mmEffectCancel(m_fireplace);
 	//mmEffectCancel(m_waterdrip);
 	
-	mmEffectCancelAll();
+	//mmEffectCancelAll();
 	
 	m_footsteps = 0;
 	m_clock = 0;
