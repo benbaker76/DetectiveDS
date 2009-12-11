@@ -16,6 +16,7 @@ class CRoom;
 class CDoor;
 class CItem;
 class CEvent;
+class CTime;
 
 class CSave
 {
@@ -23,6 +24,7 @@ public:
 	CSave(int bufferSize, CCharacter** characterArray, CSprite** spriteArray, CRoom** roomArray, CItem** itemArray, CEvent** eventArray);
 	~CSave();
 	
+	bool ReadTimeStamp(const char* fileName, CTime* time);
 	int ReadBuffer(const char* pFileName);
 	int WriteBuffer(const char* pFileName);
 	void ClearBuffer();

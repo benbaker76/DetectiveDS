@@ -820,6 +820,9 @@ void CGame::Update()
 		{
 			m_gameMode = GAMEMODE_RUNNING;
 			
+			mmResume();
+			InitRoom();
+					
 			ClearBG(0, true);
 			
 			m_console->Clear();
@@ -1656,8 +1659,22 @@ void CGame::ShowSaveMenu(const char* text)
 	m_console->AddText(text);
 	m_console->ClearMenu();
 	
+	static char buf[256];
+	CTime time;
+	
 	for(int i=0; i<5; i++)
-		m_console->AddMenuItem(g_saveText[i], NULL);
+	{
+		if(m_save->ReadTimeStamp(g_saveName[i], &time))
+		{
+			sprintf(buf, "Slot %02d (%02d:%02d:%02d)", i + 1, time.Hours, time.Minutes, time.Seconds);
+			m_console->AddMenuItem(buf, NULL);
+		}
+		else
+		{
+			sprintf(buf, "Slot %02d (Empty)", i + 1);
+			m_console->AddMenuItem(buf, NULL);
+		}
+	}
 		
 	m_console->ShowMenu();
 	m_console->DrawSelectorBar();
@@ -1998,17 +2015,12 @@ void CGame::ProcessMenu(int x, int y)
 		m_menu->Hide();
 		break;
 	case ICON_SHOOT:
-		{
-			//CItemCache* pItemCache = m_snide->GetItemCache();
-			
+		{	
 			if(m_endingMode == ENDINGMODE_ESCAPING)
 			{
-				//if(pItemCache->ContainsItem(m_itemArray[ITEM_BULLETS])) // ?????
-				//{
-					m_endingMode = ENDINGMODE_ARREST;
+				m_endingMode = ENDINGMODE_ARREST;
 					
-					m_frameCount = 50;
-				//}
+				m_frameCount = 50;
 			}
 			else
 			{
@@ -2930,7 +2942,7 @@ void CGame::InitMurder(MurderType murderType)
 		
 		m_roomArray[ROOM_COOK]->AddItem(0, m_itemArray[ITEM_A_KNIFE], true);
 		
-		((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("YOU HEAR A RATHER UPLEASANT, GASPING SCREAM FROM DOWNSTAIRS!");
+		((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("YOU HEAR A RATHER UNPLEASANT, GASPING SCREAM FROM DOWNSTAIRS!");
 		break;
 	case MURDERTYPE_GABRIEL:
 		m_characterArray[CHARTYPE_GABRIEL]->Reset();
@@ -3098,7 +3110,7 @@ void CGame::CharacterSpeak(CCharacter* pCharacter, const char* string)
 
 	if(m_speakCharacter != pCharacter)
 	{
-		if(strchr(string, '\"') != NULL)
+		if(string[0] == '\"')
 		{
 			m_speakCharacter = pCharacter;
 
@@ -3186,7 +3198,13 @@ mm_word CGame::MusicEventHandler(mm_word msg, mm_word param)
 
 void CGame::UpdateVBlank()
 {
-	m_fxManager.UpdateVBlank();
+	if(m_gameMode == GAMEMODE_PAUSED)
+	{
+		m_fxManager.GetFx(FXTYPE_FADE_RAMP)->UpdateVBlank();
+		m_fxManager.GetFx(FXTYPE_COLOUR)->UpdateVBlank();
+	}
+	else
+		m_fxManager.UpdateVBlank();
 }
 
 void CGame::UpdateHBlank()
@@ -3697,6 +3715,9 @@ void CGame::PauseGame()
 	m_timer->Stop();
 	m_pointer->Hide();
 	m_menu->Hide();
+	
+	mmPause();
+	SoundOff();
 }
 
 void CGame::UpdateEvents()
@@ -3844,8 +3865,6 @@ void CGame::UpdateGameOver()
 	case GAMEOVERMODE_LOSE:
 	case GAMEOVERMODE_END:
 		BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
-
-		UpdateFx();
 		
 		//DrawTime(m_timer->pCurrentTime());
 		m_console->Update();
@@ -3932,6 +3951,8 @@ void CGame::InitEnding(EndingMode endingMode)
 	
 	m_endingMode = endingMode;
 	m_frameCount = 300;
+	
+	ClearBG(0, true);
 	
 	SoundOff();
 	FxOff();
@@ -4084,7 +4105,7 @@ void CGame::UpdateEnding(touchPosition touch, int keys_held, int keys_pressed, i
 		case ENDINGMODE_ESCAPING:
 			break;
 		case ENDINGMODE_ESCAPED:
-			m_endingMode = ENDINGMODE_GAMEOVER_LOSE;
+			m_endingMode = ENDINGMODE_GAMEOVER_END;
 			m_frameCount = 500;
 			
 			mmEffectCancel(m_footsteps);
@@ -4128,6 +4149,8 @@ void CGame::InitTitleScreen()
 	m_characterIndex = -1;
 	m_frameCount = 0;
 	
+	FxOff();
+	
 	m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
 	
 	videoBgDisableSub(0);
@@ -4150,7 +4173,7 @@ void CGame::InitTitleScreen()
 	
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->ClearText();
 	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->SetLoop(true);
-	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE DETECTIVE GAME  -  WRITTEN BY HEADKAZE....GRAPHICS BY LOBO....MUSIC BY SPACE FRACTAL....SUPPORT BY FLASH....TESTING BY SASHANAN....ORIGINAL BY SAM MANTHORPE....CHARACTERS BY PAUL JAY....PLOT CUNNINGLY DEVISED BY THE MAGNIFICENT SEVEN....   PRESS START TO BEGIN INVESTIGATION                               ");
+	((CFxTextScroller*)m_fxManager.GetFx(FXTYPE_TEXT_SCROLLER))->AddText("THE DETECTIVE GAME  -  WRITTEN BY HEADKAZE....GRAPHICS BY LOBO....MUSIC BY SPACE FRACTAL....SUPPORT BY FLASH....TESTING BY SASHANAN AND SVERX....ORIGINAL BY SAM MANTHORPE....CHARACTERS BY PAUL JAY....PLOT CUNNINGLY DEVISED BY THE MAGNIFICENT SEVEN....   PRESS START TO BEGIN INVESTIGATION                               ");
 	
 	m_console->AddText("\n\n    INTRODUCING\n     THE CAST..");
 
@@ -4194,8 +4217,6 @@ void CGame::UpdateTitleScreen()
 	m_frameCount++;
 	
 	BACKGROUND.scroll[2].y = --m_bg2MainVScroll;
-	
-	UpdateFx();
 	
 	if(m_characterIndex != -1)
 	{
@@ -4255,6 +4276,8 @@ void CGame::SoundOff()
 	mmEffectCancel(m_clock);
 	mmEffectCancel(m_fireplace);
 	//mmEffectCancel(m_waterdrip);
+	
+	mmEffectCancelAll();
 	
 	m_footsteps = 0;
 	m_clock = 0;
@@ -4421,7 +4444,7 @@ bool CGame::Load(const char* fileName)
 	m_save->ClearBuffer();
 
 	static char buf[256];
-	
+
 	if(m_save->ReadBuffer(fileName) != m_save->GetBufferSize())
 		return false;
 	

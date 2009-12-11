@@ -43,8 +43,6 @@ void CFxLeak::UpdateVBlank()
 		{
 			m_frameCount = 0;
 			m_waiting = false;
-			
-			mmEffectEx(&g_sfx_waterdrip);
 		}
 		
 		return;
@@ -60,6 +58,9 @@ void CFxLeak::UpdateVBlank()
 		
 		if(m_location.Y == m_endPoint.Y)
 		{
+			if(m_frameNum == 16)
+				mmEffectEx(&g_sfx_waterdrip);
+			
 			if(m_frameNum == 19)
 			{
 				m_location.Y = m_startPoint.Y;

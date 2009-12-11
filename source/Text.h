@@ -16,7 +16,6 @@ extern const char* g_iconName[];
 extern const char* g_roomName[];
 extern const char* g_enterRoomText[];
 extern const char* g_saveName[];
-extern const char* g_saveText[];
 extern const char* g_keyboardText[];
 extern const char* g_keyboardHit[];
 

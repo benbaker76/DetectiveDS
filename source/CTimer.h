@@ -8,6 +8,7 @@ class CSave;
 class CTime
 {
 public:
+	CTime() : Hours(0), Minutes(0), Seconds(0), MilliSeconds(0) {}
 	CTime(int hours, int minutes, int seconds, int milliSeconds)
 	{
 		Hours = hours;
@@ -39,6 +40,7 @@ public:
 	void Reverse();
 
 	CTime* pCurrentTime() const { return m_pCurrentTime; }
+	void SetTime(CTime* time) { m_pCurrentTime->Hours = time->Hours; m_pCurrentTime->Minutes = time->Minutes; m_pCurrentTime->Seconds = time->Seconds; m_pCurrentTime->MilliSeconds = time->MilliSeconds; }
 	
 	void ToString();
 	

@@ -28,6 +28,37 @@ CSave::~CSave()
 	free(m_pBuffer);
 }
 
+bool CSave::ReadTimeStamp(const char* fileName, CTime* time)
+{
+	FILE *pFile;
+	struct stat fileStat;
+	size_t result;
+
+	pFile = fopen(fileName, "rb");
+	
+	if(pFile == NULL)
+		return 0;
+
+	result = fread(m_pBuffer, 1, 20, pFile);
+	
+	if(result != 20)
+	{
+		fclose(pFile);
+		return 0;
+	}
+	
+	if(strcmp(m_pBuffer, "TDG") != 0)
+		return false;
+		
+	m_bufferPos = 4;
+	
+	time->Load(this);
+
+	fclose(pFile);
+	
+	return result;
+}
+
 int CSave::ReadBuffer(const char* fileName)
 {
 	FILE *pFile;

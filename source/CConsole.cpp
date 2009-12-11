@@ -21,7 +21,7 @@ CConsole::CConsole(CCursor* pCursor)
 		strcpy(m_textArray[i], "");
 
 	for(int i=0; i<CONSOLE_MENU_MAX_TEXT; i++)
-		m_menuArray[i] = NULL;
+		strcpy(m_menuArray[i], "");
 	
 	Clear();
 }
@@ -144,7 +144,7 @@ void CConsole::ClearMenu()
 	m_menuOffset = 0;
 	
 	for(int i=0; i<CONSOLE_MENU_MAX_TEXT; i++)
-		m_menuArray[i] = NULL;
+		strcpy(m_menuArray[i], "");
 	
 	ClearMenuText();
 	HideArrows();
@@ -162,17 +162,14 @@ void CConsole::ClearMenuText()
 
 bool CConsole::AddMenuItem(const char* text, void* object)
 {
-	for(int i=0; i<CONSOLE_MENU_MAX_TEXT; i++)
+	if(m_menuCount < CONSOLE_MENU_MAX_TEXT)
 	{
-		if(m_menuArray[i] == NULL)
-		{
-			m_menuArray[i] = text;
-			m_objectArray[i] = object;
-			
-			m_menuCount++;
-			
-			return true;
-		}
+		strcpy(m_menuArray[m_menuCount], text);
+		m_objectArray[m_menuCount] = object;
+		
+		m_menuCount++;
+		
+		return true;
 	}
 	
 	return false;

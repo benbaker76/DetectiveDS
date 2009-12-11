@@ -88,7 +88,7 @@ private:
 	int m_frameCount;
 
 	char m_textArray[CONSOLE_MAX_TEXT][CONSOLE_MAP_WIDTH+2];
-	const char* m_menuArray[CONSOLE_MENU_MAX_TEXT];
+	char m_menuArray[CONSOLE_MENU_MAX_TEXT][CONSOLE_MAP_WIDTH+2];
 	void* m_objectArray[CONSOLE_MENU_MAX_TEXT];
 	
 	void ClearMenuText();
