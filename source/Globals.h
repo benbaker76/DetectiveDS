@@ -146,7 +146,7 @@ extern Map* g_landing_front2Map;
 extern Map* g_outside2_frontMap;
 extern Map* g_stairs_frontMap;
 
-extern mm_sound_effect g_sfx_footsteps;
+extern mm_sound_effect g_sfx_footsteps[];
 extern mm_sound_effect g_sfx_opendoor;
 extern mm_sound_effect g_sfx_closedoor;
 extern mm_sound_effect g_sfx_secretdoor;
@@ -160,7 +160,8 @@ extern mm_sound_effect g_sfx_ghostly;
 extern mm_sound_effect g_sfx_howling;
 extern mm_sound_effect g_sfx_timewarp;
 extern mm_sound_effect g_sfx_magic;
-extern mm_sound_effect g_sfx_clock;
+extern mm_sound_effect g_sfx_clock_tick;
+extern mm_sound_effect g_sfx_clock_chime;
 extern mm_sound_effect g_sfx_fireplace;
 extern mm_sound_effect g_sfx_vacuum;
 extern mm_sound_effect g_sfx_bomb;

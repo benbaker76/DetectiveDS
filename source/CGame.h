@@ -122,6 +122,7 @@ public:
 	CGame();
 	~CGame();
 	
+	void InitLoading();
 	void Initialize();
 	void Update();
 	
@@ -188,6 +189,11 @@ private:
 	
 	int m_characterIndex;
 	
+	int m_footstepFrameCount;
+	int m_clockChimeHour;
+	int m_clockFrameCount;
+	int m_clockChimeCount;
+	
 	uint64 m_eventFlags;
 	
 	Point* m_ratPoints[MAX_POINTS];
@@ -224,6 +230,7 @@ private:
 	void InitMurder(MurderType murderType);
 	void UpdateFx();
 	
+	void InitVideoLoading();
 	void InitVideoIntro();
 	void InitVideoMain();
 	void InitIntro1();
@@ -241,6 +248,8 @@ private:
 	void UpdateEnding(touchPosition touch, int keys_held, int keys_pressed, int keys_released);
 	void InitTitleScreen();
 	void UpdateTitleScreen();
+	void PlayFootsteps();
+	void PlayClock();
 	void SoundOff();
 	void FxOff();
 	void PlaySong(SongType songType);

@@ -56,9 +56,7 @@ void CSprite::SetPosition(int x, int y)
 
 void CSprite::Update()
 {
-	m_frameCount++;
-	
-	if(m_frameCount > FRAME_RATE)
+	if(m_frameCount++ > FRAME_RATE)
 	{
 		m_frameCount = 0;
 	
@@ -161,7 +159,9 @@ void CSprite::SetFrameType(FrameType frameType)
 	if(m_frameType != frameType)
 	{
 		m_frameType = frameType;
-		GetNextFrame();
+		
+		if(!(m_frameArray[m_frameNum] & m_frameType))
+			GetNextFrame();
 	}
 }
 

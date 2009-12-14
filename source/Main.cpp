@@ -53,6 +53,8 @@ int main(void)
 	
 	irqEnable(IRQ_VBLANK | IRQ_HBLANK | IRQ_TIMER1 | IRQ_TIMER2);
 	
+	m_game.InitLoading();
+	
 #if (EFS == 1)
 	retVal = EFS_Init(EFS_AND_FAT | EFS_DEFAULT_DEVICE, NULL);	// Init EFS
 #else
@@ -78,7 +80,16 @@ int main(void)
 				mmSetEventHandler(mmEventHandler);
 				mmLoad(MOD_DETECTIVE);
 				mmLoad(MOD_WEATHER);
-				mmLoadEffect(SFX_FOOTSTEPS);
+				mmLoadEffect(SFX_FOOTSTEP01);
+				mmLoadEffect(SFX_FOOTSTEP02);
+				mmLoadEffect(SFX_FOOTSTEP03);
+				mmLoadEffect(SFX_FOOTSTEP04);
+				mmLoadEffect(SFX_FOOTSTEP05);
+				mmLoadEffect(SFX_FOOTSTEP06);
+				mmLoadEffect(SFX_FOOTSTEP07);
+				mmLoadEffect(SFX_FOOTSTEP08);
+				mmLoadEffect(SFX_FOOTSTEP09);
+				mmLoadEffect(SFX_FOOTSTEP10);
 				mmLoadEffect(SFX_OPENDOOR);
 				mmLoadEffect(SFX_CLOSEDOOR);
 				mmLoadEffect(SFX_SECRETDOOR);
@@ -92,7 +103,8 @@ int main(void)
 				mmLoadEffect(SFX_HOWLING);
 				mmLoadEffect(SFX_TIMEWARP);
 				mmLoadEffect(SFX_MAGIC);
-				mmLoadEffect(SFX_CLOCK);
+				mmLoadEffect(SFX_CLOCK_TICK);
+				mmLoadEffect(SFX_CLOCK_CHIME);
 				mmLoadEffect(SFX_FIREPLACE);
 				mmLoadEffect(SFX_VACUUM);
 				mmLoadEffect(SFX_BOMB);

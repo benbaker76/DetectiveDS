@@ -137,6 +137,8 @@ public:
 	
 	void Save(CSave* pSave);
 	void Load(CSave* pSave);
+	
+	void SetFrameType(FrameType frameType);
 
 private:
 	CharacterType m_characterType;
@@ -178,8 +180,6 @@ private:
 	const char* m_string;
 	
 	ItemType m_keyItemType;
-	
-	void SetFrameType(FrameType frameType);
 };
 
 #endif

@@ -816,7 +816,7 @@ void CGame::Update()
 			UpdateTitleScreen();
 		break;
 	case GAMEMODE_PAUSED:
-		if(keys_released & KEY_START || keys_released & KEY_A || keys_pressed & KEY_TOUCH)
+		if(keys_released & KEY_START || keys_released & KEY_A || keys_released & KEY_B || keys_pressed & KEY_TOUCH)
 		{
 			m_gameMode = GAMEMODE_RUNNING;
 			
@@ -832,7 +832,7 @@ void CGame::Update()
 		{
 			InitTitleScreen();
 		}
-		else if(keys_released & KEY_B)
+		else if((keys_held & (KEY_X | KEY_Y)) == (KEY_X | KEY_Y))
 		{
 			InitGame(GAMETYPE_NORMAL);
 		}
@@ -1237,140 +1237,130 @@ void CGame::UpdateSnideMovement(int keys_held)
 	
 	if(keys_held & KEY_UP)
 	{
-		if(!m_footsteps)
-			m_footsteps = mmEffectEx(&g_sfx_footsteps);
-		
 		if(m_snide->SpriteX() < 256 - m_snide->Width() - 8)
 		{
 			m_snide->CheckCollision(DIRECTION_UP, &colNear, &colFar);
 			
-			//if(CheckCharacterCollision(DIRECTION_UP, &charNear, &charFar))
-			//	DrawString(" DIRECTION UP      ", 0, 0, false);
-			//else
-			//	DrawString("                   ", 0, 0, false);
-			
 			if(colNear == COL_NOTHING_HERE)
-				m_snide->Move(DIRECTION_UP);
-			else
-				m_snide->Face(DIRECTION_UP);
+			{
+				PlayFootsteps();
 				
-			if(colNear >= COL_GARGOYLE1 && colNear <= COL_GARGOYLE3)
-			{
-				if(colNear == COL_GARGOYLE3 && m_gargoyleActive[0] && m_gargoyleActive[1] && !m_gargoyleActive[2])
-				{
-					m_gargoyleActive[2] = true;
-					
-					m_currentRoom->SetAnimFrame(DSTRECT_FOUNTAIN, 0);
-					m_currentRoom->SetAnimState(DSTRECT_FOUNTAIN, ANIMSTATE_STOP);
-					m_currentRoom->Draw();
-					
-					//CItemCache* pItemCache = m_roomArray[ROOM_COURTYARD]->GetItemCache(0);
-					//pItemCache->AddItem(m_itemArray[ITEM_RED_KEY]);
-					mmEffectEx(&g_sfx_drain);
-				}
-				else if(colNear == COL_GARGOYLE1 && m_gargoyleActive[0])
-					m_gargoyleActive[1] = true;
-				else if(colNear == COL_GARGOYLE3)
-					m_gargoyleActive[0] = true;
-				else
-					{ m_gargoyleActive[0] = false; m_gargoyleActive[1] = false; m_gargoyleActive[2] = false; }
+				m_snide->Move(DIRECTION_UP);
 			}
-			
-			if(TryGetDoor(colNear, colNear, &pDoor))
+			else
 			{
-				if(pDoor->GetDoorState() == DOORSTATE_OPEN || pDoor->GetDoorState() == DOORSTATE_OPENING)
-				{		
-					m_currentRoom = pDoor->pRoomOut();
-					Point* pDoorPoint = pDoor->pDoorOut()->pPoint();
-					
-					int xDoor = pDoorPoint->X * 8;
-					int yDoor = pDoorPoint->Y * 8;
-					
-					int xRoom = xDoor - 128;
-					
-					int xChar = xDoor;
-					int yChar = yDoor - m_snide->Height() - 8;
-					
-					if(pDoor->GetDoorState() != DOORSTATE_OPENING)
-						pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
-					
-					m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
-					
-					m_currentRoom->Initialize(xRoom);
-					m_snide->SetRoom(m_currentRoom);
-					m_snide->SetPosition(xChar, yChar);
-					
-					m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
-					
-					InitRoom();
+				m_snide->Face(DIRECTION_UP);
+				m_snide->SetFrameType(FRAME_NONE);
+				
+				if(colNear >= COL_GARGOYLE1 && colNear <= COL_GARGOYLE3)
+				{
+					if(colNear == COL_GARGOYLE3 && m_gargoyleActive[0] && m_gargoyleActive[1] && !m_gargoyleActive[2])
+					{
+						m_gargoyleActive[2] = true;
+						
+						m_currentRoom->SetAnimFrame(DSTRECT_FOUNTAIN, 0);
+						m_currentRoom->SetAnimState(DSTRECT_FOUNTAIN, ANIMSTATE_STOP);
+						m_currentRoom->Draw();
+						
+						mmEffectEx(&g_sfx_drain);
+					}
+					else if(colNear == COL_GARGOYLE1 && m_gargoyleActive[0])
+						m_gargoyleActive[1] = true;
+					else if(colNear == COL_GARGOYLE3)
+						m_gargoyleActive[0] = true;
+					else
+						{ m_gargoyleActive[0] = false; m_gargoyleActive[1] = false; m_gargoyleActive[2] = false; }
+				}
+				
+				if(TryGetDoor(colNear, colNear, &pDoor))
+				{
+					if(pDoor->GetDoorState() == DOORSTATE_OPEN || pDoor->GetDoorState() == DOORSTATE_OPENING)
+					{		
+						m_currentRoom = pDoor->pRoomOut();
+						Point* pDoorPoint = pDoor->pDoorOut()->pPoint();
+						
+						int xDoor = pDoorPoint->X * 8;
+						int yDoor = pDoorPoint->Y * 8;
+						
+						int xRoom = xDoor - 128;
+						
+						int xChar = xDoor;
+						int yChar = yDoor - m_snide->Height() - 8;
+						
+						if(pDoor->GetDoorState() != DOORSTATE_OPENING)
+							pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
+						
+						m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
+						
+						m_currentRoom->Initialize(xRoom);
+						m_snide->SetRoom(m_currentRoom);
+						m_snide->SetPosition(xChar, yChar);
+						
+						m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+						
+						InitRoom();
+					}
 				}
 			}
 		}
 	}
 	else if(keys_held & KEY_DOWN)
 	{
-		if(!m_footsteps)
-			m_footsteps = mmEffectEx(&g_sfx_footsteps);
-		
 		if(m_snide->SpriteX() > 8)
 		{
 			m_snide->CheckCollision(DIRECTION_DOWN, &colNear, &colFar);
 			
-			//if(CheckCharacterCollision(DIRECTION_DOWN, &charNear, &charFar))
-			//	DrawString(" DIRECTION DOWN    ", 0, 0, false);
-			//else
-			//	DrawString("                   ", 0, 0, false);
-			
 			if(colNear == COL_NOTHING_HERE)
-				m_snide->Move(DIRECTION_DOWN);
-			else
-				m_snide->Face(DIRECTION_DOWN);
-			
-			if(TryGetDoor(colNear, colNear, &pDoor))
 			{
-				if(pDoor->GetDoorState() == DOORSTATE_OPEN || pDoor->GetDoorState() == DOORSTATE_OPENING)
+				PlayFootsteps();
+				
+				m_snide->Move(DIRECTION_DOWN);
+			}
+			else
+			{
+				m_snide->Face(DIRECTION_DOWN);
+				m_snide->SetFrameType(FRAME_NONE);
+			
+				if(TryGetDoor(colNear, colNear, &pDoor))
 				{
-					m_currentRoom = pDoor->pRoomOut();
-					Point* pDoorPoint = pDoor->pDoorOut()->pPoint();
+					if(pDoor->GetDoorState() == DOORSTATE_OPEN || pDoor->GetDoorState() == DOORSTATE_OPENING)
+					{
+						m_currentRoom = pDoor->pRoomOut();
+						Point* pDoorPoint = pDoor->pDoorOut()->pPoint();
+							
+						int xDoor = pDoorPoint->X * 8;
+						int yDoor = pDoorPoint->Y * 8;
 						
-					int xDoor = pDoorPoint->X * 8;
-					int yDoor = pDoorPoint->Y * 8;
-					
-					int xRoom = xDoor - 128;
-					
-					int xChar = xDoor;
-					int yChar = yDoor - m_snide->Height() + 8;
-					
-					if(pDoor->GetDoorState() != DOORSTATE_OPENING)
-						pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
-					
-					m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
-					
-					m_currentRoom->Initialize(xRoom);
-					m_snide->SetRoom(m_currentRoom);
-					m_snide->SetPosition(xChar, yChar);
-					
-					m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
-					
-					InitRoom();
+						int xRoom = xDoor - 128;
+						
+						int xChar = xDoor;
+						int yChar = yDoor - m_snide->Height() + 8;
+						
+						if(pDoor->GetDoorState() != DOORSTATE_OPENING)
+							pDoor->pDoorOut()->SetDoorState(DOORSTATE_OPEN);
+						
+						m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
+						
+						m_currentRoom->Initialize(xRoom);
+						m_snide->SetRoom(m_currentRoom);
+						m_snide->SetPosition(xChar, yChar);
+						
+						m_console->AddText(g_enterRoomText[m_currentRoom->GetRoomType()]);
+						
+						InitRoom();
+					}
 				}
 			}
 		}
 	}
 	else if(keys_held & KEY_LEFT)
 	{
-		if(!m_footsteps)
-			m_footsteps = mmEffectEx(&g_sfx_footsteps);
-		
 		m_snide->CheckCollision(DIRECTION_LEFT, &colNear, &colFar);
-		
-		//if(CheckCharacterCollision(DIRECTION_LEFT, &charNear, &charFar))
-		//	DrawString(" DIRECTION LEFT    ", 0, 0, false);
-		//else
-		//	DrawString("                   ", 0, 0, false);
 		
 		if(colNear == COL_NOTHING_HERE)
 		{
+			PlayFootsteps();
+			
 			m_snide->Move(DIRECTION_LEFT);
 			
 			if(m_snide->SpriteX() < 128)
@@ -1378,6 +1368,9 @@ void CGame::UpdateSnideMovement(int keys_held)
 		}
 		else
 		{
+			m_snide->Face(DIRECTION_LEFT);
+			m_snide->SetFrameType(FRAME_NONE);
+			
 			if(TryGetDoor(colNear, colFar, &pDoor))
 			{
 				m_currentRoom = pDoor->pRoomOut();
@@ -1401,18 +1394,12 @@ void CGame::UpdateSnideMovement(int keys_held)
 	}
 	else if(keys_held & KEY_RIGHT)
 	{
-		if(!m_footsteps)
-			m_footsteps = mmEffectEx(&g_sfx_footsteps);
-		
 		m_snide->CheckCollision(DIRECTION_RIGHT, &colNear, &colFar);
-		
-		//if(CheckCharacterCollision(DIRECTION_RIGHT, &charNear, &charFar))
-		//	DrawString(" DIRECTION RIGHT   ", 0, 0, false);
-		//else
-		//	DrawString("                   ", 0, 0, false);
 		
 		if(colNear == COL_NOTHING_HERE)
 		{
+			PlayFootsteps();
+			
 			m_snide->Move(DIRECTION_RIGHT);
 			
 			if(m_snide->SpriteX() > 128)
@@ -1420,6 +1407,9 @@ void CGame::UpdateSnideMovement(int keys_held)
 		}
 		else
 		{
+			m_snide->Face(DIRECTION_RIGHT);
+			m_snide->SetFrameType(FRAME_NONE);
+		
 			if(TryGetDoor(colNear, colFar, &pDoor))
 			{
 				m_currentRoom = pDoor->pRoomOut();
@@ -1523,8 +1513,8 @@ void CGame::SetMenuIcons(MenuMode menuMode, CItem* pItem)
 		break;
 	}
 	
-	mmEffectCancel(m_footsteps);
-	m_footsteps = 0;
+	//mmEffectCancel(m_footsteps);
+	//m_footsteps = 0;
 	
 	m_menu->Show(menuMode);
 	
@@ -2860,7 +2850,7 @@ void CGame::InitRoom()
 	case ROOM_CLOCK:
 		SoundOff();
 		FxOff();
-		m_clock = mmEffectEx(&g_sfx_clock);
+		m_clock = mmEffectEx(&g_sfx_clock_tick);
 		
 		if((m_eventFlags & EVENTFLAG_MURDER_DOCTOR) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_DOCTOR))
 		{
@@ -3000,6 +2990,8 @@ void CGame::UpdateFx()
 		((CFxRat*)m_fxManager.GetFx(FXTYPE_RAT))->SetXOffset(m_currentRoom->X());
 		((CFxLeak*)m_fxManager.GetFx(FXTYPE_LEAK))->SetXOffset(m_currentRoom->X());
 		break;
+	case ROOM_CLOCK:
+		PlayClock();
 	default:
 		break;
 	}
@@ -3227,8 +3219,27 @@ void CGame::UpdateTimer2()
 	m_timer->Update();
 }
 
+void CGame::InitVideoLoading()
+{
+	videoSetMode(MODE_0_2D | DISPLAY_BG0_ACTIVE);
+	videoSetModeSub(MODE_0_2D | DISPLAY_BG0_ACTIVE);
+	
+	vramSetMainBanks(VRAM_A_MAIN_BG, VRAM_B_MAIN_SPRITE_0x06400000, VRAM_C_SUB_BG, VRAM_D_SUB_SPRITE);
+
+	bgInit(0, BgType_Text4bpp, BgSize_T_256x256, BG0_MAP_BASE, BG0_TILE_BASE);
+	
+	bgInitSub(0, BgType_Text4bpp, BgSize_T_256x256, BG0_MAP_BASE_SUB, BG0_TILE_BASE_SUB);
+	
+	lcdMainOnBottom();
+}
+
 void CGame::InitVideoIntro()
 {
+	dmaFillHalfWords(0, BG_PALETTE_SUB, 512);
+	dmaFillHalfWords(0, BG_PALETTE, 512);
+	dmaFillHalfWords(0, BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB), 2048);
+	dmaFillHalfWords(0, BG_MAP_RAM(BG0_MAP_BASE), 2048);
+	
 	videoSetMode(MODE_0_2D | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE);
 	videoSetModeSub(MODE_0_2D | DISPLAY_BG0_ACTIVE | DISPLAY_BG1_ACTIVE);
 	
@@ -3284,14 +3295,14 @@ void CGame::InitVideoMain()
 	dmaCopy(fontTiles, BG_TILE_RAM(BG0_TILE_BASE), fontTilesLen);
 	//dmaCopy(fontTiles, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB) , fontTilesLen);
 	
+	dmaCopy(font_largeTiles, BG_TILE_RAM(BG0_TILE_BASE) + (fontTilesLen / 2), font_largeTilesLen);
+	//dmaCopy(font_largeTiles, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB) + (fontTilesLen / 2), font_largeTilesLen);
+	
 	dmaCopy(fontPal, BG_PALETTE, fontPalLen);
 	//dmaCopy(fontPal, BG_PALETTE_SUB, fontPalLen);
 	
 	BG_PALETTE[0] = 0;
 	BG_PALETTE_SUB[0] = 0;
-	
-	dmaCopy(font_largeTiles, BG_TILE_RAM(BG0_TILE_BASE) + (fontTilesLen / 2), font_largeTilesLen);
-	//dmaCopy(font_largeTiles, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB) + (fontTilesLen / 2), font_largeTilesLen);
 	
 	WIN_IN = WIN0_BG0 | WIN0_BG1 | WIN0_BG2 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;
 	WIN_OUT = WIN0_BG1 | WIN0_BG2 | WIN0_BG3 | WIN0_SPRITES | WIN0_BLENDS;
@@ -3329,6 +3340,26 @@ void CGame::InitVideoMain()
 	m_fxManager.SetFx(FXTYPE_TEXT_SCROLLER, FXMODE_NORMAL, true);
 	m_fxManager.SetFx(FXTYPE_COLOUR, FXMODE_NORMAL, true);
 	m_fxManager.SetFx(FXTYPE_C64, FXMODE_NORMAL, true);
+}
+
+void CGame::InitLoading()
+{
+	InitVideoLoading();
+	
+	dmaCopy(fontTiles, BG_TILE_RAM(BG0_TILE_BASE), fontTilesLen);
+	dmaCopy(fontTiles, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB) , fontTilesLen);
+	
+	dmaCopy(font_largeTiles, BG_TILE_RAM(BG0_TILE_BASE) + (fontTilesLen / 2), font_largeTilesLen);
+	dmaCopy(font_largeTiles, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB) + (fontTilesLen / 2), font_largeTilesLen);
+	
+	dmaCopy(fontPal, BG_PALETTE, fontPalLen);
+	dmaCopy(fontPal, BG_PALETTE_SUB, fontPalLen);
+	
+	BG_PALETTE[0] = 0;
+	BG_PALETTE_SUB[0] = 0;
+
+	DrawStringLarge("LOADING...", 11, 11, true);
+	DrawStringLarge("PLEASE WAIT.", 10, 11, false);
 }
 
 void CGame::InitIntro1()
@@ -3424,12 +3455,16 @@ void CGame::InitGame(GameType gameType)
 	m_questionMode = QUESTIONMODE_NONE;
 	m_openMode = OPENMODE_ROOM;
 	m_endingMode = ENDINGMODE_NONE;
+	m_frameCount = 0;
+	m_eventFlags = 0;
+	m_footstepFrameCount = 0;
+	m_clockChimeHour = 0;
+	m_clockFrameCount = 0;
+	m_clockChimeCount = 0;
 	m_footsteps = 0;
 	m_clock = 0;
 	m_fireplace = 0;
 	//m_waterdrip = 0;
-	m_frameCount = 0;
-	m_eventFlags = 0;	
 	
 	m_questionCharacter = NULL;
 	m_speakCharacter = NULL;
@@ -4109,8 +4144,8 @@ void CGame::UpdateEnding(touchPosition touch, int keys_held, int keys_pressed, i
 			m_endingMode = ENDINGMODE_GAMEOVER_END;
 			m_frameCount = 500;
 			
-			mmEffectCancel(m_footsteps);
-			m_footsteps = 0;
+			//mmEffectCancel(m_footsteps);
+			//m_footsteps = 0;
 			
 			m_snide->SetCharacterMode(CHARMODE_NONE);
 			
@@ -4120,8 +4155,8 @@ void CGame::UpdateEnding(touchPosition touch, int keys_held, int keys_pressed, i
 			m_endingMode = ENDINGMODE_GAMEOVER_WIN;
 			m_frameCount = 1000;
 			
-			mmEffectCancel(m_footsteps);
-			m_footsteps = 0;
+			//mmEffectCancel(m_footsteps);
+			//m_footsteps = 0;
 			
 			m_snide->SetCharacterMode(CHARMODE_NONE);
 			
@@ -4271,6 +4306,47 @@ void CGame::UpdateTitleScreen()
 	m_cursor->Show();
 }
 
+void CGame::PlayFootsteps()
+{
+	if(m_footstepFrameCount++ > 35)
+	{
+		m_footstepFrameCount = 0;
+		
+		m_footsteps = mmEffectEx(&g_sfx_footsteps[rand() % 10]);
+	}
+}
+
+void CGame::PlayClock()
+{
+	if(m_clockFrameCount++ > 230)
+	{
+		m_clockFrameCount = 0;
+		
+		if(m_clockChimeCount)
+		{
+			m_clockChimeCount--;
+			
+			m_clock = mmEffectEx(&g_sfx_clock_chime);
+		}
+		else
+		{
+			CTime* pTime = m_timer->pCurrentTime();
+		
+			if(pTime->Hours != m_clockChimeHour && pTime->Minutes == 0)
+			{
+				m_clockChimeHour = pTime->Hours;
+				m_clockChimeCount = m_clockChimeHour - 1;
+				
+				m_clock = mmEffectEx(&g_sfx_clock_chime);
+			}
+			else
+			{
+				m_clock = mmEffectEx(&g_sfx_clock_tick);
+			}
+		}
+	}
+}
+
 void CGame::SoundOff()
 {
 	mmEffectCancel(m_footsteps);
@@ -4280,7 +4356,7 @@ void CGame::SoundOff()
 	
 	//mmEffectCancelAll();
 	
-	m_footsteps = 0;
+	//m_footsteps = 0;
 	m_clock = 0;
 	m_fireplace = 0;
 	//m_waterdrip = 0;
@@ -4419,6 +4495,11 @@ void CGame::Save(const char* fileName)
 	m_save->WriteUInt32(m_introIndex);
 	
 	m_save->WriteUInt32(m_characterIndex);
+	
+	m_save->WriteUInt32(m_footstepFrameCount);
+	m_save->WriteUInt32(m_clockChimeHour);
+	m_save->WriteUInt32(m_clockFrameCount);
+	m_save->WriteUInt32(m_clockChimeCount);
 		
 	m_save->WriteUInt64(m_eventFlags);
 	
@@ -4512,6 +4593,11 @@ bool CGame::Load(const char* fileName)
 	m_save->ReadUInt32((u32*)&m_introIndex);
 	
 	m_save->ReadUInt32((u32*)&m_characterIndex);
+	
+	m_save->ReadUInt32((u32*)&m_footstepFrameCount);
+	m_save->ReadUInt32((u32*)&m_clockChimeHour);
+	m_save->ReadUInt32((u32*)&m_clockFrameCount);
+	m_save->ReadUInt32((u32*)&m_clockChimeCount);
 		
 	m_save->ReadUInt64(&m_eventFlags);
 	

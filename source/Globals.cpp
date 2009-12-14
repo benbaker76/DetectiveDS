@@ -153,7 +153,20 @@ Map* g_landing_front2Map = new Map(400, 192, map_landing_front2Tiles, map_landin
 Map* g_outside2_frontMap = new Map(544, 192, map_outside2_frontTiles, map_outside2_frontTilesLen, map_outside2_frontMap, map_outside2_frontMapLen);
 Map* g_stairs_frontMap = new Map(416, 192, map_stairs_frontTiles, map_stairs_frontTilesLen, map_stairs_frontMap, map_stairs_frontMapLen);
 
-mm_sound_effect g_sfx_footsteps = { { SFX_FOOTSTEPS } , (int)(1.0f * (1<<10)), 0, 255, 127 };
+mm_sound_effect g_sfx_footsteps[] =
+{
+	{ { SFX_FOOTSTEP01 } , (int)(1.0f * (1<<10)), 0, 255, 127 },
+	{ { SFX_FOOTSTEP02 } , (int)(1.0f * (1<<10)), 0, 255, 127 },
+	{ { SFX_FOOTSTEP03 } , (int)(1.0f * (1<<10)), 0, 255, 127 },
+	{ { SFX_FOOTSTEP04 } , (int)(1.0f * (1<<10)), 0, 255, 127 },
+	{ { SFX_FOOTSTEP05 } , (int)(1.0f * (1<<10)), 0, 255, 127 },
+	{ { SFX_FOOTSTEP06 } , (int)(1.0f * (1<<10)), 0, 255, 127 },
+	{ { SFX_FOOTSTEP07 } , (int)(1.0f * (1<<10)), 0, 255, 127 },
+	{ { SFX_FOOTSTEP08 } , (int)(1.0f * (1<<10)), 0, 255, 127 },
+	{ { SFX_FOOTSTEP09 } , (int)(1.0f * (1<<10)), 0, 255, 127 },
+	{ { SFX_FOOTSTEP10 } , (int)(1.0f * (1<<10)), 0, 255, 127 }
+};
+
 mm_sound_effect g_sfx_opendoor = { { SFX_OPENDOOR } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_closedoor = { { SFX_CLOSEDOOR } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_secretdoor = { { SFX_SECRETDOOR } , (int)(1.0f * (1<<10)), 0, 255, 127 };
@@ -167,7 +180,8 @@ mm_sound_effect g_sfx_ghostly = { { SFX_GHOSTLY } , (int)(1.0f * (1<<10)), 0, 25
 mm_sound_effect g_sfx_howling = { { SFX_HOWLING } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_timewarp = { { SFX_TIMEWARP } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_magic = { { SFX_MAGIC } , (int)(1.0f * (1<<10)), 0, 255, 127 };
-mm_sound_effect g_sfx_clock = { { SFX_CLOCK } , (int)(1.0f * (1<<10)), 0, 255, 127 };
+mm_sound_effect g_sfx_clock_tick = { { SFX_CLOCK_TICK } , (int)(1.0f * (1<<10)), 0, 255, 127 };
+mm_sound_effect g_sfx_clock_chime = { { SFX_CLOCK_CHIME } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_fireplace = { { SFX_FIREPLACE } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_vacuum = { { SFX_VACUUM } , (int)(1.0f * (1<<10)), 0, 255, 127 };
 mm_sound_effect g_sfx_bomb = { { SFX_BOMB } , (int)(1.0f * (1<<10)), 0, 255, 127 };
