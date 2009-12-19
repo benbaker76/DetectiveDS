@@ -805,7 +805,10 @@ void CGame::Update()
 	{
 	case GAMEMODE_INTRO:
 		if(keys_released & KEY_START)
+		{
+			((CFxFade*)m_fxManager.GetFx(FXTYPE_FADE))->SetCallback(NULL);
 			InitData(0);
+		}
 		else
 			UpdateIntro();
 		return;
@@ -3422,7 +3425,7 @@ void CGame::InitIntro3(int param)
 
 void CGame::UpdateIntro()
 {
-	if(m_frameCount++ == 100)
+	if(m_frameCount++ == 200)
 	{
 		m_frameCount = 0;
 		
