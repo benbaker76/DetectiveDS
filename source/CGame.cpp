@@ -798,6 +798,13 @@ void CGame::Update()
 	keys_pressed = keysDown();
 	keys_released = keysUp();
 	
+	if(REG_POWERCNT & POWER_SWAP_LCDS)
+	{
+		keys_held &= ~KEY_TOUCH;
+		keys_pressed &= ~KEY_TOUCH;
+		keys_released &= ~KEY_TOUCH;
+	}
+	
 	elapsedTime = m_timer->pCurrentTime()->MilliSeconds - lastUpdate;
 	lastUpdate = m_timer->pCurrentTime()->MilliSeconds;
 	
