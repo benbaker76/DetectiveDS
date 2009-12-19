@@ -1433,8 +1433,7 @@ void CGame::UpdateSnideMovement(int keys_held)
 	}
 	else
 	{
-		mmEffectCancel(m_footsteps);
-		m_footsteps = 0;
+		m_footstepFrameCount = 0;
 		
 		m_snide->SetCharacterMode(CHARMODE_NONE);
 	}
@@ -2847,10 +2846,11 @@ void CGame::InitRoom()
 		mmSetJingleVolume(1024);
 		m_fxManager.SetFx(FXTYPE_PARTICLES, FXMODE_RAIN, true);
 		break;
-	case ROOM_CLOCK:
+	case ROOM_CLOCK:	
 		SoundOff();
 		FxOff();
-		m_clock = mmEffectEx(&g_sfx_clock_tick);
+
+		m_clockFrameCount = 0;
 		
 		if((m_eventFlags & EVENTFLAG_MURDER_DOCTOR) && !(m_eventFlags & EVENTFLAG_WITNESS_MURDER_DOCTOR))
 		{
@@ -3407,8 +3407,8 @@ void CGame::InitIntro2(int param)
 	dmaCopy(intro_retrobytesTiles, BG_TILE_RAM_SUB(INTRO_BG1_TILE_BASE_SUB), intro_retrobytesTilesLen);
 	dmaCopy(intro_retrobytesMap, BG_MAP_RAM_SUB(INTRO_BG1_MAP_BASE_SUB), intro_retrobytesMapLen);
 
-	dmaCopy(intro_retrogamerTiles, BG_TILE_RAM(INTRO_BG1_TILE_BASE), intro_retrogamerTilesLen);
-	dmaCopy(intro_retrogamerMap, BG_MAP_RAM(INTRO_BG1_MAP_BASE), intro_retrogamerMapLen);
+	dmaCopy(intro_retroremakesTiles, BG_TILE_RAM(INTRO_BG1_TILE_BASE), intro_retroremakesTilesLen);
+	dmaCopy(intro_retroremakesMap, BG_MAP_RAM(INTRO_BG1_MAP_BASE), intro_retroremakesMapLen);
 }
 
 void CGame::InitIntro3(int param)
@@ -3416,8 +3416,8 @@ void CGame::InitIntro3(int param)
 	dmaCopy(intro_retrobytesTiles, BG_TILE_RAM_SUB(INTRO_BG0_TILE_BASE_SUB), intro_retrobytesTilesLen);
 	dmaCopy(intro_retrobytesMap, BG_MAP_RAM_SUB(INTRO_BG0_MAP_BASE_SUB), intro_retrobytesMapLen);
 	
-	dmaCopy(intro_retrogamerTiles, BG_TILE_RAM(INTRO_BG0_TILE_BASE), intro_retrogamerTilesLen);
-	dmaCopy(intro_retrogamerMap, BG_MAP_RAM(INTRO_BG0_MAP_BASE), intro_retrogamerMapLen);
+	dmaCopy(intro_retroremakesTiles, BG_TILE_RAM(INTRO_BG0_TILE_BASE), intro_retroremakesTilesLen);
+	dmaCopy(intro_retroremakesMap, BG_MAP_RAM(INTRO_BG0_MAP_BASE), intro_retroremakesMapLen);
 }
 
 void CGame::UpdateIntro()
@@ -4308,9 +4308,11 @@ void CGame::UpdateTitleScreen()
 
 void CGame::PlayFootsteps()
 {
-	if(m_footstepFrameCount++ > 35)
+	if(m_footstepFrameCount-- == 0)
 	{
-		m_footstepFrameCount = 0;
+		m_footstepFrameCount = 35;
+		
+		mmEffectCancel(m_footsteps);
 		
 		m_footsteps = mmEffectEx(&g_sfx_footsteps[rand() % 10]);
 	}
@@ -4318,13 +4320,15 @@ void CGame::PlayFootsteps()
 
 void CGame::PlayClock()
 {
-	if(m_clockFrameCount++ > 230)
+	if(m_clockFrameCount-- == 0)
 	{
-		m_clockFrameCount = 0;
+		m_clockFrameCount = 230;
 		
 		if(m_clockChimeCount)
 		{
 			m_clockChimeCount--;
+			
+			mmEffectCancel(m_clock);
 			
 			m_clock = mmEffectEx(&g_sfx_clock_chime);
 		}
@@ -4337,10 +4341,14 @@ void CGame::PlayClock()
 				m_clockChimeHour = pTime->Hours;
 				m_clockChimeCount = m_clockChimeHour - 1;
 				
+				mmEffectCancel(m_clock);
+				
 				m_clock = mmEffectEx(&g_sfx_clock_chime);
 			}
 			else
 			{
+				mmEffectCancel(m_clock);
+		
 				m_clock = mmEffectEx(&g_sfx_clock_tick);
 			}
 		}
@@ -4349,7 +4357,7 @@ void CGame::PlayClock()
 
 void CGame::SoundOff()
 {
-	mmEffectCancel(m_footsteps);
+	//mmEffectCancel(m_footsteps);
 	mmEffectCancel(m_clock);
 	mmEffectCancel(m_fireplace);
 	//mmEffectCancel(m_waterdrip);

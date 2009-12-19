@@ -1307,11 +1307,11 @@ const char* g_enterRoomText[MAX_ROOMS] =
 
 const char* g_saveName[] =
 {
-	"/TDG/Data/Save01.dat",
-	"/TDG/Data/Save02.dat",
-	"/TDG/Data/Save03.dat",
-	"/TDG/Data/Save04.dat",
-	"/TDG/Data/Save05.dat"
+	"/Data/TDG/Data/Save01.dat",
+	"/Data/TDG/Data/Save02.dat",
+	"/Data/TDG/Data/Save03.dat",
+	"/Data/TDG/Data/Save04.dat",
+	"/Data/TDG/Data/Save05.dat"
 };
 
 const char* g_keyboardText[] =

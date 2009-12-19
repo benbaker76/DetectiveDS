@@ -63,7 +63,7 @@ int main(void)
 
 	if(retVal)
 	{
-		int soundBankSize = readFileSize("/TDG/Audio/soundbank.bin");
+		int soundBankSize = readFileSize("/Data/TDG/Audio/soundbank.bin");
 
 		if(soundBankSize != 0)
 		{
@@ -71,12 +71,12 @@ int main(void)
 			
 			if(pSoundBankBuffer != NULL)
 			{
-				readFileBuffer("/TDG/Audio/soundbank.bin", (char*) pSoundBankBuffer);
+				readFileBuffer("/Data/TDG/Audio/soundbank.bin", (char*) pSoundBankBuffer);
 				
 				mmInitDefaultMem((mm_addr)pSoundBankBuffer);
 				
 				//mmInitDefault((char*) "/TDG/Audio/soundbank.bin");
-		
+				//mmSelectMode(MM_MODE_B);
 				mmSetEventHandler(mmEventHandler);
 				mmLoad(MOD_DETECTIVE);
 				mmLoad(MOD_WEATHER);

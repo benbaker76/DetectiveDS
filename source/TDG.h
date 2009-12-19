@@ -76,7 +76,7 @@
 #include "intro_infectuous.h"
 #include "intro_proteus.h"
 #include "intro_retrobytes.h"
-#include "intro_retrogamer.h"
+#include "intro_retroremakes.h"
 #include "intro_spacefractal.h"
 
 #include "sprite_snide_head.h"
