@@ -205,9 +205,16 @@ void CRoom::InitializeOverlay()
 	{
 		//dmaCopy(m_pOverlay->pTiles, BG_TILE_RAM_SUB(BG2_TILE_BASE_SUB), m_pOverlay->TilesLen);
 		decompressToVRAM(m_pOverlay->pTiles, BG_TILE_RAM_SUB(BG2_TILE_BASE_SUB));
+		
+		//videoBgEnableSub(2);
 	}
 	else
+	{
+		dmaFillHalfWords(0, BG_TILE_RAM_SUB(BG2_TILE_BASE_SUB), 8 * 8 * 2);
 		dmaFillHalfWords(0, BG_MAP_RAM_SUB(BG2_MAP_BASE_SUB), 4096);
+		
+		//videoBgDisableSub(2);
+	}
 }
 
 void CRoom::Draw()

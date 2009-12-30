@@ -832,6 +832,8 @@ void CGame::Update()
 			
 			mmResume();
 			InitRoom();
+			
+			videoBgDisableSub(0);
 					
 			ClearBG(0, true);
 			
@@ -3240,6 +3242,15 @@ void CGame::InitVideoLoading()
 	
 	bgInitSub(0, BgType_Text4bpp, BgSize_T_256x256, BG0_MAP_BASE_SUB, BG0_TILE_BASE_SUB);
 	
+	dmaFillHalfWords(0, BG_PALETTE_SUB, 512);
+	dmaFillHalfWords(0, BG_PALETTE, 512);
+	
+	dmaFillHalfWords(0, BG_MAP_RAM(BG0_MAP_BASE), 2048);
+	dmaFillHalfWords(0, BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB), 2048);
+	
+	dmaFillHalfWords(0, BG_TILE_RAM(BG0_TILE_BASE), 8 * 8 * 2);
+	dmaFillHalfWords(0, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB), 8 * 8 * 2);
+	
 	lcdMainOnBottom();
 }
 
@@ -3292,8 +3303,24 @@ void CGame::InitVideoMain()
 	bgSetControlBits(bg3Sub, BG_PRIORITY_2);
 	
 	ClearBG(0, true);
+	ClearBG(1, true);
+	ClearBG(2, true);
+	ClearBG(3, true);
+	
+	ClearBG(0, false);
+	ClearBG(1, false);
+	ClearBG(2, false);
+	ClearBG(3, false);
+	
+	dmaFillHalfWords(0, BG_TILE_RAM(BG0_TILE_BASE), 8 * 8 * 2);
+	dmaFillHalfWords(0, BG_TILE_RAM(BG1_TILE_BASE), 8 * 8 * 2);
+	dmaFillHalfWords(0, BG_TILE_RAM(BG2_TILE_BASE), 8 * 8 * 2);
+	dmaFillHalfWords(0, BG_TILE_RAM(BG3_TILE_BASE), 8 * 8 * 2);
 	
 	dmaFillHalfWords(0, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB), 8 * 8 * 2);
+	dmaFillHalfWords(0, BG_TILE_RAM_SUB(BG1_TILE_BASE_SUB), 8 * 8 * 2);
+	dmaFillHalfWords(0, BG_TILE_RAM_SUB(BG2_TILE_BASE_SUB), 8 * 8 * 2);
+	dmaFillHalfWords(0, BG_TILE_RAM_SUB(BG3_TILE_BASE_SUB), 8 * 8 * 2);
 	
 	videoBgEnableSub(0);
 	
@@ -3484,7 +3511,7 @@ void CGame::InitGame(GameType gameType)
 	
 	m_fxManager.SetFx(FXTYPE_FADE_RAMP, FXMODE_BLACK_OUT, true);
 	
-	videoBgEnableSub(0);
+	videoBgDisableSub(0);
 	
 	ClearBG(0, false);
 	ClearBG(1, false);
@@ -3751,6 +3778,8 @@ void CGame::PauseGame()
 	static char buffer[64];
 	
 	m_gameMode = GAMEMODE_PAUSED;
+	
+	videoBgEnableSub(0);
 	
 	dmaCopy(pausedTiles, BG_TILE_RAM_SUB(BG0_TILE_BASE_SUB), pausedTilesLen);
 	dmaCopy(pausedMap, BG_MAP_RAM_SUB(BG0_MAP_BASE_SUB), pausedMapLen);
