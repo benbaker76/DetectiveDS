@@ -11,8 +11,6 @@
 #include "fat.h"
 #include "Text.h"
 
-#define EFS			1
-
 CGame m_game;
 u8* pSoundBankBuffer = NULL;
 

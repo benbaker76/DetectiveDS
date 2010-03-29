@@ -53,6 +53,9 @@ CFLAGS	:=	-g -Wall -O2 \
 			$(ARCH)
 
 CFLAGS		+=	$(INCLUDE) -DARM9
+ifeq ($(EFS), 1)
+CFLAGS		+=	$(INCLUDE) -DEFS
+endif
 CXXFLAGS	:=	$(CFLAGS) -fno-rtti -fno-exceptions
 
 ASFLAGS		:=	-g $(ARCH)
