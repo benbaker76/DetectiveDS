@@ -65,7 +65,7 @@ LDFLAGS		:=	-specs=ds_arm9.specs -g $(ARCH) -Wl,-Map,$(notdir $*.map)
 #---------------------------------------------------------------------------------
 # any extra libraries we wish to link with the project
 #---------------------------------------------------------------------------------
-LIBS		:= -lmm9 -lnds9 -lfat
+LIBS		:= -lfat -lmm9 -lnds9
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
@@ -142,6 +142,9 @@ clean:
 	@echo clean ...
 	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).nds $(TARGET).arm9
 
+#---------------------------------------------------------------------------------
+run:
+	@START $(TARGET).nds
 
 #---------------------------------------------------------------------------------
 else

@@ -45,7 +45,7 @@ const char* g_itemName[MAX_ITEMS] =
 	"A KNIFE#",							// Clue #8
 	"NEWSPAPER CUTTING",
 	"A NOTE#",							// Clue #4
-	"A SMALL BOTTLE",					// Clue #6 (Not marked)
+	"A SMALL BOTTLE#",					// Clue #6 (Not marked)
 	"A CRAVATE#",						// Clue #3
 	"A SOGGY ENVELOPE",
 	"A LETTER",
@@ -67,10 +67,10 @@ const char* g_itemName[MAX_ITEMS] =
 	"A SMALL BOOK",
 	"DIRTY PLATES",
 	"A PICTURE",
-	"A WAD OF NOTES",					// Clue #5 (Not marked)
+	"A WAD OF NOTES#",					// Clue #5 (Not marked)
 	"A LOCKET",
 	"A SCREWDRIVER",
-	"AN OPEN LOCKET",					// Clue #10 (Not marked)
+	"AN OPEN LOCKET#",					// Clue #10 (Not marked)
 	"BROKEN PLATES",
 	"BROKEN GLASS",
 	"SHREDDED PAPER",
